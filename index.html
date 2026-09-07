@@ -2,60 +2,26 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tammy Thai Food — Cuisine thaïlandaise authentique à Champhol</title>
+<title>Tammy Thai Food — Commander à Champhol</title>
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="order-page">
 <header>
   <a class="brand" href="#accueil"><span class="brand-mark">✿</span><span><b>Tammy Thai Food</b><small>Cuisine thaïlandaise authentique · Champhol</small></span></a>
-  <nav><a href="#menu">Nos plats</a><a href="#histoire">Notre histoire</a><a href="#comment-ca-marche">Comment ça marche</a></nav>
-  <button class="top-cart" onclick="openCheckout()"><span>🛍</span><b id="top-total">0,00 €</b><small id="top-count">0 article</small></button>
+  <nav><a href="#menu">Commander</a><a href="decouvrir.html">Notre histoire</a><a href="decouvrir.html#comment-ca-marche">Comment ça marche</a></nav>
 </header>
-
 <main>
-<section id="accueil" class="hero">
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <p class="eyebrow">🇹🇭 Cuisine thaïlandaise authentique</p>
-    <h1>Tammy Thai Food</h1>
-    <p class="hero-sub">Les saveurs de Thaïlande, préparées avec passion.</p>
-    <p class="hero-copy">Un voyage culinaire en Thaïlande, près de chez vous.</p>
-    <a class="btn hero-btn" href="#menu">Découvrir nos plats <span>→</span></a>
-    <div class="hero-badges"><span>🌿 Recettes authentiques</span><span>🥢 Préparé avec passion</span><span>📍 Champhol</span></div>
-  </div>
-</section>
-
-<section class="intro">
-  <div><p class="eyebrow">Bienvenue</p><h2>Un petit bout de Thaïlande,<br><em>près de chez vous.</em></h2></div>
-  <p>Une cuisine thaïlandaise authentique, généreuse et préparée en petite quantité pour préserver les saveurs.</p>
-</section>
-
-<section id="menu" class="section">
-  <div class="heading"><div><p class="eyebrow">Le menu</p><h2>Les plats de Tammy</h2></div><span class="pill">Click & Collect · Champhol</span></div>
-  <p class="menu-intro">Choisissez vos plats, ajustez le piment quand il est disponible, puis sélectionnez votre créneau de retrait.</p>
+<section id="accueil" class="hero hero-image-only" aria-label="Tammy Thai Food"><div class="hero-actions"><a class="btn hero-btn" href="#menu">Commander mes plats →</a></div></section>
+<section id="menu" class="section order-menu">
+  <div class="heading"><div><p class="eyebrow">Le menu</p><h2>Choisissez vos plats</h2></div><span class="pill">Click & Collect · Champhol</span></div>
+  <p class="menu-intro">Ajoutez vos plats avec +, choisissez le niveau de piment quand il est disponible, puis validez votre commande en bas de page.</p>
   <div id="menu-grid" class="grid"></div>
 </section>
-
-<section id="histoire" class="story">
-  <div class="story-decoration"><span>🇹🇭</span><b>Tammy Thai Food</b><small>Des saveurs authentiques préparées avec passion.</small></div>
-  <div class="story-copy"><p class="eyebrow">Notre histoire</p><h2>La cuisine thaïlandaise, simplement.</h2><p>Tammy souhaite partager des recettes thaïlandaises authentiques avec les habitants de Champhol et des alentours, dans un format simple : commander en ligne et récupérer son repas.</p><div class="values"><div><b>01</b><span>Recettes authentiques</span></div><div><b>02</b><span>Petites quantités</span></div><div><b>03</b><span>Préparé avec passion</span></div></div></div>
-</section>
-
-<section id="suivi" class="section tracking-section">
-  <div class="heading"><div><p class="eyebrow">Suivi en direct</p><h2>Votre commande</h2></div><span id="client-status" class="pill">Aucune commande</span></div>
-  <div id="client-tracking" class="tracking-card"><p class="muted">Votre commande apparaîtra ici après validation.</p></div>
-</section>
-
-<section id="comment-ca-marche" class="section soft">
-  <p class="eyebrow">Click & Collect</p><h2>De la commande au retrait</h2>
-  <div class="steps"><article><b>01</b><h3>Je commande</h3><p>Je choisis mes plats, le niveau de piment et mon créneau.</p></article><article><b>02</b><h3>Tammy prépare</h3><p>La commande entre dans la file de préparation.</p></article><article><b>03</b><h3>Je suis l'avancement</h3><p>Je vois quand Tammy commence ma préparation.</p></article><article><b>04</b><h3>Je récupère</h3><p>Je suis prévenu dès que ma commande est prête.</p></article></div>
-</section>
-
-<section class="cta"><div><p class="eyebrow">Sabai sabai</p><h2>Bonne humeur.<br>Bon repas.</h2><p>La Thaïlande, tout simplement, près de chez vous.</p></div><a class="btn" href="#menu">Commander maintenant →</a></section>
+<section class="cart-end" id="panier"><div class="cart-end-copy"><p class="eyebrow">Votre commande</p><h2>Votre panier</h2><p id="cart-end-count">0 article</p></div><div class="cart-end-total"><span>Total</span><strong id="cart-end-total">0,00 €</strong><button class="btn" onclick="openCheckout()">Valider ma commande →</button></div></section>
 </main>
-
 <div id="checkout-modal" class="modal" aria-hidden="true"><div class="modal-box"><button class="close" onclick="closeCheckout()">×</button><p class="eyebrow">Finaliser la commande</p><h2>Votre retrait</h2><div class="checkout-summary"><div><span>Votre panier</span><b id="modal-total">0,00 €</b></div><div><span>Temps estimé</span><b id="modal-wait">—</b></div></div><label for="slot">Choisissez votre créneau de retrait</label><select id="slot"></select><p class="service-info" id="service-info"></p><button class="btn full" onclick="placeOrder()">💳 Payer et commander (simulation)</button><p class="modal-note">Phase 1 : paiement simulé. Aucun débit réel.</p></div></div>
 <div id="toast" class="toast"></div>
-<footer><div><b>Tammy Thai Food</b><span>Des saveurs de Thaïlande préparées avec passion.</span></div><span>Champhol · Click & Collect</span></footer>
+<footer><div><b>Tammy Thai Food</b><span>Des saveurs de Thaïlande préparées avec passion.</span></div><div><a href="decouvrir.html">Découvrir Tammy →</a><span>Champhol · Click & Collect</span></div></footer>
 <script src="app.js"></script>
+<script>const _renderAll=renderAll;renderAll=function(){_renderAll();renderCartEnd()};function renderCartEnd(){const n=cart.reduce((s,i)=>s+i.qty,0);document.querySelector('#cart-end-count').textContent=`${n} article${n>1?'s':''}`;document.querySelector('#cart-end-total').textContent=euro(cartTotal())}renderCartEnd();</script>
 </body></html>
