@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tammy Thai Food — Espace cuisine</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-page">
+<header>
+  <a class="brand" href="index.html">🌿 <span><b>Tammy Thai Food</b><small>Espace cuisine</small></span></a>
+  <span class="pill">ADMIN</span>
+</header>
+<main class="section">
+  <div id="login" class="admin-login">
+    <p class="eyebrow">Accès cuisine</p>
+    <h1>Espace Tammy</h1>
+    <p class="muted">La gestion des commandes est séparée du site client.</p>
+    <input id="pin" type="password" inputmode="numeric" placeholder="Code administrateur">
+    <button class="btn" onclick="login()">Entrer</button>
+    <small>Prototype : code 2026. À remplacer par une vraie authentification avant mise en ligne.</small>
+  </div>
+  <div id="dashboard" hidden>
+    <div class="heading"><div><p class="eyebrow">Cuisine</p><h1>File de préparation</h1></div><button class="btn" onclick="logout()">Verrouiller</button></div>
+    <div class="stats"><div>À préparer <b id="waiting">0</b></div><div>En préparation <b id="cooking">0</b></div><div>Prêtes <b id="ready">0</b></div></div>
+    <div id="admin-queue"></div>
+  </div>
+</main>
+<div id="toast" class="toast"></div>
+<script src="admin.js"></script>
+</body>
+</html>
