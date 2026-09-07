@@ -34,4 +34,60 @@ body.order-page{background:transparent!important}
 .side-scene{z-index:0!important;width:clamp(300px,19vw,390px)!important}
 .order-page>header,main,.cart-end,footer{position:relative;z-index:5}
 @media(max-width:1250px){.side-scene{width:240px!important}.order-menu{max-width:980px!important}}
-@media(max-width:900px){.order-page>header{width:100%;border-radius:0}.side-scene{display:none!important}.order-menu{background:transparent;box-shadow:none;padding:50px 5vw!important}.order-menu .grid{grid-template-columns:repeat(2,minmax(0,1fr))}.order-menu .grid>.card,.order-menu .grid>.card:nth-child(n+8){grid-column:span 1}}
+@media(max-width:900px){
+  .order-page>header{width:calc(100% - 12px);margin:0 6px;border-radius:0 0 16px 16px;padding:8px 10px;gap:8px}
+  .order-page header nav{display:none}
+  .order-page .brand{min-width:0}
+  .order-page .brand b{font-size:1rem}
+  .order-page .brand small{font-size:.56rem;white-space:nowrap}
+  .order-page .top-cart{padding:5px 8px}
+  .order-page .hero{display:block!important;aspect-ratio:16/10;min-height:170px;background-position:center center}
+  .side-scene{display:block!important;position:fixed!important;top:0!important;bottom:0!important;width:25vw!important;max-width:105px!important;min-width:58px!important;z-index:0!important;opacity:.88!important}
+  .side-left{left:0!important;background-image:linear-gradient(90deg,rgba(250,247,236,0) 0%,rgba(250,247,236,.15) 45%,rgba(250,247,236,.86) 100%),url('https://images.pexels.com/photos/5659563/pexels-photo-5659563.jpeg?auto=compress&cs=tinysrgb&w=700')!important;background-position:center center!important;background-size:cover!important}
+  .side-right{right:0!important;background-image:linear-gradient(270deg,rgba(250,247,236,0) 0%,rgba(250,247,236,.15) 45%,rgba(250,247,236,.86) 100%),url('https://images.pexels.com/photos/130158/pexels-photo-130158.jpeg?auto=compress&cs=tinysrgb&w=700')!important;background-position:center center!important;background-size:cover!important}
+  .side-left:after{display:none}
+  .order-page{background:#dce9df url('https://images.pexels.com/photos/8170275/pexels-photo-8170275.jpeg?auto=compress&cs=tinysrgb&w=1200') center center/cover fixed no-repeat!important}
+  .order-menu{width:calc(100% - 18px)!important;max-width:none!important;margin:10px 9px 0!important;padding:30px 12px 24px!important;background:linear-gradient(90deg,rgba(250,247,236,.42) 0%,rgba(250,247,236,.92) 13%,rgba(250,247,236,.92) 87%,rgba(250,247,236,.42) 100%)!important;border-radius:22px!important;box-shadow:0 12px 40px rgba(31,56,45,.13)!important}
+  .order-menu .heading{display:block;margin-bottom:13px}
+  .order-menu .heading h2{font-size:clamp(2rem,9vw,2.65rem)}
+  .order-menu .heading .pill{display:inline-block;margin-top:8px;font-size:.62rem}
+  .order-menu .menu-intro{font-size:.76rem;line-height:1.4;margin:0 0 15px}
+  .order-menu .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+  .order-menu .grid>.card,.order-menu .grid>.card:nth-child(n+8){grid-column:span 1!important;min-width:0}
+  .order-menu .card{border-radius:12px!important;min-width:0;overflow:hidden}
+  .order-menu .pic{aspect-ratio:1.5!important}
+  .order-menu .cardbody{padding:8px 8px 9px!important;min-width:0}
+  .order-menu .dish-title{gap:4px;min-width:0}
+  .order-menu .card h3{font-size:.82rem!important;line-height:1.08;margin-bottom:3px;overflow-wrap:anywhere}
+  .order-menu .dish-title b{font-size:.75rem!important;white-space:nowrap}
+  .order-menu .card p{font-size:.64rem!important;line-height:1.25;min-height:48px!important;margin:0}
+  .order-menu .qty-row{width:100%;gap:3px;margin-top:6px!important}
+  .order-menu .control-label{font-size:.59rem!important;min-width:0}
+  .order-menu .qty{width:25px!important;height:25px!important;flex:0 0 25px}
+  .order-menu .qty-row strong{font-size:.7rem;min-width:12px}
+  .order-menu .spice-box{margin-top:7px!important;padding:7px 6px!important;border-radius:10px!important;overflow:visible!important}
+  .order-menu .spice-header{display:block!important;min-width:0}
+  .order-menu .spice-header .spice-title{font-size:.58rem!important;line-height:1.15;white-space:normal;margin:0 0 5px!important;max-width:100%!important}
+  .order-menu .spice-header .qty-row{display:flex!important;width:100%!important;margin:0!important}
+  .order-menu .spice-header .control-label{margin-right:auto!important}
+  .order-menu .spice-portion{width:100%!important;display:grid!important;grid-template-columns:minmax(0,1fr) auto minmax(42px,auto) auto!important;gap:3px!important;align-items:center!important;padding:5px 1px!important;margin-top:5px!important;box-sizing:border-box!important}
+  .order-menu .portion-label{font-size:.61rem!important;min-width:0!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .order-menu .portion-peppers{min-width:0!important;font-size:.72rem!important;letter-spacing:-2px;white-space:nowrap!important;text-align:center}
+  .order-menu .spice-portion .mini{width:24px!important;height:24px!important;min-width:24px!important;padding:0!important;display:grid!important;place-items:center!important;font-size:.75rem!important;position:relative!important;z-index:8!important}
+  .order-menu .spice-portion .mini:disabled{opacity:.3}
+  .order-menu .grid>.card:nth-child(n+8) .pic{aspect-ratio:1.05!important}
+  .order-menu .grid>.card:nth-child(n+8) .cardbody{padding:7px 6px 8px!important}
+  .order-menu .grid>.card:nth-child(n+8) h3{font-size:.72rem!important}
+  .order-menu .grid>.card:nth-child(n+8) .qty{width:23px!important;height:23px!important;flex-basis:23px}
+  .cart-end{width:calc(100% - 18px)!important;margin:12px 9px 45px!important;padding:20px 16px!important;border-radius:18px!important}
+  footer{padding:22px 5vw!important}
+}
+@media(max-width:380px){
+  .order-page .hero{aspect-ratio:4/3;min-height:155px}
+  .order-menu{padding-left:9px!important;padding-right:9px!important}
+  .order-menu .grid{gap:7px!important}
+  .order-menu .cardbody{padding-left:6px!important;padding-right:6px!important}
+  .order-menu .card p{font-size:.59rem!important;min-height:44px!important}
+  .order-menu .spice-portion{grid-template-columns:minmax(0,1fr) auto minmax(38px,auto) auto!important}
+  .order-menu .spice-portion .mini{width:22px!important;height:22px!important;min-width:22px!important}
+}
