@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 620">
+<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#e9d8b7"/><stop offset="1" stop-color="#d5e1ce"/></linearGradient></defs>
+<rect width="520" height="620" rx="40" fill="url(#sky)"/>
+<path fill="#b9c9b4" d="M0 355l130-130 65 62 90-116 235 184v265H0z"/>
+<path fill="#88a58a" d="M0 420l120-90 74 51 93-77 233 122v194H0z"/>
+<path fill="#d3a04e" d="M270 214l45-67 45 67h-18v174h-54V214z"/>
+<path fill="#a45a3f" d="M238 218h154l-18 25H256z"/>
+<path fill="#f3df9d" d="M285 190h44l-22-51z"/>
+<g fill="#c58e43"><path d="M238 397h170v24H238z"/><path d="M259 421h24v84h-24z"/><path d="M363 421h24v84h-24z"/></g>
+<g fill="#fffdf8" stroke="#b99158" stroke-width="5"><rect x="316" y="315" width="190" height="225" rx="12"/><path d="M336 354h150M336 397h150M336 440h150"/></g>
+<text x="350" y="338" font-family="Georgia,serif" font-size="27" fill="#183c31">Good</text><text x="350" y="381" font-family="Georgia,serif" font-size="27" fill="#183c31">Food</text><text x="350" y="424" font-family="Georgia,serif" font-size="27" fill="#183c31">Good</text><text x="350" y="467" font-family="Georgia,serif" font-size="27" fill="#183c31">Mood</text>
+<g fill="#315d47"><path d="M40 505c42-54 74-55 95-13-37-10-64 2-95 13z"/><path d="M78 560c40-55 72-56 94-14-37-10-64 2-94 14z"/><path d="M438 116c24-48 54-50 69-14-26-8-46 1-69 14z"/></g>
+</svg>
