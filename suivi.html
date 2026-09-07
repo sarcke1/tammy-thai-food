@@ -1,0 +1,7 @@
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Suivi de commande — Tammy Thai Food</title><link rel="stylesheet" href="style.css"></head>
+<body class="order-page tracking-page">
+<header><a class="brand" href="index.html"><span class="brand-mark">✿</span><span><b>Tammy Thai Food</b><small>Cuisine thaïlandaise authentique · Champhol</small></span></a><nav><a href="index.html#menu">Commander</a><a href="decouvrir.html">Notre histoire</a><a href="decouvrir.html#comment-ca-marche">Comment ça marche</a></nav></header>
+<main><section class="tracking-hero"><p class="eyebrow">Commande confirmée</p><h1>Merci pour votre commande.</h1><p>Vous pouvez suivre sa préparation ici. La file est mise à jour automatiquement.</p></section><section class="section tracking-section"><div class="heading"><div><p class="eyebrow">Suivi en direct</p><h2>Votre commande</h2></div><a class="btn" href="index.html#menu">Commander autre chose →</a></div><div id="client-tracking" class="tracking-card"><p class="muted">Chargement de votre commande…</p></div></section></main><footer><div><b>Tammy Thai Food</b><span>Des saveurs de Thaïlande préparées avec passion.</span></div><span>Champhol · Click & Collect</span></footer><script src="app.js"></script><script>orders=loadOrders();const id=localStorage.getItem('tammyLastOrder');const order=orders.find(o=>o.id===id)||orders[orders.length-1];renderTracking(order);</script>
+</body></html>
