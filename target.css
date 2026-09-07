@@ -9,7 +9,9 @@ body.order-page{background:linear-gradient(180deg,#f7f2e4 0%,#f5efdf 100%)}
 .order-menu .heading{margin-bottom:16px}
 .order-menu .heading h2{font-size:clamp(2.5rem,4vw,3.25rem)}
 .order-menu .menu-intro{max-width:650px;margin-bottom:18px}
-.order-menu .grid{gap:11px}
+.order-menu .grid{grid-template-columns:repeat(12,minmax(0,1fr));gap:11px}
+.order-menu .grid>.card{grid-column:span 3}
+.order-menu .grid>.card:nth-child(n+8){grid-column:span 1}
 .order-menu .card{border-radius:15px;background:rgba(255,253,248,.94);box-shadow:0 8px 24px rgba(31,56,45,.10)}
 .order-menu .pic{aspect-ratio:1.65}
 .order-menu .cardbody{padding:11px 12px 12px}
@@ -17,8 +19,18 @@ body.order-page{background:linear-gradient(180deg,#f7f2e4 0%,#f5efdf 100%)}
 .order-menu .card p{font-size:.74rem;min-height:54px}
 .order-menu .qty-row{margin-top:7px}
 .order-menu .qty{width:29px;height:29px}
+.order-menu .grid>.card:nth-child(n+8) .pic{aspect-ratio:1.05}
+.order-menu .grid>.card:nth-child(n+8) .cardbody{padding:8px 7px 9px}
+.order-menu .grid>.card:nth-child(n+8) .dish-title{display:block}
+.order-menu .grid>.card:nth-child(n+8) .dish-title b{display:block;margin-top:1px;font-size:.78rem}
+.order-menu .grid>.card:nth-child(n+8) h3{font-size:.78rem;line-height:1.08}
+.order-menu .grid>.card:nth-child(n+8) p{display:none}
+.order-menu .grid>.card:nth-child(n+8) .qty-row{gap:2px;margin-top:6px}
+.order-menu .grid>.card:nth-child(n+8) .control-label{font-size:.58rem}
+.order-menu .grid>.card:nth-child(n+8) .qty{width:24px;height:24px}
+.order-menu .grid>.card:nth-child(n+8) .qty-row strong{font-size:.72rem;min-width:10px}
 .cart-end{max-width:860px!important;margin:12px auto 60px!important;padding:18px 25px!important;border-radius:18px!important;border:1px solid #b9c7bb!important;background:rgba(255,253,248,.92)!important}
 .side-scene{z-index:0!important;width:clamp(300px,19vw,390px)!important}
 .order-page>header,main,.cart-end,footer{position:relative;z-index:5}
 @media(max-width:1250px){.side-scene{width:240px!important}.order-menu{max-width:980px!important}}
-@media(max-width:900px){.order-page>header{width:100%;border-radius:0}.side-scene{display:none!important}.order-menu{background:transparent;box-shadow:none;padding:50px 5vw!important}}
+@media(max-width:900px){.order-page>header{width:100%;border-radius:0}.side-scene{display:none!important}.order-menu{background:transparent;box-shadow:none;padding:50px 5vw!important}.order-menu .grid{grid-template-columns:repeat(2,minmax(0,1fr))}.order-menu .grid>.card,.order-menu .grid>.card:nth-child(n+8){grid-column:span 1}}
