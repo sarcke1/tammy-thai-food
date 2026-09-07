@@ -1,14 +1,55 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 620">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7c8f72"/><stop offset="1" stop-color="#3e604d"/></linearGradient></defs>
-<g fill="none" stroke="#294b3b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
-<path fill="url(#g)" d="M94 474c-19-106 7-232 96-285 68-41 171-29 220 34 35 45 42 112 18 163-23 49-69 73-116 76-66 4-105 21-132 48-27 27-59 21-86-36z"/>
-<path fill="#617c66" d="M305 238c48-34 93-30 121 2 25 29 22 76-3 103-29 31-73 35-104 9-29-24-41-82-14-114z"/>
-<path fill="#6f8a72" d="M364 306c51-17 78 4 83 30 6 33-28 58-71 55-42-3-62-26-57-47 5-19 21-31 45-38z"/>
-<path fill="#789178" d="M403 346c-9 39-4 71 22 93 20 17 43 7 46-15 4-26-22-42-32-68-7-18-16-23-36-10z"/>
-<path fill="#80967d" d="M169 203c-54-37-101-17-111 21-10 39 21 73 59 82 31 7 52-3 65-25 15-27 10-59-13-78z"/>
-<circle fill="#f7f1e3" cx="386" cy="286" r="15"/><circle fill="#183c31" cx="389" cy="287" r="7"/>
-<path d="M350 328c14 11 31 13 47 7"/><path d="M162 463c-2 42-1 76 11 91"/><path d="M235 453c1 47 3 79 16 96"/><path d="M312 451c0 48 7 75 23 88"/>
-<path stroke="#b48a4a" d="M417 347c-10 8-20 14-31 18"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 760">
+<defs>
+  <linearGradient id="skin" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9aac91"/><stop offset=".58" stop-color="#6f866f"/><stop offset="1" stop-color="#4d6957"/></linearGradient>
+  <linearGradient id="ear" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#829982"/><stop offset="1" stop-color="#58705f"/></linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d7aa58"/><stop offset="1" stop-color="#9b6e31"/></linearGradient>
+</defs>
+<!-- tropical leaves -->
+<g opacity=".9" fill="none" stroke="#355b47" stroke-linecap="round" stroke-width="8">
+  <path d="M66 165C34 111 39 55 91 25"/><path d="M91 121C121 73 158 45 205 34"/>
 </g>
-<g fill="#ee634c"><path d="M76 198c-11-15-32-6-26 10 6 15 24 14 32 0 7 14 27 15 31 0 5-18-18-27-37-10z"/></g>
+<g fill="#63886c" opacity=".9">
+  <path d="M55 103C23 77 20 45 36 20c29 13 40 39 19 83z"/><path d="M105 80C101 45 119 17 153 5c8 30-7 58-48 75z"/>
+  <path d="M146 76c17-36 49-50 78-44-8 29-33 45-78 44z"/>
+</g>
+<!-- body -->
+<path d="M111 536C83 409 91 257 180 174c78-73 222-80 304-11 64 54 87 148 65 239-22 91-94 138-196 148-73 7-112 31-145 61-39 35-81 19-97-75z" fill="url(#skin)" stroke="#315543" stroke-width="9" stroke-linejoin="round"/>
+<!-- back highlight -->
+<path d="M144 306C160 213 225 154 315 151c65-2 123 22 163 68" fill="none" stroke="#b5c3a8" stroke-opacity=".55" stroke-width="12" stroke-linecap="round"/>
+<!-- large ear -->
+<path d="M326 241c53-62 139-70 183-24 42 44 35 119-13 163-46 42-117 42-154 1-36-40-43-96-16-140z" fill="url(#ear)" stroke="#315543" stroke-width="9"/>
+<path d="M365 276c34-34 85-43 112-16 25 25 20 67-11 91-32 25-77 23-102-5-20-23-20-47 1-70z" fill="#718a73" opacity=".75"/>
+<!-- head / cheek -->
+<path d="M408 346c48-28 100-14 117 20 19 37-9 75-55 86-47 11-93-8-105-42-10-28 12-51 43-64z" fill="#819681" stroke="#315543" stroke-width="9"/>
+<!-- animated trunk -->
+<g id="trunk" transform-origin="493px 413px">
+  <path d="M486 402c37 22 57 51 61 85 5 39 34 57 43 88 8 28-8 60-36 65-31 6-54-20-58-52-5-43-32-60-39-91-8-35 2-75 29-95z" fill="url(#skin)" stroke="#315543" stroke-width="9" stroke-linejoin="round"/>
+  <path d="M493 410c18 12 29 26 35 43" fill="none" stroke="#b2c1a9" stroke-width="7" stroke-linecap="round" opacity=".65"/>
+  <path d="M501 642c16 7 33 5 47-5" fill="none" stroke="#315543" stroke-width="7" stroke-linecap="round"/>
+</g>
+<!-- eye -->
+<circle cx="462" cy="331" r="18" fill="#f5f0df" stroke="#315543" stroke-width="7"/><circle cx="466" cy="332" r="9" fill="#183d32"/><circle cx="469" cy="328" r="3" fill="#fff"/>
+<!-- smile / mouth -->
+<path d="M414 382c18 17 42 20 64 9" fill="none" stroke="#315543" stroke-width="8" stroke-linecap="round"/>
+<!-- tusk -->
+<path d="M500 421c-18 14-31 22-47 26" fill="none" stroke="url(#gold)" stroke-width="12" stroke-linecap="round"/>
+<!-- legs -->
+<g fill="none" stroke="#315543" stroke-width="10" stroke-linecap="round">
+  <path d="M166 520c-3 65-1 112 16 139"/><path d="M267 502c-1 70 4 119 22 151"/><path d="M370 488c1 71 9 113 28 141"/>
+</g>
+<!-- little Thai flower -->
+<g transform="translate(113 196)">
+  <circle cx="0" cy="0" r="11" fill="#d6a34e"/>
+  <path d="M0-8C-33-43-62-25-46 5-30 34-6 24 0 8z" fill="#ef7561"/><path d="M8-1C29-38 60-25 47 5 34 34 9 25 1 8z" fill="#f28b72"/>
+  <path d="M-8 3C-45 12-43 45-15 44 14 43 18 18 7 5z" fill="#f1a17e"/><path d="M7 5C22 38 53 34 49 8 45-18 22-13 7 1z" fill="#e76b62"/>
+</g>
+<!-- subtle ground leaves -->
+<g fill="#4f775e" opacity=".9">
+  <path d="M58 700c18-49 48-67 76-70-2 34-27 62-76 70z"/><path d="M77 724c36-26 68-28 91-15-17 28-48 32-91 15z"/>
+</g>
+<style>
+#trunk{animation:trunkWave 4.8s ease-in-out infinite;transform-box:fill-box;transform-origin:top left}
+@keyframes trunkWave{0%,100%{transform:rotate(0deg)}48%{transform:rotate(-3deg)}58%{transform:rotate(-8deg)}72%{transform:rotate(-2deg)}}
+@media (prefers-reduced-motion:reduce){#trunk{animation:none}}
+</style>
 </svg>
