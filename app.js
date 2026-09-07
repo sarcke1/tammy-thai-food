@@ -1,12 +1,12 @@
 const dishes=[
-{id:"pad",name:"Pad Thaï",price:11,emoji:"🍜",desc:"Nouilles de riz sautées, sauce thaï, légumes et garniture.",spicy:true},
-{id:"jour",name:"Plat thaï du jour",price:9,emoji:"🍛",desc:"Une recette thaïlandaise authentique préparée en petite quantité.",spicy:true},
-{id:"kids",name:"Menu enfant",price:6,emoji:"🍗",desc:"2 pilons de poulet frit + frites, ou 2 nems + riz.",spicy:false},
-{id:"nems",name:"Nems",price:1,emoji:"🥢",desc:"Nems croustillants, à l’unité.",spicy:false},
-{id:"samoussa",name:"Samoussa",price:1.5,emoji:"🥟",desc:"Samoussa croustillant, à l’unité.",spicy:false},
-{id:"spring",name:"Spring roll",price:3,emoji:"🌯",desc:"Rouleau frais préparé avec les ingrédients du jour.",spicy:false},
-{id:"mango",name:"Sticky rice mangue",price:4,emoji:"🥭",desc:"Riz gluant au lait de coco et mangue.",spicy:false},
-{id:"drink",name:"Boisson",price:2,emoji:"🥤",desc:"Eau ou soda.",spicy:false}
+{id:"pad",name:"Pad Thaï",price:11,emoji:"🍜",photo:"photo-pad",desc:"Nouilles de riz sautées, crevettes, œuf, tofu, pousses de soja et cacahuètes.",spicy:true},
+{id:"jour",name:"Plat thaï du jour",price:9,emoji:"🍛",photo:"photo-krapow",desc:"Exemple du jour : Khao Pad Krapow, poulet au basilic thaï, ail et piment, servi avec riz jasmin.",spicy:true},
+{id:"kids",name:"Menu enfant",price:6,emoji:"🍗",photo:"photo-kids",desc:"2 pilons de poulet frit + frites, ou 2 nems + riz.",spicy:false},
+{id:"nems",name:"Nems",price:1,emoji:"🥢",photo:"photo-nems",desc:"Nems thaïlandais croustillants, à l’unité.",spicy:false},
+{id:"samoussa",name:"Samoussa",price:1.5,emoji:"🥟",photo:null,desc:"Samoussa croustillant, à l’unité.",spicy:false},
+{id:"spring",name:"Spring roll",price:3,emoji:"🌯",photo:null,desc:"Rouleau frais préparé avec les ingrédients du jour.",spicy:false},
+{id:"mango",name:"Sticky rice mangue",price:4,emoji:"🥭",photo:"photo-mango",desc:"Riz gluant au lait de coco et mangue fraîche, selon saison.",spicy:false},
+{id:"drink",name:"Boisson",price:2,emoji:"🥤",photo:null,desc:"Eau ou soda.",spicy:false}
 ];
 const SERVICE_WINDOWS=[{label:"Service midi",start:"11:30",end:"14:00"},{label:"Service soir",start:"18:30",end:"21:00"}];
 const PREP={pad:{base:8,extra:2},jour:{base:7,extra:2},kids:{base:5,extra:1.5},nems:{base:2,extra:.5},samoussa:{base:2,extra:.5},spring:{base:1.5,extra:.3},mango:{base:2,extra:.5},drink:{base:.5,extra:.2}};
@@ -14,7 +14,7 @@ let cart=[],orders=[],selectedSpice={};
 const euro=n=>n.toLocaleString("fr-FR",{style:"currency",currency:"EUR"}),$=s=>document.querySelector(s);
 const loadOrders=()=>{try{return JSON.parse(localStorage.getItem("tammyOrders")||"[]")}catch{return[]}};
 const saveOrders=()=>localStorage.setItem("tammyOrders",JSON.stringify(orders));
-function renderMenu(){$("#menu-grid").innerHTML=dishes.map(d=>{const qty=cart.filter(i=>i.id===d.id).reduce((s,i)=>s+i.qty,0),spice=selectedSpice[d.id]||0;return `<article class="card"><div class="pic">${d.emoji}</div><div class="cardbody"><div class="dish-title"><h3>${d.name}</h3><b>${euro(d.price)}</b></div><p>${d.desc}</p>${d.spicy?`<div class="spice-row"><span class="control-label">Piment</span><button class="mini" onclick="changeSpice('${d.id}',-1)">−</button><span class="peppers">${[0,1,2].map(n=>`<span class="${n<spice?'active':''}">🌶️</span>`).join("")}</span><button class="mini" onclick="changeSpice('${d.id}',1)">+</button><span class="spice-level">${spice}/3</span></div>`:""}<div class="qty-row"><span class="control-label">Quantité</span><button class="qty" onclick="removeOne('${d.id}')">−</button><strong>${qty}</strong><button class="qty" onclick="add('${d.id}')">+</button></div></div></article>`}).join("")}
+function renderMenu(){$("#menu-grid").innerHTML=dishes.map(d=>{const qty=cart.filter(i=>i.id===d.id).reduce((s,i)=>s+i.qty,0),spice=selectedSpice[d.id]||0;return `<article class="card"><div class="pic ${d.photo||"no-photo"}">${d.photo?"":`<span>${d.emoji}</span>`}</div><div class="cardbody"><div class="dish-title"><h3>${d.name}</h3><b>${euro(d.price)}</b></div><p>${d.desc}</p>${d.spicy?`<div class="spice-row"><span class="control-label">Piment</span><button class="mini" onclick="changeSpice('${d.id}',-1)">−</button><span class="peppers">${[0,1,2].map(n=>`<span class="${n<spice?'active':''}">🌶️</span>`).join("")}</span><button class="mini" onclick="changeSpice('${d.id}',1)">+</button><span class="spice-level">${spice}/3</span></div>`:""}<div class="qty-row"><span class="control-label">Quantité</span><button class="qty" onclick="removeOne('${d.id}')">−</button><strong>${qty}</strong><button class="qty" onclick="add('${d.id}')">+</button></div></div></article>`}).join("")}
 function changeSpice(id,d){selectedSpice[id]=Math.max(0,Math.min(3,(selectedSpice[id]||0)+d));renderMenu()}
 function add(id){const spice=selectedSpice[id]||0,x=cart.find(i=>i.id===id&&i.spice===spice);x?x.qty++:cart.push({id,qty:1,spice});renderAll();toast("Plat ajouté au panier")}
 function removeOne(id){const x=cart.filter(i=>i.id===id).sort((a,b)=>b.spice-a.spice)[0];if(!x)return;x.qty--;if(x.qty<1)cart=cart.filter(i=>i!==x);renderAll()}
