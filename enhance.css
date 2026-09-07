@@ -1,15 +1,19 @@
-/* Target visual: full Thai scenery + centered menu + compact spicy controls */
-.side-scene{position:fixed;z-index:1;top:0;bottom:0;width:clamp(270px,19vw,380px);height:100vh;pointer-events:none;opacity:1!important;overflow:hidden;border-radius:0;background-size:cover;background-repeat:no-repeat;filter:saturate(1.04) contrast(1.01)}
-.side-scene.active{opacity:1}
+/* Final visual layout: fixed Thai scenery behind a centered interactive menu */
+.order-page{background:#dbe8df url('https://images.pexels.com/photos/8170275/pexels-photo-8170275.jpeg?auto=compress&cs=tinysrgb&w=1800') center center/cover fixed no-repeat!important}
+.order-page .hero{display:none!important}
+.side-scene{position:fixed;z-index:2;top:62px;bottom:0;width:clamp(300px,24vw,390px);height:auto;pointer-events:none;opacity:1!important;overflow:hidden;border-radius:0;background-size:cover;background-repeat:no-repeat;filter:saturate(1.05) contrast(1.02);transition:none!important}
+.side-scene.active{opacity:1!important}
 .side-scene img{display:none}
-.side-left{left:0;background-image:linear-gradient(90deg,rgba(250,247,236,0) 55%,rgba(250,247,236,.98) 100%),url('https://images.pexels.com/photos/31022346/pexels-photo-31022346.jpeg?auto=compress&cs=tinysrgb&w=1200');background-position:center center;background-size:cover}
-.side-right{right:0;background-image:linear-gradient(270deg,rgba(250,247,236,0) 50%,rgba(250,247,236,.98) 100%),url('https://images.pexels.com/photos/36879313/pexels-photo-36879313.jpeg?auto=compress&cs=tinysrgb&w=1200');background-position:center center;background-size:cover}
-.side-left:after{content:"Un voyage\A culinaire\A en Thaïlande\A près de chez vous";white-space:pre;position:absolute;top:15%;left:8%;right:12%;color:#123f33;font-family:cursive;font-weight:800;font-size:clamp(1.05rem,1.45vw,1.55rem);line-height:1.02;text-align:center;transform:rotate(-5deg);text-shadow:0 2px 0 rgba(255,255,255,.85)}
-.order-menu{max-width:1040px!important;padding:42px 28px 32px!important;background:rgba(250,247,236,.82);border-radius:28px;box-shadow:0 18px 60px rgba(35,64,48,.08)}
+.side-left{left:0;background-image:linear-gradient(90deg,rgba(250,247,236,0) 42%,rgba(250,247,236,.10) 72%,rgba(250,247,236,.72) 100%),url('https://images.pexels.com/photos/5659563/pexels-photo-5659563.jpeg?auto=compress&cs=tinysrgb&w=1100');background-position:center center;background-size:cover}
+.side-right{right:0;background-image:linear-gradient(270deg,rgba(250,247,236,0) 42%,rgba(250,247,236,.10) 72%,rgba(250,247,236,.72) 100%),url('https://images.pexels.com/photos/130158/pexels-photo-130158.jpeg?auto=compress&cs=tinysrgb&w=1100');background-position:center center;background-size:cover}
+.side-left:after{content:"Un voyage\\A culinaire\\A en Thaïlande\\A près de chez vous";white-space:pre;position:absolute;top:12%;left:7%;right:10%;color:#123f33;font-family:cursive;font-weight:800;font-size:clamp(1.05rem,1.45vw,1.55rem);line-height:1.03;text-align:center;transform:rotate(-5deg);text-shadow:0 2px 0 rgba(255,255,255,.9)}
+main{position:relative!important;z-index:auto!important}
+.order-menu{isolation:auto!important;position:relative!important;z-index:5!important;max-width:1040px!important;margin:0 auto!important;padding:42px 28px 32px!important;background:rgba(250,247,236,.82);border-radius:0 0 28px 28px;box-shadow:0 18px 60px rgba(35,64,48,.10)}
 .order-menu .grid::before{display:none!important}
-.order-menu::before,.order-menu::after{opacity:.06!important}
-.cart-end{max-width:900px!important;margin-top:24px!important}
+.order-menu::before,.order-menu::after{opacity:.04!important}
+.cart-end{position:relative!important;z-index:5!important;max-width:900px!important;margin-top:24px!important}
+footer{position:relative!important;z-index:5!important}
 .spice-box{overflow:hidden}.spice-header{display:block!important}.spice-header .spice-title{display:block;max-width:100%;margin-bottom:6px}.spice-header .qty-row{width:100%;display:flex;align-items:center;margin-top:0!important}.spice-header .control-label{margin-right:auto}.spice-portion{width:100%;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(52px,auto) auto;align-items:center;gap:6px}.spice-portion .portion-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.spice-portion .portion-peppers{white-space:nowrap;text-align:center}.spice-portion .mini{flex:0 0 auto}
-@media(max-width:1250px){.side-scene{width:220px}.order-menu{max-width:1000px!important}}
-@media(max-width:900px){.side-scene{display:none}.order-menu{background:transparent;box-shadow:none;border-radius:0;padding:50px 5vw!important}}
-@media(prefers-reduced-motion:reduce){.side-scene{transition:none}}
+@media(max-width:1250px){.side-scene{width:230px}.order-menu{max-width:1000px!important}}
+@media(max-width:900px){.side-scene{display:none!important}.order-page{background:var(--cream)!important}.order-menu{background:transparent;box-shadow:none;border-radius:0;padding:50px 5vw!important}}
+@media(prefers-reduced-motion:reduce){.side-scene{transition:none!important}}
