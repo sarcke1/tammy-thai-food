@@ -1,0 +1,24 @@
+/* Visual match for the provided target mockup */
+body.order-page{background:linear-gradient(180deg,#f7f2e4 0%,#f5efdf 100%)}
+.order-page>header{width:min(1035px,calc(100% - 32px));margin:0 auto;padding:10px 24px;border:1px solid rgba(229,220,201,.9);border-top:0;border-radius:0 0 18px 18px;box-shadow:0 8px 28px rgba(31,56,45,.08);background:rgba(255,253,248,.94)}
+.order-page header nav{gap:25px;font-size:.78rem}
+.order-page .brand b{font-size:1.2rem}
+.order-page .brand small{font-size:.66rem}
+.order-page .top-cart{padding:7px 12px}
+.order-menu{max-width:1040px!important;margin:0 auto!important;padding:38px 28px 30px!important;background:rgba(250,247,236,.72);border-radius:28px;box-shadow:0 20px 65px rgba(31,56,45,.08)}
+.order-menu .heading{margin-bottom:16px}
+.order-menu .heading h2{font-size:clamp(2.5rem,4vw,3.25rem)}
+.order-menu .menu-intro{max-width:650px;margin-bottom:18px}
+.order-menu .grid{gap:11px}
+.order-menu .card{border-radius:15px;background:rgba(255,253,248,.94);box-shadow:0 8px 24px rgba(31,56,45,.10)}
+.order-menu .pic{aspect-ratio:1.65}
+.order-menu .cardbody{padding:11px 12px 12px}
+.order-menu .card h3{font-size:1rem}
+.order-menu .card p{font-size:.74rem;min-height:54px}
+.order-menu .qty-row{margin-top:7px}
+.order-menu .qty{width:29px;height:29px}
+.cart-end{max-width:860px!important;margin:12px auto 60px!important;padding:18px 25px!important;border-radius:18px!important;border:1px solid #b9c7bb!important;background:rgba(255,253,248,.92)!important}
+.side-scene{z-index:0!important;width:clamp(300px,19vw,390px)!important}
+.order-page>header,main,.cart-end,footer{position:relative;z-index:5}
+@media(max-width:1250px){.side-scene{width:240px!important}.order-menu{max-width:980px!important}}
+@media(max-width:900px){.order-page>header{width:100%;border-radius:0}.side-scene{display:none!important}.order-menu{background:transparent;box-shadow:none;padding:50px 5vw!important}}
