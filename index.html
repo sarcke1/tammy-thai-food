@@ -9,7 +9,8 @@
 <body>
 <header>
   <a class="brand" href="#accueil">🌿 <span><b>Tammy</b> Thai Food<small>Champhol · Cuisine thaïlandaise</small></span></a>
-  <nav><a href="#menu">Menu</a><a href="#comment-ca-marche">Comment ça marche</a><a href="#tammy">Espace Tammy</a></nav>
+  <nav><a href="#menu">Menu</a><a href="#comment-ca-marche">Comment ça marche</a><a href="#suivi">Ma commande</a></nav>
+  <button class="top-cart" onclick="openCheckout()"><span>🛒</span><b id="top-total">0,00 €</b><small id="top-count">0 article</small></button>
 </header>
 
 <main>
@@ -31,12 +32,13 @@
 <section id="menu" class="section">
   <div class="heading"><div><p class="eyebrow">Le menu</p><h2>Les plats de Tammy</h2></div><span class="pill">Prototype</span></div>
   <div id="menu-grid" class="grid"></div>
-  <aside class="cart">
-    <p class="eyebrow">Votre commande</p><h3>Panier</h3>
-    <div id="cart-items"><p class="muted">Votre panier est vide.</p></div>
-    <div class="total"><span>Total</span><b id="cart-total">0,00 €</b></div>
-    <button id="checkout" class="btn full" disabled>Commander (simulation)</button>
-  </aside>
+</section>
+
+<section id="suivi" class="section tracking-section">
+  <div class="heading"><div><p class="eyebrow">Suivi en direct</p><h2>Votre commande</h2></div><span id="client-status" class="pill">Aucune commande</span></div>
+  <div id="client-tracking" class="tracking-card">
+    <p class="muted">Votre commande apparaîtra ici après validation.</p>
+  </div>
 </section>
 
 <section id="comment-ca-marche" class="section soft">
@@ -58,6 +60,22 @@
 </section>
 </main>
 
+<div id="checkout-modal" class="modal" aria-hidden="true">
+  <div class="modal-box">
+    <button class="close" onclick="closeCheckout()">×</button>
+    <p class="eyebrow">Finaliser la commande</p>
+    <h2>Votre retrait</h2>
+    <div class="checkout-summary">
+      <div><span>Votre panier</span><b id="modal-total">0,00 €</b></div>
+      <div><span>Temps estimé</span><b id="modal-wait">—</b></div>
+    </div>
+    <label for="slot">Choisissez votre créneau de retrait</label>
+    <select id="slot"></select>
+    <p class="service-info" id="service-info"></p>
+    <button class="btn full" onclick="placeOrder()">💳 Payer et commander (simulation)</button>
+    <p class="modal-note">Phase 1 : paiement simulé. Aucun débit réel.</p>
+  </div>
+</div>
 <div id="toast" class="toast"></div>
 <footer><b>Tammy Thai Food</b><span>Prototype Phase 1 — Champhol</span></footer>
 <script src="app.js"></script>
