@@ -1,5 +1,6 @@
 /* Visual match for the provided target mockup */
-body.order-page{background:linear-gradient(180deg,#f7f2e4 0%,#f5efdf 100%)}
+body.order-page{background:transparent!important}
+.order-page .hero{display:block!important}
 .order-page>header{width:min(1035px,calc(100% - 32px));margin:0 auto;padding:10px 24px;border:1px solid rgba(229,220,201,.9);border-top:0;border-radius:0 0 18px 18px;box-shadow:0 8px 28px rgba(31,56,45,.08);background:rgba(255,253,248,.94)}
 .order-page header nav{gap:25px;font-size:.78rem}
 .order-page .brand b{font-size:1.2rem}
