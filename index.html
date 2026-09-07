@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tammy Thai Food — Prototype Phase 1</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <a class="brand" href="#accueil">🌿 <span><b>Tammy</b> Thai Food<small>Champhol · Cuisine thaïlandaise</small></span></a>
+  <nav><a href="#menu">Menu</a><a href="#comment-ca-marche">Comment ça marche</a><a href="#tammy">Espace Tammy</a></nav>
+</header>
+
+<main>
+<section id="accueil" class="hero">
+  <div class="hero-content">
+    <p class="eyebrow">🇹🇭 Cuisine thaïlandaise authentique</p>
+    <h1>Tammy Thai Food</h1>
+    <p>Les saveurs de la Thaïlande à Champhol.</p>
+    <a class="btn light" href="#menu">Découvrir le menu</a>
+    <p class="note">Prototype Phase 1 · commandes simulées</p>
+  </div>
+</section>
+
+<section class="intro">
+  <div><p class="eyebrow">Tammy prépare</p><h2>Une cuisine simple, authentique et préparée à la demande.</h2></div>
+  <p>Ce premier prototype construit le futur parcours : choisir, commander, choisir un créneau, puis suivre la préparation.</p>
+</section>
+
+<section id="menu" class="section">
+  <div class="heading"><div><p class="eyebrow">Le menu</p><h2>Les plats de Tammy</h2></div><span class="pill">Prototype</span></div>
+  <div id="menu-grid" class="grid"></div>
+  <aside class="cart">
+    <p class="eyebrow">Votre commande</p><h3>Panier</h3>
+    <div id="cart-items"><p class="muted">Votre panier est vide.</p></div>
+    <div class="total"><span>Total</span><b id="cart-total">0,00 €</b></div>
+    <button id="checkout" class="btn full" disabled>Commander (simulation)</button>
+  </aside>
+</section>
+
+<section id="comment-ca-marche" class="section soft">
+  <p class="eyebrow">Le futur parcours</p><h2>De la commande au retrait</h2>
+  <div class="steps">
+    <article><b>01</b><h3>Je commande</h3><p>Je choisis mes plats et mon créneau.</p></article>
+    <article><b>02</b><h3>Tammy prépare</h3><p>La commande entre dans la file.</p></article>
+    <article><b>03</b><h3>Je suis l'avancement</h3><p>Le statut et l'heure sont actualisés.</p></article>
+    <article><b>04</b><h3>Je récupère</h3><p>Je suis prévenu quand la commande est prête.</p></article>
+  </div>
+</section>
+
+<section id="tammy" class="section">
+  <div class="heading"><div><p class="eyebrow">Prototype cuisine</p><h2>Espace Tammy</h2></div><span id="count" class="pill">0 commande</span></div>
+  <div class="board">
+    <div class="stats"><div>À préparer <b id="waiting">0</b></div><div>En préparation <b id="cooking">0</b></div><div>Prêtes <b id="ready">0</b></div></div>
+    <div id="queue"><p class="muted">La file de préparation apparaîtra ici.</p></div>
+  </div>
+</section>
+</main>
+
+<div id="toast" class="toast"></div>
+<footer><b>Tammy Thai Food</b><span>Prototype Phase 1 — Champhol</span></footer>
+<script src="app.js"></script>
+</body>
+</html>
