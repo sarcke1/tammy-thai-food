@@ -1,0 +1,4 @@
+const dishes=[{name:'Pad Thaï',price:11,emoji:'🍜',desc:'Nouilles de riz sautées, crevettes, œuf, tofu et cacahuètes.'},{name:'Plat thaï du jour',price:9,emoji:'🍛',desc:'Une recette thaï différente selon les jours.'},{name:'Nems',price:1,emoji:'🥢',desc:'Nems thaïlandais croustillants, à l’unité.'},{name:'Sticky rice mangue',price:4,emoji:'🥭',desc:'Riz gluant au lait de coco et mangue fraîche.'}];
+const euro=n=>n.toLocaleString('fr-FR',{style:'currency',currency:'EUR'});
+const grid=document.querySelector('#menu-grid');
+if(grid)grid.innerHTML=dishes.map(d=>`<article class="dish-card"><div class="dish-placeholder">${d.emoji}</div><div class="dish-card-body"><h3>${d.name}</h3><p>${d.desc}</p><span class="price">${euro(d.price)}</span></div></article>`).join('');
