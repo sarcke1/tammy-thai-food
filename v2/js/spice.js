@@ -7,7 +7,7 @@ export function spiceLabel(level) {
   return level === 0 ? 'Sans piment' : '🌶️'.repeat(level);
 }
 
-export function renderSpiceControl(dishId, initial = 1) {
+export function renderSpiceControl(dishId, initial = 0) {
   const safe = Math.max(0, Math.min(3, Number(initial) || 0));
   return `<div class="spice-control" data-spice-control="${dishId}" data-level="${safe}">
     <span class="spice-caption">Piment</span>
