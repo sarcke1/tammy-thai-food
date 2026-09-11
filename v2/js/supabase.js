@@ -7,7 +7,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 const SUPABASE_URL = 'https://ugarjrbtvwbwppfeusgd.supabase.co';
 
 const SUPABASE_PUBLISHABLE_KEY =
-  'TA_CLE_PUBLISHABLE_SUPABASE';
+  'sb_publishable_86yXv-GlRPvRcYH-HMQuJw_fUbqbn5m';
 
 export const supabase = createClient(
   SUPABASE_URL,
