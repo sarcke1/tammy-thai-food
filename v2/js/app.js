@@ -2,7 +2,7 @@
 // Product content, spice logic and cart state remain separate modules.
 import { dishes } from './data.js';
 import { renderSpiceControl, readSpiceControl, spiceLabel } from './spice.js';
-import { addToCart, getCart, changeQuantity, clearCart, cartCount, cartTotal } from './cart.js';
+import { addToCart, getCart, updateSpice, removeItem, clearCart, cartCount, cartTotal } from './cart.js';
 
 const euro = n => n.toLocaleString('fr-FR', { style:'currency', currency:'EUR' });
 const grid = document.querySelector('#menu-grid');
@@ -42,11 +42,23 @@ function renderCart(){
   if(!items.length){
     cartContent.innerHTML = '<p class="empty-cart">Votre panier est vide.</p>'; return;
   }
-  cartContent.innerHTML = items.map(item => `
-    <div class="cart-line">
-      <div><strong>${item.name}</strong>${item.spice ? `<small>${spiceLabel(item.spice)}</small>` : ''}<span>${euro(item.price)} / unité</span></div>
-      <div class="cart-qty"><button data-cart-key="${item.key}" data-delta="-1">−</button><b>${item.quantity}</b><button data-cart-key="${item.key}" data-delta="1">+</button></div>
-    </div>`).join('') + `<div class="cart-total"><strong>Total</strong><strong>${euro(cartTotal())}</strong></div><button class="button cart-clear" data-clear-cart>Vider le panier</button>`;
+
+  cartContent.innerHTML = items.map((item, index) => `
+    <div class="cart-line cart-unit" data-cart-key="${item.key}">
+      <div class="cart-unit-info">
+        <strong>${item.name} <small class="unit-number">#${index + 1}</small></strong>
+        ${item.spicy ? `<div class="cart-spice-control" data-cart-spice="${item.key}">
+          <span>Piment :</span>
+          <button type="button" data-spice-delta="-1" data-cart-key="${item.key}">−</button>
+          <b>${spiceLabel(item.spice)}</b>
+          <button type="button" data-spice-delta="1" data-cart-key="${item.key}">+</button>
+        </div>` : ''}
+        <span>${euro(item.price)}</span>
+      </div>
+      <button class="cart-remove" type="button" data-remove-key="${item.key}" aria-label="Retirer ${item.name}">×</button>
+    </div>`).join('') + `
+      <div class="cart-total"><strong>Total</strong><strong>${euro(cartTotal())}</strong></div>
+      <button class="button cart-clear" data-clear-cart>Vider le panier</button>`;
 }
 
 categoryButtons.forEach(button => button.addEventListener('click', () => {
@@ -77,8 +89,25 @@ grid?.addEventListener('click', event => {
 });
 
 cartContent?.addEventListener('click', event => {
-  const qty = event.target.closest('[data-cart-key]');
-  if(qty) changeQuantity(qty.dataset.cartKey, Number(qty.dataset.delta));
+  const remove = event.target.closest('[data-remove-key]');
+  if(remove){
+    removeItem(remove.dataset.removeKey);
+    renderCart();
+    return;
+  }
+
+  const spiceButton = event.target.closest('[data-spice-delta]');
+  if(spiceButton){
+    const key = spiceButton.dataset.cartKey;
+    const item = getCart().find(entry => entry.key === key);
+    if(item){
+      const level = Math.max(0, Math.min(3, item.spice + Number(spiceButton.dataset.spiceDelta)));
+      updateSpice(key, level);
+    }
+    renderCart();
+    return;
+  }
+
   if(event.target.closest('[data-clear-cart]')) clearCart();
   renderCart();
 });
