@@ -1,6 +1,7 @@
 // V2 — UI RENDERER + EVENT WIRING
 import { dishes } from './data.js';
 import { spiceLabel } from './spice.js';
+import { supabase } from './supabase.js';
 import { addToCart, getCart, updateSpice, removeItem, clearCart, cartCount, cartTotal } from './cart.js';
 
 const euro = n => n.toLocaleString('fr-FR', { style:'currency', currency:'EUR' });
@@ -11,6 +12,22 @@ const cartPanel = document.querySelector('#cart-panel');
 const cartContent = document.querySelector('#cart-content');
 const cartCountEl = document.querySelector('#cart-count');
 const cardStates = new Map();
+
+async function testSupabaseConnection(){
+  const { error } = await supabase
+    .from('products')
+    .select('id')
+    .limit(1);
+
+  if(error){
+    console.error('Supabase connection error:', error.message);
+    return;
+  }
+
+  console.info('Supabase connection OK');
+}
+
+testSupabaseConnection();
 
 function photoStyle(d){
   if(!d.photo) return 'background:linear-gradient(135deg,#e8dfca,#d5dfd2)';
