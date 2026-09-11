@@ -1,8 +1,10 @@
 // V2 — UI RENDERER + EVENT WIRING
-import { dishes } from './data.js';
+import { dishes as localDishes } from './data.js';
 import { spiceLabel } from './spice.js';
 import { supabase } from './supabase.js';
 import { addToCart, getCart, updateSpice, removeItem, clearCart, cartCount, cartTotal } from './cart.js';
+
+let dishes = [...localDishes];
 
 const euro = n => n.toLocaleString('fr-FR', { style:'currency', currency:'EUR' });
 const grid = document.querySelector('#menu-grid');
@@ -13,21 +15,42 @@ const cartContent = document.querySelector('#cart-content');
 const cartCountEl = document.querySelector('#cart-count');
 const cardStates = new Map();
 
-async function testSupabaseConnection(){
-  const { error } = await supabase
+async function loadProductsFromSupabase(){
+  const { data, error } = await supabase
     .from('products')
-    .select('id')
-    .limit(1);
+    .select('id,name,price,description,allow_spice,preparation_minutes,is_active,product_categories(name)')
+    .eq('is_active', true)
+    .order('name');
 
   if(error){
-    console.error('Supabase connection error:', error.message);
+    console.error('Supabase products error — fallback local:', error.message);
     return;
   }
 
-  console.info('Supabase connection OK');
-}
+  if(!data?.length){
+    console.warn('Supabase products empty — fallback local');
+    return;
+  }
 
-testSupabaseConnection();
+  dishes = data.map(product => {
+    const local = localDishes.find(d => d.name === product.name);
+    return {
+      id: product.id,
+      name: product.name,
+      price: Number(product.price),
+      category: product.product_categories?.name || local?.category || 'Plats',
+      emoji: local?.emoji || '🍽️',
+      photo: local?.photo || '',
+      position: local?.position,
+      desc: product.description || local?.desc || '',
+      spicy: Boolean(product.allow_spice),
+      preparation_minutes: product.preparation_minutes
+    };
+  });
+
+  console.info(`Supabase products loaded: ${dishes.length}`);
+  renderMenu(document.querySelector('.category-row .active')?.textContent.trim() || 'Tous');
+}
 
 function photoStyle(d){
   if(!d.photo) return 'background:linear-gradient(135deg,#e8dfca,#d5dfd2)';
@@ -75,7 +98,8 @@ function renderCart(){
 categoryButtons.forEach(button=>button.addEventListener('click',()=>{categoryButtons.forEach(b=>b.classList.remove('active'));button.classList.add('active');renderMenu(button.textContent.trim());}));
 grid?.addEventListener('click',event=>{
   const card=event.target.closest('.dish-card'); if(!card)return;
-  const dish=dishes.find(d=>d.id===card.dataset.dishId); const state=getState(dish);
+  const dish=dishes.find(d=>d.id===card.dataset.dishId); if(!dish)return;
+  const state=getState(dish);
   const q=event.target.closest('[data-quantity-delta]');
   if(q){setQuantity(dish,state.quantity+Number(q.dataset.quantityDelta));renderMenu(document.querySelector('.category-row .active')?.textContent.trim()||'Tous');return;}
   const s=event.target.closest('[data-spice-delta]');
@@ -86,4 +110,6 @@ cartContent?.addEventListener('click',event=>{const remove=event.target.closest(
 cartButton?.addEventListener('click',()=>{cartPanel?.classList.toggle('open');renderCart();});
 document.querySelector('[data-cart-close]')?.addEventListener('click',()=>cartPanel?.classList.remove('open'));
 document.addEventListener('cart:updated',renderCart);
-renderMenu();renderCart();
+renderMenu();
+renderCart();
+loadProductsFromSupabase();
