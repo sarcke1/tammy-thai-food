@@ -1,8 +1,19 @@
 // V2 — CART MODULE
-// Cart state is isolated from the visual renderer.
+// Each added dish is an individual unit so every spicy dish can have its own level.
 
 const STORAGE_KEY = 'tammy-v2-cart';
 let items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+
+function normalizeItems() {
+  // Old V2 grouped format is intentionally not reused: individual units are required.
+  items = items.map((item, index) => ({
+    ...item,
+    key: item.key || `${item.id || 'item'}::${Date.now()}::${index}`,
+    quantity: 1,
+    spice: Number(item.spice || 0)
+  }));
+}
+normalizeItems();
 
 function persist() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
@@ -14,18 +25,27 @@ export function getCart() {
 }
 
 export function addToCart(dish, spice = 0) {
-  const key = `${dish.id}::${spice}`;
-  const existing = items.find(item => item.key === key);
-  if (existing) existing.quantity += 1;
-  else items.push({ key, id: dish.id, name: dish.name, price: dish.price, spice, quantity: 1 });
+  items.push({
+    key: `${dish.id}::${Date.now()}::${Math.random().toString(36).slice(2, 8)}`,
+    id: dish.id,
+    name: dish.name,
+    price: dish.price,
+    spicy: Boolean(dish.spicy),
+    spice: dish.spicy ? Math.max(0, Math.min(3, Number(spice) || 0)) : 0,
+    quantity: 1
+  });
   persist();
 }
 
-export function changeQuantity(key, delta) {
+export function updateSpice(key, spice) {
   const item = items.find(entry => entry.key === key);
-  if (!item) return;
-  item.quantity += delta;
-  if (item.quantity <= 0) items = items.filter(entry => entry.key !== key);
+  if (!item || !item.spicy) return;
+  item.spice = Math.max(0, Math.min(3, Number(spice) || 0));
+  persist();
+}
+
+export function removeItem(key) {
+  items = items.filter(entry => entry.key !== key);
   persist();
 }
 
@@ -35,9 +55,9 @@ export function clearCart() {
 }
 
 export function cartCount() {
-  return items.reduce((sum, item) => sum + item.quantity, 0);
+  return items.length;
 }
 
 export function cartTotal() {
-  return items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  return items.reduce((sum, item) => sum + item.price, 0);
 }
