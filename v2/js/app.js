@@ -18,18 +18,19 @@ function photoStyle(d){
   return `background-image:url('${d.photo}')`;
 }
 function getState(dish){
-  if(!cardStates.has(dish.id)) cardStates.set(dish.id, { quantity: 1, spices: [1] });
+  if(!cardStates.has(dish.id)) cardStates.set(dish.id, { quantity: 0, spices: [] });
   return cardStates.get(dish.id);
 }
 function setQuantity(dish, quantity){
   const state = getState(dish);
-  state.quantity = Math.max(1, Math.min(20, quantity));
-  while(state.spices.length < state.quantity) state.spices.push(1);
+  state.quantity = Math.max(0, Math.min(20, quantity));
+  while(state.spices.length < state.quantity) state.spices.push(0);
   state.spices.length = state.quantity;
 }
 function spiceRows(dish){
   if(!dish.spicy) return '';
   const state = getState(dish);
+  if(state.quantity === 0) return '<div class="spice-box spice-box-empty">Sélectionnez une quantité pour choisir le piment.</div>';
   return `<div class="spice-box"><div class="spice-box-title">Choisissez le piment pour chaque plat</div>${state.spices.map((level,index)=>`
     <div class="spice-row" data-spice-row="${index}"><span>Plat ${index+1}</span><div class="spice-row-controls">
       <button type="button" data-spice-delta="-1" aria-label="Diminuer le piment">−</button><b>${spiceLabel(level)}</b><button type="button" data-spice-delta="1" aria-label="Augmenter le piment">+</button>
@@ -37,14 +38,17 @@ function spiceRows(dish){
 }
 function quantityControl(dish){
   const state = getState(dish);
-  return `<div class="quantity-row"><span>Quantité</span><div class="quantity-controls"><button type="button" data-quantity-delta="-1">−</button><b>${state.quantity}</b><button type="button" data-quantity-delta="1">+</button></div></div>`;
+  return `<div class="quantity-row"><span>Quantité</span><div class="quantity-controls"><button type="button" data-quantity-delta="-1" aria-label="Diminuer la quantité">−</button><b>${state.quantity}</b><button type="button" data-quantity-delta="1" aria-label="Augmenter la quantité">+</button></div></div>`;
 }
 function renderMenu(category='Tous'){
   const visible = category === 'Tous' ? dishes : dishes.filter(d=>d.category===category);
-  grid.innerHTML = visible.map(d=>`<article class="dish-card" data-dish-id="${d.id}" data-category="${d.category}">
+  grid.innerHTML = visible.map(d=>{
+    const state = getState(d);
+    return `<article class="dish-card" data-dish-id="${d.id}" data-category="${d.category}">
     <div class="dish-photo" style="${photoStyle(d)}">${d.spicy?'<span class="dish-badge">🌶️ Piment au choix</span>':''}</div>
     <div class="dish-card-body"><div class="dish-title-row"><h3>${d.name}</h3><span class="price">${euro(d.price)}</span></div><p>${d.desc}</p>
-    ${quantityControl(d)}${spiceRows(d)}<button class="button dish-action" type="button" data-action="add">Ajouter au panier</button></div></article>`).join('');
+    ${quantityControl(d)}${spiceRows(d)}<button class="button dish-action ${state.quantity===0?'is-disabled':''}" type="button" data-action="add" ${state.quantity===0?'disabled':''}>Ajouter au panier</button></div></article>`;
+  }).join('');
 }
 function renderCart(){
   const items=getCart(); if(cartCountEl) cartCountEl.textContent=cartCount();
