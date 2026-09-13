@@ -14,20 +14,17 @@ const cartPanel = document.querySelector('#cart-panel');
 const cartContent = document.querySelector('#cart-content');
 const cartCountEl = document.querySelector('#cart-count');
 const cardStates = new Map();
+const categoryOrder = { Plats:1, Entrées:2, Desserts:3, Boissons:4 };
 
 async function loadProductsFromSupabase(){
-  // Lecture uniquement des colonnes réellement nécessaires.
-  // Les colonnes optionnelles de l'ancien schéma ne sont pas demandées.
   const { data, error } = await supabase
     .from('products')
-    .select('id,name,price,description,product_categories(name)')
-    .order('name');
+    .select('id,name,price,description,product_categories(name)');
 
   if(error){
     console.error('Supabase products error — fallback local:', error.message);
     return;
   }
-
   if(!data?.length){
     console.warn('Supabase products empty — fallback local');
     return;
@@ -45,11 +42,11 @@ async function loadProductsFromSupabase(){
       position: local?.position,
       desc: product.description || local?.desc || '',
       spicy: Boolean(local?.spicy),
-      preparation_minutes: local?.preparation_minutes ?? null
+      preparation_minutes: local?.preparation_minutes ?? null,
+      menuPosition: local ? localDishes.indexOf(local) : 999
     };
-  });
+  }).sort((a,b) => (categoryOrder[a.category]||99) - (categoryOrder[b.category]||99) || a.menuPosition - b.menuPosition);
 
-  console.info(`Supabase products loaded: ${dishes.length}`);
   renderMenu(document.querySelector('.category-row .active')?.textContent.trim() || 'Tous');
 }
 
@@ -92,9 +89,15 @@ function renderMenu(category='Tous'){
   }).join('');
 }
 function renderCart(){
-  const items=getCart(); if(cartCountEl) cartCountEl.textContent=cartCount();
-  if(!items.length){cartContent.innerHTML='<p class="empty-cart">Votre panier est vide.</p>';return;}
-  cartContent.innerHTML=items.map((item,index)=>`<div class="cart-line cart-unit"><div class="cart-unit-info"><strong>${item.name} <small>#${index+1}</small></strong>${item.spicy?`<div class="cart-spice-control"><span>Piment :</span><button data-cart-key="${item.key}" data-spice-delta="-1">−</button><b>${spiceLabel(item.spice)}</b><button data-cart-key="${item.key}" data-spice-delta="1">+</button></div>`:'<small>Sans piment</small>'}<span>${euro(item.price)}</span></div><button class="cart-remove" data-remove-key="${item.key}">×</button></div>`).join('')+`<div class="cart-total"><strong>Total</strong><strong>${euro(cartTotal())}</strong></div><button class="button cart-clear" data-clear-cart>Vider le panier</button>`;
+  const items=getCart();
+  if(cartCountEl) cartCountEl.textContent=cartCount();
+  if(!items.length){
+    cartContent.innerHTML='<p class="empty-cart">Votre panier est vide.</p>';
+    return;
+  }
+  cartContent.innerHTML = items.map((item,index)=>`<div class="cart-line cart-unit"><div class="cart-unit-info"><strong>${item.name} <small>#${index+1}</small></strong>${item.spicy?`<div class="cart-spice-control"><span>Piment :</span><button data-cart-key="${item.key}" data-spice-delta="-1">−</button><b>${spiceLabel(item.spice)}</b><button data-cart-key="${item.key}" data-spice-delta="1">+</button></div>`:'<small>Sans piment</small>'}<span>${euro(item.price)}</span></div><button class="cart-remove" data-remove-key="${item.key}">×</button></div>`).join('')
+    + `<div class="cart-total"><strong>Total</strong><strong>${euro(cartTotal())}</strong></div>`
+    + `<div class="cart-actions"><button class="button cart-validate" data-validate-cart>Valider le panier</button><button class="cart-clear secondary-cart-action" data-clear-cart>Vider le panier</button></div>`;
 }
 categoryButtons.forEach(button=>button.addEventListener('click',()=>{categoryButtons.forEach(b=>b.classList.remove('active'));button.classList.add('active');renderMenu(button.textContent.trim());}));
 grid?.addEventListener('click',event=>{
@@ -107,7 +110,19 @@ grid?.addEventListener('click',event=>{
   if(s){const row=s.closest('[data-spice-row]');const i=Number(row.dataset.spiceRow);state.spices[i]=Math.max(0,Math.min(3,state.spices[i]+Number(s.dataset.spiceDelta)));renderMenu(document.querySelector('.category-row .active')?.textContent.trim()||'Tous');return;}
   if(event.target.closest('[data-action="add"]')){state.spices.slice(0,state.quantity).forEach(level=>addToCart(dish,dish.spicy?level:0));renderCart();cartPanel?.classList.add('open');}
 });
-cartContent?.addEventListener('click',event=>{const remove=event.target.closest('[data-remove-key]');if(remove){removeItem(remove.dataset.removeKey);renderCart();return;}const s=event.target.closest('[data-spice-delta]');if(s){const item=getCart().find(x=>x.key===s.dataset.cartKey);if(item)updateSpice(item.key,item.spice+Number(s.dataset.spiceDelta));renderCart();return;}if(event.target.closest('[data-clear-cart]'))clearCart();renderCart();});
+cartContent?.addEventListener('click',event=>{
+  const remove=event.target.closest('[data-remove-key]');
+  if(remove){removeItem(remove.dataset.removeKey);renderCart();return;}
+  const s=event.target.closest('[data-spice-delta]');
+  if(s){const item=getCart().find(x=>x.key===s.dataset.cartKey);if(item)updateSpice(item.key,item.spice+Number(s.dataset.spiceDelta));renderCart();return;}
+  const clear=event.target.closest('[data-clear-cart]');
+  if(clear){
+    if(confirm('Voulez-vous vraiment vider complètement le panier ?')) clearCart();
+    return;
+  }
+  const validate=event.target.closest('[data-validate-cart]');
+  if(validate) document.dispatchEvent(new CustomEvent('checkout:open'));
+});
 cartButton?.addEventListener('click',()=>{cartPanel?.classList.toggle('open');renderCart();});
 document.querySelector('[data-cart-close]')?.addEventListener('click',()=>cartPanel?.classList.remove('open'));
 document.addEventListener('cart:updated',renderCart);
