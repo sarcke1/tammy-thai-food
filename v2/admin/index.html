@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Tammy Thai Food — Administration</title>
-<link rel="stylesheet" href="admin.css?v=20260913-5">
+<link rel="stylesheet" href="admin.css?v=20260913-6">
 </head>
 <body>
 <main class="admin-shell">
   <header class="admin-header"><div><p class="eyebrow">Espace privé</p><h1>Tammy Thai Food</h1><p>Gestion des commandes</p></div><button id="logout" class="secondary hidden">Se déconnecter</button></header>
   <section id="login-panel" class="panel login-panel"><h2>Connexion Tammy</h2><form id="login-form"><label>Email<input id="email" type="email" required autocomplete="username"></label><label>Mot de passe<input id="password" type="password" required autocomplete="current-password"></label><button class="primary" type="submit">Se connecter</button><p id="login-status" class="status"></p></form></section>
-  <section id="dashboard" class="hidden"><div class="toolbar panel"><div><h2>Commandes</h2><p id="refresh-info">Chargement…</p></div><button id="refresh" class="primary">Actualiser</button></div><div class="view-tabs panel"><button class="view-tab active" data-view="active">En cours</button><button class="view-tab" data-view="kitchen">En cuisine</button><button class="view-tab" data-view="archive">Archives</button></div><div id="orders" class="orders"></div></section>
+  <section id="dashboard" class="hidden"><div class="toolbar panel"><div><h2>Commandes</h2><p id="refresh-info">Chargement…</p></div><button id="refresh" class="primary">Actualiser</button></div><div class="view-tabs panel"><button class="view-tab active" data-view="active">En cours</button><button class="view-tab" data-view="kitchen">En cuisine</button><button class="view-tab" data-view="pickup">En attente de retrait</button><button class="view-tab" data-view="archive">Archives</button></div><div id="orders" class="orders"></div></section>
 </main>
-<script type="module" src="admin.js?v=20260913-5"></script>
+<script type="module" src="admin.js?v=20260913-6"></script>
 </body>
 </html>
