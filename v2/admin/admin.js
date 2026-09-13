@@ -10,13 +10,19 @@ const refreshInfo = document.querySelector('#refresh-info');
 const viewTabs = document.querySelectorAll('.view-tab');
 let currentView = 'active';
 let allOrders = [];
+const checklistKey = 'tammy-kitchen-checklist';
 
 function showDashboard(){loginPanel.classList.add('hidden');dashboard.classList.remove('hidden');logoutButton.classList.remove('hidden');loadOrders();}
 function showLogin(){loginPanel.classList.remove('hidden');dashboard.classList.add('hidden');logoutButton.classList.add('hidden');}
 function escapeHtml(value){return String(value ?? '').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
-function statusLabel(status){return ({pending_payment:'En attente de paiement',paid:'Payée',confirmed:'En file cuisine',preparing:'En préparation',ready:'Prête',completed:'Archivée',cancelled:'Annulée'})[status]||status;}
-function nextAction(status){return ({pending_payment:['paid','Marquer comme payée'],paid:['enqueue','Mettre en file cuisine'],confirmed:['preparing','Démarrer la préparation'],preparing:['ready','Plat prêt ✓'],ready:['completed','Retirer / archiver']})[status]||null;}
+function statusLabel(status){return ({pending_payment:'En attente de paiement',paid:'Payée',confirmed:'En file cuisine',preparing:'En préparation',ready:'En attente de retrait',completed:'Archivée',cancelled:'Annulée'})[status]||status;}
+function nextAction(status){return ({pending_payment:['paid','Marquer comme payée'],paid:['enqueue','Mettre en file cuisine'],confirmed:['preparing','Démarrer la préparation'],ready:['completed','Retirer / archiver']})[status]||null;}
 function formatMoney(value){return Number(value||0).toLocaleString('fr-FR',{style:'currency',currency:'EUR'});}
+function getChecklist(){try{return JSON.parse(localStorage.getItem(checklistKey)||'{}');}catch{return {};}}
+function setChecklist(data){localStorage.setItem(checklistKey,JSON.stringify(data));}
+function isOrderChecked(orderId,index){return Boolean(getChecklist()[orderId]?.includes(index));}
+function updateOrderChecklist(orderId,index,checked){const data=getChecklist();const list=new Set(data[orderId]||[]);if(checked)list.add(index);else list.delete(index);data[orderId]=[...list];setChecklist(data);}
+function allItemsChecked(order){return (order.order_items||[]).length>0 && order.order_items.every((_,index)=>isOrderChecked(order.id,index));}
 
 async function enqueueOrder(orderId){
   const {data:existing,error:existingError}=await supabase.from('kitchen_queue').select('id').eq('order_id',orderId).maybeSingle();
@@ -39,19 +45,24 @@ async function changeOrderStatus(orderId,status){
     if(success) await loadOrders();
     return;
   }
-
   const {data:queueItem}=await supabase.from('kitchen_queue').select('id').eq('order_id',orderId).maybeSingle();
   const updates={status};
   if(status==='paid') updates.payment_status='paid';
   const {error}=await supabase.from('orders').update(updates).eq('id',orderId);
   if(error){alert('Erreur de mise à jour : '+error.message);return;}
-
   if(queueItem){
     if(status==='preparing') await supabase.from('kitchen_queue').update({status:'in_progress'}).eq('id',queueItem.id);
     if(status==='ready') await supabase.from('kitchen_queue').update({status:'completed'}).eq('id',queueItem.id);
     if(status==='completed') await supabase.from('kitchen_queue').delete().eq('id',queueItem.id);
   }
   await loadOrders();
+}
+
+function renderChecklist(order){
+  if(order.status!=='preparing') return '';
+  const items=order.order_items||[];
+  const checkedCount=items.filter((_,index)=>isOrderChecked(order.id,index)).length;
+  return `<div class="kitchen-checklist"><div class="checklist-title">Préparation : ${checkedCount}/${items.length} lignes prêtes</div>${items.map((item,index)=>`<label class="checklist-item"><input type="checkbox" data-check-order="${order.id}" data-check-index="${index}" ${isOrderChecked(order.id,index)?'checked':''}><span>${escapeHtml(item.product_name)} × ${item.quantity} — ${item.spice_level===0?'Sans piment':'Niveau '+item.spice_level}</span></label>`).join('')}</div>${allItemsChecked(order)?'<button class="order-action primary" data-order-id="'+order.id+'" data-next-status="ready">Sac complet — en attente du client</button>':''}`;
 }
 
 function renderOrders(){
@@ -72,10 +83,15 @@ function renderOrders(){
     return `<article class="order-card${cardClass}${archivedClass}">
       <div class="order-top"><div><div class="order-number">Commande n°${order.order_number}${queuePosition?`<span class="queue-position">File #${queuePosition}</span>`:''}</div><div class="order-meta">${escapeHtml(order.customer_first_name)} ${escapeHtml(order.customer_last_name)}<br>${escapeHtml(order.customer_phone||'')} · ${escapeHtml(order.customer_email||'')}<br>${new Date(order.created_at).toLocaleString('fr-FR')}</div></div><span class="badge${badgeClass}">${escapeHtml(statusLabel(order.status))}</span></div>
       <ul class="items">${(order.order_items||[]).map(item=>`<li><div><div class="item-name">${escapeHtml(item.product_name)} × ${item.quantity}</div><div class="item-detail">Piment : ${item.spice_level===0?'Sans piment':'Niveau '+item.spice_level}</div></div><span>${formatMoney(Number(item.unit_price)*Number(item.quantity))}</span></li>`).join('')}</ul>
+      ${renderChecklist(order)}
       <div class="order-bottom"><span>Temps estimé : ${order.estimated_preparation_minutes||0} min</span><strong>${formatMoney(order.total)}</strong></div>${actionHtml}
     </article>`;
   }).join('');
 
+  ordersEl.querySelectorAll('[data-check-order]').forEach(input=>input.addEventListener('change',()=>{
+    updateOrderChecklist(input.dataset.checkOrder,Number(input.dataset.checkIndex),input.checked);
+    renderOrders();
+  }));
   ordersEl.querySelectorAll('.order-action').forEach(button=>button.addEventListener('click',async()=>{button.disabled=true;button.textContent='Mise à jour…';await changeOrderStatus(button.dataset.orderId,button.dataset.nextStatus);}));
 }
 
@@ -87,7 +103,6 @@ async function loadOrders(){
   refreshInfo.textContent=`${allOrders.length} commande(s) — dernière actualisation ${new Date().toLocaleTimeString('fr-FR')}`;
   renderOrders();
 }
-
 viewTabs.forEach(tab=>tab.addEventListener('click',()=>{currentView=tab.dataset.view;renderOrders();}));
 loginForm.addEventListener('submit',async event=>{event.preventDefault();loginStatus.textContent='Connexion…';const {error}=await supabase.auth.signInWithPassword({email:document.querySelector('#email').value,password:document.querySelector('#password').value});if(error){loginStatus.textContent='Erreur : '+error.message;return}loginStatus.textContent='';showDashboard();});
 logoutButton.addEventListener('click',async()=>{await supabase.auth.signOut();showLogin();});
