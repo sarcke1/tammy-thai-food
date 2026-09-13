@@ -16,10 +16,11 @@ const cartCountEl = document.querySelector('#cart-count');
 const cardStates = new Map();
 
 async function loadProductsFromSupabase(){
+  // Lecture uniquement des colonnes réellement nécessaires.
+  // Les colonnes optionnelles de l'ancien schéma ne sont pas demandées.
   const { data, error } = await supabase
     .from('products')
-    .select('id,name,price,description,allow_spice,preparation_minutes,is_active,product_categories(name)')
-    .eq('is_active', true)
+    .select('id,name,price,description,product_categories(name)')
     .order('name');
 
   if(error){
@@ -43,8 +44,8 @@ async function loadProductsFromSupabase(){
       photo: local?.photo || '',
       position: local?.position,
       desc: product.description || local?.desc || '',
-      spicy: Boolean(product.allow_spice),
-      preparation_minutes: product.preparation_minutes
+      spicy: Boolean(local?.spicy),
+      preparation_minutes: local?.preparation_minutes ?? null
     };
   });
 
