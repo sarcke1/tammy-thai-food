@@ -11,10 +11,52 @@ const refreshInfo = document.querySelector('#refresh-info');
 function showDashboard(){loginPanel.classList.add('hidden');dashboard.classList.remove('hidden');logoutButton.classList.remove('hidden');loadOrders();}
 function showLogin(){loginPanel.classList.remove('hidden');dashboard.classList.add('hidden');logoutButton.classList.add('hidden');}
 function escapeHtml(value){return String(value ?? '').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
-function statusLabel(status){return ({pending_payment:'En attente de paiement',paid:'Payée',queued:'En file cuisine',preparing:'En préparation',ready:'Prête',completed:'Retirée',cancelled:'Annulée'})[status]||status;}
-function nextAction(status){return ({pending_payment:['paid','Marquer comme payée'],paid:['queued','Mettre en file cuisine'],queued:['preparing','Démarrer la préparation'],preparing:['ready','Marquer prête'],ready:['completed','Marquer retirée']})[status]||null;}
+function statusLabel(status){return ({pending_payment:'En attente de paiement',paid:'Payée',confirmed:'En file cuisine',preparing:'En préparation',ready:'Prête',completed:'Retirée',cancelled:'Annulée'})[status]||status;}
+function nextAction(status){return ({pending_payment:['paid','Marquer comme payée'],paid:['enqueue','Mettre en file cuisine'],confirmed:['preparing','Démarrer la préparation'],preparing:['ready','Marquer prête'],ready:['completed','Marquer retirée']})[status]||null;}
+
+async function enqueueOrder(orderId){
+  const {data:existing,error:existingError}=await supabase
+    .from('kitchen_queue')
+    .select('id')
+    .eq('order_id',orderId)
+    .maybeSingle();
+
+  if(existingError){alert('Erreur de vérification de la file cuisine : '+existingError.message);return false;}
+
+  if(!existing){
+    const {data:lastItem,error:lastError}=await supabase
+      .from('kitchen_queue')
+      .select('queue_position')
+      .order('queue_position',{ascending:false})
+      .limit(1)
+      .maybeSingle();
+
+    if(lastError){alert('Erreur de lecture de la file cuisine : '+lastError.message);return false;}
+
+    const nextPosition=(lastItem?.queue_position||0)+1;
+    const {error:insertError}=await supabase
+      .from('kitchen_queue')
+      .insert({order_id:orderId,queue_position:nextPosition,status:'waiting'});
+
+    if(insertError){alert('Erreur d’ajout à la file cuisine : '+insertError.message);return false;}
+  }
+
+  const {error:updateError}=await supabase
+    .from('orders')
+    .update({status:'confirmed'})
+    .eq('id',orderId);
+
+  if(updateError){alert('Commande ajoutée mais statut non mis à jour : '+updateError.message);return false;}
+  return true;
+}
 
 async function changeOrderStatus(orderId,status){
+  if(status==='enqueue'){
+    const success=await enqueueOrder(orderId);
+    if(success) await loadOrders();
+    return;
+  }
+
   const updates={status};
   if(status==='paid') updates.payment_status='paid';
   const {error}=await supabase.from('orders').update(updates).eq('id',orderId);
