@@ -1,8 +1,7 @@
 import { supabase } from './supabase.js';
 import { getCart } from './cart.js';
 
-// Checkout is deliberately outside #cart-content because renderCart() replaces
-// that element's HTML whenever the cart changes.
+// Checkout is outside #cart-content so renderCart() cannot destroy the form.
 const panel = document.querySelector('#checkout-content');
 let checkoutForm = null;
 
@@ -32,26 +31,57 @@ function mountCheckout(){
     event.preventDefault();
 
     const status = box.querySelector('#order-status');
-    const data = new FormData(box);
-    const items = getCart().map(item => ({
-      product_id: item.id,
-      quantity: 1,
-      spice_level: item.spicy ? Number(item.spice || 0) : 0
-    }));
+    const formData = new FormData(box);
+    const cartItems = getCart();
 
-    if(!items.length){
+    if(!cartItems.length){
       status.textContent = 'Votre panier est vide.';
       updateCheckoutVisibility();
       return;
     }
 
+    status.textContent = 'Vérification des produits…';
+
+    // Les anciens paniers peuvent contenir des IDs locaux comme "pad".
+    // On récupère toujours les UUID réels depuis Supabase par le nom du produit.
+    const { data: products, error: productsError } = await supabase
+      .from('products')
+      .select('id,name,allow_spice,is_active')
+      .eq('is_active', true);
+
+    if(productsError){
+      status.textContent = 'Erreur produits : ' + productsError.message;
+      return;
+    }
+
+    const productsByName = new Map(
+      (products || []).map(product => [product.name.trim().toLowerCase(), product])
+    );
+
+    const items = [];
+    for(const item of cartItems){
+      const product = productsByName.get(String(item.name || '').trim().toLowerCase());
+      if(!product){
+        status.textContent = `Produit introuvable : ${item.name || item.id}`;
+        return;
+      }
+
+      items.push({
+        product_id: product.id,
+        quantity: 1,
+        spice_level: product.allow_spice
+          ? Math.max(0, Math.min(3, Number(item.spice) || 0))
+          : 0
+      });
+    }
+
     status.textContent = 'Enregistrement en cours…';
 
     const { data: result, error } = await supabase.rpc('create_pending_order', {
-      p_first_name: data.get('first_name'),
-      p_last_name: data.get('last_name'),
-      p_email: data.get('email'),
-      p_phone: data.get('phone'),
+      p_first_name: formData.get('first_name'),
+      p_last_name: formData.get('last_name'),
+      p_email: formData.get('email'),
+      p_phone: formData.get('phone'),
       p_service_slot_id: null,
       p_items: items,
       p_customer_note: null
