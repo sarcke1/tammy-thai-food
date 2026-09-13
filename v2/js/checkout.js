@@ -28,7 +28,6 @@ function mountCheckout(){
 
   box.addEventListener('submit', async (event) => {
     event.preventDefault();
-
     const status = box.querySelector('#order-status');
     const formData = new FormData(box);
     const cartItems = getCart();
@@ -43,8 +42,7 @@ function mountCheckout(){
 
     const { data: products, error: productsError } = await supabase
       .from('products')
-      .select('id,name,is_active')
-      .eq('is_active', true);
+      .select('id,name');
 
     if(productsError){
       status.textContent = 'Erreur produits : ' + productsError.message;
