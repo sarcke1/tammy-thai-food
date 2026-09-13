@@ -1,110 +1,17 @@
 import { supabase } from '../js/supabase.js';
-
-const loginPanel = document.querySelector('#login-panel');
-const dashboard = document.querySelector('#dashboard');
-const loginForm = document.querySelector('#login-form');
-const loginStatus = document.querySelector('#login-status');
-const logoutButton = document.querySelector('#logout');
-const ordersEl = document.querySelector('#orders');
-const refreshInfo = document.querySelector('#refresh-info');
-const viewTabs = document.querySelectorAll('.view-tab');
-let currentView = 'active';
-let allOrders = [];
-const checklistKey = 'tammy-kitchen-checklist';
-
-function showDashboard(){loginPanel.classList.add('hidden');dashboard.classList.remove('hidden');logoutButton.classList.remove('hidden');loadOrders();}
-function showLogin(){loginPanel.classList.remove('hidden');dashboard.classList.add('hidden');logoutButton.classList.add('hidden');}
-function escapeHtml(value){return String(value ?? '').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
-function statusLabel(status){return ({pending_payment:'En attente de paiement',paid:'Payée',confirmed:'En file cuisine',preparing:'En préparation',ready:'En attente de retrait',completed:'Archivée',cancelled:'Annulée'})[status]||status;}
-function nextAction(status){return ({pending_payment:['paid','Marquer comme payée'],paid:['enqueue','Mettre en file cuisine'],confirmed:['preparing','Démarrer la préparation'],ready:['completed','Retirer / archiver']})[status]||null;}
-function formatMoney(value){return Number(value||0).toLocaleString('fr-FR',{style:'currency',currency:'EUR'});}
-function getChecklist(){try{return JSON.parse(localStorage.getItem(checklistKey)||'{}');}catch{return {};}}
-function setChecklist(data){localStorage.setItem(checklistKey,JSON.stringify(data));}
-function isOrderChecked(orderId,index){return Boolean(getChecklist()[orderId]?.includes(index));}
-function updateOrderChecklist(orderId,index,checked){const data=getChecklist();const list=new Set(data[orderId]||[]);if(checked)list.add(index);else list.delete(index);data[orderId]=[...list];setChecklist(data);}
-function allItemsChecked(order){return (order.order_items||[]).length>0 && order.order_items.every((_,index)=>isOrderChecked(order.id,index));}
-
-async function enqueueOrder(orderId){
-  const {data:existing,error:existingError}=await supabase.from('kitchen_queue').select('id').eq('order_id',orderId).maybeSingle();
-  if(existingError){alert('Erreur de vérification de la file cuisine : '+existingError.message);return false;}
-  if(!existing){
-    const {data:lastItem,error:lastError}=await supabase.from('kitchen_queue').select('queue_position').order('queue_position',{ascending:false}).limit(1).maybeSingle();
-    if(lastError){alert('Erreur de lecture de la file cuisine : '+lastError.message);return false;}
-    const nextPosition=(lastItem?.queue_position||0)+1;
-    const {error:insertError}=await supabase.from('kitchen_queue').insert({order_id:orderId,queue_position:nextPosition,status:'waiting'});
-    if(insertError){alert('Erreur d’ajout à la file cuisine : '+insertError.message);return false;}
-  }
-  const {error:updateError}=await supabase.from('orders').update({status:'confirmed'}).eq('id',orderId);
-  if(updateError){alert('Commande ajoutée mais statut non mis à jour : '+updateError.message);return false;}
-  return true;
-}
-
-async function changeOrderStatus(orderId,status){
-  if(status==='enqueue'){
-    const success=await enqueueOrder(orderId);
-    if(success) await loadOrders();
-    return;
-  }
-  const {data:queueItem}=await supabase.from('kitchen_queue').select('id').eq('order_id',orderId).maybeSingle();
-  const updates={status};
-  if(status==='paid') updates.payment_status='paid';
-  const {error}=await supabase.from('orders').update(updates).eq('id',orderId);
-  if(error){alert('Erreur de mise à jour : '+error.message);return;}
-  if(queueItem){
-    if(status==='preparing') await supabase.from('kitchen_queue').update({status:'in_progress'}).eq('id',queueItem.id);
-    if(status==='ready') await supabase.from('kitchen_queue').update({status:'completed'}).eq('id',queueItem.id);
-    if(status==='completed') await supabase.from('kitchen_queue').delete().eq('id',queueItem.id);
-  }
-  await loadOrders();
-}
-
-function renderChecklist(order){
-  if(order.status!=='preparing') return '';
-  const items=order.order_items||[];
-  const checkedCount=items.filter((_,index)=>isOrderChecked(order.id,index)).length;
-  return `<div class="kitchen-checklist"><div class="checklist-title">Préparation : ${checkedCount}/${items.length} lignes prêtes</div>${items.map((item,index)=>`<label class="checklist-item"><input type="checkbox" data-check-order="${order.id}" data-check-index="${index}" ${isOrderChecked(order.id,index)?'checked':''}><span>${escapeHtml(item.product_name)} × ${item.quantity} — ${item.spice_level===0?'Sans piment':'Niveau '+item.spice_level}</span></label>`).join('')}</div>${allItemsChecked(order)?'<button class="order-action primary" data-order-id="'+order.id+'" data-next-status="ready">Sac complet — en attente du client</button>':''}`;
-}
-
-function renderOrders(){
-  const visible=allOrders.filter(order=>currentView==='active'?!['completed','cancelled'].includes(order.status):['completed','cancelled'].includes(order.status));
-  const activeCount=allOrders.filter(order=>!['completed','cancelled'].includes(order.status)).length;
-  const archiveCount=allOrders.length-activeCount;
-  viewTabs.forEach(tab=>{tab.textContent=tab.dataset.view==='active'?`En cours (${activeCount})`:`Archives (${archiveCount})`;tab.classList.toggle('active',tab.dataset.view===currentView);});
-  if(!visible.length){ordersEl.innerHTML=`<div class="empty">${currentView==='active'?'Aucune commande en cours.':'Aucune commande archivée.'}</div>`;return;}
-
-  ordersEl.innerHTML=visible.map(order=>{
-    const action=nextAction(order.status);
-    const queue=Array.isArray(order.kitchen_queue)?order.kitchen_queue[0]:order.kitchen_queue;
-    const queuePosition=queue?.queue_position;
-    const actionHtml=action?`<button class="order-action primary" data-order-id="${order.id}" data-next-status="${action[0]}">${action[1]}</button>`:'';
-    const cardClass=['confirmed','preparing','ready'].includes(order.status)?' in-kitchen':'';
-    const archivedClass=['completed','cancelled'].includes(order.status)?' archived':'';
-    const badgeClass=order.status==='ready'?' ready':order.status==='preparing'?' preparing':archivedClass?' archived-badge':'';
-    return `<article class="order-card${cardClass}${archivedClass}">
-      <div class="order-top"><div><div class="order-number">Commande n°${order.order_number}${queuePosition?`<span class="queue-position">File #${queuePosition}</span>`:''}</div><div class="order-meta">${escapeHtml(order.customer_first_name)} ${escapeHtml(order.customer_last_name)}<br>${escapeHtml(order.customer_phone||'')} · ${escapeHtml(order.customer_email||'')}<br>${new Date(order.created_at).toLocaleString('fr-FR')}</div></div><span class="badge${badgeClass}">${escapeHtml(statusLabel(order.status))}</span></div>
-      <ul class="items">${(order.order_items||[]).map(item=>`<li><div><div class="item-name">${escapeHtml(item.product_name)} × ${item.quantity}</div><div class="item-detail">Piment : ${item.spice_level===0?'Sans piment':'Niveau '+item.spice_level}</div></div><span>${formatMoney(Number(item.unit_price)*Number(item.quantity))}</span></li>`).join('')}</ul>
-      ${renderChecklist(order)}
-      <div class="order-bottom"><span>Temps estimé : ${order.estimated_preparation_minutes||0} min</span><strong>${formatMoney(order.total)}</strong></div>${actionHtml}
-    </article>`;
-  }).join('');
-
-  ordersEl.querySelectorAll('[data-check-order]').forEach(input=>input.addEventListener('change',()=>{
-    updateOrderChecklist(input.dataset.checkOrder,Number(input.dataset.checkIndex),input.checked);
-    renderOrders();
-  }));
-  ordersEl.querySelectorAll('.order-action').forEach(button=>button.addEventListener('click',async()=>{button.disabled=true;button.textContent='Mise à jour…';await changeOrderStatus(button.dataset.orderId,button.dataset.nextStatus);}));
-}
-
-async function loadOrders(){
-  refreshInfo.textContent='Chargement…';
-  const {data:orders,error}=await supabase.from('orders').select('id,order_number,status,total,payment_status,customer_first_name,customer_last_name,customer_email,customer_phone,estimated_preparation_minutes,created_at,order_items(product_name,quantity,unit_price,spice_level),kitchen_queue(queue_position,status)').order('created_at',{ascending:false});
-  if(error){ordersEl.innerHTML=`<div class="empty">Erreur : ${escapeHtml(error.message)}</div>`;refreshInfo.textContent='Erreur';return;}
-  allOrders=orders||[];
-  refreshInfo.textContent=`${allOrders.length} commande(s) — dernière actualisation ${new Date().toLocaleTimeString('fr-FR')}`;
-  renderOrders();
-}
-viewTabs.forEach(tab=>tab.addEventListener('click',()=>{currentView=tab.dataset.view;renderOrders();}));
-loginForm.addEventListener('submit',async event=>{event.preventDefault();loginStatus.textContent='Connexion…';const {error}=await supabase.auth.signInWithPassword({email:document.querySelector('#email').value,password:document.querySelector('#password').value});if(error){loginStatus.textContent='Erreur : '+error.message;return}loginStatus.textContent='';showDashboard();});
-logoutButton.addEventListener('click',async()=>{await supabase.auth.signOut();showLogin();});
-document.querySelector('#refresh').addEventListener('click',loadOrders);
-const {data:{session}}=await supabase.auth.getSession();if(session)showDashboard();else showLogin();
+const loginPanel=document.querySelector('#login-panel'),dashboard=document.querySelector('#dashboard'),loginForm=document.querySelector('#login-form'),loginStatus=document.querySelector('#login-status'),logoutButton=document.querySelector('#logout'),ordersEl=document.querySelector('#orders'),refreshInfo=document.querySelector('#refresh-info'),viewTabs=document.querySelectorAll('.view-tab');
+let currentView='active',allOrders=[];const checklistKey='tammy-kitchen-checklist';
+function showDashboard(){loginPanel.classList.add('hidden');dashboard.classList.remove('hidden');logoutButton.classList.remove('hidden');loadOrders();} function showLogin(){loginPanel.classList.remove('hidden');dashboard.classList.add('hidden');logoutButton.classList.add('hidden');}
+function escapeHtml(v){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+function statusLabel(s){return({pending_payment:'En attente de paiement',paid:'Payée',confirmed:'En cuisine',preparing:'En cuisine',ready:'En attente de retrait',completed:'Archivée',cancelled:'Annulée'})[s]||s;}
+function nextAction(s){return({pending_payment:['paid','Marquer comme payée'],paid:['enqueue','Mettre en cuisine'],confirmed:['noop','En cuisine'],preparing:null,ready:['completed','Retirer / archiver']})[s]||null;}
+function formatMoney(v){return Number(v||0).toLocaleString('fr-FR',{style:'currency',currency:'EUR'});}
+function getChecklist(){try{return JSON.parse(localStorage.getItem(checklistKey)||'{}');}catch{return{};}} function setChecklist(d){localStorage.setItem(checklistKey,JSON.stringify(d));}
+function isChecked(id,i){return Boolean(getChecklist()[id]?.includes(i));} function updateChecklist(id,i,checked){const d=getChecklist(),list=new Set(d[id]||[]);checked?list.add(i):list.delete(i);d[id]=[...list];setChecklist(d);} function allChecked(o){return(o.order_items||[]).length>0&&o.order_items.every((_,i)=>isChecked(o.id,i));}
+async function enqueueOrder(orderId){const {data:existing,error:ee}=await supabase.from('kitchen_queue').select('id').eq('order_id',orderId).maybeSingle();if(ee){alert('Erreur de vérification de la file cuisine : '+ee.message);return false;}if(!existing){const {data:last,error:le}=await supabase.from('kitchen_queue').select('queue_position').order('queue_position',{ascending:false}).limit(1).maybeSingle();if(le){alert('Erreur de lecture de la file cuisine : '+le.message);return false;}const pos=(last?.queue_position||0)+1;const {error:ie}=await supabase.from('kitchen_queue').insert({order_id:orderId,queue_position:pos,status:'in_progress'});if(ie){alert('Erreur d’ajout à la file cuisine : '+ie.message);return false;}}const {error:ue}=await supabase.from('orders').update({status:'preparing'}).eq('id',orderId);if(ue){alert('Commande ajoutée mais statut non mis à jour : '+ue.message);return false;}return true;}
+async function changeOrderStatus(id,status){if(status==='noop')return;if(status==='enqueue'){if(await enqueueOrder(id))await loadOrders();return;}const {data:q}=await supabase.from('kitchen_queue').select('id').eq('order_id',id).maybeSingle();const updates={status};if(status==='paid')updates.payment_status='paid';const {error}=await supabase.from('orders').update(updates).eq('id',id);if(error){alert('Erreur de mise à jour : '+error.message);return;}if(q){if(status==='ready')await supabase.from('kitchen_queue').update({status:'completed'}).eq('id',q.id);if(status==='completed')await supabase.from('kitchen_queue').delete().eq('id',q.id);}await loadOrders();}
+function renderChecklist(o){if(!['preparing','confirmed'].includes(o.status))return '';const items=o.order_items||[],count=items.filter((_,i)=>isChecked(o.id,i)).length;return `<div class="kitchen-checklist"><div class="checklist-title">Préparation : ${count}/${items.length} lignes préparées</div>${items.map((it,i)=>`<label class="checklist-item"><input type="checkbox" data-check-order="${o.id}" data-check-index="${i}" ${isChecked(o.id,i)?'checked':''}><span>${escapeHtml(it.product_name)} × ${it.quantity} — ${it.spice_level===0?'Sans piment':'Niveau '+it.spice_level}</span></label>`).join('')}</div>${allChecked(o)?`<button class="order-action primary" data-order-id="${o.id}" data-next-status="ready">Sac complet — en attente du client</button>`:''}`;}
+function matchesView(o){if(currentView==='archive')return['completed','cancelled'].includes(o.status);if(currentView==='kitchen')return['preparing','confirmed'].includes(o.status);return!['completed','cancelled','preparing','confirmed'].includes(o.status);}
+function renderOrders(){const visible=allOrders.filter(matchesView),activeCount=allOrders.filter(o=>!['completed','cancelled'].includes(o.status)).length,kitchenCount=allOrders.filter(o=>['preparing','confirmed'].includes(o.status)).length,archiveCount=allOrders.filter(o=>['completed','cancelled'].includes(o.status)).length;viewTabs.forEach(t=>{t.textContent=t.dataset.view==='active'?`En cours (${activeCount-kitchenCount})`:t.dataset.view==='kitchen'?`En cuisine (${kitchenCount})`:`Archives (${archiveCount})`;t.classList.toggle('active',t.dataset.view===currentView);});if(!visible.length){ordersEl.innerHTML=`<div class="empty">${currentView==='archive'?'Aucune commande archivée.':currentView==='kitchen'?'Aucune commande en cuisine.':'Aucune commande en cours.'}</div>`;return;}ordersEl.innerHTML=visible.map(o=>{const action=nextAction(o.status),queue=Array.isArray(o.kitchen_queue)?o.kitchen_queue[0]:o.kitchen_queue,pos=queue?.queue_position,actionHtml=action&&action[0]!=='noop'?`<button class="order-action primary" data-order-id="${o.id}" data-next-status="${action[0]}">${action[1]}</button>`:'';const cardClass=['confirmed','preparing','ready'].includes(o.status)?' in-kitchen':'';const archived=['completed','cancelled'].includes(o.status);return `<article class="order-card${cardClass}${archived?' archived':''}"><div class="order-top"><div><div class="order-number">Commande n°${o.order_number}${pos?`<span class="queue-position">File #${pos}</span>`:''}</div><div class="order-meta">${escapeHtml(o.customer_first_name)} ${escapeHtml(o.customer_last_name)}<br>${escapeHtml(o.customer_phone||'')} · ${escapeHtml(o.customer_email||'')}<br>${new Date(o.created_at).toLocaleString('fr-FR')}</div></div><span class="badge">${escapeHtml(statusLabel(o.status))}</span></div><ul class="items">${(o.order_items||[]).map(it=>`<li><div><div class="item-name">${escapeHtml(it.product_name)} × ${it.quantity}</div><div class="item-detail">Piment : ${it.spice_level===0?'Sans piment':'Niveau '+it.spice_level}</div></div><span>${formatMoney(Number(it.unit_price)*Number(it.quantity))}</span></li>`).join('')}</ul>${renderChecklist(o)}<div class="order-bottom"><span>Temps estimé : ${o.estimated_preparation_minutes||0} min</span><strong>${formatMoney(o.total)}</strong></div>${actionHtml}</article>`;}).join('');ordersEl.querySelectorAll('[data-check-order]').forEach(i=>i.addEventListener('change',()=>{updateChecklist(i.dataset.checkOrder,Number(i.dataset.checkIndex),i.checked);renderOrders();}));ordersEl.querySelectorAll('.order-action').forEach(b=>b.addEventListener('click',async()=>{b.disabled=true;b.textContent='Mise à jour…';await changeOrderStatus(b.dataset.orderId,b.dataset.nextStatus);}));}
+async function loadOrders(){refreshInfo.textContent='Chargement…';const {data,error}=await supabase.from('orders').select('id,order_number,status,total,payment_status,customer_first_name,customer_last_name,customer_email,customer_phone,estimated_preparation_minutes,created_at,order_items(product_name,quantity,unit_price,spice_level),kitchen_queue(queue_position,status)').order('created_at',{ascending:false});if(error){ordersEl.innerHTML=`<div class="empty">Erreur : ${escapeHtml(error.message)}</div>`;refreshInfo.textContent='Erreur';return;}allOrders=data||[];refreshInfo.textContent=`${allOrders.length} commande(s) — dernière actualisation ${new Date().toLocaleTimeString('fr-FR')}`;renderOrders();}
+viewTabs.forEach(t=>t.addEventListener('click',()=>{currentView=t.dataset.view;renderOrders();}));loginForm.addEventListener('submit',async e=>{e.preventDefault();loginStatus.textContent='Connexion…';const{error}=await supabase.auth.signInWithPassword({email:document.querySelector('#email').value,password:document.querySelector('#password').value});if(error){loginStatus.textContent='Erreur : '+error.message;return;}loginStatus.textContent='';showDashboard();});logoutButton.addEventListener('click',async()=>{await supabase.auth.signOut();showLogin();});document.querySelector('#refresh').addEventListener('click',loadOrders);const{data:{session}}=await supabase.auth.getSession();if(session)showDashboard();else showLogin();
