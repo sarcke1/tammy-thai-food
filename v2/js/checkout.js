@@ -1,7 +1,6 @@
 import { supabase } from './supabase.js';
 import { getCart } from './cart.js';
 
-// Checkout is outside #cart-content so renderCart() cannot destroy the form.
 const panel = document.querySelector('#checkout-content');
 let checkoutForm = null;
 
@@ -42,11 +41,9 @@ function mountCheckout(){
 
     status.textContent = 'Vérification des produits…';
 
-    // Les anciens paniers peuvent contenir des IDs locaux comme "pad".
-    // On récupère toujours les UUID réels depuis Supabase par le nom du produit.
     const { data: products, error: productsError } = await supabase
       .from('products')
-      .select('id,name,allow_spice,is_active')
+      .select('id,name,is_active')
       .eq('is_active', true);
 
     if(productsError){
@@ -69,7 +66,7 @@ function mountCheckout(){
       items.push({
         product_id: product.id,
         quantity: 1,
-        spice_level: product.allow_spice
+        spice_level: item.spicy
           ? Math.max(0, Math.min(3, Number(item.spice) || 0))
           : 0
       });
