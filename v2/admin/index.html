@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Tammy Thai Food — Administration</title>
-<link rel="stylesheet" href="admin.css?v=20260913-2">
+<link rel="stylesheet" href="admin.css?v=20260913-3">
 </head>
 <body>
 <main class="admin-shell">
@@ -24,10 +24,17 @@
   </section>
 
   <section id="dashboard" class="hidden">
-    <div class="toolbar panel"><div><h2>Commandes</h2><p id="refresh-info">Chargement…</p></div><button id="refresh" class="primary">Actualiser</button></div>
+    <div class="toolbar panel">
+      <div><h2>Commandes</h2><p id="refresh-info">Chargement…</p></div>
+      <button id="refresh" class="primary">Actualiser</button>
+    </div>
+    <div class="view-tabs panel">
+      <button class="view-tab active" data-view="active">Commandes en cours</button>
+      <button class="view-tab" data-view="archive">Archives</button>
+    </div>
     <div id="orders" class="orders"></div>
   </section>
 </main>
-<script type="module" src="admin.js?v=20260913-2"></script>
+<script type="module" src="admin.js?v=20260913-3"></script>
 </body>
 </html>
