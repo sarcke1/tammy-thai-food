@@ -1,5 +1,5 @@
 // V2 fallback renderer — menu only.
-// The complete cart and checkout logic belongs to app.js and checkout.js.
+// It must never override the real app renderer when app.js is working.
 import { dishes } from './data.js';
 import { spiceLabel } from './spice.js';
 
@@ -8,11 +8,13 @@ const garnishes = new Map();
 const spices = new Map();
 const garnishNames = ['Porc','Poulet','Crevette'];
 
+function fallbackActive(){ return !window.__tammyAppReady; }
 function quantityOf(id){ return quantities.get(id) || 0; }
 function garnishOf(id,name){ return garnishes.get(id)?.[name] || 0; }
 function setGarnish(id,name,value){ const current=garnishes.get(id)||{}; current[name]=Math.max(0,Math.min(20,value)); garnishes.set(id,current); }
 
 function renderFallback(refresh=false){
+  if(!fallbackActive())return;
   const grid=document.querySelector('#menu-grid');
   if(!grid)return;
   if(!refresh && grid.children.length)return;
@@ -26,6 +28,7 @@ function renderFallback(refresh=false){
 }
 
 document.querySelector('#menu-grid')?.addEventListener('click',event=>{
+  if(!fallbackActive())return;
   const card=event.target.closest('[data-dish-id]');
   if(!card)return;
   const id=card.dataset.dishId;
