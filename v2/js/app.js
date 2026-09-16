@@ -45,4 +45,5 @@ cartContent?.addEventListener('click',event=>{const remove=event.target.closest(
 cartButton?.addEventListener('click',()=>{cartPanel?.classList.toggle('open');renderCart();});
 document.querySelector('[data-cart-close]')?.addEventListener('click',()=>cartPanel?.classList.remove('open'));
 document.addEventListener('cart:updated',()=>{renderCart();if(!getCart().length){cardStates.clear();renderMenu(document.querySelector('.category-row .active')?.textContent.trim()||'Tous');}});
+window.__tammyAppReady = true;
 renderMenu();renderCart();loadProductsFromSupabase();
