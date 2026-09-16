@@ -1,8 +1,18 @@
 // V2 — CART MODULE
-// Each added dish is an individual unit so every spicy dish can have its own level.
+// Safe cart storage: a malformed localStorage value must never block the menu.
 
 const STORAGE_KEY = 'tammy-v2-cart';
-let items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+let items = [];
+
+try {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  const parsed = saved ? JSON.parse(saved) : [];
+  items = Array.isArray(parsed) ? parsed : [];
+} catch (error) {
+  console.warn('Cart storage reset:', error);
+  items = [];
+  try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
+}
 
 function normalizeItems() {
   items = items.map((item, index) => ({
@@ -15,7 +25,7 @@ function normalizeItems() {
 normalizeItems();
 
 function persist() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch (_) {}
   document.dispatchEvent(new CustomEvent('cart:updated', { detail: getCart() }));
 }
 
@@ -43,4 +53,4 @@ export function updateSpice(key, spice) {
 export function removeItem(key) { items = items.filter(entry => entry.key !== key); persist(); }
 export function clearCart() { items = []; persist(); }
 export function cartCount() { return items.length; }
-export function cartTotal() { return items.reduce((sum, item) => sum + item.price, 0); }
+export function cartTotal() { return items.reduce((sum, item) => sum + Number(item.price || 0), 0); }
