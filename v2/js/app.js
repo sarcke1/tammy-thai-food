@@ -41,8 +41,8 @@ async function loadProductsFromSupabase(){
         };
       });
 
-    const localNemsVariants = localDishes.filter(dish => dish.id.startsWith('nems-'));
-    dishes = [...remoteDishes, ...localNemsVariants]
+    const localNems = localDishes.find(dish => dish.id === 'nems');
+    dishes = [...remoteDishes, ...(localNems ? [localNems] : [])]
       .sort((a,b) => (categoryOrder[a.category] || 99) - (categoryOrder[b.category] || 99) || (a.menuPosition || 999) - (b.menuPosition || 999));
 
     renderMenu(document.querySelector('.category-row .active')?.textContent.trim() || 'Tous');
@@ -51,11 +51,11 @@ async function loadProductsFromSupabase(){
   }
 }
 
-function photoStyle(d){ if(!d.photo)return 'background:linear-gradient(135deg,#e8dfca,#d5dfd2)'; if(d.id.startsWith('nems-'))return `background-image:url('${d.photo}');background-size:90% auto;background-position:center;background-repeat:no-repeat;background-color:#e7dfcd`; if(d.photo.endsWith('.webp'))return `background-image:url('${d.photo}');background-size:400% 300%;background-position:${d.position||'center'}`; return `background-image:url('${d.photo}')`; }
+function photoStyle(d){ if(!d.photo)return 'background:linear-gradient(135deg,#e8dfca,#d5dfd2)'; if(d.id==='nems')return `background-image:url('${d.photo}');background-size:90% auto;background-position:center;background-repeat:no-repeat;background-color:#e7dfcd`; if(d.photo.endsWith('.webp'))return `background-image:url('${d.photo}');background-size:400% 300%;background-position:${d.position||'center'}`; return `background-image:url('${d.photo}')`; }
 function getState(dish){ if(!cardStates.has(dish.id))cardStates.set(dish.id,{quantity:0,spices:[],garnishes:{}}); return cardStates.get(dish.id); }
 function setQuantity(dish,quantity){ const state=getState(dish); state.quantity=Math.max(0,Math.min(20,quantity)); while(state.spices.length<state.quantity)state.spices.push(0); state.spices.length=state.quantity; }
 function garnishTotal(state,dish){ return (dish.garnishOptions||[]).reduce((sum,name)=>sum+(state.garnishes[name]||0),0); }
-function garnishRows(dish){ if(!dish.garnishOptions)return ''; const state=getState(dish); return `<div class="garnish-box"><div class="garnish-box-title">Choisissez votre garniture</div>${dish.garnishOptions.map(name=>`<div class="garnish-row"><span>${name}</span><div class="garnish-controls"><button type="button" data-garnish="${name}" data-garnish-delta="-1">−</button><b>${state.garnishes[name]||0}</b><button type="button" data-garnish="${name}" data-garnish-delta="1">+</button></div></div>`).join('')}</div>`; }
+function garnishRows(dish){ if(!dish.garnishOptions)return ''; const state=getState(dish); return `<div class="garnish-box"><div class="garnish-box-title">Choisissez votre garniture</div>${dish.garnishOptions.map(name=>`<div class="garnish-row"><span>Nems ${name.toLowerCase()}</span><div class="garnish-controls"><button type="button" data-garnish="${name}" data-garnish-delta="-1">−</button><b>${state.garnishes[name]||0}</b><button type="button" data-garnish="${name}" data-garnish-delta="1">+</button></div></div>`).join('')}</div>`; }
 function spiceRows(dish){ if(!dish.spicy)return ''; const state=getState(dish); if(state.quantity===0)return '<div class="spice-box spice-box-empty">Sélectionnez une quantité pour choisir le piment.</div>'; return `<div class="spice-box"><div class="spice-box-title">Choisissez le piment pour chaque plat</div>${state.spices.map((level,index)=>`<div class="spice-row" data-spice-row="${index}"><span>Plat ${index+1}</span><div class="spice-row-controls"><button type="button" data-spice-delta="-1">−</button><b>${spiceLabel(level)}</b><button type="button" data-spice-delta="1">+</button></div></div>`).join('')}</div>`; }
 function quantityControl(dish){ const state=getState(dish); return `<div class="quantity-row"><span>Quantité</span><div class="quantity-controls"><button type="button" data-quantity-delta="-1">−</button><b>${state.quantity}</b><button type="button" data-quantity-delta="1">+</button></div></div>`; }
 function renderMenu(category='Tous'){ const visible=category==='Tous'?dishes:dishes.filter(d=>d.category===category); if(!grid)return; grid.innerHTML=visible.map(d=>{const state=getState(d);const hasGarnish=Boolean(d.garnishOptions);const selected=hasGarnish?garnishTotal(state,d):state.quantity;const disabled=selected===0;return `<article class="dish-card" data-dish-id="${d.id}" data-category="${d.category}"><div class="dish-photo" style="${photoStyle(d)}">${d.spicy?'<span class="dish-badge">🌶️ Piment au choix</span>':''}</div><div class="dish-card-body"><div class="dish-title-row"><h3>${d.name}</h3><span class="price">${euro(d.price)}</span></div><p>${d.desc}</p>${hasGarnish?garnishRows(d):quantityControl(d)}${spiceRows(d)}<button class="button dish-action ${disabled?'is-disabled':''}" type="button" data-action="add" ${disabled?'disabled':''}>Ajouter au panier</button></div></article>`;}).join(''); }
