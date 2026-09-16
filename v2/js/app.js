@@ -20,16 +20,38 @@ async function loadProductsFromSupabase(){
     const { data, error } = await supabase.from('products').select('id,name,price,description,product_categories(name)');
     if(error){ console.error('Supabase products error — fallback local:', error.message); return; }
     if(!data?.length){ console.warn('Supabase products empty — fallback local'); return; }
-    dishes = data.map(product => {
-      const local = localDishes.find(d => d.name === product.name || (product.id === d.id));
-      return { id:product.id,name:product.name,price:Number(product.price),category:product.product_categories?.name||local?.category||'Plats',emoji:local?.emoji||'🍽️',photo:local?.photo||'',position:local?.position,desc:product.description||local?.desc||'',spicy:Boolean(local?.spicy),garnishOptions:local?.garnishOptions||null,preparation_minutes:local?.preparation_minutes??null,menuPosition:local?localDishes.indexOf(local):999 };
-    }).sort((a,b)=>(categoryOrder[a.category]||99)-(categoryOrder[b.category]||99)||a.menuPosition-b.menuPosition);
-    renderMenu(document.querySelector('.category-row .active')?.textContent.trim()||'Tous');
+
+    const remoteDishes = data
+      .filter(product => product.name !== 'Nems')
+      .map(product => {
+        const local = localDishes.find(d => d.name === product.name || product.id === d.id);
+        return {
+          id:product.id,
+          name:product.name,
+          price:Number(product.price),
+          category:product.product_categories?.name || local?.category || 'Plats',
+          emoji:local?.emoji || '🍽️',
+          photo:local?.photo || '',
+          position:local?.position,
+          desc:product.description || local?.desc || '',
+          spicy:Boolean(local?.spicy),
+          garnishOptions:local?.garnishOptions || null,
+          preparation_minutes:local?.preparation_minutes ?? null,
+          menuPosition:local ? localDishes.indexOf(local) : 999
+        };
+      });
+
+    const localNemsVariants = localDishes.filter(dish => dish.id.startsWith('nems-'));
+    dishes = [...remoteDishes, ...localNemsVariants]
+      .sort((a,b) => (categoryOrder[a.category] || 99) - (categoryOrder[b.category] || 99) || (a.menuPosition || 999) - (b.menuPosition || 999));
+
+    renderMenu(document.querySelector('.category-row .active')?.textContent.trim() || 'Tous');
   } catch(error) {
     console.error('Supabase unavailable — local menu kept:', error);
   }
 }
-function photoStyle(d){ if(!d.photo)return 'background:linear-gradient(135deg,#e8dfca,#d5dfd2)'; if(d.id==='nems')return `background-image:url('${d.photo}');background-size:90% auto;background-position:center;background-repeat:no-repeat;background-color:#e7dfcd`; if(d.photo.endsWith('.webp'))return `background-image:url('${d.photo}');background-size:400% 300%;background-position:${d.position||'center'}`; return `background-image:url('${d.photo}')`; }
+
+function photoStyle(d){ if(!d.photo)return 'background:linear-gradient(135deg,#e8dfca,#d5dfd2)'; if(d.id.startsWith('nems-'))return `background-image:url('${d.photo}');background-size:90% auto;background-position:center;background-repeat:no-repeat;background-color:#e7dfcd`; if(d.photo.endsWith('.webp'))return `background-image:url('${d.photo}');background-size:400% 300%;background-position:${d.position||'center'}`; return `background-image:url('${d.photo}')`; }
 function getState(dish){ if(!cardStates.has(dish.id))cardStates.set(dish.id,{quantity:0,spices:[],garnishes:{}}); return cardStates.get(dish.id); }
 function setQuantity(dish,quantity){ const state=getState(dish); state.quantity=Math.max(0,Math.min(20,quantity)); while(state.spices.length<state.quantity)state.spices.push(0); state.spices.length=state.quantity; }
 function garnishTotal(state,dish){ return (dish.garnishOptions||[]).reduce((sum,name)=>sum+(state.garnishes[name]||0),0); }
