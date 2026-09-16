@@ -5,7 +5,6 @@ const STORAGE_KEY = 'tammy-v2-cart';
 let items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
 
 function normalizeItems() {
-  // Old V2 grouped format is intentionally not reused: individual units are required.
   items = items.map((item, index) => ({
     ...item,
     key: item.key || `${item.id || 'item'}::${Date.now()}::${index}`,
@@ -20,15 +19,13 @@ function persist() {
   document.dispatchEvent(new CustomEvent('cart:updated', { detail: getCart() }));
 }
 
-export function getCart() {
-  return [...items];
-}
+export function getCart() { return [...items]; }
 
-export function addToCart(dish, spice = 0) {
+export function addToCart(dish, spice = 0, nameOverride = null) {
   items.push({
     key: `${dish.id}::${Date.now()}::${Math.random().toString(36).slice(2, 8)}`,
     id: dish.id,
-    name: dish.name,
+    name: nameOverride || dish.name,
     price: dish.price,
     spicy: Boolean(dish.spicy),
     spice: dish.spicy ? Math.max(0, Math.min(3, Number(spice) || 0)) : 0,
@@ -43,21 +40,7 @@ export function updateSpice(key, spice) {
   item.spice = Math.max(0, Math.min(3, Number(spice) || 0));
   persist();
 }
-
-export function removeItem(key) {
-  items = items.filter(entry => entry.key !== key);
-  persist();
-}
-
-export function clearCart() {
-  items = [];
-  persist();
-}
-
-export function cartCount() {
-  return items.length;
-}
-
-export function cartTotal() {
-  return items.reduce((sum, item) => sum + item.price, 0);
-}
+export function removeItem(key) { items = items.filter(entry => entry.key !== key); persist(); }
+export function clearCart() { items = []; persist(); }
+export function cartCount() { return items.length; }
+export function cartTotal() { return items.reduce((sum, item) => sum + item.price, 0); }
