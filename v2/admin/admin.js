@@ -16,8 +16,55 @@ function isChecked(id,i){return Boolean(getChecklist()[id]?.includes(i));}
 function updateChecklist(id,i,checked){const d=getChecklist(),list=new Set(d[id]||[]);checked?list.add(i):list.delete(i);d[id]=[...list];setChecklist(d);}
 function allChecked(o){return(o.order_items||[]).length>0&&o.order_items.every((_,i)=>isChecked(o.id,i));}
 
-function activateAudio(){try{audioContext=audioContext||new (window.AudioContext||window.webkitAudioContext)();if(audioContext.state==='suspended')audioContext.resume();audioEnabled=true;enableSoundButton.textContent='Son activé';alertStatus.textContent='Alertes sonores activées';enableSoundButton.disabled=true;playNotificationSound(false);}catch{alertStatus.textContent='Son non disponible sur ce navigateur';}}
-function playNotificationSound(repeat=true){if(!audioEnabled||!audioContext)return;const beep=()=>{const osc=audioContext.createOscillator(),gain=audioContext.createGain();osc.type='sine';osc.frequency.value=880;gain.gain.setValueAtTime(.0001,audioContext.currentTime);gain.gain.exponentialRampToValueAtTime(.18,audioContext.currentTime+.02);gain.gain.exponentialRampToValueAtTime(.0001,audioContext.currentTime+.28);osc.connect(gain);gain.connect(audioContext.destination);osc.start();osc.stop(audioContext.currentTime+.3);};beep();if(repeat)setTimeout(beep,380);}
+async function activateAudio(){
+  if(audioEnabled){
+    audioEnabled=false;
+    enableSoundButton.textContent='Activer le son';
+    enableSoundButton.disabled=false;
+    alertStatus.textContent='Alertes sonores désactivées';
+    return;
+  }
+  try{
+    const AudioCtor=window.AudioContext||window.webkitAudioContext;
+    if(!AudioCtor)throw new Error('AudioContext non supporté');
+    audioContext=audioContext||new AudioCtor();
+    if(audioContext.state==='suspended')await audioContext.resume();
+    if(audioContext.state!=='running')throw new Error('AudioContext non actif');
+    audioEnabled=true;
+    enableSoundButton.textContent='Désactiver le son';
+    enableSoundButton.disabled=false;
+    alertStatus.textContent='Alertes sonores activées';
+    await playNotificationSound(false);
+  }catch(error){
+    console.error('Audio activation error:',error);
+    audioEnabled=false;
+    alertStatus.textContent='Son non disponible sur ce navigateur';
+  }
+}
+
+async function playNotificationSound(repeat=true){
+  if(!audioContext||!audioEnabled)return;
+  try{
+    if(audioContext.state==='suspended')await audioContext.resume();
+    if(audioContext.state!=='running')return;
+    const beep=()=>{
+      const now=audioContext.currentTime;
+      const osc=audioContext.createOscillator();
+      const gain=audioContext.createGain();
+      osc.type='sine';
+      osc.frequency.setValueAtTime(880,now);
+      gain.gain.setValueAtTime(0.0001,now);
+      gain.gain.exponentialRampToValueAtTime(0.35,now+0.03);
+      gain.gain.exponentialRampToValueAtTime(0.0001,now+0.45);
+      osc.connect(gain);
+      gain.connect(audioContext.destination);
+      osc.start(now);
+      osc.stop(now+0.5);
+    };
+    beep();
+    if(repeat){setTimeout(beep,550);setTimeout(beep,1100);}
+  }catch(error){console.error('Notification sound error:',error);}
+}
 function startAutoRefresh(){if(refreshTimer)return;refreshTimer=setInterval(()=>loadOrders(true),5000);}
 
 async function enqueueOrder(orderId){const{data:existing,error:ee}=await supabase.from('kitchen_queue').select('id').eq('order_id',orderId).maybeSingle();if(ee){alert('Erreur de vérification de la file cuisine : '+ee.message);return false;}if(!existing){const{data:last,error:le}=await supabase.from('kitchen_queue').select('queue_position').order('queue_position',{ascending:false}).limit(1).maybeSingle();if(le){alert('Erreur de lecture de la file cuisine : '+le.message);return false;}const pos=(last?.queue_position||0)+1;const{error:ie}=await supabase.from('kitchen_queue').insert({order_id:orderId,queue_position:pos,status:'in_progress'});if(ie){alert('Erreur d’ajout à la file cuisine : '+ie.message);return false;}}const{error:ue}=await supabase.from('orders').update({status:'preparing'}).eq('id',orderId);if(ue){alert('Commande ajoutée mais statut non mis à jour : '+ue.message);return false;}return true;}
