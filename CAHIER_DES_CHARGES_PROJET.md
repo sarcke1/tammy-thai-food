@@ -1,7 +1,7 @@
 # Cahier des charges évolutif — Tammy Thai Food
 
 Dernière mise à jour : 16 septembre 2026
-Version de référence : V2.01
+Version de référence : V2.02
 
 ## 1. Objectif du projet
 
@@ -14,7 +14,7 @@ Le site doit être simple, rapide, responsive, fiable sur ordinateur et mobile, 
 1. La V1 est une référence fonctionnelle et ne doit jamais être modifiée pendant le développement de la V2.
 2. Une modification ciblée ne doit toucher qu'à la zone concernée.
 3. Ne jamais modifier simultanément plusieurs modules fonctionnels sans nécessité.
-4. Avant toute modification, lire les fichiers réels présents sur GitHub. Ne jamais se baser uniquement sur une ancienne version supposée.
+4. Avant toute modification, lire les fichiers réels présents sur GitHub.
 5. Après chaque modification GitHub, relire le fichier modifié pour vérifier le contenu réellement enregistré.
 6. Toute nouvelle fonction doit être testée avant de passer à la suivante.
 7. Ne jamais supprimer une fonction existante pour en ajouter une autre sans validation explicite.
@@ -24,164 +24,164 @@ Le site doit être simple, rapide, responsive, fiable sur ordinateur et mobile, 
 
 ## 3. Gestion des versions
 
-Le projet utilise des versions fonctionnelles validées :
+- V2.01 : base fonctionnelle avec menu, quantités, piment, panier, Supabase et administration.
+- V2.02 : séparation des nems en trois variantes avec compteurs indépendants.
+- V2.03 et suivantes : une seule évolution fonctionnelle ou visuelle à la fois.
 
-- V2.01 : base stable actuelle — menu visible, quantités, piment, panier de base.
-- V2.02 et suivantes : une évolution fonctionnelle ou visuelle à la fois.
-
-Chaque version doit être considérée comme validée uniquement après test PC et mobile.
-
-Les paramètres de cache HTML/CSS/JS doivent être incrémentés à chaque changement important afin d'éviter les anciennes versions mises en cache par GitHub Pages.
+Une version n'est considérée comme stable qu'après validation PC et mobile.
+Les cache-busters HTML/CSS/JS doivent être incrémentés après chaque changement important.
 
 ## 4. Architecture technique
 
-La V2 doit rester modulaire :
-
 - `v2/index.html` : structure générale uniquement.
 - `v2/js/data.js` : catalogue local, contenu, prix, descriptions, photos et options produits.
-- `v2/js/app.js` : moteur principal du menu et raccordement des interactions.
+- `v2/js/app.js` : moteur principal du menu et interactions.
 - `v2/js/menu-fallback.js` : affichage de secours du menu si le moteur principal échoue.
 - `v2/js/cart.js` : panier, quantités, stockage local et total.
-- `v2/js/spice.js` : gestion des niveaux de piment.
+- `v2/js/spice.js` : niveaux de piment.
 - `v2/js/checkout.js` : formulaire et création de commande.
 - `v2/js/supabase.js` : connexion publique Supabase uniquement.
-- `v2/admin/` : administration séparée du site public.
-- `v2/css/variables.css` : variables graphiques.
-- `v2/css/layout.css` : structure générale.
-- `v2/css/header.css` : en-tête.
-- `v2/css/hero.css` : bannière.
-- `v2/css/menu.css` : cartes et zone menu.
-- `v2/css/cart.css` : panier.
-- `v2/css/footer.css` : pied de page.
-- `v2/css/responsive.css` : adaptation mobile.
+- `v2/admin/` : administration séparée.
+- CSS séparés par zone : variables, layout, header, hero, menu, cart, footer et responsive.
 
-## 5. Fonctionnalités déjà présentes ou à préserver
+## 5. Fonctions à préserver
 
 - Affichage du catalogue par catégories.
-- Photos et descriptions des plats.
-- Quantité `- / +` sur les plats.
-- Choix du niveau de piment pour les plats concernés.
+- Photos et descriptions.
+- Contrôles `- / +` sur les produits.
+- Choix du piment pour les plats concernés.
 - Ajout au panier.
-- Affichage du compteur du panier.
-- Affichage du total.
-- Suppression d'articles.
-- Vidage du panier.
-- Persistance locale du panier.
-- Connexion à Supabase.
-- Création de commande en statut `pending_payment`.
-- Administration séparée fonctionnelle.
-- Responsive PC/mobile.
+- Compteur et total.
+- Suppression et vidage du panier.
+- Persistance locale.
+- Connexion Supabase.
+- Création de commande `pending_payment`.
+- Administration fonctionnelle.
+- Affichage PC et mobile.
 
-## 6. Catalogue et options produits
+## 6. Catalogue actuel
 
-Le catalogue doit pouvoir gérer :
+Le catalogue comprend notamment :
 
-- nom du produit ;
-- catégorie ;
-- prix ;
-- description ;
-- photo ;
-- ordre d'affichage ;
-- produit épicé ou non ;
-- niveau de piment par portion ;
-- options de garniture ;
-- suppléments éventuels ;
-- disponibilité temporaire.
+- Pad Thaï — 11 €
+- Plat thaï du jour — 9 €
+- Menu enfant — 6 €
+- Nems poulet — 1 € l'unité
+- Nems porc — 1 € l'unité
+- Nems crevette — 1 € l'unité
+- Samoussa — 1,50 €
+- Spring roll — 3 €
+- Sticky rice mangue — 4 €
+- Cola — 2 €
+- Ice Tea — 2 €
+- Thai Iced Tea — 3 €
 
-Pour les produits avec plusieurs portions, chaque portion doit pouvoir avoir son propre niveau de piment.
+## 7. Évolution V2.02 — variantes des nems
 
-## 7. Garnitures et variantes
+Le produit unique « Nems » est remplacé dans la V2 par trois variantes indépendantes :
 
-Prévoir un système propre pour les plats concernés, notamment :
+```text
+Nems poulet       - 0 +
+Nems porc         - 0 +
+Nems crevette     - 0 +
+```
 
-- choix de la viande ou garniture ;
+Règles :
+
+- chaque variante possède son propre compteur ;
+- les quantités sont indépendantes ;
+- chaque variante est ajoutée séparément au panier ;
+- le prix est de 1 € par unité ;
+- le nom de la variante doit apparaître dans le panier et la commande ;
+- cette évolution ne doit pas modifier les autres entrées ou plats ;
+- le système doit fonctionner avec le moteur principal et le fallback ;
+- l'ancien produit générique « Nems » provenant de Supabase ne doit pas remplacer les trois variantes locales.
+
+## 8. Garnitures et variantes futures
+
+Un système plus général pourra être développé ultérieurement pour d'autres produits, mais il ne doit pas être généralisé automatiquement à partir de la V2.02.
+
+Les futures options pourront inclure :
+
 - poulet ;
 - porc ;
 - crevettes ;
-- quantité indépendante par garniture si nécessaire ;
-- supplément tarifaire éventuel ;
-- affichage clair dans le panier et dans la commande administrateur.
+- quantités indépendantes ;
+- suppléments éventuels ;
+- affichage détaillé dans le panier et l'administration.
 
-Le système de garnitures ne doit pas casser les contrôles de quantité classiques des autres produits.
-
-## 8. Commande et Click & Collect
+## 9. Commande et Click & Collect
 
 À développer progressivement :
 
 - choix du service midi ou soir ;
 - génération des créneaux de retrait ;
-- détection du prochain créneau disponible ;
+- prochain créneau disponible ;
 - délai de préparation ;
 - formulaire client ;
-- validation de commande ;
+- validation ;
 - numéro de commande ;
 - paiement en ligne ;
 - confirmation client ;
 - enregistrement complet dans Supabase.
 
-## 9. Administration
+## 10. Administration
 
-L'administration doit rester indépendante du site public et permettre progressivement :
+L'administration doit rester indépendante et permettre progressivement :
 
 - connexion sécurisée ;
-- liste des commandes ;
-- détail d'une commande ;
-- statut en attente ;
-- statut en préparation ;
-- statut prête ;
+- liste et détail des commandes ;
+- statuts en attente, préparation et prête ;
 - estimation du temps ;
 - gestion des produits et disponibilités ;
 - statistiques simples.
 
-Toute modification du site public doit vérifier qu'elle ne casse pas l'administration, notamment le module partagé Supabase.
+Toute modification publique doit vérifier qu'elle ne casse pas le module Supabase partagé ni l'administration.
 
-## 10. Méthode obligatoire avant chaque changement
-
-Avant modification :
+## 11. Méthode obligatoire avant chaque changement
 
 1. Identifier précisément la fonctionnalité demandée.
-2. Identifier le ou les fichiers réellement concernés.
-3. Lire leur contenu actuel sur GitHub.
-4. Vérifier les dépendances avec les autres modules.
-5. Définir ce qui ne doit absolument pas changer.
-6. Modifier uniquement la zone nécessaire.
-7. Relire le fichier après écriture.
-8. Vérifier les éventuelles erreurs de syntaxe ou de logique.
+2. Lire le cahier des charges.
+3. Lire les fichiers réels concernés sur GitHub.
+4. Vérifier leurs dépendances.
+5. Définir ce qui ne doit pas changer.
+6. Modifier uniquement le nécessaire.
+7. Relire chaque fichier modifié après écriture.
+8. Vérifier syntaxe et logique.
 9. Incrémenter le cache-buster si nécessaire.
-10. Donner à Cédric l'URL de test et les points précis à contrôler.
+10. Donner l'URL de test et les contrôles à effectuer.
+11. Mettre à jour ce cahier après chaque décision ou fonctionnalité validée.
 
-## 11. Critères de validation
+## 12. Critères de validation
 
-Une évolution n'est pas considérée comme terminée tant que :
+Une évolution n'est terminée que si :
 
 - le menu s'affiche ;
 - les catégories fonctionnent ;
-- les quantités `- / +` fonctionnent ;
+- les contrôles `- / +` fonctionnent ;
 - le piment fonctionne si concerné ;
 - l'ajout au panier fonctionne ;
 - le panier s'ouvre ;
-- aucun autre plat ou module n'a régressé ;
-- le rendu PC est correct ;
-- le rendu mobile est correct ;
+- aucun autre produit ou module ne régresse ;
+- le PC fonctionne ;
+- le mobile fonctionne ;
 - l'administration fonctionne toujours si Supabase a été touché.
 
-## 12. Priorité de développement
+## 13. Priorité de développement
 
-Ordre recommandé :
+1. Stabiliser V2.02.
+2. Tester les trois variantes de nems et leur panier.
+3. Finaliser les cartes et options produits.
+4. Stabiliser panier et variantes.
+5. Créneaux Click & Collect.
+6. Checkout complet.
+7. Paiement.
+8. Confirmation et suivi.
+9. Administration avancée.
+10. Optimisation et tests finaux.
 
-1. Stabiliser totalement V2.01.
-2. Finaliser les cartes produits et garnitures.
-3. Stabiliser panier et variantes.
-4. Créneaux Click & Collect.
-5. Checkout complet.
-6. Paiement.
-7. Confirmation et suivi de commande.
-8. Administration avancée.
-9. Optimisation visuelle et performance.
-10. Tests finaux PC/mobile.
+## 14. Principe anti-régression
 
-## 13. Principe de sécurité contre les régressions
+Aucune nouvelle fonction ne doit être développée sur une base non validée. Si une modification casse une fonction existante, restaurer d'abord la dernière version fonctionnelle puis reprendre la modification de manière isolée.
 
-Aucune nouvelle fonction ne doit être développée sur une base non validée. Si une modification casse une fonction existante, il faut d'abord restaurer la dernière version fonctionnelle, puis reprendre la modification de manière isolée.
-
-Ce document est évolutif : toute nouvelle décision importante, contrainte ou fonctionnalité validée doit y être ajoutée avant de poursuivre le développement.
+Ce document est évolutif et constitue la référence fonctionnelle du projet. Toute nouvelle décision importante, contrainte ou fonctionnalité validée doit y être ajoutée.
