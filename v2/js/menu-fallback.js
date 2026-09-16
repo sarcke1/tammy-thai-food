@@ -10,12 +10,14 @@ const spices = new Map();
 function quantityOf(id) { return quantities.get(id) || 0; }
 function setQuantity(id, value) {
   quantities.set(id, Math.max(0, Math.min(20, value)));
-  renderFallback();
+  renderFallback(true);
 }
 
-function renderFallback() {
+function renderFallback(refresh = false) {
   const grid = document.querySelector('#menu-grid');
-  if (!grid || grid.children.length) return;
+  if (!grid) return;
+  if (!refresh && grid.children.length) return;
+  grid.dataset.fallbackRenderer = 'true';
 
   grid.innerHTML = dishes.map(dish => {
     const quantity = quantityOf(dish.id);
@@ -39,16 +41,17 @@ document.querySelector('#menu-grid')?.addEventListener('click', event => {
   if (!id) return;
   if (event.target.closest('[data-minus]')) return setQuantity(id, quantityOf(id) - 1);
   if (event.target.closest('[data-plus]')) return setQuantity(id, quantityOf(id) + 1);
-  if (event.target.closest('[data-spice-minus]')) { spices.set(id, Math.max(0, (spices.get(id) || 0) - 1)); return renderFallback(); }
-  if (event.target.closest('[data-spice-plus]')) { spices.set(id, Math.min(3, (spices.get(id) || 0) + 1)); return renderFallback(); }
+  if (event.target.closest('[data-spice-minus]')) { spices.set(id, Math.max(0, (spices.get(id) || 0) - 1)); return renderFallback(true); }
+  if (event.target.closest('[data-spice-plus]')) { spices.set(id, Math.min(3, (spices.get(id) || 0) + 1)); return renderFallback(true); }
   if (event.target.closest('[data-add]')) {
     const dish = dishes.find(item => item.id === id);
     const quantity = quantityOf(id);
     for (let i = 0; i < quantity; i++) addToCart(dish, dish.spicy ? (spices.get(id) || 0) : 0);
     quantities.set(id, 0);
-    renderFallback();
-    document.querySelector('#cart-count').textContent = getCart().length;
+    renderFallback(true);
+    const count = document.querySelector('#cart-count');
+    if (count) count.textContent = getCart().length;
   }
 });
 
-setTimeout(renderFallback, 800);
+setTimeout(() => renderFallback(false), 800);
