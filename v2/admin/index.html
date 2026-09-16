@@ -8,10 +8,10 @@
 </head>
 <body>
 <main class="admin-shell">
-  <header class="admin-header"><div><p class="eyebrow">Espace privé</p><h1>Tammy Thai Food</h1><p>Gestion des commandes</p></div><button id="logout" class="secondary hidden">Se déconnecter</button></header>
+  <header class="admin-header"><div><p class="eyebrow">Espace privé</p><h1>Tammy Thai Food</h1><p>Gestion des commandes</p></div><button type="button" id="logout" class="secondary hidden">Se déconnecter</button></header>
   <section id="login-panel" class="panel login-panel"><h2>Connexion Tammy</h2><form id="login-form"><label>Email<input id="email" type="email" required autocomplete="username"></label><label>Mot de passe<input id="password" type="password" required autocomplete="current-password"></label><button class="primary" type="submit">Se connecter</button><p id="login-status" class="status"></p></form></section>
-  <section id="dashboard" class="hidden"><div class="toolbar panel"><div><h2>Commandes</h2><p id="refresh-info">Chargement…</p><p id="alert-status" class="status">Alertes sonores désactivées</p></div><div class="toolbar-actions"><button id="enable-sound" class="secondary">Activer le son</button><button id="refresh" class="primary">Actualiser</button></div></div><div class="view-tabs panel"><button class="view-tab active" data-view="active">En cours</button><button class="view-tab" data-view="kitchen">En cuisine</button><button class="view-tab" data-view="pickup">En attente de retrait</button><button class="view-tab" data-view="archive">Archives</button></div><div id="orders" class="orders"></div></section>
+  <section id="dashboard" class="hidden"><div class="toolbar panel"><div><h2>Commandes</h2><p id="refresh-info">Chargement…</p><p id="alert-status" class="status">Alertes sonores désactivées</p></div><div class="toolbar-actions"><button type="button" id="enable-sound" class="secondary">Activer le son</button><button type="button" id="refresh" class="primary">Actualiser</button></div></div><div class="view-tabs panel"><button type="button" class="view-tab active" data-view="active">En cours</button><button type="button" class="view-tab" data-view="kitchen">En cuisine</button><button type="button" class="view-tab" data-view="pickup">En attente de retrait</button><button type="button" class="view-tab" data-view="archive">Archives</button></div><div id="orders" class="orders"></div></section>
 </main>
-<script type="module" src="admin.js?v=20260916-1"></script>
+<script type="module" src="admin.js?v=20260916-2"></script>
 </body>
 </html>
