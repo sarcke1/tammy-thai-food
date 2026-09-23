@@ -5,7 +5,7 @@ const sheet = "../assets/dishes-sheet.webp";
 const pexels = "https://images.pexels.com/photos/";
 
 export const dishes = [
-  { id:"pad", name:"Pad Thaï", price:11, category:"Plats", emoji:"🍜", photo:"Pad Thai.png", desc:"Nouilles de riz sautées façon thaïlandaise avec tofu, œuf, ail, échalote, sauce et cacahuètes. Au choix : crevettes, porc ou poulet.", spicy:true, proteinOptions:["Crevettes","Porc","Poulet"], chiliPacketAvailable:true },
+  { id:"pad", name:"Pad Thaï", price:11, category:"Plats", emoji:"🍜", photo:sheet, position:"0% 0%", desc:"Nouilles de riz sautées façon thaïlandaise avec tofu, œuf, ail, échalote, sauce et cacahuètes. Au choix : crevettes, porc ou poulet.", spicy:true, proteinOptions:["Crevettes","Porc","Poulet"], chiliPacketAvailable:true },
   { id:"jour", name:"Plat thaï du jour", price:9, category:"Plats", emoji:"🍛", photo:sheet, position:"33.333% 0%", desc:"Une recette thaï différente selon les jours.", spicy:true },
   { id:"kids", name:"Menu enfant", price:6, category:"Plats", emoji:"🍗", photo:pexels+"36879224/pexels-photo-36879224.jpeg?auto=compress&cs=tinysrgb&w=900", desc:"2 pilons de poulet frit + frites, ou 2 nems + riz.", spicy:false },
   { id:"riz-saute", name:"Riz sauté au choix", price:10, category:"Plats", emoji:"🍚", photo:"Riz frit poulet.png", desc:"Riz sauté thaïlandais préparé avec œuf, ail, carotte, sauce et coriandre. Au choix : poulet, bœuf, porc ou crevettes.", spicy:false },
