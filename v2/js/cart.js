@@ -10,7 +10,8 @@ function normalizeItems() {
     key: item.key || `${item.id || 'item'}::${Date.now()}::${index}`,
     quantity: 1,
     spice: Number(item.spice || 0),
-    protein: item.protein || ''
+    protein: item.protein || '',
+    chiliPacket: Boolean(item.chiliPacket)
   }));
 }
 normalizeItems();
@@ -24,7 +25,7 @@ export function getCart() {
   return [...items];
 }
 
-export function addToCart(dish, spice = 0, protein = '') {
+export function addToCart(dish, spice = 0, protein = '', chiliPacket = false) {
   items.push({
     key: `${dish.id}::${Date.now()}::${Math.random().toString(36).slice(2, 8)}`,
     id: dish.id,
@@ -33,6 +34,7 @@ export function addToCart(dish, spice = 0, protein = '') {
     spicy: Boolean(dish.spicy),
     spice: dish.spicy ? Math.max(0, Math.min(3, Number(spice) || 0)) : 0,
     protein,
+    chiliPacket: Boolean(chiliPacket),
     quantity: 1
   });
   persist();
@@ -60,5 +62,5 @@ export function cartCount() {
 }
 
 export function cartTotal() {
-  return items.reduce((sum, item) => sum + item.price, 0);
+  return items.reduce((sum, item) => sum + item.price + (item.chiliPacket ? 0.50 : 0), 0);
 }
