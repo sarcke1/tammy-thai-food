@@ -101,7 +101,7 @@ function mountCheckout(){
     confirmation.className = 'checkout-success';
     confirmation.innerHTML = `<strong>Commande n°${order.order_number} enregistrée.</strong><br>Paiement à venir.`;
     panel.appendChild(confirmation);
-    updateCheckoutVisibility();
+    panel.hidden = false;
   });
 }
 
