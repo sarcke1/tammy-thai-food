@@ -39,7 +39,7 @@ function renderCart(){
   const items=getCart();
   if(cartCountEl)cartCountEl.textContent=cartCount();
   if(!items.length){cartContent.innerHTML='<p class="empty-cart">Votre panier est vide.</p>';return;}
-  cartContent.innerHTML=items.map((item,index)=>'<div class="cart-line cart-unit"><div class="cart-unit-info"><strong>'+item.name+' <small>#'+(index+1)+'</small></strong>'+(item.protein?'<small>Viande : '+item.protein+'</small>':'')+(item.spicy?'<div class="cart-spice-control"><span>Piment :</span><button data-cart-key="'+item.key+'" data-spice-delta="-1">−</button><b>'+spiceLabel(item.spice)+'</b><button data-cart-key="'+item.key+'" data-spice-delta="1">+</button></div>':'<small>Sans piment</small>')+(item.chiliPacket?'<small>+ Sachet de piment : 0,50 €</small>':'')+'<span>'+euro(item.price)+'</span></div><button class="cart-remove" data-remove-key="'+item.key+'">×</button></div>').join('')+'<div class="cart-total"><strong>Total</strong><strong>'+euro(cartTotal())+'</strong></div><div class="cart-actions"><button class="button cart-validate" data-validate-cart>Valider le panier</button><button class="cart-clear secondary-cart-action" data-clear-cart>Vider le panier</button></div>';
+  cartContent.innerHTML=items.map((item,index)=>'<div class="cart-line cart-unit"><div class="cart-unit-info"><strong>'+item.name+' <small>#'+(index+1)+'</small></strong>'+(item.protein?'<small>Viande : '+item.protein+'</small>':'')+(item.spicy?'<div class="cart-spice-control"><span>Piment :</span><button data-cart-key="'+item.key+'" data-spice-delta="-1">−</button><b>'+spiceLabel(item.spice)+'</b><button data-cart-key="'+item.key+'" data-spice-delta="1">+</button></div>':'<small>Sans piment</small>')+'<span>'+euro(item.price)+'</span></div><button class="cart-remove" data-remove-key="'+item.key+'">×</button></div>').join('')+'<div class="cart-total"><strong>Total</strong><strong>'+euro(cartTotal())+'</strong></div><div class="cart-actions"><button class="button cart-validate" data-validate-cart>Valider le panier</button><button class="cart-clear secondary-cart-action" data-clear-cart>Vider le panier</button></div>';
 }
 
 categoryButtons.forEach(button=>button.addEventListener('click',()=>{categoryButtons.forEach(b=>b.classList.remove('active'));button.classList.add('active');renderMenu(button.textContent.trim());}));
@@ -50,24 +50,6 @@ grid?.addEventListener('click',event=>{
   const state=getState(dish);
   const pq=event.target.closest('[data-protein-delta]');
   if(pq){const row=pq.closest('[data-protein-row]');setProteinQuantity(dish,row.dataset.proteinRow,Number(pq.dataset.proteinDelta)+(Number(state.proteinQuantities?.[row.dataset.proteinRow]||0)));renderMenu(document.querySelector('.category-row .active')?.textContent.trim()||'Tous');return;}
-  const cq=event.target.closest('[data-chili-delta]');
-  if(cq){state.chiliPacketQty=Math.max(0,Math.min(1,state.chiliPacketQty+Number(cq.dataset.chiliDelta)));renderMenu(document.querySelector('.category-row .active')?.textContent.trim()||'Tous');return;}
-  const q=event.target.closest('[data-quantity-delta]');
-  if(q){setQuantity(dish,state.quantity+Number(q.dataset.quantityDelta));renderMenu(document.querySelector('.category-row .active')?.textContent.trim()||'Tous');return;}
-  const s=event.target.closest('[data-spice-delta]');
-  if(s){const row=s.closest('[data-spice-row]');const i=Number(row.dataset.spiceRow);state.spices[i]=Math.max(0,Math.min(3,state.spices[i]+Number(s.dataset.spiceDelta)));renderMenu(document.querySelector('.category-row .active')?.textContent.trim()||'Tous');return;}
-  if(event.target.closest('[data-action="add"]')){
-    let spiceIndex=0;
-    if(dish.proteinOptions?.length){
-      dish.proteinOptions.forEach(protein=>{
-        const quantity=Number(state.proteinQuantities?.[protein]||0);
-        for(let i=0;i<quantity;i++){addToCart(dish,state.spices[spiceIndex]||0,protein);spiceIndex++;}
-      });
-    }else{
-      for(let i=0;i<state.quantity;i++){addToCart(dish,state.spices[i]||0,state.protein);}
-    }
-    renderCart();cartPanel?.classList.add('open');
-  }
 });
 cartContent?.addEventListener('click',event=>{const remove=event.target.closest('[data-remove-key]');if(remove){removeItem(remove.dataset.removeKey);renderCart();return;}const s=event.target.closest('[data-spice-delta]');if(s){const item=getCart().find(x=>x.key===s.dataset.cartKey);if(item)updateSpice(item.key,item.spice+Number(s.dataset.spiceDelta));renderCart();return;}const clear=event.target.closest('[data-clear-cart]');if(clear){if(confirm('Voulez-vous vraiment vider complètement le panier ?'))clearCart();return;}const validate=event.target.closest('[data-validate-cart]');if(validate)document.dispatchEvent(new CustomEvent('checkout:open'));});
 cartButton?.addEventListener('click',()=>{cartPanel?.classList.toggle('open');renderCart();});
