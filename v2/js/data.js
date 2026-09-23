@@ -10,8 +10,6 @@ export const dishes = [
   { id:"kids", name:"Menu enfant", price:6, category:"Plats", emoji:"🍗", photo:pexels+"36879224/pexels-photo-36879224.jpeg?auto=compress&cs=tinysrgb&w=900", desc:"2 pilons de poulet frit + frites, ou 2 nems + riz.", spicy:false },
   { id:"riz-saute", name:"Riz sauté au choix", price:10, category:"Plats", emoji:"🍚", photo:"Riz frit poulet.png", desc:"Riz sauté thaïlandais préparé avec œuf, ail, carotte, sauce et coriandre. Au choix : poulet, bœuf, porc ou crevettes.", spicy:false },
   { id:"tom-kha-kai", name:"Tom kha kai", price:9, category:"Plats", emoji:"🥥", photo:"Tom kha kai.png", desc:"Soupe thaïlandaise au lait de coco et poulet, avec citronnelle, galanga, feuilles de combava et échalote. Piment au choix de 0 à 3.", spicy:true },
-  { id:"nems", name:"Nems", price:1, category:"Entrées", emoji:"🥢", photo:pexels+"12356601/pexels-photo-12356601.jpeg?auto=compress&cs=tinysrgb&w=900", desc:"Nems thaïlandais croustillants, à l’unité.", spicy:false },
-  { id:"samoussa", name:"Samoussa", price:1.5, category:"Entrées", emoji:"🥟", photo:pexels+"28075291/pexels-photo-28075291.jpeg?auto=compress&cs=tinysrgb&w=900", desc:"Samoussa croustillant, à l’unité.", spicy:false },
   { id:"spring", name:"Rouleau de printemps", price:2, category:"Entrées", emoji:"🌯", photo:"Rouleau de printemps.png", desc:"Rouleau de printemps aux crevettes, salade, carotte, menthe, coriandre et nouilles chinoises, roulé dans une feuille de riz. Servi avec sa sauce.", spicy:false },
   { id:"mango", name:"Sticky rice mangue", price:4, category:"Desserts", emoji:"🥭", photo:sheet, position:"100% 100%", desc:"Riz gluant au lait de coco et mangue fraîche, selon saison.", spicy:false },
   { id:"cola", name:"Cola", price:2, category:"Boissons", emoji:"🥤", photo:pexels+"844875/pexels-photo-844875.jpeg?auto=compress&cs=tinysrgb&w=900", desc:"Boisson fraîche.", spicy:false },
@@ -28,6 +26,6 @@ export const serviceWindows = [
 
 export const preparation = {
   pad:{base:8,extra:2}, jour:{base:7,extra:2}, kids:{base:5,extra:1.5}, "riz-saute":{base:8,extra:1}, "tom-kha-kai":{base:8,extra:1},
-  nems:{base:2,extra:.5}, samoussa:{base:2,extra:.5}, spring:{base:1.5,extra:.3},
+  spring:{base:1.5,extra:.3},
   mango:{base:2,extra:.5}, cola:{base:.5,extra:.2}, "ice-tea":{base:.5,extra:.2}, "thai-tea":{base:.7,extra:.2}
 };
