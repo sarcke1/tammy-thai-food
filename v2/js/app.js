@@ -1,5 +1,5 @@
 // V2 — UI RENDERER + EVENT WIRING
-import { dishes as localDishes } from './data.js?v=20260923-13';
+import { dishes as localDishes } from './data.js?v=20260923-14';
 import { spiceLabel } from './spice.js';
 import { supabase } from './supabase.js';
 import { addToCart, getCart, updateSpice, removeItem, clearCart, cartCount, cartTotal } from './cart.js?v=20260923-08';
