@@ -1,17 +1,13 @@
 import { supabase } from './supabase.js';
-import { getCart, clearCart } from './cart.js?v=20260923-04';
+import { getCart, clearCart } from './cart.js?v=20260923-05';
 
 const panel = document.querySelector('#checkout-content');
 let checkoutForm = null;
 
-function updateCheckoutVisibility(){
-  if(!panel) return;
-  panel.hidden = getCart().length === 0;
-}
+function updateCheckoutVisibility(){ if(!panel) return; panel.hidden = getCart().length === 0; }
 
 function mountCheckout(){
   if(!panel || checkoutForm) return;
-
   const box = document.createElement('form');
   box.id = 'order-form';
   box.hidden = true;
@@ -24,7 +20,6 @@ function mountCheckout(){
     <input name="phone" placeholder="Téléphone" autocomplete="tel" required>
     <button class="button" type="submit">Confirmer les informations</button>
     <p id="order-status"></p>`;
-
   panel.appendChild(box);
   checkoutForm = box;
 
@@ -40,39 +35,25 @@ function mountCheckout(){
     const submit = box.querySelector('button[type="submit"]');
     const formData = new FormData(box);
     const cartItems = getCart();
-
-    if(!cartItems.length){
-      status.textContent = 'Votre panier est vide.';
-      updateCheckoutVisibility();
-      return;
-    }
+    if(!cartItems.length){ status.textContent = 'Votre panier est vide.'; updateCheckoutVisibility(); return; }
 
     submit.disabled = true;
     status.textContent = 'Vérification des produits…';
 
-    const { data: products, error: productsError } = await supabase
-      .from('products')
-      .select('id,name');
-
-    if(productsError){
-      status.textContent = 'Erreur produits : ' + productsError.message;
-      submit.disabled = false;
-      return;
-    }
+    const { data: products, error: productsError } = await supabase.from('products').select('id,name');
+    if(productsError){ status.textContent = 'Erreur produits : ' + productsError.message; submit.disabled = false; return; }
 
     const productsByName = new Map((products || []).map(product => [product.name.trim().toLowerCase(), product]));
     const items = [];
     for(const item of cartItems){
       const product = productsByName.get(String(item.name || '').trim().toLowerCase());
-      if(!product){
-        status.textContent = `Produit introuvable : ${item.name || item.id}`;
-        submit.disabled = false;
-        return;
-      }
+      if(!product){ status.textContent = `Produit introuvable : ${item.name || item.id}`; submit.disabled = false; return; }
       items.push({
         product_id: product.id,
         quantity: 1,
-        spice_level: item.spicy ? Math.max(0, Math.min(3, Number(item.spice) || 0)) : 0
+        spice_level: item.spicy ? Math.max(0, Math.min(3, Number(item.spice) || 0)) : 0,
+        protein: item.protein || null,
+        chili_packet_qty: item.chiliPacket ? 1 : 0
       });
     }
 
@@ -87,11 +68,7 @@ function mountCheckout(){
       p_customer_note: null
     });
 
-    if(error){
-      status.textContent = 'Erreur : ' + error.message;
-      submit.disabled = false;
-      return;
-    }
+    if(error){ status.textContent = 'Erreur : ' + error.message; submit.disabled = false; return; }
 
     const order = Array.isArray(result) ? result[0] : result;
     clearCart();
