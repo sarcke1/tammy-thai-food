@@ -5,12 +5,12 @@ const STORAGE_KEY = 'tammy-v2-cart';
 let items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
 
 function normalizeItems() {
-  // Old V2 grouped format is intentionally not reused: individual units are required.
   items = items.map((item, index) => ({
     ...item,
     key: item.key || `${item.id || 'item'}::${Date.now()}::${index}`,
     quantity: 1,
-    spice: Number(item.spice || 0)
+    spice: Number(item.spice || 0),
+    protein: item.protein || ''
   }));
 }
 normalizeItems();
@@ -24,7 +24,7 @@ export function getCart() {
   return [...items];
 }
 
-export function addToCart(dish, spice = 0) {
+export function addToCart(dish, spice = 0, protein = '') {
   items.push({
     key: `${dish.id}::${Date.now()}::${Math.random().toString(36).slice(2, 8)}`,
     id: dish.id,
@@ -32,6 +32,7 @@ export function addToCart(dish, spice = 0) {
     price: dish.price,
     spicy: Boolean(dish.spicy),
     spice: dish.spicy ? Math.max(0, Math.min(3, Number(spice) || 0)) : 0,
+    protein,
     quantity: 1
   });
   persist();
