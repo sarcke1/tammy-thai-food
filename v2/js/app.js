@@ -16,7 +16,7 @@ const cardStates = new Map();
 const categoryOrder = { Plats:1, Entrées:2, Desserts:3, Boissons:4 };
 
 async function loadProductsFromSupabase(){
-  const { data, error } = await supabase.from('products').select('id,name,price,description,image_url,preparation_minutes,supports_spice,protein_options,product_categories(name)');
+  const { data, error } = await supabase.from('products').select('id,name,price,description,image_url,preparation_minutes,supports_spice,protein_options,product_categories(name)').eq('active',true);
   if(error){ console.error('Supabase products error — fallback local:', error.message); return; }
   if(!data?.length){ console.warn('Supabase products empty — fallback local'); return; }
   dishes = data.map(product => {
