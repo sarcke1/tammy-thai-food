@@ -1,8 +1,8 @@
 // V2 — UI RENDERER + EVENT WIRING
-import { dishes as localDishes } from './data.js?v=20260923-12';
+import { dishes as localDishes } from './data.js?v=20260923-13';
 import { spiceLabel } from './spice.js';
 import { supabase } from './supabase.js';
-import { addToCart, getCart, updateSpice, removeItem, clearCart, cartCount, cartTotal } from './cart.js?v=20260923-07';
+import { addToCart, getCart, updateSpice, removeItem, clearCart, cartCount, cartTotal } from './cart.js?v=20260923-08';
 
 let dishes = [...localDishes];
 const euro = n => n.toLocaleString('fr-FR', { style:'currency', currency:'EUR' });
@@ -26,7 +26,7 @@ async function loadProductsFromSupabase(){
   renderMenu(document.querySelector('.category-row .active')?.textContent.trim()||'Tous');
 }
 function photoStyle(d){ if(!d.photo)return 'background:linear-gradient(135deg,#e8dfca,#d5dfd2)'; if(d.photo.endsWith('.webp'))return "background-image:url('"+d.photo+"');background-size:400% 300%;background-position:"+(d.position||'center'); return "background-image:url('"+d.photo+"')"; }
-function getState(dish){ if(!cardStates.has(dish.id))cardStates.set(dish.id,{quantity:0,spices:[],protein:'',proteinQuantities:{}}); return cardStates.get(dish.id); }
+function getState(dish){ if(!cardStates.has(dish.id))cardStates.set(dish.id,{quantity:0,spices:[],protein:'',proteinQuantities:{},chiliPacketQty:0}); return cardStates.get(dish.id); }
 function syncSpices(state){ while(state.spices.length<state.quantity)state.spices.push(0); state.spices.length=state.quantity; }
 function setQuantity(dish,quantity){ const state=getState(dish); state.quantity=Math.max(0,Math.min(20,quantity)); syncSpices(state); }
 function setProteinQuantity(dish,protein,quantity){ const state=getState(dish); const next=Math.max(0,Math.min(20,Number(quantity)||0)); state.proteinQuantities[protein]=next; state.quantity=Object.values(state.proteinQuantities).reduce((sum,value)=>sum+Number(value||0),0); if(state.quantity>20){ const overflow=state.quantity-20; state.proteinQuantities[protein]=Math.max(0,next-overflow); state.quantity=Object.values(state.proteinQuantities).reduce((sum,value)=>sum+Number(value||0),0); } syncSpices(state); }
@@ -50,6 +50,22 @@ grid?.addEventListener('click',event=>{
   const state=getState(dish);
   const pq=event.target.closest('[data-protein-delta]');
   if(pq){const row=pq.closest('[data-protein-row]');setProteinQuantity(dish,row.dataset.proteinRow,Number(pq.dataset.proteinDelta)+(Number(state.proteinQuantities?.[row.dataset.proteinRow]||0)));renderMenu(document.querySelector('.category-row .active')?.textContent.trim()||'Tous');return;}
+  const q=event.target.closest('[data-quantity-delta]');
+  if(q){setQuantity(dish,state.quantity+Number(q.dataset.quantityDelta));renderMenu(document.querySelector('.category-row .active')?.textContent.trim()||'Tous');return;}
+  const s=event.target.closest('[data-spice-delta]');
+  if(s){const row=s.closest('[data-spice-row]');const i=Number(row.dataset.spiceRow);state.spices[i]=Math.max(0,Math.min(3,state.spices[i]+Number(s.dataset.spiceDelta)));renderMenu(document.querySelector('.category-row .active')?.textContent.trim()||'Tous');return;}
+  if(event.target.closest('[data-action="add"]')){
+    let spiceIndex=0;
+    if(dish.proteinOptions?.length){
+      dish.proteinOptions.forEach(protein=>{
+        const quantity=Number(state.proteinQuantities?.[protein]||0);
+        for(let i=0;i<quantity;i++){addToCart(dish,state.spices[spiceIndex]||0,protein);spiceIndex++;}
+      });
+    }else{
+      for(let i=0;i<state.quantity;i++){addToCart(dish,state.spices[i]||0,state.protein);}
+    }
+    renderCart();cartPanel?.classList.add('open');
+  }
 });
 cartContent?.addEventListener('click',event=>{const remove=event.target.closest('[data-remove-key]');if(remove){removeItem(remove.dataset.removeKey);renderCart();return;}const s=event.target.closest('[data-spice-delta]');if(s){const item=getCart().find(x=>x.key===s.dataset.cartKey);if(item)updateSpice(item.key,item.spice+Number(s.dataset.spiceDelta));renderCart();return;}const clear=event.target.closest('[data-clear-cart]');if(clear){if(confirm('Voulez-vous vraiment vider complètement le panier ?'))clearCart();return;}const validate=event.target.closest('[data-validate-cart]');if(validate)document.dispatchEvent(new CustomEvent('checkout:open'));});
 cartButton?.addEventListener('click',()=>{cartPanel?.classList.toggle('open');renderCart();});
