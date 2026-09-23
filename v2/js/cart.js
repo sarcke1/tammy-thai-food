@@ -60,5 +60,5 @@ export function cartCount() {
 }
 
 export function cartTotal() {
-  return items.reduce((sum, item) => sum + item.price + (item.chiliPacket ? 0.50 : 0), 0);
+  return items.reduce((sum, item) => sum + item.price, 0);
 }
