@@ -7,6 +7,7 @@ const pexels = "https://images.pexels.com/photos/";
 export const dishes = [
   { id:"pad", name:"Pad Thaï", price:11, category:"Plats", emoji:"🍜", photo:sheet, position:"0% 0%", desc:"Nouilles de riz sautées, crevettes, œuf, tofu, pousses de soja et cacahuètes.", spicy:true },
   { id:"jour", name:"Plat thaï du jour", price:9, category:"Plats", emoji:"🍛", photo:sheet, position:"33.333% 0%", desc:"Une recette thaï différente selon les jours.", spicy:true },
+  { id:"fried-rice", name:"Riz sauté au choix", price:10, category:"Plats", emoji:"🍚", photo:"Riz frit poulet.png", desc:"Riz sauté thaïlandais préparé avec œuf, ail, carotte, sauce et coriandre. Au choix : poulet, bœuf, porc ou crevettes.", spicy:false },
   { id:"kids", name:"Menu enfant", price:6, category:"Plats", emoji:"🍗", photo:pexels+"36879224/pexels-photo-36879224.jpeg?auto=compress&cs=tinysrgb&w=900", desc:"2 pilons de poulet frit + frites, ou 2 nems + riz.", spicy:false },
   { id:"riz-saute", name:"Riz sauté au choix", price:10, category:"Plats", emoji:"🍚", photo:"Riz frit poulet.png", desc:"Riz sauté thaïlandais préparé avec œuf, ail, carotte, sauce et coriandre. Au choix : poulet, bœuf, porc ou crevettes.", spicy:false },
   { id:"nems", name:"Nems", price:1, category:"Entrées", emoji:"🥢", photo:pexels+"12356601/pexels-photo-12356601.jpeg?auto=compress&cs=tinysrgb&w=900", desc:"Nems thaïlandais croustillants, à l’unité.", spicy:false },
@@ -26,7 +27,7 @@ export const serviceWindows = [
 ];
 
 export const preparation = {
-  pad:{base:8,extra:2}, jour:{base:7,extra:2}, kids:{base:5,extra:1.5}, "riz-saute":{base:8,extra:1},
+  pad:{base:8,extra:2}, jour:{base:7,extra:2}, "fried-rice":{base:8,extra:1}, kids:{base:5,extra:1.5}, "riz-saute":{base:8,extra:1},
   nems:{base:2,extra:.5}, samoussa:{base:2,extra:.5}, spring:{base:1.5,extra:.3},
   mango:{base:2,extra:.5}, cola:{base:.5,extra:.2}, "ice-tea":{base:.5,extra:.2}, "thai-tea":{base:.7,extra:.2}
 };
