@@ -1,5 +1,5 @@
 import { supabase } from './supabase.js';
-import { getCart, clearCart } from './cart.js?v=20260923-05';
+import { getCart, clearCart } from './cart.js?v=20260923-06';
 
 const panel = document.querySelector('#checkout-content');
 let checkoutForm = null;
@@ -52,8 +52,7 @@ function mountCheckout(){
         product_id: product.id,
         quantity: 1,
         spice_level: item.spicy ? Math.max(0, Math.min(3, Number(item.spice) || 0)) : 0,
-        protein: item.protein || null,
-        chili_packet_qty: item.chiliPacket ? 1 : 0
+        protein: item.protein || null
       });
     }
 
