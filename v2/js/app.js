@@ -2,7 +2,7 @@
 import { dishes as localDishes } from './data.js';
 import { spiceLabel } from './spice.js';
 import { supabase } from './supabase.js';
-import { addToCart, getCart, updateSpice, removeItem, clearCart, cartCount, cartTotal } from './cart.js';
+import { addToCart, getCart, updateSpice, removeItem, clearCart, cartCount, cartTotal } from './cart.js?v=20260923-04';
 
 let dishes = [...localDishes];
 const euro = n => n.toLocaleString('fr-FR', { style:'currency', currency:'EUR' });
