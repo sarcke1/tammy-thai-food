@@ -17,14 +17,5 @@ export const dishes = [
 ];
 
 export const categories = ["Tous", "Plats", "Entrées", "Desserts", "Boissons"];
-
-export const serviceWindows = [
-  { label:"Service midi", start:"11:30", end:"14:00" },
-  { label:"Service soir", start:"18:30", end:"21:00" }
-];
-
-export const preparation = {
-  pad:{base:8,extra:2}, "chicken-massena":{base:8,extra:1}, jour:{base:7,extra:2}, "riz-saute":{base:8,extra:1}, "tom-kha-kai":{base:8,extra:1},
-  spring:{base:1.5,extra:.3},
-  mango:{base:2,extra:.5}, "ice-tea":{base:.5,extra:.2}, "thai-tea":{base:.7,extra:.2}
-};
+export const serviceWindows=[{label:"Service midi",start:"11:30",end:"14:00"},{label:"Service soir",start:"18:30",end:"21:00"}];
+export const preparation={pad:{base:8,extra:2},"chicken-massena":{base:8,extra:1},jour:{base:7,extra:2},"riz-saute":{base:8,extra:1},"tom-kha-kai":{base:8,extra:1},spring:{base:1.5,extra:.3},mango:{base:2,extra:.5},"ice-tea":{base:.5,extra:.2},"thai-tea":{base:.7,extra:.2}};
