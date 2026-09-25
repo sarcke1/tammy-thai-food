@@ -1,8 +1,6 @@
 name: Tammy Bot
 
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch:
     inputs:
       action:
@@ -11,7 +9,7 @@ on:
         type: choice
         options:
           - validate
-          - bootstrap
+          - add_nems
 
 permissions:
   contents: write
@@ -24,55 +22,52 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Validation
-        if: inputs.action == 'validate' || github.event_name == 'push'
+        if: inputs.action == 'validate'
         run: |
           test -f .github/PROJECT_RULES.md
           echo "Validation OK"
 
-      - name: Bootstrap
-        if: inputs.action == 'bootstrap'
+      - name: Ajouter les Nems
+        if: inputs.action == 'add_nems'
         run: |
-          cat > PROJECT_MEMORY.md <<'EOF'
-          # PROJECT MEMORY
+          python3 <<'PY'
+from pathlib import Path
 
-          V2 : sauvegarde
-          V3 : développement actif
-          EOF
+path = Path("v2/js/data.js")
+text = path.read_text(encoding="utf-8")
 
-          cat > CHANGELOG.md <<'EOF'
-          # CHANGELOG
+if "Nems maison" in text:
+    print("Les Nems existent déjà.")
+    raise SystemExit(0)
 
-          ## V3.00
-          Bootstrap DevOps.
-          EOF
+insert = '''
+,
+{
+  id: "nems-maison",
+  name: "Nems maison",
+  price: 1,
+  image: "Nem.png",
+  description: "Nem maison croustillant préparé selon la recette traditionnelle thaïlandaise.",
+  category: "entrees",
+  allowSpice: false,
+  promo: "4 achetés = le 5ᵉ offert"
+}
+'''
 
-          cat > ROADMAP_V3.md <<'EOF'
-          # ROADMAP V3
-          - V3.01 Nems
-          - V3.02 Commandes RATP
-          EOF
+marker = "];"
 
-          cat > RECIPES_COSTS.md <<'EOF'
-          # RECETTES VALIDÉES
-          Pad Thaï : 10 €
-          Chicken Massena : 9 €
-          Tom Kha Kai : 9 €
-          Riz frit : 7 €
-          Rouleau printemps : 2 €
-          Nem : 1 €
-          EOF
+if marker in text:
+    text = text.replace(marker, insert + "\n];", 1)
+    path.write_text(text, encoding="utf-8")
+else:
+    raise SystemExit("Impossible de trouver la fin du tableau produits.")
+PY
 
-          cat > RELEASE_LOCK.md <<'EOF'
-          CURRENT_VERSION=V3.00
-          NEXT_VERSION=V3.01
-          LOCKED_VERSION=V2
-          EOF
-
-      - name: Commit automatique
-        if: inputs.action == 'bootstrap'
+      - name: Commit
+        if: inputs.action == 'add_nems'
         run: |
           git config user.name "Tammy Bot"
           git config user.email "tammy-bot@users.noreply.github.com"
-          git add .
-          git commit -m "DevOps: bootstrap project files" || exit 0
+          git add v2/js/data.js
+          git commit -m "V3.01 Ajout des Nems maison" || exit 0
           git push
