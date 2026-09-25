@@ -17,9 +17,9 @@ export const dishes = [
   id: "nems-maison",
   name: "Nems maison",
   price: 1,
-  image: "Nem.png",
-  description: "Nem maison croustillant préparé selon la recette traditionnelle thaïlandaise.",
-  category: "entrees",
+  photo: "Nem.png",
+  desc: "Nem maison croustillant préparé selon la recette traditionnelle thaïlandaise.",
+  category: "entrées",
   allowSpice: false,
   promo: "4 achetés = le 5ᵉ offert"
 }
