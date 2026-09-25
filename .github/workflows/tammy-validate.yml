@@ -1,0 +1,44 @@
+name: Tammy Validation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Vérification des fichiers obligatoires
+        run: |
+          echo "Vérification de la structure du projet..."
+
+          test -f .github/PROJECT_RULES.md || { echo "❌ PROJECT_RULES.md manquant"; exit 1; }
+
+          if [ -f PROJECT_MEMORY.md ]; then
+            echo "✅ PROJECT_MEMORY.md"
+          else
+            echo "⚠️ PROJECT_MEMORY.md absent (sera créé plus tard)"
+          fi
+
+          if [ -f CHANGELOG.md ]; then
+            echo "✅ CHANGELOG.md"
+          else
+            echo "⚠️ CHANGELOG.md absent"
+          fi
+
+      - name: Vérification V2
+        run: |
+          echo "Aucune règle bloquante pour V2 pour le moment."
+
+      - name: Résultat
+        run: echo "✅ Validation terminée."
