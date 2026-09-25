@@ -1,44 +1,103 @@
-name: Tammy Validation
+name: Tammy Bot
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
   workflow_dispatch:
+    inputs:
+      action:
+        description: "Action à effectuer"
+        required: true
+        type: choice
+        options:
+          - bootstrap
+          - validate
+      version:
+        description: "Version"
+        required: false
+        default: "V3.00"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  validate:
+  tammy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Vérification des fichiers obligatoires
+      - name: Validation
+        if: inputs.action == 'validate'
         run: |
-          echo "Vérification de la structure du projet..."
+          test -f .github/PROJECT_RULES.md
+          echo "Validation OK"
 
-          test -f .github/PROJECT_RULES.md || { echo "❌ PROJECT_RULES.md manquant"; exit 1; }
-
-          if [ -f PROJECT_MEMORY.md ]; then
-            echo "✅ PROJECT_MEMORY.md"
-          else
-            echo "⚠️ PROJECT_MEMORY.md absent (sera créé plus tard)"
-          fi
-
-          if [ -f CHANGELOG.md ]; then
-            echo "✅ CHANGELOG.md"
-          else
-            echo "⚠️ CHANGELOG.md absent"
-          fi
-
-      - name: Vérification V2
+      - name: Bootstrap DevOps
+        if: inputs.action == 'bootstrap'
         run: |
-          echo "Aucune règle bloquante pour V2 pour le moment."
+          cat > PROJECT_MEMORY.md <<'EOF'
+          # PROJECT MEMORY
 
-      - name: Résultat
-        run: echo "✅ Validation terminée."
+          V2 : sauvegarde
+
+          V3 : développement actif
+
+          Prix validés
+
+          - Pad Thaï : 10 €
+          - Chicken Massena : 9 €
+          - Tom Kha Kai : 9 €
+          - Riz frit : 7 €
+          - Rouleau printemps : 2 €
+          - Nem : 1 €
+
+          Promo
+
+          4 nems achetés = 1 offert
+          EOF
+
+          cat > CHANGELOG.md <<'EOF'
+          # CHANGELOG
+
+          ## V3.00
+
+          Bootstrap DevOps.
+          EOF
+
+          cat > ROADMAP_V3.md <<'EOF'
+          # ROADMAP V3
+
+          - V3.01 Nems
+          - V3.02 Commandes RATP
+          - V3.03 Planning
+          - V3.04 Cuisine
+          EOF
+
+          cat > RECIPES_COSTS.md <<'EOF'
+          # RECETTES VALIDÉES
+
+          Pad Thaï 10 €
+          Chicken Massena 9 €
+          Tom Kha Kai 9 €
+          Riz frit 7 €
+          Rouleau printemps 2 €
+          Nem 1 €
+          EOF
+
+          cat > RELEASE_LOCK.md <<'EOF'
+          CURRENT_VERSION=V3.00
+          NEXT_VERSION=V3.01
+          LOCKED_VERSION=V2
+          EOF
+
+      - name: Commit automatique
+        if: inputs.action == 'bootstrap'
+        run: |
+          git config user.name "Tammy Bot"
+          git config user.email "tammy-bot@users.noreply.github.com"
+
+          git add .
+
+          git commit -m "DevOps: bootstrap project files" || exit 0
+
+          git push
