@@ -11,6 +11,19 @@ export const dishes = [
   { id:"tom-kha-kai", name:"Tom kha kai", price:9, category:"Plats", emoji:"🥥", photo:"Tom kha kai.png", desc:"Soupe thaïlandaise au lait de coco et poulet, avec citronnelle, galanga, feuilles de combava et échalote. Piment au choix de 0 à 3.", spicy:true },
   { id:"spring", name:"Rouleau de printemps", price:2, category:"Entrées", emoji:"🌯", photo:"Rouleau de printemps.png", desc:"Rouleau de printemps aux crevettes, salade, carotte, menthe, coriandre et nouilles chinoises, roulé dans une feuille de riz. Servi avec sa sauce.", spicy:false },
   { id:"mango", name:"Sticky rice mangue", price:4, category:"Desserts", emoji:"🥭", photo:sheet, position:"100% 100%", desc:"Riz gluant au lait de coco et mangue fraîche, selon saison.", spicy:false }
+
+,
+{
+  id: "nems-maison",
+  name: "Nems maison",
+  price: 1,
+  image: "Nem.png",
+  description: "Nem maison croustillant préparé selon la recette traditionnelle thaïlandaise.",
+  category: "entrees",
+  allowSpice: false,
+  promo: "4 achetés = le 5ᵉ offert"
+}
+
 ];
 
 export const categories=["Tous","Plats","Entrées","Desserts","Boissons"];
