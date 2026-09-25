@@ -1,19 +1,17 @@
 name: Tammy Bot
 
 on:
+  push:
+    branches: [ main ]
   workflow_dispatch:
     inputs:
       action:
-        description: "Action à effectuer"
+        description: "Action"
         required: true
         type: choice
         options:
-          - bootstrap
           - validate
-      version:
-        description: "Version"
-        required: false
-        default: "V3.00"
+          - bootstrap
 
 permissions:
   contents: write
@@ -23,65 +21,45 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Validation
-        if: inputs.action == 'validate'
+        if: inputs.action == 'validate' || github.event_name == 'push'
         run: |
           test -f .github/PROJECT_RULES.md
           echo "Validation OK"
 
-      - name: Bootstrap DevOps
+      - name: Bootstrap
         if: inputs.action == 'bootstrap'
         run: |
           cat > PROJECT_MEMORY.md <<'EOF'
           # PROJECT MEMORY
 
           V2 : sauvegarde
-
           V3 : développement actif
-
-          Prix validés
-
-          - Pad Thaï : 10 €
-          - Chicken Massena : 9 €
-          - Tom Kha Kai : 9 €
-          - Riz frit : 7 €
-          - Rouleau printemps : 2 €
-          - Nem : 1 €
-
-          Promo
-
-          4 nems achetés = 1 offert
           EOF
 
           cat > CHANGELOG.md <<'EOF'
           # CHANGELOG
 
           ## V3.00
-
           Bootstrap DevOps.
           EOF
 
           cat > ROADMAP_V3.md <<'EOF'
           # ROADMAP V3
-
           - V3.01 Nems
           - V3.02 Commandes RATP
-          - V3.03 Planning
-          - V3.04 Cuisine
           EOF
 
           cat > RECIPES_COSTS.md <<'EOF'
           # RECETTES VALIDÉES
-
-          Pad Thaï 10 €
-          Chicken Massena 9 €
-          Tom Kha Kai 9 €
-          Riz frit 7 €
-          Rouleau printemps 2 €
-          Nem 1 €
+          Pad Thaï : 10 €
+          Chicken Massena : 9 €
+          Tom Kha Kai : 9 €
+          Riz frit : 7 €
+          Rouleau printemps : 2 €
+          Nem : 1 €
           EOF
 
           cat > RELEASE_LOCK.md <<'EOF'
@@ -95,9 +73,6 @@ jobs:
         run: |
           git config user.name "Tammy Bot"
           git config user.email "tammy-bot@users.noreply.github.com"
-
           git add .
-
           git commit -m "DevOps: bootstrap project files" || exit 0
-
           git push
