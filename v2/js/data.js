@@ -16,7 +16,7 @@ export const dishes = [
   {
   id: "red-curry-soup",
   name: "Soupe de curry rouge",
-  price: 12,
+  price: 10,
   category: "Plats",
   emoji: "🍛",
   photo: "Soupe de curry rouge.png",
