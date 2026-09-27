@@ -26,11 +26,11 @@ export const dishes = [
 },
   {
   id: "green-curry-soup",
-  name: "soupe de curry vert",
+  name: "Soupe de curry vert",
   price: 10,
   category: "Plats",
   emoji: "🍛",
-  photo: "Soupe de curry vert.png",
+  photo: "soupe de curry vert.png",
   desc: "Soupe thaïlandaise au curry vert, lait de coco, aubergines thaïes, basilic thaï et légumes. Au choix : poulet, porc ou bœuf (+1 €).",
   spicy: true,
   proteinOptions: ["Poulet", "Porc", "Bœuf (+1 €)"]
