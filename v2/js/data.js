@@ -13,6 +13,17 @@ export const dishes = [
   { id:"mango", name:"Sticky rice mangue", price:4, category:"Desserts", emoji:"🥭", photo:sheet, position:"100% 100%", desc:"Riz gluant au lait de coco et mangue fraîche, selon saison.", spicy:false }
 
 ,
+  {
+  id: "red-curry-soup",
+  name: "Soupe de curry rouge",
+  price: 12,
+  category: "Plats",
+  emoji: "🍛",
+  photo: "Soupe de curry rouge.png",
+  desc: "Soupe thaïlandaise au curry rouge, lait de coco, feuilles de combava et légumes. Au choix : poulet, porc ou bœuf (+1 €).",
+  spicy: true,
+  proteinOptions: ["Poulet", "Porc", "Bœuf (+1 €)"]
+},
 {
   id: "nems-maison",
   name: "Nems maison",
