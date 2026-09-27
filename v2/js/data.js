@@ -24,6 +24,17 @@ export const dishes = [
   spicy: true,
   proteinOptions: ["Poulet", "Porc", "Bœuf (+1 €)"]
 },
+  {
+  id: "green-curry-soup",
+  name: "Soupe de curry vert",
+  price: 12,
+  category: "Plats",
+  emoji: "🍛",
+  photo: "Soupe de curry vert.png",
+  desc: "Soupe thaïlandaise au curry vert, lait de coco, aubergines thaïes, basilic thaï et légumes. Au choix : poulet, porc ou bœuf (+1 €).",
+  spicy: true,
+  proteinOptions: ["Poulet", "Porc", "Bœuf (+1 €)"]
+},
 {
   id: "nems-maison",
   name: "Nems maison",
