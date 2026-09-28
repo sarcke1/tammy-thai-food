@@ -112,7 +112,7 @@ function photoStyle(d){
   }
 
   return `
-    background-image:url(assets/${d.photo});
+    background-image:url(${d.photo});
     background-size:cover;
     background-position:center;
     background-repeat:no-repeat;
@@ -366,7 +366,7 @@ function renderCart(){
       <div class="cart-line">
 
         <div class="cart-photo"
-             style="background-image:url(assets/${item.photo||""})">
+             style="background-image:url(${item.photo||""})">
         </div>
 
         <div class="cart-unit-info">
