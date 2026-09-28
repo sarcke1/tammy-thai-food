@@ -72,23 +72,23 @@ async function loadProductsFromSupabase(){
 
       const local = localDishes.find(d => d.name === product.name);
 
-      return {
-        id: product.id,
-        name: product.name,
-        price: Number(product.price),
-        category: product.product_categories?.name || local?.category || "Plats",
-        emoji: local?.emoji || "🍽️",
-        photo: local?.photo || "",
-        position: local?.position,
-        desc: product.description || local?.desc || "",
-        spicy: Boolean(product.supports_spice),
-        proteinOptions: product.protein_options || local?.proteinOptions || [],
-        preparation_minutes:
-          product.preparation_minutes ??
-          local?.preparation_minutes ??
-          null,
-        menuPosition: local ? localDishes.indexOf(local) : 999
-      };
+     return {
+      id: product.id, // UUID Supabase à conserver
+      name: product.name,
+      price: Number(product.price),
+      category: product.product_categories?.name || local?.category || "Plats",
+      emoji: local?.emoji || "🍽️",
+      photo: local?.photo || "",
+      position: local?.position,
+      desc: product.description || local?.desc || "",
+      spicy: Boolean(product.supports_spice),
+      proteinOptions: product.protein_options || local?.proteinOptions || [],
+      preparation_minutes:
+        product.preparation_minutes ??
+        local?.preparation_minutes ??
+        null,
+      menuPosition: local ? localDishes.indexOf(local) : 999
+    };
 
     })
     .sort((a,b)=>
