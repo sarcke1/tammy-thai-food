@@ -77,8 +77,8 @@ function mountCheckout() {
         inputmode="tel"
         autocomplete="tel"
         required
-        pattern="^(?:(?:\+33|0033)[67][0-9]{8}|0[67][0-9]{8})$"
-        title="Entrez un numéro français valide (06XXXXXXXX, 07XXXXXXXX ou +336XXXXXXXX)."
+        pattern="^(?:(?:[+]33|0033|0)[67](?: ?[0-9]){8})$"
+        title="Entrez un numéro français valide (06 12 34 56 78 ou +33 6 12 34 56 78)."
       />
       <textarea
         name="comment"
@@ -128,7 +128,7 @@ function mountCheckout() {
 
     const customerName = String(formData.get("customer_name") || "").trim();
     const email = String(formData.get("email") || "").trim();
-    cconst phone = String(formData.get("phone") || "")
+    const phone = String(formData.get("phone") || "")
       .replace(/\s+/g, "")
       .trim();
     const comment = String(formData.get("comment") || "").trim();
