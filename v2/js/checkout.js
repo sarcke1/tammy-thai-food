@@ -202,28 +202,38 @@ function mountCheckout() {
       return;
     }
 
-   status.textContent = "Votre commande est transmise à Tammy.";
+  status.textContent = "Votre commande est transmise à Tammy.";
 
-clearCart();
-
-    // Demande à app.js de remettre les compteurs à zéro
-    document.dispatchEvent(new CustomEvent("cart:updated"));
-    
-    box.reset();
-    
-    box.querySelector('[name="customer_name"]').value = customerName;
-    box.querySelector('[name="email"]').value = email;
-    box.querySelector('[name="phone"]').value = phone;
-    
-    submit.disabled = false;
-
-    box.querySelector('[name="customer_name"]').value = customerName;
-    box.querySelector('[name="email"]').value = email;
-
-    submit.disabled = false;
-    box.hidden = true;
-
+  clearCart();
+  
+  // Remet à zéro le panier et les compteurs dans app.js
+  document.dispatchEvent(new CustomEvent("cart:updated"));
+  
+  // Message de confirmation dans le panier
+  cartContent.innerHTML = `
+    <div class="order-success">
+      <div class="success-icon">✓</div>
+      <h3>Commande transmise</h3>
+      <p>Votre commande a été envoyée à Tammy.</p>
+      <p class="pickup-reminder">
+        Retrait : <strong>${getPickupLabel()} (midi)</strong>
+      </p>
+    </div>
+  `;
+  
+  box.reset();
+  
+  box.querySelector('[name="customer_name"]').value = customerName;
+  box.querySelector('[name="email"]').value = email;
+  box.querySelector('[name="phone"]').value = phone;
+  
+  submit.disabled = false;
+  box.hidden = true;
+  
+  // Ferme automatiquement le panier après 2,5 s
+  setTimeout(() => {
     panel.classList.remove("open");
+  }, 2500);
   });
 
   updateCheckoutVisibility();
