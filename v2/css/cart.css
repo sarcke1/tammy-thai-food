@@ -12,6 +12,16 @@ border-radius:999px;
 background:var(--green);
 color:white;
 box-shadow:0 10px 25px rgba(0,0,0,.25);
+transition:transform .15s ease, box-shadow .2s ease;
+}
+
+.cart-button:hover{
+transform:translateY(-2px);
+box-shadow:0 14px 30px rgba(0,0,0,.28);
+}
+
+.cart-button:active{
+transform:scale(.96);
 }
 
 .cart-button b{
@@ -59,6 +69,15 @@ border:0;
 background:none;
 font-size:2rem;
 cursor:pointer;
+transition:transform .12s ease;
+}
+
+.cart-panel-head button:hover{
+transform:scale(1.08);
+}
+
+.cart-panel-head button:active{
+transform:scale(.92);
 }
 
 .empty-cart{
@@ -109,6 +128,15 @@ background:white;
 color:var(--coral);
 cursor:pointer;
 font-size:1.2rem;
+transition:transform .12s ease, background .15s ease;
+}
+
+.cart-remove:hover{
+background:#fff2ef;
+}
+
+.cart-remove:active{
+transform:scale(.9);
 }
 
 .cart-total{
@@ -123,6 +151,24 @@ display:flex;
 flex-direction:column;
 gap:10px;
 }
+
+/* Bouton Valider */
+
+.cart-validate{
+transition:transform .12s ease, box-shadow .15s ease;
+}
+
+.cart-validate:hover{
+transform:translateY(-2px);
+box-shadow:0 8px 18px rgba(31,56,45,.2);
+}
+
+.cart-validate:active{
+transform:scale(.96);
+box-shadow:0 0 0 6px rgba(42,91,70,.18);
+}
+
+/* Bouton Vider */
 
 .secondary-cart-action{
 border:1px solid var(--line);
@@ -160,6 +206,15 @@ border-radius:50%;
 border:1px solid #d9c69c;
 background:white;
 cursor:pointer;
+transition:transform .12s ease, background .15s ease;
+}
+
+.cart-spice-control button:hover{
+background:#fff6dd;
+}
+
+.cart-spice-control button:active{
+transform:scale(.9);
 }
 
 @media(max-width:620px){
