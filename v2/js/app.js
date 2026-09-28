@@ -57,6 +57,8 @@ async function loadProductsFromSupabase(){
       product_categories(name)
     `)
     .eq("active", true);
+  console.log("SUPABASE ERROR :", error);
+console.table(data);
 
   if(error){
     console.warn("Fallback data.js :", error.message);
