@@ -102,12 +102,15 @@ document.addEventListener("checkout:open", () => {
 
   box.hidden = false;
 
-  // Fait défiler le volet du panier et non la page
+  // Attendre que le formulaire soit affiché
   requestAnimationFrame(() => {
     panel.scrollTo({
       top: panel.scrollHeight,
       behavior: "smooth"
     });
+
+    // Met le curseur directement dans le champ Nom
+    box.querySelector('[name="customer_name"]')?.focus();
   });
 });
 
