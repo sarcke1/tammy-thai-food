@@ -115,7 +115,7 @@ function photoStyle(d){
   }
 
   return `
-    background-image:url(${d.photo});
+    background-image:url(/tammy-thai-food/v2/${encodeURIComponent(d.photo)});
     background-size:cover;
     background-position:center;
     background-repeat:no-repeat;
