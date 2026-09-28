@@ -1,10 +1,27 @@
-@media(max-width:900px){
-  .dish-grid{grid-template-columns:repeat(2,1fr)}
-  .section-heading{display:block}
-  .tag{display:inline-block;margin-top:12px}
+/* =========================
+   TAMMY THAI FOOD — responsive.css
+   ========================= */
+
+@media (max-width:900px){
+
+  .dish-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .section-heading{
+    display:block;
+  }
+
+  .tag{
+    display:inline-block;
+    margin-top:12px;
+  }
+
 }
 
-@media(max-width:620px){
+@media (max-width:620px){
+
+  /* Header */
   .site-header{
     padding:9px 4vw;
     flex-wrap:wrap;
@@ -15,8 +32,13 @@
     width:100%;
   }
 
-  .brand b{font-size:1rem}
-  .brand small{font-size:.58rem}
+  .brand b{
+    font-size:1rem;
+  }
+
+  .brand small{
+    font-size:.58rem;
+  }
 
   .site-header nav{
     display:flex;
@@ -31,18 +53,56 @@
     font-size:.9rem;
   }
 
+  /* Panier flottant */
   .cart-button{
     position:fixed;
     right:16px;
     bottom:16px;
     z-index:120;
+    display:flex;
   }
 
-  .hero{min-height:0;padding:0}
-  .hero h1{font-size:3.2rem}
-  .section{padding:65px 5vw}
-  .dish-grid{grid-template-columns:1fr}
-  .category-row{overflow:auto;white-space:nowrap}
-  footer{display:block}
-  footer>div+div{margin-top:20px}
+  /* Bannière */
+  .hero{
+    min-height:60vh;
+    padding:90px 5vw 40px;
+  }
+
+  .hero h1{
+    font-size:2.4rem;
+    line-height:1.1;
+  }
+
+  /* Sections */
+  .section{
+    padding:40px 5vw;
+  }
+
+  /* Le menu remonte juste sous la bannière */
+  .menu{
+    padding-top:40px !important;
+  }
+
+  /* Grille des plats */
+  .dish-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:18px;
+  }
+
+  /* Catégories */
+  .category-row{
+    overflow:auto;
+    white-space:nowrap;
+  }
+
+  /* Footer */
+  footer{
+    display:block;
+  }
+
+  footer>div+div{
+    margin-top:20px;
+  }
+
 }
