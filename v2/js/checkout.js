@@ -69,14 +69,17 @@ function mountCheckout() {
         required
       >
       
-      <input
+     <input
         name="phone"
         type="tel"
-        placeholder="Téléphone"
+        placeholder="Téléphone (06 12 34 56 78)"
         value="${localStorage.getItem('customerPhone') || ''}"
         inputmode="tel"
         autocomplete="tel"
-      >
+        required
+        pattern="^(?:(?:\+33|0033)[67][0-9]{8}|0[67][0-9]{8})$"
+        title="Entrez un numéro français valide (06XXXXXXXX, 07XXXXXXXX ou +336XXXXXXXX)."
+      />
       <textarea
         name="comment"
         placeholder="Commentaire (facultatif)"
@@ -125,7 +128,9 @@ function mountCheckout() {
 
     const customerName = String(formData.get("customer_name") || "").trim();
     const email = String(formData.get("email") || "").trim();
-    const phone = String(formData.get("phone") || "").trim();
+    cconst phone = String(formData.get("phone") || "")
+      .replace(/\s+/g, "")
+      .trim();
     const comment = String(formData.get("comment") || "").trim();
     
     localStorage.setItem("customerName", customerName);
