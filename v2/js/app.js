@@ -19,10 +19,31 @@ async function loadProductsFromSupabase(){
 const { data, error } = await supabase.from('products').select('id,name,price,description,image_url,preparation_minutes,supports_spice,protein_options,product_categories(name)').eq('active',true);
 if(error){ console.error('Supabase products error — fallback local:', error.message); return; }
 if(!data?.length){ console.warn('Supabase products empty — fallback local'); return; }
+
 dishes = data.map(product => {
-const local = localDishes.find(d => d.name === product.name);
-return { id.id, name.name, price(product.price), category.product_categories?.name||local?.category||'Plats', emoji?.emoji||'🍽️', photo?.photo||'', position?.position, desc.description||local?.desc||'', spicy(product.supports_spice), proteinOptions.protein_options||local?.proteinOptions||[], preparation_minutes.preparation_minutes??local?.preparation_minutes??null, menuPosition?localDishes.indexOf(local):999 };
-}).sort((a,b)=>(categoryOrder[a.category]||99)-(categoryOrder[b.category]||99)||a.menuPosition-b.menuPosition);
+  const local = localDishes.find(d => d.name === product.name);
+
+  return {
+    id: product.id,
+    name: product.name,
+    price: Number(product.price),
+    category: product.product_categories?.name || local?.category || "Plats",
+    emoji: local?.emoji || "🍽️",
+    photo: local?.photo || "",
+    position: local?.position,
+    desc: product.description || local?.desc || "",
+    spicy: Boolean(product.supports_spice),
+    proteinOptions: product.protein_options || local?.proteinOptions || [],
+    preparation_minutes:
+      product.preparation_minutes ?? local?.preparation_minutes ?? null,
+    menuPosition: local ? localDishes.indexOf(local) : 999
+  };
+}).sort((a, b) =>
+  (categoryOrder[a.category] || 99) -
+  (categoryOrder[b.category] || 99) ||
+  a.menuPosition - b.menuPosition
+);
+  
 renderMenu(document.querySelector('.category-row .active')?.textContent.trim()||'Tous');
 }
 function photoStyle(d){ if(!d.photo)return 'background(135deg,#e8dfca,#d5dfd2)'; if(d.photo.endsWith('.webp'))return "background-image('"+d.photo+"');background-size:400% 300%;background-position:"+(d.position||'center'); return "background-image('"+d.photo+"')"; }
