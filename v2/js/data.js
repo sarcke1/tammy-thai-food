@@ -12,7 +12,6 @@ export const dishes = [
   { id:"spring", name:"Rouleau de printemps", price:1.5, category:"Entrées", emoji:"🌯", photo:"Rouleau de printemps.png", desc:"Rouleau de printemps aux crevettes, salade, carotte, menthe, coriandre et nouilles chinoises, roulé dans une feuille de riz. Servi avec sa sauce.", spicy:false },
  // { id:"mango", name:"Sticky rice mangue", price:4, category:"Desserts", emoji:"🥭", photo:sheet, position:"100% 100%", desc:"Riz gluant au lait de coco et mangue fraîche, selon saison.", spicy:false }
 
-,
   {
   id: "red-curry-soup",
   name: "Soupe de curry rouge",
