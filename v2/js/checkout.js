@@ -8,7 +8,10 @@ let checkoutForm = null;
 
 function updateCheckoutVisibility() {
   if (!checkoutForm) return;
-  checkoutForm.hidden = getCart().length === 0;
+
+  if (!getCart().length) {
+    checkoutForm.hidden = true;
+  }
 }
 
 function getPickupDate() {
