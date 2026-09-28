@@ -72,15 +72,16 @@ console.table(data);
   dishes = data
     .map(product => {
 
-      const local = localDishes.find(d => d.name === product.name);
-
+     const local = localDishes.find(
+  d => d.name.trim().toLowerCase() === product.name.trim().toLowerCase()
+);
      return {
       id: product.id, // UUID Supabase à conserver
       name: product.name,
       price: Number(product.price),
       category: product.product_categories?.name || local?.category || "Plats",
       emoji: local?.emoji || "🍽️",
-      photo: local?.photo || "",
+      photo: local?.photo ?? product.image_url ?? "",
       position: local?.position,
       desc: product.description || local?.desc || "",
       spicy: Boolean(product.supports_spice),
