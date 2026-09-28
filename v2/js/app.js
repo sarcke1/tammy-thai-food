@@ -19,31 +19,10 @@ async function loadProductsFromSupabase(){
 const { data, error } = await supabase.from('products').select('id,name,price,description,image_url,preparation_minutes,supports_spice,protein_options,product_categories(name)').eq('active',true);
 if(error){ console.error('Supabase products error — fallback local:', error.message); return; }
 if(!data?.length){ console.warn('Supabase products empty — fallback local'); return; }
-
 dishes = data.map(product => {
-  const local = localDishes.find(d => d.name === product.name);
-
-  return {
-    id: product.id,
-    name: product.name,
-    price: Number(product.price),
-    category: product.product_categories?.name || local?.category || "Plats",
-    emoji: local?.emoji || "🍽️",
-    photo: local?.photo || "",
-    position: local?.position,
-    desc: product.description || local?.desc || "",
-    spicy: Boolean(product.supports_spice),
-    proteinOptions: product.protein_options || local?.proteinOptions || [],
-    preparation_minutes:
-      product.preparation_minutes ?? local?.preparation_minutes ?? null,
-    menuPosition: local ? localDishes.indexOf(local) : 999
-  };
-}).sort((a, b) =>
-  (categoryOrder[a.category] || 99) -
-  (categoryOrder[b.category] || 99) ||
-  a.menuPosition - b.menuPosition
-);
-  
+const local = localDishes.find(d => d.name === product.name);
+return { id.id, name.name, price(product.price), category.product_categories?.name||local?.category||'Plats', emoji?.emoji||'🍽️', photo?.photo||'', position?.position, desc.description||local?.desc||'', spicy(product.supports_spice), proteinOptions.protein_options||local?.proteinOptions||[], preparation_minutes.preparation_minutes??local?.preparation_minutes??null, menuPosition?localDishes.indexOf(local):999 };
+}).sort((a,b)=>(categoryOrder[a.category]||99)-(categoryOrder[b.category]||99)||a.menuPosition-b.menuPosition);
 renderMenu(document.querySelector('.category-row .active')?.textContent.trim()||'Tous');
 }
 function photoStyle(d){ if(!d.photo)return 'background(135deg,#e8dfca,#d5dfd2)'; if(d.photo.endsWith('.webp'))return "background-image('"+d.photo+"');background-size:400% 300%;background-position:"+(d.position||'center'); return "background-image('"+d.photo+"')"; }
@@ -54,34 +33,10 @@ function setProteinQuantity(dish,protein,quantity){ const state=getState(dish); 
 function proteinSelector(dish){ if(!dish.proteinOptions?.length)return ''; const state=getState(dish); return '<div class="spice-box protein-box"><div class="spice-box-title">Choix de la viande</div>'+dish.proteinOptions.map(option=>{const quantity=Number(state.proteinQuantities?.[option]||0);return '<div class="spice-row protein-row" data-protein-row="'+option+'"><span>'+option+'</span><div class="spice-row-controls"><button type="button" data-protein-delta="-1" aria-label="Diminuer la quantité de '+option+'">−</button><b>'+quantity+'</b><button type="button" data-protein-delta="1" aria-label="Augmenter la quantité de '+option+'">+</button></div></div>';}).join('')+'</div>'; }
 function spiceRows(dish){ if(!dish.spicy)return ''; const state=getState(dish); if(state.quantity===0)return '<div class="spice-box spice-box-empty">Sélectionnez une quantité pour choisir le piment.</div>'; return '<div class="spice-box"><div class="spice-box-title">Choisissez le piment pour chaque plat</div>'+state.spices.map((level,index)=>'<div class="spice-row" data-spice-row="'+index+'"><span>Plat '+(index+1)+'</span><div class="spice-row-controls"><button type="button" data-spice-delta="-1" aria-label="Diminuer le piment">−</button><b>'+spiceLabel(level)+'</b><button type="button" data-spice-delta="1" aria-label="Augmenter le piment">+</button></div></div>').join('')+'</div>'; }
 function quantityControl(dish){ const state=getState(dish); return '<div class="quantity-row"><span>Quantité</span><div class="quantity-controls"><button type="button" data-quantity-delta="-1" aria-label="Diminuer la quantité">−</button><b>'+state.quantity+'</b><button type="button" data-quantity-delta="1" aria-label="Augmenter la quantité">+</button></div></div>'; }
-
-function renderMenu(category='Tous'){
-  const visible = (category === 'Tous'
-    ? dishes
-    : dishes.filter(d => d?.category === category)
-  ).filter(Boolean);
-
-  grid.innerHTML = visible.map(d => {
-    const state = getState(d);
-
-    return '<article class="dish-card" data-dish-id="'+d.id+'" data-category="'+d.category+'">'+
-      '<div class="dish-photo" style="'+photoStyle(d)+'">'+
-        (d.spicy ? '<span class="dish-badge">🌶️ Piment au choix</span>' : '')+
-      '</div>'+
-      '<div class="dish-card-body">'+
-        '<div class="dish-title-row">'+
-          '<h3>'+d.name+'</h3>'+
-          '<span class="price">'+euro(d.price)+'</span>'+
-        '</div>'+
-        '<p>'+d.desc+'</p>'+
-        proteinSelector(d)+
-        (d.proteinOptions?.length ? '' : quantityControl(d))+
-        spiceRows(d)+
-        '<button class="button dish-action '+(state.quantity===0?'is-disabled':'')+'" type="button" data-action="add" '+(state.quantity===0?'disabled':'')+'>Ajouter au panier</button>'+
-      '</div>'+
-    '</article>';
-  }).join('');
-}
+function renderMenu(category='Tous'){ const visible = (category === 'Tous'
+? dishes
+: dishes.filter(d => d?.category === category)
+).filter(Boolean); grid.innerHTML=visible.map(d=>{const state=getState(d);return '<article class="dish-card" data-dish-id="'+d.id+'" data-category="'+d.category+'"><div class="dish-photo" style="'+photoStyle(d)+'">'+(d.spicy?'<span class="dish-badge">🌶️ Piment au choix</span>':'')+'</div><div class="dish-card-body"><div class="dish-title-row"><h3>'+d.name+'</h3><span class="price">'+euro(d.price)+'</span></div><p>'+d.desc+'</p>'+proteinSelector(d)+(d.proteinOptions?.length?''(d))+spiceRows(d)+'<button class="button dish-action '+(state.quantity===0?'is-disabled':'')+'" type="button" data-action="add" '+(state.quantity===0?'disabled':'')+'>Ajouter au panier</button></div></article>';}).join(''); }
 
 function renderCart(){
 const items = getCart();
