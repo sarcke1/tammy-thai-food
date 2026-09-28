@@ -551,9 +551,12 @@ grid?.addEventListener("click",event=>{
 
     }
 
-    renderCart();
+   renderCart();
+cartPanel.classList.add("open");
 
-    cartPanel.classList.add("open");
+// Prépare immédiatement le formulaire
+document.dispatchEvent(new CustomEvent("checkout:mount"));
+document.dispatchEvent(new CustomEvent("checkout:open"));
 
   }
 
