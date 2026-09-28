@@ -97,17 +97,19 @@ function mountCheckout() {
 
   cartContent.after(box);
   checkoutForm = box;
+document.addEventListener("checkout:open", () => {
+  if (!getCart().length) return;
 
-  document.addEventListener("checkout:open", () => {
-    if (!getCart().length) return;
+  box.hidden = false;
 
-    box.hidden = false;
-
-    box.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
+  // Fait défiler le volet du panier et non la page
+  requestAnimationFrame(() => {
+    panel.scrollTo({
+      top: panel.scrollHeight,
+      behavior: "smooth"
     });
   });
+});
 
   document.addEventListener("cart:updated", updateCheckoutVisibility);
 
