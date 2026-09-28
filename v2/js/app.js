@@ -118,7 +118,6 @@ function photoStyle(d){
     background-repeat:no-repeat;
   `;
 }
-
 // ===== État des cartes =====
 
 function getState(dish){
