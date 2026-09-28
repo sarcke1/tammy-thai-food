@@ -203,42 +203,39 @@ document.addEventListener("checkout:open", () => {
       submit.disabled = false;
       return;
     }
+status.textContent = "Votre commande est transmise à Tammy.";
 
-  status.textContent = "Votre commande est transmise à Tammy.";
+clearCart(); // Déclenche déjà cart:updated
 
-  clearCart();
-  
-  // Remet à zéro le panier et les compteurs dans app.js
-  document.dispatchEvent(new CustomEvent("cart:updated"));
-  
-  // Message de confirmation dans le panier
-  cartContent.innerHTML = `
-    <div class="order-success">
-      <div class="success-icon">✓</div>
-      <h3>Commande transmise</h3>
-      <p>Votre commande a été envoyée à Tammy.</p>
-      <p class="pickup-reminder">
-        Retrait : <strong>${getPickupLabel()} (midi)</strong>
-      </p>
-    </div>
-  `;
-  
-  box.reset();
-  
-  box.querySelector('[name="customer_name"]').value = customerName;
-  box.querySelector('[name="email"]').value = email;
-  box.querySelector('[name="phone"]').value = phone;
-  
-  submit.disabled = false;
-  box.hidden = true;
-  
-  // Ferme automatiquement le panier après 2,5 s
-  setTimeout(() => {
-    panel.classList.remove("open");
-  }, 2500);
-  });
+// Message de confirmation
+cartContent.innerHTML = `
+  <div class="order-success">
+    <div class="success-icon">✓</div>
+    <h3>Commande transmise</h3>
+    <p>Votre commande est en cours de préparation.</p>
+    <p class="pickup-reminder">
+      Retrait : <strong>${getPickupLabel()} (midi)</strong>
+    </p>
+  </div>
+`;
 
-  updateCheckoutVisibility();
+box.reset();
+
+box.querySelector('[name="customer_name"]').value = customerName;
+box.querySelector('[name="email"]').value = email;
+box.querySelector('[name="phone"]').value = phone;
+
+submit.disabled = false;
+box.hidden = true;
+
+// Ferme le panier puis remet toute l'interface à zéro
+setTimeout(() => {
+  panel.classList.remove("open");
+  window.location.reload();
+}, 2200);
+});
+
+updateCheckoutVisibility();
 }
 
 mountCheckout();
