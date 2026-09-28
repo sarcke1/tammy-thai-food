@@ -68,7 +68,15 @@ function mountCheckout() {
         value="${savedEmail}"
         required
       >
-
+      
+      <input
+        name="phone"
+        type="tel"
+        placeholder="Téléphone"
+        value="${localStorage.getItem('customerPhone') || ''}"
+        inputmode="tel"
+        autocomplete="tel"
+      >
       <textarea
         name="comment"
         placeholder="Commentaire (facultatif)"
@@ -117,10 +125,12 @@ function mountCheckout() {
 
     const customerName = String(formData.get("customer_name") || "").trim();
     const email = String(formData.get("email") || "").trim();
+    const phone = String(formData.get("phone") || "").trim();
     const comment = String(formData.get("comment") || "").trim();
-
+    
     localStorage.setItem("customerName", customerName);
     localStorage.setItem("customerEmail", email);
+    localStorage.setItem("customerPhone", phone);
 
     submit.disabled = true;
     status.textContent = "Vérification des produits...";
@@ -174,7 +184,7 @@ function mountCheckout() {
         p_first_name: customerName,
         p_last_name: "",
         p_email: email,
-        p_phone: "",
+        p_phone: phone,
         p_service_slot_id: null,
         p_items: items,
         p_customer_note: comment
