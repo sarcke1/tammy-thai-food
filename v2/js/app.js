@@ -604,16 +604,18 @@ cartContent?.addEventListener("click",event=>{
     return;
   }
 
-  const validate=event.target.closest("[data-validate-cart]");
-  if(validate){
+  const validate = event.target.closest("[data-validate-cart]");
+if(validate){
 
-    document.dispatchEvent(
-      new CustomEvent("checkout:open")
-    );
+  renderCart();
 
-    return;
-  }
+  requestAnimationFrame(() => {
+    document.dispatchEvent(new CustomEvent("checkout:mount"));
+    document.dispatchEvent(new CustomEvent("checkout:open"));
+  });
 
+  return;
+}
 });
 
 // ===== Ouverture/Fermeture panier =====
