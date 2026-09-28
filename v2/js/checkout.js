@@ -202,11 +202,20 @@ function mountCheckout() {
       return;
     }
 
-    status.textContent = "Commande enregistrée.";
+   status.textContent = "Votre commande est transmise à Tammy.";
 
-    clearCart();
+clearCart();
 
+    // Demande à app.js de remettre les compteurs à zéro
+    document.dispatchEvent(new CustomEvent("cart:updated"));
+    
     box.reset();
+    
+    box.querySelector('[name="customer_name"]').value = customerName;
+    box.querySelector('[name="email"]').value = email;
+    box.querySelector('[name="phone"]').value = phone;
+    
+    submit.disabled = false;
 
     box.querySelector('[name="customer_name"]').value = customerName;
     box.querySelector('[name="email"]').value = email;
