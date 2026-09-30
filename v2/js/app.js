@@ -1,7 +1,7 @@
 // ===== TAMMY THAI FOOD V3.10 =====
 // UI Renderer + Event Wiring
 
-import { dishes as localDishes } from "./data.js?v=20260923-14";
+import { dishes as localDishes } from "./data.js?v=20260930-01";
 import { spiceLabel } from "./spice.js";
 import { supabase } from "./supabase.js";
 import {
@@ -12,7 +12,7 @@ import {
   clearCart,
   cartCount,
   cartTotal
-} from "./cart.js?v=20260923-08";
+} from "./cart.js?v=20260930-01";
 
 let dishes = [...localDishes];
 
@@ -85,6 +85,8 @@ console.table(data);
       position: local?.position,
       desc: product.description || local?.desc || "",
       spicy: Boolean(product.supports_spice),
+      fixedSpice: local?.fixedSpice ?? null,
+      fixedProtein: local?.fixedProtein ?? null,
       proteinOptions: product.protein_options || local?.proteinOptions || [],
       preparation_minutes:
         product.preparation_minutes ??
@@ -137,13 +139,17 @@ function getState(dish){
   return cardStates.get(dish.id);
 }
 
-function syncSpices(state){
+function syncSpices(state,dish){
 
   while(state.spices.length<state.quantity){
-    state.spices.push(0);
+    state.spices.push(dish.fixedSpice ?? 0);
   }
 
   state.spices.length=state.quantity;
+
+  if(dish.fixedSpice != null){
+    state.spices=state.spices.map(()=>Number(dish.fixedSpice));
+  }
 }
 
 function setQuantity(dish,q){
@@ -152,7 +158,7 @@ function setQuantity(dish,q){
 
   state.quantity=Math.max(0,Math.min(20,q));
 
-  syncSpices(state);
+  syncSpices(state,dish);
 }
 
 function setProteinQuantity(dish,protein,q){
@@ -170,6 +176,10 @@ function setProteinQuantity(dish,protein,q){
 // ===== Sélecteurs =====
 
 function proteinSelector(dish){
+
+  if(dish.fixedProtein){
+    return "<div class=\"spice-box protein-box\"><div class=\"spice-box-title\">Viande</div><div class=\"spice-row\"><span>"+dish.fixedProtein+"</span><b>Inclus</b></div></div>";
+  }
 
   if(!dish.proteinOptions?.length){
     return "";
@@ -215,6 +225,10 @@ function spiceRows(dish){
   }
 
   const state=getState(dish);
+
+  if(dish.fixedSpice != null){
+    return "<div class=\"spice-box\"><div class=\"spice-box-title\">Piment</div><div class=\"spice-row\"><span>Niveau de piment</span><b>Niveau "+dish.fixedSpice+"</b></div></div>";
+  }
 
   if(state.quantity===0){
     return `
@@ -296,9 +310,11 @@ function renderMenu(category="Tous"){
 
         <div class="dish-photo" style="${photoStyle(d)}">
 
-          ${d.spicy
-            ? '<span class="dish-badge">🌶️ Piment au choix</span>'
-            : ""}
+          ${d.fixedSpice != null
+            ? '<span class="dish-badge">🌶️ Piment niveau 1</span>'
+            : d.spicy
+              ? '<span class="dish-badge">🌶️ Piment au choix</span>'
+              : ""}
 
         </div>
 
@@ -381,8 +397,10 @@ function renderCart(){
             ? `<small>Viande : ${item.protein}</small>`
             : ""}
 
-          ${item.spicy
-            ? `
+          ${item.fixedSpice != null
+            ? `<small>Piment : niveau ${item.fixedSpice}</small>`
+            : item.spicy
+              ? `
               <div class="cart-spice-control">
 
                 <span>Piment</span>
@@ -508,6 +526,8 @@ grid?.addEventListener("click",event=>{
   const spiceBtn=event.target.closest("[data-spice-delta]");
   if(spiceBtn){
 
+    if(dish.fixedSpice != null) return;
+
     const row=spiceBtn.closest("[data-spice-row]");
     const index=Number(row.dataset.spiceRow);
 
@@ -525,7 +545,11 @@ grid?.addEventListener("click",event=>{
 
     let spiceIndex=0;
 
-    if(dish.proteinOptions?.length){
+    if(dish.fixedProtein){
+      for(let i=0;i<state.quantity;i++){
+        addToCart(dish,dish.fixedSpice ?? 0,dish.fixedProtein);
+      }
+    }else if(dish.proteinOptions?.length){
 
       dish.proteinOptions.forEach(protein=>{
 
@@ -581,7 +605,7 @@ cartContent?.addEventListener("click",event=>{
 
     const item=getCart().find(x=>x.key===spice.dataset.cartKey);
 
-    if(item){
+    if(item && item.fixedSpice == null){
       updateSpice(item.key,item.spice+Number(spice.dataset.spiceDelta));
     }
 
