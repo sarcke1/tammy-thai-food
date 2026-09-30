@@ -11,7 +11,8 @@ function normalizeItems() {
     quantity: 1,
     spice: Number(item.spice || 0),
     protein: item.protein || '',
-    photo: item.photo || ''
+    photo: item.photo || '',
+    fixedSpice: item.fixedSpice ?? null
   }));
 }
 
@@ -35,7 +36,9 @@ export function addToCart(dish, spice = 0, protein = '') {
     photo: dish.photo || '',
     spicy: Boolean(dish.spicy),
     spice: dish.spicy ? Math.max(0, Math.min(3, Number(spice)||0)) : 0,
+    fixedSpice: dish.fixedSpice ?? null,
     protein,
+
     quantity: 1
   });
 
@@ -44,7 +47,7 @@ export function addToCart(dish, spice = 0, protein = '') {
 
 export function updateSpice(key, spice) {
   const item = items.find(i => i.key === key);
-  if (!item || !item.spicy) return;
+  if (!item || !item.spicy || item.fixedSpice != null) return;
   item.spice = Math.max(0, Math.min(3, Number(spice)||0));
   persist();
 }
