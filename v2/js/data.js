@@ -22,6 +22,20 @@ export const dishes = [
     proteinOptions:["Poulet"]
   },
 
+  {
+    id:"poulet-cajoux",
+    name:"Sauté de poulet aux noix de cajou",
+    price:8,
+    category:"Plats",
+    emoji:"🥜",
+    photo:"Sauté poulet cajoux.png",
+    prep:8,
+    desc:"Poulet sauté aux noix de cajou, poivrons rouges et verts, oignons et cibettes dans une sauce thaïlandaise savoureuse. Servi avec 150 g de riz thaï.",
+    spicy:false,
+    fixedProtein:"Poulet",
+    proteinOptions:["Poulet"]
+  },
+
   { id:"riz-saute", name:"Riz sauté au choix", price:9, category:"Plats", emoji:"🍚", photo:"Riz frit poulet.png", desc:"Riz sauté thaïlandais préparé avec œuf, ail, carotte, sauce et coriandre. Au choix : poulet, bœuf, porc ou crevettes.", spicy:false },
 
   { id:"tom-kha-kai", name:"Tom kha kai", price:7, category:"Plats", emoji:"🥥", photo:"Tom kha kai.png", desc:"Soupe thaïlandaise au lait de coco et poulet, avec citronnelle, galanga, feuilles de combava et échalote. Piment au choix de 0 à 3.", spicy:true },
@@ -66,4 +80,4 @@ export const dishes = [
 
 export const categories=["Tous","Plats","Entrées","Desserts","Boissons"];
 export const serviceWindows=[{label:"Service midi",start:"11:30",end:"14:00"},{label:"Service soir",start:"18:30",end:"21:00"}];
-export const preparation={pad:{base:8,extra:2},"chicken-massena":{base:8,extra:1},"riz-saute":{base:8,extra:1},"tom-kha-kai":{base:8,extra:1},spring:{base:1.5,extra:.3},mango:{base:2,extra:.5}};
+export const preparation={pad:{base:8,extra:2},"chicken-massena":{base:8,extra:1},"poulet-cajoux":{base:8,extra:1},"riz-saute":{base:8,extra:1},"tom-kha-kai":{base:8,extra:1},spring:{base:1.5,extra:.3},mango:{base:2,extra:.5}};
