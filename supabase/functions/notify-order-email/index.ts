@@ -3,7 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 const WEBHOOK_SECRET = "ttf-order-mail-9d6e1b7f4c2a8e5f0d3c7b1a6e4f9c2d";
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY") || "";
 const RESEND_FROM = Deno.env.get("RESEND_FROM") || "Tammy Thai Food <onboarding@resend.dev>";
-const RECIPIENT = "commande.tammythaifood@gmail.com";
+const RECIPIENT = "sarcke@gmail.com";
 
 function esc(value: unknown) {
   return String(value ?? "").replace(/[&<>'"]/g, c => ({
