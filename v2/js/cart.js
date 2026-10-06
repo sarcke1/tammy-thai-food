@@ -25,6 +25,20 @@ function persist() {
   }));
 }
 
+export function isNemsPromo(item){
+  return String(item?.name||"").trim().toLowerCase()==="nems maison";
+}
+
+export function promoBonus(quantity){
+  const q=Math.max(0,Number(quantity)||0);
+  return Math.floor(q/4);
+}
+
+export function promoDeliveredQuantity(quantity){
+  const q=Math.max(0,Number(quantity)||0);
+  return q+promoBonus(q);
+}
+
 export const getCart = () => [...items];
 
 export function addToCart(dish, spice = 0, protein = '') {
@@ -62,5 +76,5 @@ export function clearCart() {
   persist();
 }
 
-export const cartCount = () => items.length;
-export const cartTotal = () => items.reduce((s,i)=>s+i.price,0);
+export const cartCount = () => items.reduce((total,item)=>total+promoDeliveredQuantity(1),0);
+export const cartTotal = () => items.reduce((s,i)=>s+Number(i.price||0),0);
