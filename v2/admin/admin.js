@@ -15,7 +15,7 @@ function setChecklist(d){localStorage.setItem(checklistKey,JSON.stringify(d));}
 function isChecked(id,i){return Boolean(getChecklist()[id]?.includes(i));}
 function updateChecklist(id,i,checked){const d=getChecklist(),list=new Set(d[id]||[]);checked?list.add(i):list.delete(i);d[id]=[...list];setChecklist(d);}
 function allChecked(o){return(o.order_items||[]).length>0&&o.order_items.every((_,i)=>isChecked(o.id,i));}function extractProtein(note){
-  const m=String(note||'').match(/Viande\\s*:\\s*([^—]+)/i);
+  const m=String(note||'').match(/Viande\s*:\s*([^—]+)/i);
   return m?m[1].trim():'';
 }
 function groupOrderItems(items){
