@@ -1,3 +1,9 @@
+## V2.06.08 — recette interne soupe de nouille au bœuf
+
+- Le descriptif affiché au client est volontairement distinct de la recette technique.
+- La recette détaillée est stockée dans Supabase pour le calcul du coût et la préparation des informations allergènes.
+- Les coûts incomplets restent à renseigner pour les boulettes, les nouilles, la coriandre et la sauce soja.
+
 ## V2.06.07 — Soupe de nouille au bœuf
 
 - Ajout de « Soupe de nouille au bœuf » à la carte, catégorie Plats.
