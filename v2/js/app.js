@@ -15,7 +15,7 @@ import {
   isNemsPromo,
   promoBonus,
   promoDeliveredQuantity
-} from "./cart.js?v=20260930-01";
+} from "./cart.js?v=20261006-05";
 
 let dishes = [...localDishes];
 
