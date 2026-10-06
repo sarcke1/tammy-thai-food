@@ -626,6 +626,14 @@ grid?.addEventListener("click",event=>{
 
     }
 
+   // Après ajout, la fiche revient toujours à 0 pour permettre
+   // une nouvelle sélection indépendante sans réinitialiser le panier.
+   state.quantity=0;
+   state.spices=[];
+   state.proteinQuantities={};
+   state.protein="";
+
+   renderMenu(document.querySelector(".category-row .active").textContent.trim());
    renderCart();
 
    // Confirmation visuelle discrète : le panier pulse sans s'ouvrir.
@@ -647,7 +655,7 @@ grid?.addEventListener("click",event=>{
 cartContent?.addEventListener("click",event=>{
 
   const remove=event.target.closest("[data-remove-key]");
-  if(remove){
+  if(remove && remove.dataset.removeKey){
 
     removeItem(remove.dataset.removeKey);
 
