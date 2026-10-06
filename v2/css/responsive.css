@@ -53,15 +53,8 @@
     font-size:.9rem;
   }
 
-  /* Panier flottant */
-  .cart-button{
-    position:fixed;
-    right:16px;
-    bottom:16px;
-    z-index:120;
-    display:flex;
-  }
-
+  /* Panier : le bouton est désormais dans l'en-tête sticky.
+     Il reste visible pendant le défilement sans flotter en bas de l'écran. */
   /* Bannière */
   .hero{
     min-height:60vh;
