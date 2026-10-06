@@ -384,9 +384,50 @@ function renderCart(){
     return;
   }
 
-  cartContent.innerHTML=
-    items.map((item,index)=>`
+  // Les produits sans viande ni piment peuvent être regroupés.
+  // Exemple : 3 Nems maison deviennent "Nems maison ×3".
+  const displayItems=[];
+  const grouped=new Map();
 
+  items.forEach((item,index)=>{
+    const canGroup=!item.protein && !item.spicy && item.fixedSpice == null;
+
+    if(!canGroup){
+      displayItems.push({
+        item,
+        quantity:1,
+        total:item.price,
+        indexes:[index]
+      });
+      return;
+    }
+
+    const groupKey=String(item.id);
+
+    if(!grouped.has(groupKey)){
+      const group={
+        item,
+        quantity:0,
+        total:0,
+        indexes:[]
+      };
+      grouped.set(groupKey,group);
+      displayItems.push(group);
+    }
+
+    const group=grouped.get(groupKey);
+    group.quantity++;
+    group.total+=Number(item.price)||0;
+    group.indexes.push(index);
+  });
+
+  cartContent.innerHTML=
+    displayItems.map((entry,index)=>{
+
+      const item=entry.item;
+      const multiple=entry.quantity>1;
+
+      return `
       <div class="cart-line">
 
         <div class="cart-photo"
@@ -395,9 +436,11 @@ function renderCart(){
 
         <div class="cart-unit-info">
 
-          <strong>${item.name}</strong>
+          <strong>${item.name}${multiple ? ` ×${entry.quantity}` : ""}</strong>
 
-          <small>#${index+1}</small>
+          ${!multiple
+            ? `<small>#${index+1}</small>`
+            : `<small>Quantité : ${entry.quantity}</small>`}
 
           ${item.protein
             ? `<small>Viande : ${item.protein}</small>`
@@ -421,19 +464,21 @@ function renderCart(){
             `
             : "<small>Sans piment</small>"}
 
-          <span>${euro(item.price)}</span>
+          <span>${euro(multiple ? entry.total : item.price)}${multiple ? ` <small>(${euro(item.price)} / unité)</small>` : ""}</span>
 
         </div>
 
         <button
           class="cart-remove"
-          data-remove-key="${item.key}">
+          data-remove-key="${multiple ? "" : item.key}"
+          data-remove-group-id="${multiple ? item.id : ""}"
+          aria-label="${multiple ? `Supprimer les ${entry.quantity} unités` : "Supprimer ce produit"}">
           ×
         </button>
 
       </div>
-
-    `).join("")+
+      `;
+    }).join("")+
 
     `
       <div class="cart-total">
@@ -583,6 +628,13 @@ grid?.addEventListener("click",event=>{
 
    renderCart();
 
+   // Confirmation visuelle discrète : le panier pulse sans s'ouvrir.
+   if(cartButton){
+     cartButton.classList.remove("cart-bump");
+     void cartButton.offsetWidth;
+     cartButton.classList.add("cart-bump");
+   }
+
    // L'ajout au panier ne l'ouvre plus automatiquement.
    // Le client ouvre le panier uniquement en cliquant sur le bouton "Panier".
 
@@ -598,6 +650,20 @@ cartContent?.addEventListener("click",event=>{
   if(remove){
 
     removeItem(remove.dataset.removeKey);
+
+    renderCart();
+
+    return;
+  }
+
+  const removeGroup=event.target.closest("[data-remove-group-id]");
+  if(removeGroup){
+
+    const groupId=removeGroup.dataset.removeGroupId;
+
+    getCart()
+      .filter(item => String(item.id) === String(groupId))
+      .forEach(item => removeItem(item.key));
 
     renderCart();
 
