@@ -43,9 +43,12 @@
   right:0;
   width:min(380px,95vw);
   height:100vh;
+  height:100dvh;
+  max-height:100dvh;
   background:var(--paper);
   box-shadow:-20px 0 60px rgba(0,0,0,.25);
   padding:20px;
+  padding-bottom:calc(20px + env(safe-area-inset-bottom));
   transform:translateX(105%);
   transition:transform .25s ease;
   overflow:auto;
