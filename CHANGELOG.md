@@ -1,3 +1,9 @@
+## V2.06.08
+
+- Remplacement du descriptif technique affiché au client par un descriptif commercial court.
+- Ajout de la recette technique dans Supabase, séparée de la fiche client, pour le coût et les allergènes.
+- Ajout des ingrédients internes manquants « Boulettes de bœuf » et « Sauce soja » avec prix à renseigner.
+
 ## V2.06.07
 
 - Ajout de la « Soupe de nouille au bœuf » à 9 €.
