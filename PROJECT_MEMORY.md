@@ -1,3 +1,8 @@
+## V2.06.09 — correction affichage photo
+
+- Correction du chemin relatif des photos du menu dans `v2/js/app.js`.
+- Objectif : permettre l'affichage correct des images présentes directement dans `v2/` sur GitHub Pages.
+
 ## V2.06.08 — recette interne soupe de nouille au bœuf
 
 - Le descriptif affiché au client est volontairement distinct de la recette technique.
