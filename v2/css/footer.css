@@ -52,3 +52,23 @@ footer .footer-subtitle{
     margin-top:28px;
   }
 }
+footer .footer-details{
+  margin:0;
+  border-top:1px solid rgba(255,255,255,.18);
+  border-bottom:1px solid rgba(255,255,255,.18);
+  padding:10px 0;
+}
+footer .footer-details summary{
+  cursor:pointer;
+  font-weight:800;
+  font-size:.92rem;
+  list-style:none;
+}
+footer .footer-details summary::-webkit-details-marker{display:none}
+footer .footer-details summary::after{
+  content:"＋";
+  float:right;
+  opacity:.7;
+}
+footer .footer-details[open] summary::after{content:"−"}
+footer .footer-details > p:first-of-type{margin-top:12px}
