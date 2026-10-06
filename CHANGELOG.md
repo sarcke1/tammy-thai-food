@@ -4,6 +4,7 @@
 
 - Sections « Allergènes » et « Contact » rendues dépliables dans le footer.
 - Email de contact laissé en attente de confirmation.
+- Libellé « Nems » harmonisé et promotion affichée « 4 + 1 inclus ».
 
 ## V2.06.05
 
