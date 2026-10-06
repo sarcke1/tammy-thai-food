@@ -576,11 +576,9 @@ grid?.addEventListener("click",event=>{
     }
 
    renderCart();
-cartPanel.classList.add("open");
 
-// Prépare immédiatement le formulaire
-document.dispatchEvent(new CustomEvent("checkout:mount"));
-document.dispatchEvent(new CustomEvent("checkout:open"));
+   // L'ajout au panier ne l'ouvre plus automatiquement.
+   // Le client ouvre le panier uniquement en cliquant sur le bouton "Panier".
 
   }
 
