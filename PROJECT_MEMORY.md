@@ -2,6 +2,13 @@
 
 V2 : sauvegarde
 
+## V2.06.02 — Bas du site et informations consommateur
+
+- L'en-tête ne comporte plus les liens « Commander » et « Notre histoire ».
+- Le pied de page contient une première ébauche des allergènes à partir des recettes et ingrédients enregistrés dans Supabase.
+- Les sauces doivent être détaillées dans Supabase avant validation définitive des allergènes.
+- L'origine du poulet, du porc et du bœuf doit être renseignée à partir des informations fournisseurs.
+
 V3 : développement actif
 
 ## V2.05 — Notification email des commandes
