@@ -1,5 +1,31 @@
 # PROJECT MEMORY
 
+## V2.06.06 — Informations du footer dépliables
+
+- « Allergènes » est maintenant présenté dans une section dépliable.
+- « Contact » est également dépliable et indique provisoirement que l'email sera ajouté ultérieurement.
+- Les informations allergènes restent à valider après finalisation des recettes et sauces Supabase.
+
+## V2.06.05 — Regroupement des commandes dans l'administration
+
+- Les lignes identiques sont regroupées dans l'administration selon produit, viande et niveau de piment.
+- Les unités incluses par promotion sont regroupées avec les unités payantes.
+- La checklist cuisine utilise également les lignes regroupées.
+
+## V2.06.04 — Promotion Nems
+
+- Nems maison : 4 unités payées donnent 1 unité supplémentaire incluse.
+- Les multiples de 4 sont gérés automatiquement : 4 → 5, 8 → 10, 12 → 15.
+- Le prix reste calculé sur les unités payées.
+- La préparation tient compte des unités réellement à préparer.
+- L'affichage utilise « 4 + 1 inclus » pour éviter une formulation ambiguë.
+- Le traitement est effectué côté Supabase afin que le total enregistré ne puisse pas être contourné par le frontend.
+
+## V2.06.03 — Panier
+
+- Correction de la suppression des groupes de produits dans le panier.
+- Après ajout, les compteurs de la fiche produit reviennent à 0 sans modifier les autres produits déjà présents.
+
 V2 : sauvegarde
 
 ## V2.06.02 — Bas du site et informations consommateur
