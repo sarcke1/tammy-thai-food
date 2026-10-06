@@ -1,3 +1,10 @@
+## V2.06.07
+
+- Ajout de la « Soupe de nouille au bœuf » à 9 €.
+- Choix du niveau de piment activé.
+- Description et composition de la recette intégrées à la fiche.
+- Image référencée : « Soupe de nouille au boeuf.png ».
+
 # CHANGELOG
 
 ## V2.06.06
