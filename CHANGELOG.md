@@ -1,3 +1,8 @@
+## V2.06.09
+
+- Correction du chemin d'affichage des photos du menu.
+- Cache `app.js` actualisé.
+
 ## V2.06.08
 
 - Remplacement du descriptif technique affiché au client par un descriptif commercial court.
