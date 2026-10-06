@@ -273,6 +273,12 @@ function quantityControl(dish){
 
   const state=getState(dish);
 
+  // Pour les plats avec choix de viande, chaque viande possède
+  // déjà son propre compteur. Le compteur global "Quantité" est donc inutile.
+  if(dish.proteinOptions?.length){
+    return "";
+  }
+
   return `
     <div class="quantity-row">
 
