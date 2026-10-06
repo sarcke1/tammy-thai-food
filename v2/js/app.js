@@ -11,7 +11,10 @@ import {
   removeItem,
   clearCart,
   cartCount,
-  cartTotal
+  cartTotal,
+  isNemsPromo,
+  promoBonus,
+  promoDeliveredQuantity
 } from "./cart.js?v=20260930-01";
 
 let dishes = [...localDishes];
@@ -322,6 +325,8 @@ function renderMenu(category="Tous"){
               ? '<span class="dish-badge">🌶️ Piment au choix</span>'
               : ""}
 
+          ${isNemsPromo(d) ? '<span class="dish-badge promo-badge">4 + 1 inclus</span>' : ""}
+
         </div>
 
         <div class="dish-card-body">
@@ -438,9 +443,11 @@ function renderCart(){
 
           <strong>${item.name}${multiple ? ` ×${entry.quantity}` : ""}</strong>
 
-          ${!multiple
-            ? `<small>#${index+1}</small>`
-            : `<small>Quantité : ${entry.quantity}</small>`}
+          ${isNemsPromo(item) && entry.quantity >= 4
+            ? `<small>Quantité : ${promoDeliveredQuantity(entry.quantity)} (${entry.quantity} payants + ${promoBonus(entry.quantity)} inclus)</small>`
+            : !multiple
+              ? `<small>#${index+1}</small>`
+              : `<small>Quantité : ${entry.quantity}</small>`}
 
           ${item.protein
             ? `<small>Viande : ${item.protein}</small>`
