@@ -441,7 +441,7 @@ function renderCart(){
 
         <div class="cart-unit-info">
 
-          <strong>${item.name}${(multiple || isNemsPromo(item)) ? ` ×${isNemsPromo(item) ? promoDeliveredQuantity(entry.quantity) : entry.quantity}` : ""}</strong>
+          <strong>${item.name}${multiple ? ` ×${isNemsPromo(item) ? promoDeliveredQuantity(entry.quantity) : entry.quantity}` : (isNemsPromo(item) && entry.quantity >= 4 ? ` ×${promoDeliveredQuantity(entry.quantity)}` : "")}</strong>
 
           ${isNemsPromo(item) && entry.quantity >= 4
             ? `<small>Quantité : ${promoDeliveredQuantity(entry.quantity)} (${entry.quantity} payants + ${promoBonus(entry.quantity)} inclus)</small>`
