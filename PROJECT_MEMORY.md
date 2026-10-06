@@ -1,3 +1,11 @@
+## V2.06.07 — Soupe de nouille au bœuf
+
+- Ajout de « Soupe de nouille au bœuf » à la carte, catégorie Plats.
+- Prix : 9 €.
+- Piment : choix du niveau.
+- Recette saisie à partir des indications fournies : 50 g de bœuf, 2 boulettes, 70 g de nouilles, coriandre, sauce soja, ail et sauce.
+- Image prévue : « Soupe de nouille au boeuf.png ».
+
 # PROJECT MEMORY
 
 ## V2.06.06 — Informations du footer dépliables
