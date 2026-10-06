@@ -76,5 +76,19 @@ export function clearCart() {
   persist();
 }
 
-export const cartCount = () => items.reduce((total,item)=>total+promoDeliveredQuantity(1),0);
+export const cartCount = () => {
+  const grouped=new Map();
+  items.forEach(item=>{
+    const key=String(item.id||item.name||'item');
+    grouped.set(key,(grouped.get(key)||0)+1);
+  });
+  let total=0;
+  grouped.forEach((quantity,key)=>{
+    const item=items.find(i=>String(i.id||i.name||'item')===key);
+    total += item && isNemsPromo(item)
+      ? promoDeliveredQuantity(quantity)
+      : quantity;
+  });
+  return total;
+};
 export const cartTotal = () => items.reduce((s,i)=>s+Number(i.price||0),0);
