@@ -34,7 +34,8 @@ export const dishes = [
     desc:"Poulet sauté aux noix de cajou, poivrons rouges et verts, oignons et cibettes dans une sauce thaïlandaise savoureuse. Servi avec du riz thaï.",
     spicy:false,
     fixedProtein:"Poulet",
-    proteinOptions:["Poulet"]
+    proteinOptions:["Poulet"],
+    servedWithRice:true
   },
 
   { id:"riz-saute", name:"Riz sauté au choix", price:9, category:"Plats", emoji:"🍚", photo:"Riz frit poulet.png", desc:"Riz sauté thaïlandais préparé avec œuf, ail, carotte, sauce et coriandre. Au choix : poulet, bœuf, porc ou crevettes.", spicy:false },
@@ -64,9 +65,9 @@ export const dishes = [
     category:"Plats",
     emoji:"🍛",
     photo:"soupe de curry vert.png",
-    desc:"Soupe thaïlandaise au curry vert, lait de coco, aubergines thaïes, basilic thaï et légumes. Au choix : poulet, porc ou bœuf (+1 €).",
+    desc:"Soupe thaïlandaise au curry vert, lait de coco, aubergines thaïes, basilic thaï et légumes. Au choix : poulet, porc ou bœuf.",
     spicy:true,
-    proteinOptions:["Poulet","Porc","Bœuf (+1 €)"]
+    proteinOptions:["Poulet","Porc","Bœuf"]
   },
 
   {
