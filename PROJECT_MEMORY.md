@@ -1,3 +1,10 @@
+## V2.06.11 — panier et affichage des soupes
+
+- Suppression des repères « #1 », « #2 » dans le panier client.
+- Contrôle de quantité − / + conservé uniquement pour les produits additionnables : Nems maison et Rouleau de printemps.
+- Les soupes Tom kha kai, curry rouge et curry vert portent le badge « 🍚 Servi avec riz ».
+- La Soupe de nouille au bœuf utilise le nom de fichier exact présent dans GitHub, avec le caractère « œ ».
+
 ## V2.06.10 — carte client et panier
 
 - Ordre des catégories client : Entrées, Plats, Desserts, Boissons.
