@@ -460,7 +460,8 @@ function renderCart(){
           ${isNemsPromo(item) && entry.quantity >= 4
             ? `<small>Quantité : ${promoDeliveredQuantity(entry.quantity)} (${entry.quantity} payants + ${promoBonus(entry.quantity)} offert)</small>`
             : !multiple
-              ? "" : `<small>Quantité : ${entry.quantity}</small>`
+              ? ""
+              : `<small>Quantité : ${entry.quantity}</small>`}
 
           ${item.cartAdjustable
             ? `
