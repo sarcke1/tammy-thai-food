@@ -40,11 +40,11 @@ export const dishes = [
 
   { id:"riz-saute", name:"Riz sauté au choix", price:9, category:"Plats", emoji:"🍚", photo:"Riz frit poulet.png", desc:"Riz sauté thaïlandais préparé avec œuf, ail, carotte, sauce et coriandre. Au choix : poulet, bœuf, porc ou crevettes.", spicy:false },
 
-  { id:"tom-kha-kai", name:"Tom kha kai", price:7, category:"Plats", emoji:"🥥", photo:"Tom kha kai.png", desc:"Soupe thaïlandaise au lait de coco et poulet, avec citronnelle, galanga, feuilles de combava et échalote. Piment au choix de 0 à 3.", spicy:true },
+  { id:"tom-kha-kai", name:"Tom kha kai", price:7, category:"Plats", emoji:"🥥", photo:"Tom kha kai.png", desc:"Soupe thaïlandaise au lait de coco et poulet, avec citronnelle, galanga, feuilles de combava et échalote. Piment au choix de 0 à 3.", spicy:true, servedWithRice:true },
 
-  { id:"soupe-nouille-boeuf", name:"Soupe de nouille au bœuf", price:9, category:"Plats", emoji:"🍜", photo:"Soupe de nouille au boeuf.png", desc:"Soupe de nouilles de riz au bœuf, servie dans un bouillon parfumé avec des boulettes de viande et de la coriandre. Piment au choix.", spicy:true },
+  { id:"soupe-nouille-boeuf", name:"Soupe de nouille au bœuf", price:9, category:"Plats", emoji:"🍜", photo:"Soupe de nouille au bœuf.png", desc:"Soupe de nouilles de riz au bœuf, servie dans un bouillon parfumé avec des boulettes de viande et de la coriandre. Piment au choix.", spicy:true },
 
-  { id:"spring", name:"Rouleau de printemps", price:1.5, category:"Entrées", emoji:"🌯", photo:"Rouleau de printemps.png", desc:"Rouleau de printemps aux crevettes, salade, carotte, menthe, coriandre et nouilles chinoises, roulé dans une feuille de riz. Servi avec sa sauce.", spicy:false },
+  { id:"spring", name:"Rouleau de printemps", price:1.5, category:"Entrées", emoji:"🌯", photo:"Rouleau de printemps.png", desc:"Rouleau de printemps aux crevettes, salade, carotte, menthe, coriandre et nouilles chinoises, roulé dans une feuille de riz. Servi avec sa sauce.", spicy:false, cartAdjustable:true },
 
   {
     id:"red-curry-soup",
@@ -55,7 +55,8 @@ export const dishes = [
     photo:"Soupe de curry rouge.png",
     desc:"Soupe thaïlandaise au curry rouge, lait de coco, feuilles de combava et légumes. Au choix : poulet, porc ou bœuf.",
     spicy:true,
-    proteinOptions:["Poulet","Porc","Bœuf"]
+    proteinOptions:["Poulet","Porc","Bœuf"],
+    servedWithRice:true
   },
 
   {
@@ -67,7 +68,8 @@ export const dishes = [
     photo:"soupe de curry vert.png",
     desc:"Soupe thaïlandaise au curry vert, lait de coco, aubergines thaïes, basilic thaï et légumes. Au choix : poulet, porc ou bœuf.",
     spicy:true,
-    proteinOptions:["Poulet","Porc","Bœuf"]
+    proteinOptions:["Poulet","Porc","Bœuf"],
+    servedWithRice:true
   },
 
   {
@@ -78,7 +80,8 @@ export const dishes = [
     desc:"Nems maison croustillants préparés selon une recette traditionnelle thaïlandaise.",
     category:"Entrées",
     spicy:false,
-    promo:"4 achetés + 1 offert"
+    promo:"4 achetés + 1 offert",
+    cartAdjustable:true
   }
 ];
 
