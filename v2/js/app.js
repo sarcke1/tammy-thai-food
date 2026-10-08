@@ -449,7 +449,7 @@ function renderCart(){
       <div class="cart-line">
 
         <div class="cart-photo"
-             style="${cartPhotoStyle(item)}"
+             style="${cartPhotoStyle(item)}">
         </div>
 
         <div class="cart-unit-info">
