@@ -306,7 +306,7 @@ function quantityControl(dish){
 
 // ===== Rendu menu =====
 
-function renderMenu(category="Entrées"){
+function renderMenu(category="Plats"){
 
   const visible=(category==="Tous"
     ? dishes
@@ -548,19 +548,65 @@ function renderCart(){
 }
 // ===== Catégories =====
 
-categoryButtons.forEach(button=>{
+function selectCategory(index){
+
+  if(!categoryButtons.length) return;
+
+  const nextIndex=(index+categoryButtons.length)%categoryButtons.length;
+  const button=categoryButtons[nextIndex];
+
+  categoryButtons.forEach(b=>b.classList.remove("active"));
+  button.classList.add("active");
+
+  renderMenu(button.textContent.trim());
+}
+
+categoryButtons.forEach((button,index)=>{
 
   button.addEventListener("click",()=>{
 
-    categoryButtons.forEach(b=>b.classList.remove("active"));
-
-    button.classList.add("active");
-
-    renderMenu(button.textContent.trim());
+    selectCategory(index);
 
   });
 
 });
+
+// Sur téléphone : un glissement horizontal n'importe où dans le menu
+// change directement de catégorie. Le défilement vertical reste normal.
+const menuSection=document.querySelector("#menu");
+let touchStartX=0;
+let touchStartY=0;
+
+menuSection?.addEventListener("touchstart",event=>{
+
+  const touch=event.changedTouches[0];
+
+  touchStartX=touch.clientX;
+  touchStartY=touch.clientY;
+
+},{passive:true});
+
+menuSection?.addEventListener("touchend",event=>{
+
+  const touch=event.changedTouches[0];
+
+  const deltaX=touch.clientX-touchStartX;
+  const deltaY=touch.clientY-touchStartY;
+
+  if(Math.abs(deltaX)<50) return;
+  if(Math.abs(deltaX)<=Math.abs(deltaY)*1.2) return;
+
+  const activeIndex=categoryButtons.findIndex(
+    button=>button.classList.contains("active")
+  );
+
+  if(activeIndex<0) return;
+
+  selectCategory(
+    activeIndex+(deltaX<0?1:-1)
+  );
+
+},{passive:true});
 
 // ===== Clic sur une carte =====
 
@@ -796,7 +842,7 @@ document.addEventListener("cart:updated",()=>{
 
 // ===== Initialisation =====
 
-renderMenu();
+renderMenu("Plats");
 
 renderCart();
 
