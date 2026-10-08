@@ -92,6 +92,7 @@ console.table(data);
       fixedSpice: local?.fixedSpice ?? null,
       fixedProtein: local?.fixedProtein ?? null,
       servedWithRice: local?.servedWithRice ?? false,
+      cartAdjustable: local?.cartAdjustable ?? false,
       proteinOptions: product.protein_options || local?.proteinOptions || [],
       preparation_minutes:
         product.preparation_minutes ??
@@ -459,14 +460,17 @@ function renderCart(){
           ${isNemsPromo(item) && entry.quantity >= 4
             ? `<small>Quantité : ${promoDeliveredQuantity(entry.quantity)} (${entry.quantity} payants + ${promoBonus(entry.quantity)} offert)</small>`
             : !multiple
-              ? `<small>#${index+1}</small>`
-              : `<small>Quantité : ${entry.quantity}</small>`}
+              ? "" : `<small>Quantité : ${entry.quantity}</small>`
 
-          <div class="cart-quantity-control">
-            <button type="button" data-cart-key="${item.key}" data-cart-quantity-delta="-1" aria-label="Diminuer la quantité">−</button>
-            <b>${entry.quantity}</b>
-            <button type="button" data-cart-key="${item.key}" data-cart-quantity-delta="1" aria-label="Augmenter la quantité">+</button>
-          </div>
+          ${item.cartAdjustable
+            ? `
+              <div class="cart-quantity-control">
+                <button type="button" data-cart-key="${item.key}" data-cart-quantity-delta="-1" aria-label="Diminuer la quantité">−</button>
+                <b>${entry.quantity}</b>
+                <button type="button" data-cart-key="${item.key}" data-cart-quantity-delta="1" aria-label="Augmenter la quantité">+</button>
+              </div>
+            `
+            : ""}
 
           ${item.protein
             ? `<small>Viande : ${item.protein}</small>`
