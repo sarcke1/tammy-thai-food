@@ -19,7 +19,8 @@ export const dishes = [
     spicy:true,
     fixedSpice:1,
     fixedProtein:"Poulet",
-    proteinOptions:["Poulet"]
+    proteinOptions:["Poulet"],
+    servedWithRice:true
   },
 
   {
@@ -30,7 +31,7 @@ export const dishes = [
     emoji:"🥜",
     photo:"Sauté poulet cajoux.png",
     prep:8,
-    desc:"Poulet sauté aux noix de cajou, poivrons rouges et verts, oignons et cibettes dans une sauce thaïlandaise savoureuse. Servi avec 150 g de riz thaï.",
+    desc:"Poulet sauté aux noix de cajou, poivrons rouges et verts, oignons et cibettes dans une sauce thaïlandaise savoureuse. Servi avec du riz thaï.",
     spicy:false,
     fixedProtein:"Poulet",
     proteinOptions:["Poulet"]
@@ -51,9 +52,9 @@ export const dishes = [
     category:"Plats",
     emoji:"🍛",
     photo:"Soupe de curry rouge.png",
-    desc:"Soupe thaïlandaise au curry rouge, lait de coco, feuilles de combava et légumes. Au choix : poulet, porc ou bœuf (+1 €).",
+    desc:"Soupe thaïlandaise au curry rouge, lait de coco, feuilles de combava et légumes. Au choix : poulet, porc ou bœuf.",
     spicy:true,
-    proteinOptions:["Poulet","Porc","Bœuf (+1 €)"]
+    proteinOptions:["Poulet","Porc","Bœuf"]
   },
 
   {
@@ -76,10 +77,10 @@ export const dishes = [
     desc:"Nems maison croustillants préparés selon une recette traditionnelle thaïlandaise.",
     category:"Entrées",
     spicy:false,
-    promo:"4 + 1 inclus"
+    promo:"4 achetés + 1 offert"
   }
 ];
 
-export const categories=["Tous","Plats","Entrées","Desserts","Boissons"];
+export const categories=["Entrées","Plats","Desserts","Boissons"];
 export const serviceWindows=[{label:"Service midi",start:"11:30",end:"14:00"},{label:"Service soir",start:"18:30",end:"21:00"}];
 export const preparation={pad:{base:8,extra:2},"chicken-massena":{base:8,extra:1},"poulet-cajoux":{base:8,extra:1},"riz-saute":{base:8,extra:1},"tom-kha-kai":{base:8,extra:1},"soupe-nouille-boeuf":{base:8,extra:1},spring:{base:1.5,extra:.3},mango:{base:2,extra:.5}};
