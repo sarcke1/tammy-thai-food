@@ -1,3 +1,10 @@
+## V2.06.13
+
+- Mobile : les 4 catégories Entrées, Plats, Desserts et Boissons tiennent sur la largeur de l'écran.
+- Mobile : un glissement horizontal vers la gauche ou la droite depuis n'importe quelle zone du menu change de catégorie.
+- La catégorie active est mise à jour automatiquement après le swipe.
+- La navigation verticale du menu reste conservée.
+
 ## V2.06.12
 
 - Accueil du menu : catégorie « Plats » sélectionnée par défaut à l'arrivée sur le site.
