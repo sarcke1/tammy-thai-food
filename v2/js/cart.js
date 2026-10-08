@@ -68,7 +68,7 @@ export function changeQuantity(key, delta) {
   if (amount > 0) {
     items.push({
       ...item,
-      key: \`${item.id || "item"}::${Date.now()}::${Math.random().toString(36).slice(2,8)}\`,
+      key: `${item.id || "item"}::${Date.now()}::${Math.random().toString(36).slice(2,8)}`,
       quantity: 1
     });
     persist();
