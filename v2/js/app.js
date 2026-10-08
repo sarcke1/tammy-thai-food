@@ -445,6 +445,7 @@ function renderCart(){
 
       const item=entry.item;
       const multiple=entry.quantity>1;
+      const adjustable=item.cartAdjustable || isNemsPromo(item) || item.name==="Rouleau de printemps";
 
       return `
       <div class="cart-line">
@@ -463,7 +464,7 @@ function renderCart(){
               ? ""
               : `<small>Quantité : ${entry.quantity}</small>`}
 
-          ${item.cartAdjustable
+          ${adjustable
             ? `
               <div class="cart-quantity-control">
                 <button type="button" data-cart-key="${item.key}" data-cart-quantity-delta="-1" aria-label="Diminuer la quantité">−</button>
