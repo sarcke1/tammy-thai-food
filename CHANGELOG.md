@@ -1,3 +1,9 @@
+## V2.06.12
+
+- Accueil du menu : catégorie « Plats » sélectionnée par défaut à l'arrivée sur le site.
+- Bannière haute et pied de page : suppression du tréma dans « thai ».
+- Mobile : navigation des catégories Entrées → Plats → Desserts → Boissons améliorée en défilement horizontal tactile.
+
 ## V2.06.11
 
 - Panier : suppression des repères « #1 », « #2 » inutiles.
