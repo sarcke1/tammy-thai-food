@@ -97,22 +97,6 @@ function mountCheckout() {
 
   cartContent.after(box);
   checkoutForm = box;
-document.addEventListener("checkout:open", () => {
-  if (!getCart().length) return;
-
-  box.hidden = false;
-
-  // Attendre que le formulaire soit affiché
-  requestAnimationFrame(() => {
-    panel.scrollTo({
-      top: panel.scrollHeight,
-      behavior: "smooth"
-    });
-
-    // Met le curseur directement dans le champ Nom
-    box.querySelector('[name="customer_name"]')?.focus();
-  });
-});
 
   document.addEventListener("cart:updated", updateCheckoutVisibility);
 
@@ -241,4 +225,35 @@ setTimeout(() => {
 updateCheckoutVisibility();
 }
 
+
+function openCheckout(){
+  if (!getCart().length) return;
+
+  // Le formulaire est créé une seule fois puis simplement affiché.
+  // Cette fonction est volontairement indépendante du rendu du panier.
+  if (!checkoutForm) {
+    mountCheckout();
+  }
+
+  if (!checkoutForm) return;
+
+  checkoutForm.hidden = false;
+
+  requestAnimationFrame(() => {
+    panel.scrollTo({
+      top: panel.scrollHeight,
+      behavior: "smooth"
+    });
+
+    checkoutForm.querySelector('[name="customer_name"]')?.focus();
+  });
+}
+
+document.addEventListener("checkout:mount", () => {
+  mountCheckout();
+});
+
+document.addEventListener("checkout:open", openCheckout);
+
 mountCheckout();
+
