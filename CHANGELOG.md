@@ -1,3 +1,10 @@
+## V2.06.11
+
+- Panier : suppression des repères « #1 », « #2 » inutiles.
+- Panier : − / + limité aux produits additionnables (Nems maison, Rouleau de printemps).
+- Soupe Tom kha kai, soupe de curry rouge et soupe de curry vert : badge « 🍚 Servi avec riz ».
+- Correction de la photo de la Soupe de nouille au bœuf : le fichier GitHub s'appelle réellement `Soupe de nouille au bœuf.png` et non `Soupe de nouille au boeuf.png`.
+
 ## V2.06.10
 
 - Carte client : catégories réordonnées Entrées → Plats → Desserts → Boissons, bouton « Tous » supprimé.
