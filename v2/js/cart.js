@@ -59,6 +59,28 @@ export function addToCart(dish, spice = 0, protein = '') {
   persist();
 }
 
+export function changeQuantity(key, delta) {
+  const item = items.find(i => i.key === key);
+  if (!item) return;
+
+  const amount = Number(delta) || 0;
+
+  if (amount > 0) {
+    items.push({
+      ...item,
+      key: \`${item.id || "item"}::${Date.now()}::${Math.random().toString(36).slice(2,8)}\`,
+      quantity: 1
+    });
+    persist();
+    return;
+  }
+
+  if (amount < 0) {
+    items = items.filter(i => i.key !== key);
+    persist();
+  }
+}
+
 export function updateSpice(key, spice) {
   const item = items.find(i => i.key === key);
   if (!item || !item.spicy || item.fixedSpice != null) return;
