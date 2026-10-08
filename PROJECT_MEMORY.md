@@ -1,3 +1,15 @@
+## V2.06.10 — carte client et panier
+
+- Ordre des catégories client : Entrées, Plats, Desserts, Boissons.
+- Suppression du bouton « Tous ».
+- Libellé des choix de protéines simplifié en « Choix ».
+- Choix poulet/porc/bœuf des soupes de curry au même prix.
+- Badge promotionnel Nems : « 4 achetés + 1 offert ».
+- Miniatures des produits fiabilisées dans le panier.
+- Contrôles − / quantité / + ajoutés dans le panier.
+- Badge « 🍚 Servi avec riz » ajouté aux plats concernés.
+- Suppression du grammage « 150 g » dans la fiche du sauté de poulet aux noix de cajou.
+
 ## V2.06.08 — recette interne soupe de nouille au bœuf
 
 - Le descriptif affiché au client est volontairement distinct de la recette technique.
