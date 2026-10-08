@@ -1,3 +1,13 @@
+## V2.06.10
+
+- Carte client : catégories réordonnées Entrées → Plats → Desserts → Boissons, bouton « Tous » supprimé.
+- Fiches : « Choix » à la place de « Choix de la viande ».
+- Soupes de curry : bœuf au même prix que poulet et porc, données Supabase mises à jour.
+- Nems : promotion affichée « 4 achetés + 1 offert ».
+- Panier : miniatures de tous les produits et quantité modifiable avec − / +.
+- Plats servis avec riz : badge « 🍚 Servi avec riz ».
+- Sauté de poulet aux noix de cajou : retrait du grammage de riz dans la description.
+
 ## V2.06.08
 
 - Remplacement du descriptif technique affiché au client par un descriptif commercial court.
