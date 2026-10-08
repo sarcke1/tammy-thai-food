@@ -1,7 +1,7 @@
 // ===== TAMMY THAI FOOD V3.10 =====
 // UI Renderer + Event Wiring
 
-import { dishes as localDishes } from "./data.js?v=20261006-06";
+import { dishes as localDishes } from "./data.js?v=20261008-01";
 import { spiceLabel } from "./spice.js";
 import { supabase } from "./supabase.js";
 import {
@@ -12,10 +12,11 @@ import {
   clearCart,
   cartCount,
   cartTotal,
+  changeQuantity,
   isNemsPromo,
   promoBonus,
   promoDeliveredQuantity
-} from "./cart.js?v=20261006-06";
+} from "./cart.js?v=20261008-01";
 
 let dishes = [...localDishes];
 
@@ -36,8 +37,8 @@ const cartCountEl = document.querySelector("#cart-count");
 const cardStates = new Map();
 
 const categoryOrder = {
-  Plats: 1,
-  Entrées: 2,
+  Entrées: 1,
+  Plats: 2,
   Desserts: 3,
   Boissons: 4
 };
@@ -90,6 +91,7 @@ console.table(data);
       spicy: Boolean(product.supports_spice),
       fixedSpice: local?.fixedSpice ?? null,
       fixedProtein: local?.fixedProtein ?? null,
+      servedWithRice: local?.servedWithRice ?? false,
       proteinOptions: product.protein_options || local?.proteinOptions || [],
       preparation_minutes:
         product.preparation_minutes ??
@@ -194,7 +196,7 @@ function proteinSelector(dish){
     <div class="spice-box protein-box">
 
       <div class="spice-box-title">
-        Choix de la viande
+        Choix
       </div>
 
       ${dish.proteinOptions.map(option=>`
@@ -303,7 +305,7 @@ function quantityControl(dish){
 
 // ===== Rendu menu =====
 
-function renderMenu(category="Tous"){
+function renderMenu(category="Entrées"){
 
   const visible=(category==="Tous"
     ? dishes
@@ -325,7 +327,9 @@ function renderMenu(category="Tous"){
               ? '<span class="dish-badge">🌶️ Piment au choix</span>'
               : ""}
 
-          ${isNemsPromo(d) ? '<span class="dish-badge promo-badge">4 + 1 inclus</span>' : ""}
+          ${isNemsPromo(d) ? '<span class="dish-badge promo-badge">4 achetés + 1 offert</span>' : ""}
+
+          ${d.servedWithRice ? '<span class="dish-badge rice-badge">🍚 Servi avec riz</span>' : ""}
 
         </div>
 
@@ -365,6 +369,15 @@ function renderMenu(category="Tous"){
   }).join("");
 }
 // ===== Rendu panier =====
+
+function cartPhotoStyle(item){
+
+  if(!item.photo){
+    return "";
+  }
+
+  return "background-image:url(\"/tammy-thai-food/v2/" + encodeURIComponent(item.photo) + "\")";
+}
 
 function renderCart(){
 
@@ -436,7 +449,7 @@ function renderCart(){
       <div class="cart-line">
 
         <div class="cart-photo"
-             style="background-image:url(${item.photo||""})">
+             style="${cartPhotoStyle(item)}"
         </div>
 
         <div class="cart-unit-info">
@@ -444,10 +457,16 @@ function renderCart(){
           <strong>${item.name}${multiple ? ` ×${isNemsPromo(item) ? promoDeliveredQuantity(entry.quantity) : entry.quantity}` : (isNemsPromo(item) && entry.quantity >= 4 ? ` ×${promoDeliveredQuantity(entry.quantity)}` : "")}</strong>
 
           ${isNemsPromo(item) && entry.quantity >= 4
-            ? `<small>Quantité : ${promoDeliveredQuantity(entry.quantity)} (${entry.quantity} payants + ${promoBonus(entry.quantity)} inclus)</small>`
+            ? `<small>Quantité : ${promoDeliveredQuantity(entry.quantity)} (${entry.quantity} payants + ${promoBonus(entry.quantity)} offert)</small>`
             : !multiple
               ? `<small>#${index+1}</small>`
               : `<small>Quantité : ${entry.quantity}</small>`}
+
+          <div class="cart-quantity-control">
+            <button type="button" data-cart-key="${item.key}" data-cart-quantity-delta="-1" aria-label="Diminuer la quantité">−</button>
+            <b>${entry.quantity}</b>
+            <button type="button" data-cart-key="${item.key}" data-cart-quantity-delta="1" aria-label="Augmenter la quantité">+</button>
+          </div>
 
           ${item.protein
             ? `<small>Viande : ${item.protein}</small>`
@@ -660,6 +679,13 @@ grid?.addEventListener("click",event=>{
 // ===== Boutons panier =====
 
 cartContent?.addEventListener("click",event=>{
+
+  const quantity=event.target.closest("[data-cart-quantity-delta]");
+  if(quantity){
+    changeQuantity(quantity.dataset.cartKey,Number(quantity.dataset.cartQuantityDelta));
+    renderCart();
+    return;
+  }
 
   const remove=event.target.closest("[data-remove-key]");
   if(remove && remove.dataset.removeKey){
