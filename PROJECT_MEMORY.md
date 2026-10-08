@@ -1,3 +1,10 @@
+## V2.06.13 — swipe des catégories mobile
+
+- Les quatre catégories tiennent sur une seule ligne dans la largeur disponible du téléphone.
+- Un swipe horizontal effectué depuis n'importe quelle zone du menu passe à la catégorie suivante ou précédente.
+- Le swipe vertical continue à permettre le défilement normal de la page.
+- La catégorie « Plats » reste la catégorie affichée par défaut.
+
 ## V2.06.11 — panier et affichage des soupes
 
 - Suppression des repères « #1 », « #2 » dans le panier client.
