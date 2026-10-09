@@ -676,7 +676,7 @@ grid?.addEventListener("click",event=>{
 
     if(dish.fixedProtein){
       for(let i=0;i<state.quantity;i++){
-        addToCart(dish,dish.fixedSpice ?? 0,dish.fixedProtein);
+        addToCart(dish,dish.fixedSpice ?? (dish.spicy ? (state.spices[i] ?? 0) : 0),dish.fixedProtein);
       }
     }else if(dish.proteinOptions?.length){
 
