@@ -6,6 +6,7 @@
 - Recettes internes saisies dans Supabase à partir des quantités manuscrites. Les prix d'achat inconnus sont laissés non renseignés ; le coût matière n'est donc pas validé.
 - Allergènes connus : salade de papaye = cacahuètes et poisson (sauce poisson) ; bœuf sauce huître = mollusques via la sauce huître. Vérifier l'étiquette exacte de la sauce fournisseur.
 - La photo client de la salade n'est pas encore présente dans le dépôt GitHub ; la fiche affiche provisoirement le fond de remplacement jusqu'à l'ajout du fichier image.
+- Le moteur d'ajout conserve le niveau de piment choisi pour le bœuf à viande fixe.
 
 ## V2.06.13 — swipe des catégories mobile
 
