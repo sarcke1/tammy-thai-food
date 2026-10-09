@@ -155,7 +155,7 @@ async function loadMenu() {
   if (error) throw error;
   const localMap = new Map(localDishes.map(d => [d.name.trim().toLocaleLowerCase("fr-FR"), d]));
   const products = (data || [])
-    .map(p => ({...p, category:p.product_categories?.name || "", local:localMap.get(p.name.trim().toLocaleLowerCase("fr-FR"))}))
+    .map(p => ({...p, local:localMap.get(p.name.trim().toLocaleLowerCase("fr-FR")), category:p.product_categories?.name || localMap.get(p.name.trim().toLocaleLowerCase("fr-FR"))?.category || ""}))
     .filter(p => p.local) // Ne pas afficher de produits absents de la carte validée dans data.js.
     .sort((a,b) => localDishes.indexOf(a.local) - localDishes.indexOf(b.local));
   if (!products.length) throw new Error("Aucun produit de la carte n’a pu être confirmé.");
