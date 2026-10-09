@@ -1,3 +1,13 @@
+## V2.06.17
+
+- Ajout de `v2/prospectus.html`, un prospectus interactif partageable et imprimable.
+- Les produits actifs et leurs prix sont chargés depuis Supabase ; les descriptions, photos, options de viande/piment et promotions sont repris des fiches locales validées.
+- Les produits non présents dans `v2/js/data.js` ne sont pas affichés : aucun dessert ni aucune boisson n’est inventé.
+- QR code vers le site de commande V2.
+- Informations de retrait conformes au checkout actuel : commande avant 18 h = retrait J+1 à midi ; à partir de 18 h = retrait J+2 à midi.
+- Aucun fichier du site de commande ni aucune logique V1/V2 n’a été modifié. La carte du site reste inchangée.
+- Le prospectus dépend d’une connexion Internet pour charger Supabase, les photos et le QR code.
+
 ## V2.06.16
 
 - Ajout de `photo:"Salade papaye.png"` à la fiche Salade de papaye dans `v2/js/data.js`.
