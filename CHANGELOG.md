@@ -8,6 +8,12 @@
 - La photo du bœuf est référencée dans le dépôt. La photo de la salade doit encore être ajoutée au dépôt pour apparaître sur la fiche client.
 - Correction du moteur d’ajout : le niveau de piment choisi est bien conservé pour le bœuf à viande fixe.
 
+## V2.06.14
+
+- Correction de l’ouverture du formulaire après clic sur « Valider le panier ».
+- Cache du module de commande actualisé.
+- Aucun changement apporté à la logique des produits ou au calcul du panier.
+
 ## V2.06.13
 
 - Mobile : les 4 catégories Entrées, Plats, Desserts et Boissons tiennent sur la largeur de l'écran.
