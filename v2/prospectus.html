@@ -131,6 +131,7 @@ function cardHtml(product) {
   const description = product.description || local?.desc || "";
   const options = product.protein_options || local?.proteinOptions || [];
   const labels = [];
+  const proteinText = local?.fixedProtein ? "Viande : " + local.fixedProtein : (options.length ? "Choix : " + options.join(", ") : "");
   if (local?.fixedSpice != null) labels.push("Piment niveau " + local.fixedSpice);
   else if (product.supports_spice ?? local?.spicy) labels.push("Piment au choix");
   if (local?.servedWithRice) labels.push("Servi avec riz");
@@ -141,7 +142,7 @@ function cardHtml(product) {
       <div class="name">${escapeHtml(product.name)}</div>
       <div class="price">${euro(product.price)}</div>
       <div class="desc">${escapeHtml(description)}</div>
-      ${options.length ? `<div class="tags">Choix : ${escapeHtml(options.join(", "))}</div>` : ""}
+      ${proteinText ? `<div class="tags">${escapeHtml(proteinText)}</div>` : ""}
       ${labels.length ? `<div class="tags">${escapeHtml(labels.join(" · "))}</div>` : ""}
       ${local?.promo ? `<div class="promo">${escapeHtml(local.promo)}</div>` : ""}
     </div>
