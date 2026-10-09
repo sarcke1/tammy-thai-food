@@ -1,7 +1,7 @@
 // ===== TAMMY THAI FOOD V3.10 =====
 // UI Renderer + Event Wiring
 
-import { dishes as localDishes } from "./data.js?v=20261008-01";
+import { dishes as localDishes } from "./data.js?v=20261009-01";
 import { spiceLabel } from "./spice.js";
 import { supabase } from "./supabase.js";
 import {
