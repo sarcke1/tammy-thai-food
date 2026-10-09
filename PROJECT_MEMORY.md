@@ -8,6 +8,12 @@
 - La photo client de la salade n'est pas encore présente dans le dépôt GitHub ; la fiche affiche provisoirement le fond de remplacement jusqu'à l'ajout du fichier image.
 - Le moteur d'ajout conserve le niveau de piment choisi pour le bœuf à viande fixe.
 
+## V2.06.14 — ouverture du formulaire de commande
+
+- Le formulaire de validation s'affiche via un gestionnaire d'ouverture dédié.
+- Le module de commande est chargé avec une version de cache actualisée.
+- Le panier et le calcul des commandes ne sont pas modifiés.
+
 ## V2.06.13 — swipe des catégories mobile
 
 - Les quatre catégories tiennent sur une seule ligne dans la largeur disponible du téléphone.
