@@ -1,3 +1,9 @@
+## V2.06.16 — photo Salade de papaye
+
+- Fiche `salade-papaye` : `photo:"Salade papaye.png"`.
+- Le fichier image existe dans `v2/Salade papaye.png` sur GitHub.
+- Cache du moteur menu actualisé dans `v2/index.html`.
+
 ## V2.06.15 — Salade de papaye et bœuf sauté sauce huître
 
 - Salade de papaye ajoutée aux Entrées au tarif TAF de 6 € ; tarif public prévu sur la fiche manuscrite : 7 €.
