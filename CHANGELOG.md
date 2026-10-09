@@ -1,3 +1,9 @@
+## V2.06.16
+
+- Ajout de `photo:"Salade papaye.png"` à la fiche Salade de papaye dans `v2/js/data.js`.
+- Vérification : le fichier `v2/Salade papaye.png` existe bien sur GitHub.
+- Cache du moteur menu actualisé dans `v2/index.html`.
+
 ## V2.06.15
 
 - Ajout de la Salade de papaye dans les Entrées, au tarif TAF de 6 €.
