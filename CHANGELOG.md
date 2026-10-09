@@ -1,3 +1,12 @@
+## V2.06.15
+
+- Ajout de la Salade de papaye dans les Entrées, au tarif TAF de 6 €.
+- Ajout du Bœuf sauté sauce huître dans les Plats, au tarif TAF de 8 €, avec piment au choix de 0 à 3 et riz servi avec.
+- Les tarifs publics notés sur les fiches (7 € pour la salade, 10 € pour le bœuf) seront à appliquer au canal client V3 lorsque la tarification par canal sera mise en place.
+- Recettes internes ajoutées dans Supabase à partir des notes manuscrites ; les coûts incomplets restent à renseigner.
+- Allergènes connus ajoutés au footer : cacahuètes et poisson pour la salade ; mollusques via la sauce huître pour le bœuf, sous réserve de vérification de l'étiquette fournisseur.
+- La photo du bœuf est référencée dans le dépôt. La photo de la salade doit encore être ajoutée au dépôt pour apparaître sur la fiche client.
+
 ## V2.06.13
 
 - Mobile : les 4 catégories Entrées, Plats, Desserts et Boissons tiennent sur la largeur de l'écran.
