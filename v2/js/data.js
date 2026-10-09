@@ -67,6 +67,7 @@ export const dishes = [
     price:6,
     category:"Entrées",
     emoji:"🥗",
+    photo:"Salade papaye.png",
     desc:"Salade thaïlandaise de papaye verte râpée, carotte, tomate et citron vert, assaisonnée d’une sauce parfumée et parsemée de cacahuètes.",
     spicy:false
   },
