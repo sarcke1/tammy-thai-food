@@ -6,6 +6,7 @@
 - Recettes internes ajoutées dans Supabase à partir des notes manuscrites ; les coûts incomplets restent à renseigner.
 - Allergènes connus ajoutés au footer : cacahuètes et poisson pour la salade ; mollusques via la sauce huître pour le bœuf, sous réserve de vérification de l'étiquette fournisseur.
 - La photo du bœuf est référencée dans le dépôt. La photo de la salade doit encore être ajoutée au dépôt pour apparaître sur la fiche client.
+- Correction du moteur d’ajout : le niveau de piment choisi est bien conservé pour le bœuf à viande fixe.
 
 ## V2.06.13
 
