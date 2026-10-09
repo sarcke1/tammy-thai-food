@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Prospectus et carte Tammy Thai Food à Champhol. Carte et tarifs chargés depuis le site.">
+<title>Tammy Thai Food — Prospectus et carte</title>
+<style>
+:root{--forest:#082f24;--green:#15553c;--leaf:#2c7650;--cream:#fff8e8;--paper:#fffdf6;--gold:#d9b85e;--red:#c93330;--ink:#1e3027;--muted:#58655b}
+*{box-sizing:border-box}
+html{background:#e7e3d9;scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:var(--cream)}
+.toolbar{position:sticky;top:0;z-index:10;display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;padding:10px;background:#06271e;color:white}
+.toolbar button,.toolbar a{border:1px solid var(--gold);border-radius:7px;padding:9px 14px;background:var(--green);color:white;font-weight:700;text-decoration:none;cursor:pointer}
+.poster{position:relative;isolation:isolate;max-width:1200px;margin:20px auto;background:var(--cream);overflow:hidden;border:5px solid var(--gold);box-shadow:0 12px 36px #0002}
+header{position:relative;text-align:center;color:white;padding:30px 24px 25px;background:radial-gradient(ellipse at 8% 0%,#2d7950,transparent 34%),radial-gradient(ellipse at 95% 90%,#1c6444,transparent 35%),linear-gradient(125deg,#061e18,#0c3c2c 55%,#061e18);border-bottom:5px solid var(--gold)}
+header:before,header:after{position:absolute;top:10px;color:var(--gold);font-size:65px;content:"❧";opacity:.9}
+header:before{left:18px;transform:rotate(-35deg)}header:after{right:18px;transform:scaleX(-1) rotate(-35deg)}
+.kicker{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:#f5dc8d}
+.brand{font-family:Georgia,serif;font-size:clamp(44px,7vw,78px);font-style:italic;font-weight:bold;line-height:.92;letter-spacing:-2px}
+.brand span{display:block;margin-top:8px;color:#f2d26f;font-style:normal;font-size:.48em;letter-spacing:4px}
+.tagline{margin:12px 0 0;font-family:Georgia,serif;font-size:17px}
+.order{display:inline-block;margin-top:18px;padding:11px 20px;border:2px solid #ffdf91;border-radius:7px;background:var(--red);font-size:clamp(15px,2vw,22px);font-weight:900;box-shadow:0 4px 0 #761c1b}
+.ribbon{height:9px;background:repeating-linear-gradient(135deg,var(--gold) 0 8px,#fff2bd 8px 13px,var(--gold) 13px 20px)}
+.service{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:18px 22px;background:#f5ebd0;border-bottom:1px solid #ddc98f}
+.service h2{margin:0 0 6px;color:var(--forest);font:700 22px Georgia,serif}
+.service p{margin:4px 0;line-height:1.4}
+.qr{display:flex;align-items:center;gap:10px;text-align:center;font-size:12px;font-weight:800;color:var(--forest)}
+.qr img{width:108px;height:108px;object-fit:contain;border:5px solid white;border-radius:5px;background:white}
+main{padding:20px 18px 25px}
+.groups{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}
+.menu-section{min-width:0}
+.menu-section h2{margin:0 0 12px;padding:10px 4px;text-align:center;background:var(--green);color:#fffdf0;border-bottom:3px solid var(--gold);border-radius:4px 16px 4px 16px;font:700 clamp(18px,2.2vw,25px) Georgia,serif}
+.menu-section h2 span{color:#f2d26f;margin:0 5px}
+.card{display:grid;grid-template-columns:38% minmax(0,1fr);gap:9px;margin-bottom:10px;padding:7px;background:var(--paper);border:1px solid #e3d5b4;border-radius:10px;box-shadow:0 2px 5px #563d1210;break-inside:avoid}
+.card img{width:100%;height:110px;object-fit:cover;border-radius:7px;background:#e8e1cf}
+.card img.missing{visibility:hidden}
+.copy{min-width:0}
+.name{margin:2px 0 5px;font:700 clamp(14px,1.35vw,17px)/1.12 Georgia,serif;color:var(--forest)}
+.price{margin-bottom:5px;color:var(--red);font-size:clamp(15px,1.6vw,19px);font-weight:900;white-space:nowrap}
+.desc{font-size:clamp(10px,1vw,12px);line-height:1.32;color:#36443b}
+.tags{margin-top:5px;font-size:10px;font-weight:800;line-height:1.3;color:var(--green)}
+.promo{display:inline-block;margin-top:5px;padding:3px 5px;border-radius:4px;background:var(--red);color:white;font-size:10px;font-weight:900}
+.status{padding:18px;text-align:center;color:var(--muted)}
+footer{position:relative;padding:18px 20px 20px;text-align:center;color:white;background:var(--forest);border-top:5px solid var(--gold)}
+.footer-title{font:700 21px Georgia,serif;color:#f4d77e}
+.site-url{margin-top:7px;overflow-wrap:anywhere;color:#fff8e7;font-weight:700}
+.footer-small{margin-top:7px;color:#e4e9e0;font-size:11px;line-height:1.4}
+@media(max-width:760px){.poster{margin:0;border-width:3px}.groups{grid-template-columns:1fr}.card{grid-template-columns:120px minmax(0,1fr)}.card img{height:118px}.service{grid-template-columns:1fr}.qr{justify-content:center}header{padding:24px 12px 20px}header:before,header:after{font-size:40px}.kicker{letter-spacing:2px}main{padding:14px 10px}.name{font-size:17px}.price{font-size:18px}.desc{font-size:12px}.tags,.promo{font-size:11px}}
+@page{size:A3 portrait;margin:5mm}
+@media print{
+ html,body{background:white}.toolbar{display:none}.poster{width:100%;max-width:none;margin:0;border-width:3px;box-shadow:none}
+ header{padding:16px 20px 14px}.brand{font-size:52px}.tagline{font-size:13px}.order{margin-top:10px;padding:7px 14px;font-size:16px}
+ .service{padding:10px 14px}.service h2{font-size:17px}.service p{font-size:10px}.qr img{width:82px;height:82px}
+ main{padding:12px 10px}.groups{gap:8px}.menu-section h2{font-size:18px;margin-bottom:7px;padding:6px}
+ .card{grid-template-columns:34% minmax(0,1fr);gap:6px;padding:5px;margin-bottom:6px}.card img{height:83px}.name{font-size:12px}.price{font-size:13px}.desc{font-size:8px}.tags,.promo{font-size:7px}
+ footer{padding:10px}.footer-title{font-size:15px}.footer-small{font-size:8px}
+}
+</style>
+</head>
+<body>
+<nav class="toolbar" aria-label="Actions du prospectus">
+  <button type="button" onclick="window.print()">Imprimer / Enregistrer en PDF</button>
+  <a href="./" target="_blank" rel="noopener">Ouvrir le site de commande</a>
+  <button type="button" onclick="location.reload()">Actualiser la carte</button>
+</nav>
+<div class="poster">
+<header>
+  <div class="kicker">✦ Cuisine thaïlandaise authentique ✦</div>
+  <div class="brand">Tammy<span>THAI FOOD</span></div>
+  <div class="tagline">Les saveurs de Thaïlande · Champhol</div>
+  <div class="order">COMMANDEZ AVANT 18 H</div>
+</header>
+<div class="ribbon"></div>
+<section class="service">
+  <div>
+    <h2>Votre commande, prête pour le retrait</h2>
+    <p><strong>Commande avant 18 h :</strong> retrait le lendemain à midi.</p>
+    <p><strong>Commande à partir de 18 h :</strong> retrait à midi le surlendemain.</p>
+    <p>Retrait à Champhol · Le jour de retrait est calculé automatiquement selon l’heure locale.</p>
+  </div>
+  <a class="qr" href="./" target="_blank" rel="noopener" aria-label="Scanner ou ouvrir le site de commande">
+    <img id="qr-code" alt="QR code vers le site de commande">
+    <span>SCANNEZ<br>POUR COMMANDER</span>
+  </a>
+</section>
+<main>
+  <div id="status" class="status">Chargement de la carte et des tarifs actuels…</div>
+  <div class="groups" id="groups" hidden>
+    <section class="menu-section"><h2><span>✿</span> Entrées <span>✿</span></h2><div id="entries"></div></section>
+    <section class="menu-section"><h2><span>✿</span> Plats <span>✿</span></h2><div id="mains"></div></section>
+    <section class="menu-section"><h2><span>✿</span> Soupes <span>✿</span></h2><div id="soups"></div></section>
+  </div>
+</main>
+<div class="ribbon"></div>
+<footer>
+  <div class="footer-title">Tammy Thai Food · Champhol</div>
+  <div class="site-url"><a href="./" style="color:inherit">sarcke1.github.io/tammy-thai-food/v2/</a></div>
+  <div class="footer-small">Les fiches, photos et prix sont chargés depuis les données actuelles du site et de Supabase.<br>Prospectus interactif · Les prix affichés correspondent aux tarifs enregistrés pour la carte collègues.</div>
+</footer>
+</div>
+<script type="module">
+import { dishes as localDishes } from "./js/data.js";
+import { supabase } from "./js/supabase.js";
+
+const SITE_URL = "https://sarcke1.github.io/tammy-thai-food/v2/";
+const statusEl = document.querySelector("#status");
+const groupsEl = document.querySelector("#groups");
+document.querySelector("#qr-code").src =
+  "https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&data=" + encodeURIComponent(SITE_URL);
+
+function euro(value) {
+  return Number(value).toLocaleString("fr-FR", {style:"currency",currency:"EUR"});
+}
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+}
+function photoUrl(photo) {
+  return photo ? "./" + encodeURIComponent(photo).replace(/%2F/gi, "/") : "";
+}
+function sectionFor(product) {
+  const name = product.name.toLocaleLowerCase("fr-FR");
+  if ((product.category || "").toLocaleLowerCase("fr-FR") === "entrées") return "entries";
+  if (/soupe|tom kha/.test(name)) return "soups";
+  return "mains";
+}
+function cardHtml(product) {
+  const local = product.local;
+  const photo = photoUrl(local?.photo);
+  const description = product.description || local?.desc || "";
+  const options = product.protein_options || local?.proteinOptions || [];
+  const labels = [];
+  if (local?.fixedSpice != null) labels.push("Piment niveau " + local.fixedSpice);
+  else if (product.supports_spice ?? local?.spicy) labels.push("Piment au choix");
+  if (local?.servedWithRice) labels.push("Servi avec riz");
+  return `
+  <article class="card">
+    ${photo ? `<img src="${photo}" alt="${escapeHtml(product.name)}" loading="lazy" onerror="this.classList.add('missing')">` : ""}
+    <div class="copy">
+      <div class="name">${escapeHtml(product.name)}</div>
+      <div class="price">${euro(product.price)}</div>
+      <div class="desc">${escapeHtml(description)}</div>
+      ${options.length ? `<div class="tags">Choix : ${escapeHtml(options.join(", "))}</div>` : ""}
+      ${labels.length ? `<div class="tags">${escapeHtml(labels.join(" · "))}</div>` : ""}
+      ${local?.promo ? `<div class="promo">${escapeHtml(local.promo)}</div>` : ""}
+    </div>
+  </article>`;
+}
+async function loadMenu() {
+  const {data, error} = await supabase
+    .from("products")
+    .select("name,price,description,image_url,supports_spice,protein_options,active,product_categories(name)")
+    .eq("active", true);
+  if (error) throw error;
+  const localMap = new Map(localDishes.map(d => [d.name.trim().toLocaleLowerCase("fr-FR"), d]));
+  const products = (data || [])
+    .map(p => ({...p, category:p.product_categories?.name || "", local:localMap.get(p.name.trim().toLocaleLowerCase("fr-FR"))}))
+    .filter(p => p.local) // Ne pas afficher de produits absents de la carte validée dans data.js.
+    .sort((a,b) => localDishes.indexOf(a.local) - localDishes.indexOf(b.local));
+  if (!products.length) throw new Error("Aucun produit de la carte n’a pu être confirmé.");
+  const buckets = {entries:[],mains:[],soups:[]};
+  for (const p of products) buckets[sectionFor(p)].push(p);
+  for (const key of Object.keys(buckets)) {
+    document.querySelector("#" + key).innerHTML = buckets[key].map(cardHtml).join("");
+  }
+  statusEl.hidden = true;
+  groupsEl.hidden = false;
+}
+function pickupLabel() {
+  const now = new Date();
+  const pickup = new Date(now);
+  pickup.setDate(pickup.getDate() + (now.getHours() >= 18 ? 2 : 1));
+  return pickup.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
+}
+document.querySelector(".service").insertAdjacentHTML("beforeend",
+  '<div class="pickup-live"><strong>Prochain retrait calculé maintenant :</strong> <span id="pickup-date"></span> à midi.</div>');
+document.querySelector("#pickup-date").textContent = pickupLabel();
+try {
+  await loadMenu();
+} catch (error) {
+  console.error("Prospectus : chargement des tarifs impossible", error);
+  statusEl.textContent = "La carte et les tarifs actuels n’ont pas pu être chargés. Vérifiez votre connexion puis actualisez la page.";
+}
+</script>
+</body>
+</html>
