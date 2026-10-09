@@ -1,3 +1,16 @@
+## V2.06.17 — Prospectus interactif dynamique
+
+- Nouvelle page autonome : `v2/prospectus.html`.
+- URL publique attendue : `https://sarcke1.github.io/tammy-thai-food/v2/prospectus.html`.
+- Le prospectus charge les produits actifs et les prix depuis Supabase, puis associe les photos, descriptions, options et promotions aux fiches correspondantes de `v2/js/data.js`.
+- Seuls les produits connus dans la carte locale sont affichés ; aucun dessert ni aucune boisson n’est ajouté par invention.
+- Le prix affiché provient du produit actif dans Supabase, pour rester synchronisé avec la carte de commande.
+- QR code cible `https://sarcke1.github.io/tammy-thai-food/v2/`.
+- Retrait repris de `v2/js/checkout.js` : avant 18 h, J+1 à midi ; à partir de 18 h, J+2 à midi. Le prospectus indique le retrait à Champhol, pas la livraison.
+- Fichiers modifiés : ajout de `v2/prospectus.html`, mise à jour de `CHANGELOG.md` et `PROJECT_MEMORY.md`. Aucun fichier de la V1 ou du site de commande n’a été modifié.
+- Dépendances : connexion Internet requise pour charger Supabase, les photos et le QR code.
+- À valider après publication : affichage sur PC et mobile, lecture du QR code et concordance de tous les tarifs.
+
 ## V2.06.16 — photo Salade de papaye
 
 - Fiche `salade-papaye` : `photo:"Salade papaye.png"`.
