@@ -100,8 +100,8 @@ export const dishes = [
 
   {
     id:"sticky-rice-mangue",
-    name:"Sticky rice mangue",
-    price:4,
+    name:"Riz gluant à la mangue",
+    price:6,
     category:"Desserts",
     emoji:"🥭",
     photo:"Sticky rice.png",
