@@ -1,3 +1,11 @@
+## V2.06.19
+
+- Renommage du dessert en « Riz gluant à la mangue ».
+- Prix collègue mis à jour de 4 € à 6 € dans la carte V2 et Supabase.
+- Photo réelle conservée : `v2/Sticky rice.png`.
+- Le prospectus dynamique reprend automatiquement le nom et le prix depuis Supabase.
+- Cache du catalogue actualisé ; V1 inchangée.
+
 ## V2.06.18
 
 - Ajout de « Sticky rice mangue » à la catégorie Desserts, au prix existant de 4 €.
