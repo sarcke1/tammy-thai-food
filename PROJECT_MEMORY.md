@@ -1,3 +1,15 @@
+## V2.06.18 — Dessert Sticky rice mangue
+
+- Produit Supabase existant réactivé : `Sticky rice mangue`, prix 4,00 €, catégorie Desserts.
+- Image réelle du dépôt : `v2/Sticky rice.png`; `image_url` enregistré dans Supabase comme `Sticky rice.png`, conformément au format des autres produits.
+- Description client : « Riz gluant au lait de coco, accompagné de mangue fraîche, de graines de sésame et d’une touche de sucre. »
+- Fiche ajoutée à `v2/js/data.js` avec id local `sticky-rice-mangue`, photo, catégorie et tarif.
+- Cache de `data.js` actualisé dans `v2/js/app.js`; cache du module menu actualisé dans `v2/index.html`.
+- `v2/prospectus.html` affiche désormais aussi la catégorie Desserts.
+- Fichiers modifiés : `v2/js/data.js`, `v2/js/app.js`, `v2/index.html`, `v2/prospectus.html`, `CHANGELOG.md`, `PROJECT_MEMORY.md`, et la ligne produit existante dans Supabase.
+- Recette manuscrite lue : 1/2 mangue, 100 g de riz, 200 ml de lait de coco, 1 g de graines de sésame et sucre (unité manuscrite incertaine, non enregistrée comme quantité structurée).
+- Aucun changement V1. Vérifier affichage photo, prix, panier, commande et prospectus sur PC et mobile.
+
 ## V2.06.17 — Prospectus interactif dynamique
 
 - Nouvelle page autonome : `v2/prospectus.html`.
