@@ -29,7 +29,7 @@ header:before{left:18px;transform:rotate(-35deg)}header:after{right:18px;transfo
 .qr img{width:108px;height:108px;object-fit:contain;border:5px solid white;border-radius:5px;background:white}
 .pickup-live{grid-column:1/-1;padding-top:8px;border-top:1px solid #ddc98f;color:var(--green);font-size:13px}
 main{padding:20px 18px 25px}
-.groups{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}
+.groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
 .menu-section{min-width:0}
 .menu-section h2{margin:0 0 12px;padding:10px 4px;text-align:center;background:var(--green);color:#fffdf0;border-bottom:3px solid var(--gold);border-radius:4px 16px 4px 16px;font:700 clamp(18px,2.2vw,25px) Georgia,serif}
 .menu-section h2 span{color:#f2d26f;margin:0 5px}
@@ -91,6 +91,7 @@ footer{position:relative;padding:18px 20px 20px;text-align:center;color:white;ba
     <section class="menu-section"><h2><span>✿</span> Entrées <span>✿</span></h2><div id="entries"></div></section>
     <section class="menu-section"><h2><span>✿</span> Plats <span>✿</span></h2><div id="mains"></div></section>
     <section class="menu-section"><h2><span>✿</span> Soupes <span>✿</span></h2><div id="soups"></div></section>
+    <section class="menu-section"><h2><span>✿</span> Desserts <span>✿</span></h2><div id="desserts"></div></section>
   </div>
 </main>
 <div class="ribbon"></div>
@@ -122,6 +123,7 @@ function photoUrl(photo) {
 function sectionFor(product) {
   const name = product.name.toLocaleLowerCase("fr-FR");
   if ((product.category || "").toLocaleLowerCase("fr-FR") === "entrées") return "entries";
+  if ((product.category || "").toLocaleLowerCase("fr-FR") === "desserts") return "desserts";
   if (/soupe|tom kha/.test(name)) return "soups";
   return "mains";
 }
@@ -160,7 +162,7 @@ async function loadMenu() {
     .filter(p => p.local) // Ne pas afficher de produits absents de la carte validée dans data.js.
     .sort((a,b) => localDishes.indexOf(a.local) - localDishes.indexOf(b.local));
   if (!products.length) throw new Error("Aucun produit de la carte n’a pu être confirmé.");
-  const buckets = {entries:[],mains:[],soups:[]};
+  const buckets = {entries:[],mains:[],soups:[],desserts:[]};
   for (const p of products) buckets[sectionFor(p)].push(p);
   for (const key of Object.keys(buckets)) {
     document.querySelector("#" + key).innerHTML = buckets[key].map(cardHtml).join("");
