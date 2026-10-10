@@ -99,6 +99,17 @@ export const dishes = [
   },
 
   {
+    id:"sticky-rice-mangue",
+    name:"Sticky rice mangue",
+    price:4,
+    category:"Desserts",
+    emoji:"🥭",
+    photo:"Sticky rice.png",
+    desc:"Riz gluant au lait de coco, accompagné de mangue fraîche, de graines de sésame et d’une touche de sucre.",
+    spicy:false
+  },
+
+  {
     id:"nems-maison",
     name:"Nems maison",
     price:0.75,
