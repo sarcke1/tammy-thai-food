@@ -1,3 +1,13 @@
+## V2.06.19 — Prix collègue du riz gluant à la mangue
+
+- Nom client : `Riz gluant à la mangue`.
+- Prix collègue V2 : 6,00 €.
+- Photo réelle conservée : `v2/Sticky rice.png`.
+- Produit Supabase existant mis à jour, sans créer de doublon ; prix 6,00 €, nom harmonisé avec `v2/js/data.js`.
+- Prospectus dynamique synchronisé par sa lecture des produits actifs Supabase.
+- Fichiers modifiés : `v2/js/data.js`, `v2/js/app.js`, `v2/index.html`, `CHANGELOG.md`, `PROJECT_MEMORY.md` et ligne produit Supabase.
+- Cache actualisé pour l'affichage V2. V1 inchangée.
+
 ## V2.06.18 — Dessert Sticky rice mangue
 
 - Produit Supabase existant réactivé : `Sticky rice mangue`, prix 4,00 €, catégorie Desserts.
