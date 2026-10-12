@@ -53,7 +53,7 @@ export const dishes = [
     servedWithRice:true
   },
 
-  { id:"riz-saute", name:"Riz sauté au choix", price:9, category:"Plats", emoji:"🍚", photo:"Riz frit poulet.png", desc:"Riz sauté thaïlandais préparé avec œuf, ail, carotte, sauce et coriandre. Au choix : poulet, bœuf, porc ou crevettes.", spicy:false },
+  { id:"riz-saute", name:"Riz sauté au choix", price:9, category:"Plats", emoji:"🍚", photo:"Riz frit poulet.png", desc:"Riz sauté thaïlandais préparé avec œuf, ail, carottes, sauce et coriandre. Au choix : poulet, bœuf, porc ou crevettes.", spicy:false },
 
   { id:"tom-kha-kai", name:"Tom kha kai", price:7, category:"Plats", emoji:"🥥", photo:"Tom kha kai.png", desc:"Soupe thaïlandaise au lait de coco et poulet, avec citronnelle, galanga, feuilles de combava et échalote. Piment au choix de 0 à 3.", spicy:true, servedWithRice:true },
 
