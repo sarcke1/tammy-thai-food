@@ -1,3 +1,14 @@
+## V2.06.23 — Calendrier relié aux commandes
+
+- Le checkout lit les 7 lignes de service « midi » dans `weekly_opening_hours`.
+- Règle minimale : avant 18 h, recherche à partir de J+1 ; à partir de 18 h, à partir de J+2. Si ce jour est fermé, sélection du prochain midi ouvert (jusqu’à 14 jours).
+- Le formulaire ne soumet pas de commande si les horaires ne peuvent pas être lus ou si le calendrier est incomplet.
+- `orders.pickup_date` enregistre la date structurée ; `create_pending_order` vérifie que cette date correspond au prochain midi ouvert et refuse une date fermée/invalide.
+- L’administration affiche la date de retrait sur chaque commande.
+- Le service client reste le retrait à midi. Les ouvertures du soir sont réglables mais ne sont pas encore proposées à la commande.
+- Cache checkout : `20261012-01` ; cache admin : `20261012-02`.
+- Validation navigateur PC/mobile encore requise après publication.
+
 ## V2.06.22 — Calendrier hebdomadaire d'ouverture
 
 - Table Supabase `public.weekly_opening_hours` avec une ligne par jour (0 dimanche à 6 samedi) et période (`midi`/`soir`).
