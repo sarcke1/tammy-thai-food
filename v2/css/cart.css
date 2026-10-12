@@ -100,7 +100,9 @@
   width:64px;
   height:64px;
   border-radius:12px;
-  background:center/cover no-repeat;
+  background:#f3ead8 center/cover no-repeat;
+  object-fit:cover;
+  display:block;
   flex:none;
 }
 
@@ -360,4 +362,16 @@
   display:inline;
   margin:0;
   font-size:.72rem;
+}
+
+
+/* Miniatures réelles dans le panier */
+.cart-photo-placeholder{
+  display:grid;
+  place-items:center;
+  color:var(--green);
+  font-size:1.5rem;
+}
+.cart-photo-error{
+  visibility:hidden;
 }
