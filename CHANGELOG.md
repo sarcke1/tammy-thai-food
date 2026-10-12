@@ -1,3 +1,10 @@
+## V2.06.20
+
+- Descriptif de « Riz sauté au choix » précisé : contient des carottes.
+- Recette Supabase mise à jour : 20 g de carottes par portion.
+- Prix (7 €), photo `Riz frit poulet.png`, choix de protéines et autres ingrédients inchangés.
+- Cache du catalogue actualisé. V1 inchangée.
+
 ## V2.06.19
 
 - Renommage du dessert en « Riz gluant à la mangue ».
