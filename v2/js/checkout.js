@@ -14,25 +14,49 @@ function updateCheckoutVisibility() {
   }
 }
 
-function getPickupDate() {
+async function getPickupDate() {
+  const { data, error } = await supabase
+    .from("weekly_opening_hours")
+    .select("day_of_week,service_period,is_open");
+
+  if (error) throw new Error("Impossible de vérifier les jours d’ouverture : " + error.message);
+  const lunchRows = (data || []).filter(row => row.service_period === "midi");
+  if (lunchRows.length !== 7) throw new Error("Le calendrier des ouvertures est incomplet. Réessayez plus tard.");
+
+  const openLunchDays = new Set(lunchRows.filter(row => row.is_open).map(row => Number(row.day_of_week)));
   const now = new Date();
   const pickup = new Date(now);
+  pickup.setHours(12, 0, 0, 0);
+  pickup.setDate(pickup.getDate() + (now.getHours() >= 18 ? 2 : 1));
 
-  if (now.getHours() >= 18) {
-    pickup.setDate(pickup.getDate() + 2);
-  } else {
+  for (let i = 0; i < 14; i++) {
+    if (openLunchDays.has(pickup.getDay())) return pickup;
     pickup.setDate(pickup.getDate() + 1);
   }
-
-  return pickup;
+  throw new Error("Aucun retrait à midi n’est ouvert dans les 14 prochains jours.");
 }
 
-function getPickupLabel() {
-  return getPickupDate().toLocaleDateString("fr-FR", {
-    weekday: "long",
-    day: "numeric",
-    month: "long"
-  });
+function getPickupLabel(date) {
+  return date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
+}
+
+function formatDateForDatabase(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+async function refreshPickupLabel() {
+  const label = checkoutForm?.querySelector("#pickup-label");
+  if (!label) return;
+  try {
+    const pickupDate = await getPickupDate();
+    label.textContent = `${getPickupLabel(pickupDate)} (midi)`;
+  } catch (error) {
+    label.textContent = "Indisponible";
+    label.title = error.message;
+  }
 }
 
 function mountCheckout() {
@@ -51,7 +75,7 @@ function mountCheckout() {
       <h3>Vos informations</h3>
 
       <p class="checkout-help">
-        Retrait : <strong>${getPickupLabel()} (midi)</strong>
+        Retrait : <strong id="pickup-label">Vérification des ouvertures…</strong>
       </p>
 
       <input
@@ -127,6 +151,16 @@ function mountCheckout() {
     localStorage.setItem("customerPhone", phone);
 
     submit.disabled = true;
+    status.textContent = "Vérification des jours d’ouverture…";
+    let pickupDate;
+    try {
+      pickupDate = await getPickupDate();
+    } catch (error) {
+      status.textContent = error.message;
+      submit.disabled = false;
+      return;
+    }
+    const pickupLabel = `${getPickupLabel(pickupDate)} (midi)`;
     status.textContent = "Vérification des produits...";
 
     const { data: products, error: productsError } =
@@ -181,7 +215,8 @@ function mountCheckout() {
         p_phone: phone,
         p_service_slot_id: null,
         p_items: items,
-        p_customer_note: comment
+        p_customer_note: comment,
+        p_pickup_date: formatDateForDatabase(pickupDate)
       }
     );
 
@@ -201,7 +236,7 @@ cartContent.innerHTML = `
     <h3>Commande transmise</h3>
     <p>Votre commande est en cours de préparation.</p>
     <p class="pickup-reminder">
-      Retrait : <strong>${getPickupLabel()} (midi)</strong>
+      Retrait : <strong id="pickup-label">Vérification des ouvertures…</strong>
     </p>
   </div>
 `;
