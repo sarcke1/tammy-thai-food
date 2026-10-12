@@ -1,3 +1,12 @@
+## V2.06.23
+
+- Le calcul du retrait consulte désormais le calendrier hebdomadaire Supabase.
+- Si le jour calculé est fermé à midi, le retrait est reporté au prochain midi ouvert ; le délai minimal reste J+1 avant 18 h et J+2 à partir de 18 h.
+- Le formulaire refuse d’enregistrer la commande si le calendrier est inaccessible ou incomplet.
+- La date de retrait est stockée dans `orders.pickup_date` et affichée dans la fiche de commande de l’administration.
+- Fichiers modifiés : `v2/js/checkout.js`, `v2/index.html`, `v2/admin/admin.js`, `v2/admin/index.html`, `CHANGELOG.md`, `PROJECT_MEMORY.md`. Mise à jour Supabase : colonne `pickup_date` et fonction `create_pending_order`.
+- Le service client reste le retrait à midi ; les ouvertures du soir sont enregistrées dans le calendrier mais ne sont pas proposées au client dans cette étape. V1 inchangée.
+
 ## V2.06.22
 
 - Administration : ajout d'un calendrier hebdomadaire pour activer/désactiver les services du midi et du soir pour chaque jour.
