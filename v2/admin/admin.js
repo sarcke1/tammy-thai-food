@@ -4,7 +4,7 @@ const loginPanel=document.querySelector('#login-panel'),dashboard=document.query
 let currentView='active',allOrders=[],loading=false,firstLoad=true,knownOrderIds=new Set(),audioContext=null,audioEnabled=false,refreshTimer=null;
 const checklistKey='tammy-kitchen-checklist';
 
-function showDashboard(){loginPanel.classList.add('hidden');dashboard.classList.remove('hidden');logoutButton.classList.remove('hidden');loadOrders();startAutoRefresh();}
+function showDashboard(){loginPanel.classList.add('hidden');dashboard.classList.remove('hidden');logoutButton.classList.remove('hidden');loadOrders();loadOpeningHours();startAutoRefresh();}
 function showLogin(){loginPanel.classList.remove('hidden');dashboard.classList.add('hidden');logoutButton.classList.add('hidden');if(refreshTimer){clearInterval(refreshTimer);refreshTimer=null;}}
 function escapeHtml(v){return String(v??'').replace(/[&<>'\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c]));}
 function statusLabel(s){return({pending_payment:'En attente de paiement',paid:'Payée',confirmed:'En cuisine',preparing:'En cuisine',ready:'En attente de retrait',completed:'Archivée',cancelled:'Annulée'})[s]||s;}
@@ -116,6 +116,52 @@ function matchesView(o){if(currentView==='archive')return['completed','cancelled
 function renderOrders(){const visible=allOrders.filter(matchesView),activeCount=allOrders.filter(o=>!['completed','cancelled','preparing','confirmed','ready'].includes(o.status)).length,kitchenCount=allOrders.filter(o=>['preparing','confirmed'].includes(o.status)).length,pickupCount=allOrders.filter(o=>o.status==='ready').length,archiveCount=allOrders.filter(o=>['completed','cancelled'].includes(o.status)).length;viewTabs.forEach(t=>{t.textContent=t.dataset.view==='active'?`En cours (${activeCount})`:t.dataset.view==='kitchen'?`En cuisine (${kitchenCount})`:t.dataset.view==='pickup'?`En attente de retrait (${pickupCount})`:`Archives (${archiveCount})`;t.classList.toggle('active',t.dataset.view===currentView);});if(!visible.length){ordersEl.innerHTML=`<div class="empty">${currentView==='archive'?'Aucune commande archivée.':currentView==='kitchen'?'Aucune commande en cuisine.':currentView==='pickup'?'Aucune commande en attente de retrait.':'Aucune commande en cours.'}`;return;}ordersEl.innerHTML=visible.map(o=>{const action=nextAction(o.status),queue=Array.isArray(o.kitchen_queue)?o.kitchen_queue[0]:o.kitchen_queue,pos=queue?.queue_position,actionHtml=action&&action[0]!=='noop'?`<button type="button" class="order-action primary" data-order-id="${o.id}" data-next-status="${action[0]}">${action[1]}</button>`:'';const cardClass=['confirmed','preparing','ready'].includes(o.status)?' in-kitchen':'';const archived=['completed','cancelled'].includes(o.status);return `<article class="order-card${cardClass}${archived?' archived':''}"><div class="order-top"><div><div class="order-number">Commande n°${o.order_number}${pos?`<span class="queue-position">File #${pos}</span>`:''}</div><div class="order-meta">${escapeHtml(o.customer_first_name)} ${escapeHtml(o.customer_last_name)}<br>${escapeHtml(o.customer_phone||'')} · ${escapeHtml(o.customer_email||'')}<br>${new Date(o.created_at).toLocaleString('fr-FR')}</div></div><span class="badge">${escapeHtml(statusLabel(o.status))}</span></div><ul class="items">${groupOrderItems(o.order_items||[]).map(it=>`<li><div><div class="item-name">${escapeHtml(it.product_name)} × ${it.quantity}${it.included_quantity?` — ${it.paid_quantity} payants + ${it.included_quantity} inclus`:``}</div><div class="item-detail">${it.protein?`Viande : ${escapeHtml(it.protein)} · `:``}${it.spice_level===0?'Sans piment':'Niveau '+it.spice_level}</div></div><span>${formatMoney(it.line_total)}</span></li>`).join('')}</ul>${renderChecklist(o)}<div class="order-bottom"><span>Temps estimé : ${o.estimated_preparation_minutes||0} min</span><strong>${formatMoney(o.total)}</strong></div>${actionHtml}</article>`;}).join('');ordersEl.querySelectorAll('[data-check-order]').forEach(i=>i.addEventListener('change',()=>{updateChecklist(i.dataset.checkOrder,Number(i.dataset.checkIndex),i.checked);renderOrders();}));ordersEl.querySelectorAll('.order-action').forEach(b=>b.addEventListener('click',async()=>{b.disabled=true;b.textContent='Mise à jour…';await changeOrderStatus(b.dataset.orderId,b.dataset.nextStatus);}));}
 
 async function loadOrders(silent=false){if(loading)return;loading=true;const{data,error}=await supabase.from('orders').select('id,order_number,status,total,payment_status,customer_first_name,customer_last_name,customer_email,customer_phone,estimated_preparation_minutes,created_at,order_items(product_name,quantity,unit_price,line_total,spice_level,customer_note),kitchen_queue(queue_position,status)').order('created_at',{ascending:false});loading=false;if(error){if(!silent){ordersEl.innerHTML=`<div class="empty">Erreur : ${escapeHtml(error.message)}</div>`;refreshInfo.textContent='Erreur';}return;}const incoming=data||[];if(!firstLoad){const newOrders=incoming.filter(o=>!knownOrderIds.has(o.id));if(newOrders.length){playNotificationSound(true);alertStatus.textContent=`${newOrders.length} nouvelle commande${newOrders.length>1?'s':''} détectée${newOrders.length>1?'s':''}`;}}knownOrderIds=new Set(incoming.map(o=>o.id));firstLoad=false;allOrders=incoming;refreshInfo.textContent=`${allOrders.length} commande(s) — actualisation automatique toutes les 5 s — ${new Date().toLocaleTimeString('fr-FR')}`;renderOrders();}
+
+
+const openingDays=[{value:1,label:'Lundi'},{value:2,label:'Mardi'},{value:3,label:'Mercredi'},{value:4,label:'Jeudi'},{value:5,label:'Vendredi'},{value:6,label:'Samedi'},{value:0,label:'Dimanche'}];
+const openingStatus=document.querySelector('#opening-status');
+const openingCalendar=document.querySelector('#opening-calendar');
+let openingRows=[];
+
+function renderOpeningHours(){
+  if(!openingCalendar)return;
+  openingCalendar.innerHTML=`<div class="opening-grid"><div class="opening-heading">Jour</div><div class="opening-heading">Midi</div><div class="opening-heading">Soir</div>${openingDays.map(day=>{
+    const lunch=openingRows.find(row=>row.day_of_week===day.value&&row.service_period==='midi');
+    const dinner=openingRows.find(row=>row.day_of_week===day.value&&row.service_period==='soir');
+    return `<div class="opening-day">${day.label}</div>
+      <label class="opening-choice"><input type="checkbox" data-opening-day="${day.value}" data-opening-period="midi" ${lunch?.is_open?'checked':''} ${!lunch?'disabled':''}><span class="sr-only">Midi ${day.label}</span></label>
+      <label class="opening-choice"><input type="checkbox" data-opening-day="${day.value}" data-opening-period="soir" ${dinner?.is_open?'checked':''} ${!dinner?'disabled':''}><span class="sr-only">Soir ${day.label}</span></label>`;
+  }).join('')}</div>`;
+  openingCalendar.querySelectorAll('input[data-opening-day]').forEach(input=>input.addEventListener('change',()=>saveOpeningHour(input)));
+}
+
+async function loadOpeningHours(){
+  if(!openingCalendar)return;
+  openingStatus.textContent='Chargement des horaires…';
+  const{data,error}=await supabase.from('weekly_opening_hours').select('id,day_of_week,service_period,is_open').order('day_of_week');
+  if(error){openingStatus.textContent='Erreur de chargement : '+error.message;openingCalendar.innerHTML='';return;}
+  openingRows=data||[];
+  renderOpeningHours();
+  openingStatus.textContent='Horaires enregistrés. Cochez les services ouverts.';
+}
+
+async function saveOpeningHour(input){
+  const day=Number(input.dataset.openingDay),period=input.dataset.openingPeriod;
+  const row=openingRows.find(item=>item.day_of_week===day&&item.service_period===period);
+  if(!row)return;
+  const previous=row.is_open,next=input.checked;
+  input.disabled=true;
+  openingStatus.textContent='Enregistrement…';
+  const{data,error}=await supabase.from('weekly_opening_hours').update({is_open:next,updated_at:new Date().toISOString()}).eq('id',row.id).select('id,is_open').maybeSingle();
+  input.disabled=false;
+  if(error||!data){
+    input.checked=previous;
+    openingStatus.textContent='Erreur : '+(error?.message||'aucune ligne mise à jour');
+    return;
+  }
+  row.is_open=data.is_open;
+  openingStatus.textContent='Enregistré : '+openingDays.find(d=>d.value===day).label+' — '+period;
+}
 
 viewTabs.forEach(t=>t.addEventListener('click',()=>{currentView=t.dataset.view;renderOrders();}));
 loginForm.addEventListener('submit',async e=>{e.preventDefault();loginStatus.textContent='Connexion…';const{error}=await supabase.auth.signInWithPassword({email:document.querySelector('#email').value,password:document.querySelector('#password').value});if(error){loginStatus.textContent='Erreur : '+error.message;return;}loginStatus.textContent='';showDashboard();});
