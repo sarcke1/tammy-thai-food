@@ -1,3 +1,10 @@
+## V2.06.21
+
+- Miniatures du panier rendues avec de véritables balises image, avec texte alternatif et chargement différé.
+- Image de remplacement affichée si un produit n'a pas de photo ; image masquée proprement si le fichier est introuvable.
+- Actualisation du cache du module menu. Aucun changement de calcul panier, de commande, d'administration ou de base de données.
+- V1 inchangée.
+
 ## V2.06.20
 
 - Descriptif de « Riz sauté au choix » précisé : contient des carottes.
