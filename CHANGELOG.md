@@ -1,3 +1,10 @@
+## V2.06.24
+
+- Correction du bouton « Valider le panier » : gestionnaire de clic directement attaché au bouton après chaque rendu du panier, au lieu de dépendre uniquement de la délégation d’événement.
+- Le bouton affiche brièvement « Ouverture du formulaire… » puis déclenche l’ouverture du formulaire de commande.
+- Aucun changement aux produits, prix, calculs, validation serveur ou V1.
+- Fichiers modifiés : `v2/js/app.js`, `v2/index.html`, `CHANGELOG.md`, `PROJECT_MEMORY.md`. Cache du moteur menu : `20261012-03`.
+
 ## V2.06.23
 
 - Le calcul du retrait consulte désormais le calendrier hebdomadaire Supabase.
