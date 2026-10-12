@@ -371,13 +371,19 @@ function renderMenu(category="Plats"){
 }
 // ===== Rendu panier =====
 
-function cartPhotoStyle(item){
+function cartPhotoUrl(item){
 
   if(!item.photo){
     return "";
   }
 
-  return "background-image:url(\"/tammy-thai-food/v2/" + encodeURIComponent(item.photo) + "\")";
+  return "/tammy-thai-food/v2/" + String(item.photo).split("/").map(encodeURIComponent).join("/");
+}
+
+function escapeCartText(value){
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[ch]));
 }
 
 function renderCart(){
@@ -450,9 +456,9 @@ function renderCart(){
       return `
       <div class="cart-line">
 
-        <div class="cart-photo"
-             style="${cartPhotoStyle(item)}">
-        </div>
+        ${item.photo
+          ? `<img class="cart-photo" src="${cartPhotoUrl(item)}" alt="${escapeCartText(item.name)}" loading="lazy" onerror="this.classList.add('cart-photo-error')">`
+          : `<div class="cart-photo cart-photo-placeholder" aria-hidden="true">🍽️</div>`}
 
         <div class="cart-unit-info">
 
