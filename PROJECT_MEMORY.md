@@ -1,3 +1,14 @@
+## V2.06.22 — Calendrier hebdomadaire d'ouverture
+
+- Table Supabase `public.weekly_opening_hours` avec une ligne par jour (0 dimanche à 6 samedi) et période (`midi`/`soir`).
+- RLS : lecture publique de la configuration d'ouverture ; écriture réservée aux comptes `authenticated` validés par `public.is_admin()`.
+- Seed initial idempotent : midi ouvert tous les jours sauf mercredi ; soir fermé tous les jours. Les lignes existantes sont préservées.
+- `v2/admin/index.html` : panneau calendrier dans le tableau de bord.
+- `v2/admin/admin.js` : chargement et sauvegarde de chaque case, retour visuel d'erreur.
+- `v2/admin/admin.css` : mise en forme responsive.
+- Cache admin actualisé vers `20261012-01`.
+- Étape suivante : raccorder la configuration au parcours client (créneaux réellement proposés/validés), puis tester PC/mobile.
+
 ## V2.06.21 — Miniatures du panier
 
 - `v2/js/app.js` : le panier affiche les photos produits en balises `img` réelles, avec URL GitHub Pages encodée, alt et chargement différé.
