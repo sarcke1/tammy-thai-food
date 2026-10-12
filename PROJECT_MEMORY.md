@@ -1,3 +1,11 @@
+## V2.06.21 — Miniatures du panier
+
+- `v2/js/app.js` : le panier affiche les photos produits en balises `img` réelles, avec URL GitHub Pages encodée, alt et chargement différé.
+- `v2/css/cart.css` : style des miniatures et visuel de secours sans photo.
+- `v2/index.html` : cache du module app actualisé vers `20261012-02`.
+- Aucun changement de logique panier/checkout ni de Supabase. V1 inchangée.
+- À valider sur mobile et PC en ajoutant plusieurs plats au panier et en contrôlant les photos.
+
 ## V2.06.20 — Carottes dans le riz sauté
 
 - Produit concerné : `Riz sauté au choix`.
