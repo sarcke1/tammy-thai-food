@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Tammy Thai Food — Administration</title>
-<link rel="stylesheet" href="admin.css?v=20260913-7">
+<link rel="stylesheet" href="admin.css?v=20261012-01">
 </head>
 <body>
 <main class="admin-shell">
   <header class="admin-header"><div><p class="eyebrow">Espace privé</p><h1>Tammy Thai Food</h1><p>Gestion des commandes</p></div><button type="button" id="logout" class="secondary hidden">Se déconnecter</button></header>
   <section id="login-panel" class="panel login-panel"><h2>Connexion Tammy</h2><form id="login-form"><label>Email<input id="email" type="email" required autocomplete="username"></label><label>Mot de passe<input id="password" type="password" required autocomplete="current-password"></label><button class="primary" type="submit">Se connecter</button><p id="login-status" class="status"></p></form></section>
-  <section id="dashboard" class="hidden"><div class="toolbar panel"><div><h2>Commandes</h2><p id="refresh-info">Chargement…</p><p id="alert-status" class="status">Alertes sonores désactivées</p></div><div class="toolbar-actions"><button type="button" id="enable-sound" class="secondary">Activer le son</button><button type="button" id="refresh" class="primary">Actualiser</button></div></div><div class="view-tabs panel"><button type="button" class="view-tab active" data-view="active">En cours</button><button type="button" class="view-tab" data-view="kitchen">En cuisine</button><button type="button" class="view-tab" data-view="pickup">En attente de retrait</button><button type="button" class="view-tab" data-view="archive">Archives</button></div><div id="orders" class="orders"></div></section>
+  <section id="dashboard" class="hidden"><div class="toolbar panel"><div><h2>Commandes</h2><p id="refresh-info">Chargement…</p><p id="alert-status" class="status">Alertes sonores désactivées</p></div><div class="toolbar-actions"><button type="button" id="enable-sound" class="secondary">Activer le son</button><button type="button" id="refresh" class="primary">Actualiser</button></div></div><div class="view-tabs panel"><button type="button" class="view-tab active" data-view="active">En cours</button><button type="button" class="view-tab" data-view="kitchen">En cuisine</button><button type="button" class="view-tab" data-view="pickup">En attente de retrait</button><button type="button" class="view-tab" data-view="archive">Archives</button></div><section class="panel opening-panel"><h2>Calendrier des ouvertures</h2><p class="opening-help">Cochez les services pendant lesquels les clients peuvent commander. Par défaut : midi ouvert sauf le mercredi, soir fermé.</p><div id="opening-calendar" aria-label="Calendrier hebdomadaire des ouvertures"></div><p id="opening-status" class="status" role="status">Horaires non chargés.</p></section><div id="orders" class="orders"></div></section>
 </main>
-<script type="module" src="admin.js?v=20260916-3"></script>
+<script type="module" src="admin.js?v=20261012-01"></script>
 </body>
 </html>
