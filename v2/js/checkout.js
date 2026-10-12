@@ -236,7 +236,7 @@ cartContent.innerHTML = `
     <h3>Commande transmise</h3>
     <p>Votre commande est en cours de préparation.</p>
     <p class="pickup-reminder">
-      Retrait : <strong id="pickup-label">Vérification des ouvertures…</strong>
+      Retrait : <strong>${pickupLabel}</strong>
     </p>
   </div>
 `;
