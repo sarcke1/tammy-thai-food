@@ -1,3 +1,12 @@
+## V2.06.24 — Bouton de validation du panier
+
+- Le bouton « Valider le panier » reçoit maintenant son gestionnaire de clic directement après le rendu de `cartContent`.
+- Le clic déclenche le montage puis l’ouverture du formulaire via les événements existants `checkout:mount` et `checkout:open`.
+- Le libellé change brièvement pour confirmer la prise en compte du clic.
+- `v2/index.html` charge `app.js?v=20261012-03`.
+- Fichiers modifiés : `v2/js/app.js`, `v2/index.html`, `CHANGELOG.md`, `PROJECT_MEMORY.md`.
+- Relecture GitHub après écriture requise ; test navigateur réel PC/mobile requis. V1 inchangée.
+
 ## V2.06.23 — Calendrier relié aux commandes
 
 - Le checkout lit les 7 lignes de service « midi » dans `weekly_opening_hours`.
