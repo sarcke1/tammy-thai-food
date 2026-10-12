@@ -548,9 +548,19 @@ function renderCart(){
       </div>
     `;
 
-  document.dispatchEvent(
-    new CustomEvent("checkout:mount")
-  );
+  document.dispatchEvent(new CustomEvent("checkout:mount"));
+
+  const validateButton = cartContent.querySelector("[data-validate-cart]");
+  validateButton?.addEventListener("click", () => {
+    validateButton.disabled = true;
+    validateButton.textContent = "Ouverture du formulaire…";
+    document.dispatchEvent(new CustomEvent("checkout:mount"));
+    requestAnimationFrame(() => {
+      document.dispatchEvent(new CustomEvent("checkout:open"));
+      validateButton.disabled = false;
+      validateButton.textContent = "Valider le panier";
+    });
+  });
 }
 // ===== Catégories =====
 
@@ -797,18 +807,6 @@ cartContent?.addEventListener("click",event=>{
     return;
   }
 
-  const validate = event.target.closest("[data-validate-cart]");
-if(validate){
-
-  renderCart();
-
-  requestAnimationFrame(() => {
-    document.dispatchEvent(new CustomEvent("checkout:mount"));
-    document.dispatchEvent(new CustomEvent("checkout:open"));
-  });
-
-  return;
-}
 });
 
 // ===== Ouverture/Fermeture panier =====
