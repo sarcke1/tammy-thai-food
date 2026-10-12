@@ -1,3 +1,12 @@
+## V2.06.20 — Carottes dans le riz sauté
+
+- Produit concerné : `Riz sauté au choix`.
+- Description client mise à jour pour mentionner les carottes explicitement.
+- Dans Supabase, ingrédient Carotte de la recette existante : quantité `20 g` par portion (auparavant 1/6 de pièce).
+- Prix conservé à 7 €, photo `Riz frit poulet.png`, choix poulet/bœuf/porc/crevettes inchangés.
+- Fichiers modifiés : `v2/js/data.js`, `v2/js/app.js`, `v2/index.html`, `CHANGELOG.md`, `PROJECT_MEMORY.md`; base Supabase : description produit et quantité de carottes.
+- V1 inchangée. À valider sur PC et mobile.
+
 ## V2.06.19 — Prix collègue du riz gluant à la mangue
 
 - Nom client : `Riz gluant à la mangue`.
