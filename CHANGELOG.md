@@ -1,3 +1,11 @@
+## V2.06.22
+
+- Administration : ajout d'un calendrier hebdomadaire pour activer/désactiver les services du midi et du soir pour chaque jour.
+- Nouveau stockage Supabase `weekly_opening_hours`, lisible publiquement et modifiable uniquement par les administrateurs authentifiés.
+- Valeurs initiales : midi ouvert du lundi au dimanche sauf le mercredi ; tous les soirs fermés. Les réglages déjà existants ne sont pas écrasés lors de l'installation.
+- Fichiers modifiés : `v2/admin/index.html`, `v2/admin/admin.js`, `v2/admin/admin.css`, `CHANGELOG.md`, `PROJECT_MEMORY.md`.
+- V1 et logique des commandes existantes inchangées. L'affichage client des créneaux sera raccordé séparément après validation du calendrier admin.
+
 ## V2.06.21
 
 - Miniatures du panier rendues avec de véritables balises image, avec texte alternatif et chargement différé.
