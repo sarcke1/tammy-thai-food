@@ -568,6 +568,18 @@ function renderCart(){
     });
   });
 }
+
+function scrollDishBelowHeader(card){
+  const header=document.querySelector(".site-header");
+  const headerHeight=header?.getBoundingClientRect().height||0;
+  const rect=card.getBoundingClientRect();
+  const visibleHeight=Math.max(0,window.innerHeight-headerHeight-24);
+  const top=rect.height<=visibleHeight
+    ? window.scrollY+rect.top-headerHeight-(visibleHeight-rect.height)/2
+    : window.scrollY+rect.top-headerHeight-10;
+  window.scrollTo({top:Math.max(0,top),behavior:"smooth"});
+}
+
 // ===== Catégories =====
 
 function selectCategory(index){
@@ -581,7 +593,10 @@ function selectCategory(index){
   button.classList.add("active");
 
   renderMenu(button.textContent.trim());
-  requestAnimationFrame(() => grid.querySelector(".dish-card")?.scrollIntoView({ behavior: "smooth", block: "center" }));
+  requestAnimationFrame(() => {
+    const firstCard=grid.querySelector(".dish-card");
+    if(firstCard) scrollDishBelowHeader(firstCard);
+  });
 }
 
 categoryButtons.forEach((button,index)=>{
@@ -640,7 +655,7 @@ menuSection?.addEventListener("touchend",event=>{
       if(distance<nearestDistance){nearestDistance=distance;nearestIndex=index;}
     });
     const nextIndex=Math.max(0,Math.min(cards.length-1,nearestIndex+(deltaY<0?1:-1)));
-    if(nextIndex!==nearestIndex)cards[nextIndex].scrollIntoView({behavior:"smooth",block:"center"});
+    if(nextIndex!==nearestIndex)scrollDishBelowHeader(cards[nextIndex]);
   }
 
 },{passive:true});
