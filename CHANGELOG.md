@@ -1,3 +1,11 @@
+## V2.06.28 — Ajustements d’affichage mobile
+
+- Défilement vertical et changement de catégorie : les fiches sont centrées dans la zone visible sous l’en-tête sticky, en tenant compte de sa hauteur.
+- Fiches avec choix de viande et de piment : réduction modérée de la photo, des marges, du texte et des contrôles sur petit écran pour limiter la hauteur totale.
+- Formulaire mobile : le choix de la date ne déclenche plus automatiquement le clavier à l’ouverture ; après le choix, le formulaire est ramené en haut du panneau et le champ Nom reçoit le focus sans défilement parasite.
+- Fichiers modifiés : v2/css/menu.css, v2/js/app.js, v2/js/checkout.js, v2/index.html, CHANGELOG.md. Versions de cache actualisées. V1 inchangée.
+- Vérification du code effectuée ; validation réelle sur téléphone et PC à effectuer après publication.
+
 ## V2.06.27 — Parcours de commande et titre Nem
 
 - Après validation réussie, la confirmation reste visible 4 secondes avant la fermeture du panier.
