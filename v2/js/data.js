@@ -5,7 +5,7 @@ const sheet = "../assets/dishes-sheet.webp";
 const pexels = "https://images.pexels.com/photos/";
 
 export const dishes = [
-  { id:"pad", name:"Pad Thaï", price:9, category:"Plats", emoji:"🍜", photo:"Pad thai.png", desc:"Nouilles de riz sautées façon thaïlandaise avec tofu, œuf, ail, échalote, sauce et cacahuètes. Au choix : crevettes, porc ou poulet.", spicy:true, proteinOptions:["Crevettes","Porc","Poulet"] },
+  { id:"pad", name:"Pad Thaï", price:9, category:"Plats", emoji:"🍜", photo:"Pad thai.png", desc:"Nouilles de riz sautées façon thaïlandaise avec tofu, œuf, ail, échalote, sauce et cacahuètes. Au choix : porc, poulet ou crevettes.", spicy:true, proteinOptions:["Porc","Poulet","Crevettes"] },
 
   {
     id:"chicken-massena",
@@ -53,13 +53,13 @@ export const dishes = [
     servedWithRice:true
   },
 
-  { id:"riz-saute", name:"Riz sauté au choix", price:9, category:"Plats", emoji:"🍚", photo:"Riz frit poulet.png", desc:"Riz sauté thaïlandais préparé avec œuf, ail, carottes, sauce et coriandre. Au choix : poulet, bœuf, porc ou crevettes.", spicy:false },
+  { id:"riz-saute", name:"Riz sauté façon thaï", price:9, category:"Plats", emoji:"🍚", photo:"Riz frit poulet.png", desc:"Riz sauté thaï préparé avec œuf, ail, carottes et coriandre. Au choix : porc, poulet ou crevettes.", spicy:false, proteinOptions:["Porc","Poulet","Crevettes"] },
 
   { id:"tom-kha-kai", name:"Tom kha kai", price:7, category:"Plats", emoji:"🥥", photo:"Tom kha kai.png", desc:"Soupe thaïlandaise au lait de coco et poulet, avec citronnelle, galanga, feuilles de combava et échalote. Piment au choix de 0 à 3.", spicy:true, servedWithRice:true },
 
-  { id:"soupe-nouille-boeuf", name:"Soupe de nouille au bœuf", price:9, category:"Plats", emoji:"🍜", photo:"Soupe de nouille au bœuf.png", desc:"Soupe de nouilles de riz au bœuf, servie dans un bouillon parfumé avec des boulettes de viande et de la coriandre. Piment au choix.", spicy:true },
+  { id:"soupe-nouille-boeuf", name:"Soupe de nouilles au bœuf", price:9, category:"Plats", emoji:"🍜", photo:"Soupe de nouille au bœuf.png", desc:"Soupe de nouilles de riz au bœuf, servie dans un bouillon parfumé avec des boulettes de viande et de la coriandre. Piment au choix.", spicy:true },
 
-  { id:"spring", name:"Rouleau de printemps", price:1.5, category:"Entrées", emoji:"🌯", photo:"Rouleau de printemps.png", desc:"Rouleau de printemps aux crevettes, salade, carotte, menthe, coriandre et nouilles chinoises, roulé dans une feuille de riz. Servi avec sa sauce.", spicy:false, cartAdjustable:true },
+  { id:"spring", name:"Rouleau de printemps", price:1.5, category:"Entrées", emoji:"🌯", photo:"Rouleau de printemps.png", desc:"Vendu à la pièce. Rouleau aux crevettes, salade, carotte, menthe, coriandre et nouilles chinoises, roulé dans une feuille de riz. Servi avec sa sauce.", spicy:false, cartAdjustable:true },
 
   {
     id:"salade-papaye",
@@ -81,7 +81,7 @@ export const dishes = [
     photo:"Soupe de curry rouge.png",
     desc:"Soupe thaïlandaise au curry rouge, lait de coco, feuilles de combava et légumes. Au choix : poulet, porc ou bœuf.",
     spicy:true,
-    proteinOptions:["Poulet","Porc","Bœuf"],
+    proteinOptions:["Porc","Poulet","Bœuf"],
     servedWithRice:true
   },
 
@@ -94,7 +94,7 @@ export const dishes = [
     photo:"soupe de curry vert.png",
     desc:"Soupe thaïlandaise au curry vert, lait de coco, aubergines thaïes, basilic thaï et légumes. Au choix : poulet, porc ou bœuf.",
     spicy:true,
-    proteinOptions:["Poulet","Porc","Bœuf"],
+    proteinOptions:["Porc","Poulet","Bœuf"],
     servedWithRice:true
   },
 
@@ -111,7 +111,7 @@ export const dishes = [
 
   {
     id:"nems-maison",
-    name:"Nems maison",
+    name:"Nems maison façon thaï",
     price:0.75,
     photo:"Nem.png",
     desc:"Nems maison croustillants préparés selon une recette traditionnelle thaïlandaise.",
