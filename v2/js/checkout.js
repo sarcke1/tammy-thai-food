@@ -180,7 +180,7 @@ function mountCheckout() {
     const { data: products, error: productsError } =
       await supabase
         .from("products")
-        .select("id,name");
+        .select("id,name,protein_options");
 
     if (productsError) {
       status.textContent = "Erreur produits : " + productsError.message;
@@ -231,7 +231,7 @@ function mountCheckout() {
           product_id: product.id,
           quantity: 1,
           spice_level: spiceLevel,
-          protein: item.protein || null
+          protein: item.protein || (Array.isArray(product.protein_options) && product.protein_options.length === 1 ? product.protein_options[0] : null)
         });
       }
     }
