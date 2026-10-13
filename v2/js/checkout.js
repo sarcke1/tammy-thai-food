@@ -139,7 +139,13 @@ function mountCheckout() {
     const details=box.querySelector("#checkout-details");
     if(details)details.hidden=!event.target.value;
     if(event.target.value){
-      requestAnimationFrame(()=>box.querySelector('[name="customer_name"]')?.focus());
+      // Garder le début du formulaire visible au-dessus du clavier mobile.
+      requestAnimationFrame(()=>{
+        panel.scrollTo({top:0,behavior:"smooth"});
+        const nameField=box.querySelector('[name="customer_name"]');
+        nameField?.focus({preventScroll:true});
+        requestAnimationFrame(()=>panel.scrollTo({top:0,behavior:"smooth"}));
+      });
     }
   });
 
@@ -324,7 +330,8 @@ function openCheckout(){
   requestAnimationFrame(()=>{
     panel.scrollTo({top:0,behavior:"smooth"});
     checkoutForm.scrollIntoView({block:"start",behavior:"smooth"});
-    checkoutForm.querySelector('[name="customer_name"]')?.focus();
+    // Ne pas ouvrir le clavier avant que le client ait choisi son retrait.
+    checkoutForm.querySelector("#pickup-date")?.focus({preventScroll:true});
   });
 }
 
