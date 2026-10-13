@@ -616,18 +616,32 @@ menuSection?.addEventListener("touchend",event=>{
   const deltaX=touch.clientX-touchStartX;
   const deltaY=touch.clientY-touchStartY;
 
-  if(Math.abs(deltaX)<50) return;
-  if(Math.abs(deltaX)<=Math.abs(deltaY)*1.2) return;
+  if(Math.abs(deltaX)>=50 && Math.abs(deltaX)>Math.abs(deltaY)*1.2){
+    const activeIndex=categoryButtons.findIndex(
+      button=>button.classList.contains("active")
+    );
+    if(activeIndex<0)return;
+    selectCategory(activeIndex+(deltaX<0?1:-1));
+    return;
+  }
 
-  const activeIndex=categoryButtons.findIndex(
-    button=>button.classList.contains("active")
-  );
-
-  if(activeIndex<0) return;
-
-  selectCategory(
-    activeIndex+(deltaX<0?1:-1)
-  );
+  // Sur mobile, un swipe vertical avance/revient d'une fiche et la centre.
+  if(Math.abs(deltaY)>=60 && Math.abs(deltaY)>Math.abs(deltaX)*1.2){
+    if(event.target.closest(".category-row"))return;
+    const cards=[...grid.querySelectorAll(".dish-card")];
+    if(!cards.length)return;
+    const screenCenter=window.innerHeight/2;
+    let nearestIndex=0;
+    let nearestDistance=Infinity;
+    cards.forEach((card,index)=>{
+      const rect=card.getBoundingClientRect();
+      const center=rect.top+rect.height/2;
+      const distance=Math.abs(center-screenCenter);
+      if(distance<nearestDistance){nearestDistance=distance;nearestIndex=index;}
+    });
+    const nextIndex=Math.max(0,Math.min(cards.length-1,nearestIndex+(deltaY<0?1:-1)));
+    if(nextIndex!==nearestIndex)cards[nextIndex].scrollIntoView({behavior:"smooth",block:"center"});
+  }
 
 },{passive:true});
 
