@@ -12,3 +12,8 @@
 .opening-choice input:disabled{cursor:wait}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 @media(max-width:600px){.opening-panel{padding:16px}.opening-grid{grid-template-columns:minmax(100px,1fr) minmax(58px,.5fr) minmax(58px,.5fr);gap:5px}.opening-day{padding:10px 3px;font-size:14px}.opening-heading{font-size:14px}}
+
+
+/* V2.06.26 — Navigation de l’administration */
+.admin-header-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+@media(max-width:600px){.admin-header-actions{width:100%;justify-content:stretch}.admin-header-actions button{flex:1}}
