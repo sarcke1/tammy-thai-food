@@ -375,3 +375,11 @@
 .cart-photo-error{
   visibility:hidden;
 }
+
+
+/* V2.06.26 — Formulaire de commande affiché en premier dans le panneau */
+#order-form[hidden], #cart-content[hidden]{display:none!important}
+#order-form{width:100%;margin:0 0 16px;scroll-margin-top:12px}
+.checkout-pickup{display:flex;flex-direction:column;gap:6px;font-weight:700;margin:0 0 12px}
+.checkout-pickup select{width:100%;min-height:44px;border:1px solid #d8c8aa;border-radius:10px;padding:10px;background:#fffdf8;color:var(--ink);font:inherit}
+.promo-note{margin:8px 0 12px!important;min-height:0!important;padding:8px 10px;border-radius:10px;background:#fff0ed;color:#9a3f32!important;font-weight:800;font-size:.8rem!important}
