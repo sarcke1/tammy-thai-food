@@ -1,3 +1,10 @@
+## V2.06.29 — Retour au défilement libre
+
+- Suppression du centrage automatique des fiches lors du changement de catégorie.
+- Suppression du geste vertical qui faisait passer d’une fiche à la suivante et imposait un ancrage.
+- Le défilement vertical redevient libre et natif ; le swipe horizontal pour changer de catégorie reste actif.
+- Fichiers modifiés : v2/js/app.js, v2/index.html, CHANGELOG.md. Les réductions de taille des fiches et les correctifs du formulaire sont conservés. V1 inchangée.
+
 ## V2.06.28 — Ajustements d’affichage mobile
 
 - Défilement vertical et changement de catégorie : les fiches sont centrées dans la zone visible sous l’en-tête sticky, en tenant compte de sa hauteur.
