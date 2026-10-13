@@ -1,3 +1,12 @@
+## V2.06.27 — Parcours de commande et titre Nem
+
+- Après validation réussie, la confirmation reste visible 4 secondes avant la fermeture du panier.
+- Le formulaire demande d’abord de choisir une date de retrait disponible à midi ; les informations client s’affichent uniquement après ce choix.
+- Correction ciblée du bouton d’envoi : le bon bouton est désactivé pendant le traitement, sans bloquer le bouton « Retour au panier ».
+- Le titre du plat s’affiche « Nem maison façon thaï » au singulier dans le menu ; le nom interne « Nems maison façon thaï » reste inchangé pour préserver la correspondance Supabase et la promotion.
+- Fichiers modifiés : `v2/js/checkout.js`, `v2/js/app.js`, `v2/index.html`, `CHANGELOG.md`.
+- Création de compte et notation : à concevoir séparément avant implémentation. V1 inchangée ; tests de commande PC/mobile à effectuer.
+
 ## V2.06.26 — Correctifs carte, panier, calendrier et e-mails
 
 - Carte : « Riz sauté façon thaï » sans bœuf et sans mention de sauce ; ordre des choix de viande uniformisé (porc, poulet, puis autres choix).
