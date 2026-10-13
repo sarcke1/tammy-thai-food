@@ -8,7 +8,7 @@
 - Choix de date de retrait parmi les midis ouverts entre le lundi de la semaine en cours et le lundi suivant, avec délai minimum selon l’heure. La fonction Supabase accepte uniquement une date ouverte dans cette période.
 - Administration : calendrier déplacé dans un onglet dédié à côté de la déconnexion.
 - E-mail de commande : date issue de `pickup_date`, lien vers l’administration, confirmation envoyée à l’adresse du client via Resend.
-- Mise à jour de la fonction SQL de commande et de l’Edge Function `notify-order-email` (version déployée 7).
+- Mise à jour de la fonction SQL de commande et de l’Edge Function `notify-order-email` (version déployée 8).
 - Fichiers V2 modifiés : `v2/js/app.js`, `v2/js/data.js`, `v2/js/cart.js`, `v2/js/checkout.js`, `v2/index.html`, `v2/css/cart.css`, `v2/admin/index.html`, `v2/admin/admin.js`, `v2/admin/admin.css`. Supabase : produits et fonction `create_pending_order`. Edge Function : `notify-order-email`.
 - V1 inchangée. Tests réels PC/mobile et test d’e-mails encore nécessaires.
 
