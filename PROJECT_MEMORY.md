@@ -1,3 +1,9 @@
+## V2.06.25 — Synchronisation de l’état du panier
+
+- Cause du bouton « Valider le panier » inopérant : `app.js` importait `cart.js?v=20261008-01`, alors que `checkout.js` importait `cart.js?v=20261006-06`. Ces URL produisent des instances de module distinctes et peuvent donner un panier vide au checkout.
+- Import checkout aligné sur `cart.js?v=20261008-01` et cache checkout actualisé à `20261013-01`.
+- Vérification réelle dans le navigateur PC/mobile toujours nécessaire ; V1 inchangée.
+
 ## V2.06.24 — Bouton de validation du panier
 
 - Le bouton « Valider le panier » reçoit maintenant son gestionnaire de clic directement après le rendu de `cartContent`.
