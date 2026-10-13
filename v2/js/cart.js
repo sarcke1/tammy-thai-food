@@ -26,7 +26,7 @@ function persist() {
 }
 
 export function isNemsPromo(item){
-  return String(item?.name||"").trim().toLowerCase()==="nems maison";
+  return String(item?.name||"").trim().toLowerCase().startsWith("nems maison");
 }
 
 export function promoBonus(quantity){
