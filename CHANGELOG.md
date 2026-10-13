@@ -1,3 +1,17 @@
+## V2.06.26 — Correctifs carte, panier, calendrier et e-mails
+
+- Carte : « Riz sauté façon thaï » sans bœuf et sans mention de sauce ; ordre des choix de viande uniformisé (porc, poulet, puis autres choix).
+- « Bœuf sauté sauce huître » reste une recette au bœuf fixe ; ses options Supabase déclarent désormais le bœuf autorisé pour éviter le rejet RPC « Choix de viande invalide ».
+- « Soupe de nouilles au bœuf », rouleau de printemps vendu à la pièce, nems renommés « Nems maison façon thaï » ; offre Nems affichée dans le corps de la fiche et reconnue malgré le nouveau nom.
+- Accord des pastilles « Servi/Servie avec du riz », choix du piment explicités par plat et viande, libellé de viande simplifié dans le panier.
+- Navigation par catégorie : centrage du premier plat affiché. Formulaire de commande placé au début du panneau ; panier masqué pendant la saisie et fermeture temporisée après envoi sans recharger la page.
+- Choix de date de retrait parmi les midis ouverts entre le lundi de la semaine en cours et le lundi suivant, avec délai minimum selon l’heure. La fonction Supabase accepte uniquement une date ouverte dans cette période.
+- Administration : calendrier déplacé dans un onglet dédié à côté de la déconnexion.
+- E-mail de commande : date issue de `pickup_date`, lien vers l’administration, confirmation envoyée à l’adresse du client via Resend.
+- Mise à jour de la fonction SQL de commande et de l’Edge Function `notify-order-email` (version déployée 7).
+- Fichiers V2 modifiés : `v2/js/app.js`, `v2/js/data.js`, `v2/js/cart.js`, `v2/js/checkout.js`, `v2/index.html`, `v2/css/cart.css`, `v2/admin/index.html`, `v2/admin/admin.js`, `v2/admin/admin.css`. Supabase : produits et fonction `create_pending_order`. Edge Function : `notify-order-email`.
+- V1 inchangée. Tests réels PC/mobile et test d’e-mails encore nécessaires.
+
 ## V2.06.25 — Synchronisation de l’état du panier
 
 - Cause identifiée : `app.js` et `checkout.js` importaient deux URL versionnées différentes pour `cart.js`, créant deux instances de module et des états de panier distincts.
