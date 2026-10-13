@@ -208,16 +208,35 @@ function mountCheckout() {
         return;
       }
 
-      items.push({
-        product_id: product.id,
-        quantity: 1,
-        spice_level: item.spicy
-          ? Math.max(0, Math.min(3, Number(item.spice) || 0))
-          : 0,
-        protein: item.protein || null
-      });
+      const spiceLevel = item.spicy
+        ? Math.max(0, Math.min(3, Number(item.spice) || 0))
+        : 0;
+      const isNems = String(item.name).trim().toLowerCase().startsWith("nems maison");
+
+      if (isNems) {
+        const existingNems = items.find(entry => entry._nemsPromo && entry.product_id === product.id);
+        if (existingNems) {
+          existingNems.quantity += 1;
+        } else {
+          items.push({
+            product_id: product.id,
+            quantity: 1,
+            spice_level: spiceLevel,
+            protein: null,
+            _nemsPromo: true
+          });
+        }
+      } else {
+        items.push({
+          product_id: product.id,
+          quantity: 1,
+          spice_level: spiceLevel,
+          protein: item.protein || null
+        });
+      }
     }
 
+    const rpcItems = items.map(({ _nemsPromo, ...item }) => item);
     status.textContent = "Enregistrement...";
 
     const { error } = await supabase.rpc(
@@ -228,7 +247,7 @@ function mountCheckout() {
         p_email: email,
         p_phone: phone,
         p_service_slot_id: null,
-        p_items: items,
+        p_items: rpcItems,
         p_customer_note: comment,
         p_pickup_date: formatDateForDatabase(pickupDate)
       }
