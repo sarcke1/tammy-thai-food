@@ -52,10 +52,14 @@ async function refreshPickupLabel() {
   if(!select)return;
   try{
     const dates=await getAvailablePickupDates();
-    select.innerHTML=dates.map(date=>`<option value="${formatDateForDatabase(date)}">${getPickupLabel(date)} (midi)</option>`).join("");
+    select.innerHTML='<option value="" selected disabled>Choisissez une date de retrait</option>'+dates.map(date=>`<option value="${formatDateForDatabase(date)}">${getPickupLabel(date)} (midi)</option>`).join("");
+    const details=checkoutForm.querySelector("#checkout-details");
+    if(details)details.hidden=!select.value;
   }catch(error){
-    select.innerHTML='<option value="">Aucune date disponible</option>';
+    select.innerHTML='<option value="" selected disabled>Aucune date disponible</option>';
     select.title=error.message;
+    const details=checkoutForm.querySelector("#checkout-details");
+    if(details)details.hidden=true;
   }
 }
 
@@ -72,14 +76,15 @@ function mountCheckout() {
   box.innerHTML = `
     <div class="checkout-box">
 
-      <h3>Vos informations</h3>
-
       <label class="checkout-pickup">
-        Date de retrait
+        <strong>1. Choisissez votre date de retrait</strong>
         <select name="pickup_date" id="pickup-date" required>
-          <option value="">Vérification des ouvertures…</option>
+          <option value="" selected disabled>Vérification des ouvertures…</option>
         </select>
       </label>
+
+      <div id="checkout-details" hidden>
+      <h3>2. Vos informations</h3>
 
       <input
         name="customer_name"
@@ -120,6 +125,7 @@ function mountCheckout() {
       </button>
 
       <p id="order-status"></p>
+      </div>
 
     </div>
   `;
@@ -129,6 +135,14 @@ function mountCheckout() {
   refreshPickupLabel();
 
   document.addEventListener("cart:updated", updateCheckoutVisibility);
+  box.querySelector("#pickup-date")?.addEventListener("change", event => {
+    const details=box.querySelector("#checkout-details");
+    if(details)details.hidden=!event.target.value;
+    if(event.target.value){
+      requestAnimationFrame(()=>box.querySelector('[name="customer_name"]')?.focus());
+    }
+  });
+
   box.querySelector("[data-back-to-cart]")?.addEventListener("click", () => {
     checkoutForm.hidden = true;
     cartContent.hidden = false;
@@ -139,7 +153,7 @@ function mountCheckout() {
     event.preventDefault();
 
     const status = box.querySelector("#order-status");
-    const submit = box.querySelector("button");
+    const submit = box.querySelector('button[type="submit"]');
 
     const formData = new FormData(box);
     const cartItems = getCart();
@@ -286,7 +300,7 @@ box.hidden = true;
 // Ferme le panier puis remet toute l'interface à zéro
 setTimeout(() => {
   panel.classList.remove("open");
-}, 2600);
+}, 4000);
 });
 
 updateCheckoutVisibility();
