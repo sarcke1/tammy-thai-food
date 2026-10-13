@@ -280,6 +280,7 @@ function openCheckout(){
 
   checkoutForm.hidden=false;
   cartContent.hidden=true;
+  refreshPickupLabel();
   requestAnimationFrame(()=>{
     panel.scrollTo({top:0,behavior:"smooth"});
     checkoutForm.scrollIntoView({block:"start",behavior:"smooth"});
