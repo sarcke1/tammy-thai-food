@@ -113,6 +113,8 @@ function mountCheckout() {
         rows="3"
       ></textarea>
 
+      <button class="secondary-cart-action" type="button" data-back-to-cart>Retour au panier</button>
+
       <button class="button cart-submit" type="submit">
         Enregistrer la commande
       </button>
@@ -127,6 +129,11 @@ function mountCheckout() {
   refreshPickupLabel();
 
   document.addEventListener("cart:updated", updateCheckoutVisibility);
+  box.querySelector("[data-back-to-cart]")?.addEventListener("click", () => {
+    checkoutForm.hidden = true;
+    cartContent.hidden = false;
+    panel.scrollTo({ top: 0, behavior: "smooth" });
+  });
 
   box.addEventListener("submit", async (event) => {
     event.preventDefault();
