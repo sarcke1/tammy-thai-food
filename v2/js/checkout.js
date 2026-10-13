@@ -124,6 +124,7 @@ function mountCheckout() {
 
   panel.insertBefore(box, cartContent);
   checkoutForm = box;
+  refreshPickupLabel();
 
   document.addEventListener("cart:updated", updateCheckoutVisibility);
 
