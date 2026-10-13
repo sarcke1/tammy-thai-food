@@ -343,7 +343,7 @@ function renderMenu(category="Plats"){
 
           <div class="dish-title-row">
 
-            <h3>${d.name}</h3>
+            <h3>${d.name.replace(/^Nems maison/i, "Nem maison")}</h3>
 
             <span class="price">${euro(d.price)}</span>
 
