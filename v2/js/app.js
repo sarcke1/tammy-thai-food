@@ -235,7 +235,7 @@ function spiceRows(dish){
   if(dish.proteinOptions?.length){
     dish.proteinOptions.forEach(protein=>{
       const count=Number(state.proteinQuantities[protein]||0);
-      for(let n=1;n<=count;n++) selectedProteinLabels.push(`${protein} ${n}`);
+      for(let n=1;n<=count;n++) selectedProteinLabels.push(protein);
     });
   }
 
