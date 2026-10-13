@@ -1,3 +1,11 @@
+## V2.06.25 — Synchronisation de l’état du panier
+
+- Cause identifiée : `app.js` et `checkout.js` importaient deux URL versionnées différentes pour `cart.js`, créant deux instances de module et des états de panier distincts.
+- `checkout.js` utilise maintenant exactement la même URL de module que `app.js` : `cart.js?v=20261008-01`.
+- Cache du module checkout actualisé dans `v2/index.html` vers `20261013-01`.
+- Aucun changement de prix, de contenu du panier, de logique serveur ou de V1.
+- Test navigateur PC/mobile encore requis après publication.
+
 ## V2.06.24
 
 - Correction du bouton « Valider le panier » : gestionnaire de clic directement attaché au bouton après chaque rendu du panier, au lieu de dépendre uniquement de la délégation d’événement.
