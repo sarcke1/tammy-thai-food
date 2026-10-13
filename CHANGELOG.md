@@ -4,7 +4,7 @@
 - « Bœuf sauté sauce huître » reste une recette au bœuf fixe ; ses options Supabase déclarent désormais le bœuf autorisé pour éviter le rejet RPC « Choix de viande invalide ».
 - « Soupe de nouilles au bœuf », rouleau de printemps vendu à la pièce, nems renommés « Nems maison façon thaï » ; offre Nems affichée dans le corps de la fiche et reconnue malgré le nouveau nom.
 - Accord des pastilles « Servi/Servie avec du riz », choix du piment explicités par plat et viande, libellé de viande simplifié dans le panier.
-- Navigation par catégorie : centrage du premier plat affiché. Formulaire de commande placé au début du panneau ; panier masqué pendant la saisie et fermeture temporisée après envoi sans recharger la page.
+- Navigation par catégorie : centrage du premier plat affiché. Formulaire de commande placé au début du panneau ; panier masqué pendant la saisie, bouton « Retour au panier » ajouté, fermeture temporisée après envoi sans recharger la page.
 - Choix de date de retrait parmi les midis ouverts entre le lundi de la semaine en cours et le lundi suivant, avec délai minimum selon l’heure. La fonction Supabase accepte uniquement une date ouverte dans cette période.
 - Administration : calendrier déplacé dans un onglet dédié à côté de la déconnexion.
 - E-mail de commande : date issue de `pickup_date`, lien vers l’administration, confirmation envoyée à l’adresse du client via Resend.
