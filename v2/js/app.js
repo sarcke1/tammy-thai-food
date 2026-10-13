@@ -1,7 +1,7 @@
 // ===== TAMMY THAI FOOD V3.10 =====
 // UI Renderer + Event Wiring
 
-import { dishes as localDishes } from "./data.js?v=20261012-01";
+import { dishes as localDishes } from "./data.js?v=20261013-02";
 import { spiceLabel } from "./spice.js";
 import { supabase } from "./supabase.js";
 import {
@@ -231,6 +231,13 @@ function spiceRows(dish){
   }
 
   const state=getState(dish);
+  const selectedProteinLabels=[];
+  if(dish.proteinOptions?.length){
+    dish.proteinOptions.forEach(protein=>{
+      const count=Number(state.proteinQuantities[protein]||0);
+      for(let n=1;n<=count;n++) selectedProteinLabels.push(`${protein} ${n}`);
+    });
+  }
 
   if(dish.fixedSpice != null){
     return "<div class=\"spice-box\"><div class=\"spice-box-title\">Piment</div><div class=\"spice-row\"><span>Niveau de piment</span><b>Niveau "+dish.fixedSpice+"</b></div></div>";
@@ -255,7 +262,7 @@ function spiceRows(dish){
 
         <div class="spice-row" data-spice-row="${i}">
 
-          <span>Plat ${i+1}</span>
+          <span>${dish.proteinOptions?.length ? `Plat ${i+1} — ${selectedProteinLabels[i] || "Viande"} : choix du piment` : `Plat ${i+1} : choix du piment`}</span>
 
           <div class="spice-row-controls">
 
@@ -328,9 +335,7 @@ function renderMenu(category="Plats"){
               ? '<span class="dish-badge">🌶️ Piment au choix</span>'
               : ""}
 
-          ${isNemsPromo(d) ? '<span class="dish-badge promo-badge">4 achetés + 1 offert</span>' : ""}
-
-          ${d.servedWithRice ? '<span class="dish-badge rice-badge">🍚 Servi avec riz</span>' : ""}
+          ${d.servedWithRice ? `<span class="dish-badge rice-badge">🍚 ${/^(soupe|tom kha)/i.test(d.name) ? "Servie" : "Servi"} avec du riz</span>` : ""}
 
         </div>
 
@@ -345,6 +350,7 @@ function renderMenu(category="Plats"){
           </div>
 
           <p>${d.desc}</p>
+          ${isNemsPromo(d) ? '<p class="promo-note">Offre : 4 achetés + 1 offert</p>' : ""}
 
           ${proteinSelector(d)}
 
@@ -481,7 +487,7 @@ function renderCart(){
             : ""}
 
           ${item.protein
-            ? `<small>Viande : ${item.protein}</small>`
+            ? `<small>${item.protein}</small>`
             : ""}
 
           ${item.fixedSpice != null
@@ -575,6 +581,7 @@ function selectCategory(index){
   button.classList.add("active");
 
   renderMenu(button.textContent.trim());
+  requestAnimationFrame(() => grid.querySelector(".dish-card")?.scrollIntoView({ behavior: "smooth", block: "center" }));
 }
 
 categoryButtons.forEach((button,index)=>{
