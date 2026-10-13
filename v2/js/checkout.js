@@ -7,35 +7,35 @@ const cartContent = document.querySelector('#cart-content');
 let checkoutForm = null;
 
 function updateCheckoutVisibility() {
-  if (!checkoutForm) return;
-
-  if (!getCart().length) {
-    checkoutForm.hidden = true;
-  }
+  if(!checkoutForm)return;
+  if(!getCart().length)checkoutForm.hidden=true;
+  cartContent.hidden=Boolean(getCart().length&&!checkoutForm.hidden);
 }
 
-async function getPickupDate() {
-  const { data, error } = await supabase
-    .from("weekly_opening_hours")
-    .select("day_of_week,service_period,is_open");
-
+async function getAvailablePickupDates() {
+  const { data, error } = await supabase.from("weekly_opening_hours").select("day_of_week,service_period,is_open");
   if (error) throw new Error("Impossible de vérifier les jours d’ouverture : " + error.message);
   const lunchRows = (data || []).filter(row => row.service_period === "midi");
   if (lunchRows.length !== 7) throw new Error("Le calendrier des ouvertures est incomplet. Réessayez plus tard.");
-
   const openLunchDays = new Set(lunchRows.filter(row => row.is_open).map(row => Number(row.day_of_week)));
   const now = new Date();
-  const pickup = new Date(now);
-  pickup.setHours(12, 0, 0, 0);
-  pickup.setDate(pickup.getDate() + (now.getHours() >= 18 ? 2 : 1));
-
-  for (let i = 0; i < 14; i++) {
-    if (openLunchDays.has(pickup.getDay())) return pickup;
-    pickup.setDate(pickup.getDate() + 1);
+  const minimum = new Date(now);
+  minimum.setHours(12,0,0,0);
+  minimum.setDate(minimum.getDate() + (now.getHours() >= 18 ? 2 : 1));
+  const monday = new Date(now);
+  monday.setHours(12,0,0,0);
+  monday.setDate(monday.getDate() - ((monday.getDay()+6)%7));
+  const nextMonday = new Date(monday);
+  nextMonday.setDate(nextMonday.getDate()+7);
+  const dates=[];
+  for(let candidate=new Date(monday);candidate<=nextMonday;candidate.setDate(candidate.getDate()+1)){
+    const day=new Date(candidate);
+    day.setHours(12,0,0,0);
+    if(day>=minimum && openLunchDays.has(day.getDay())) dates.push(new Date(day));
   }
-  throw new Error("Aucun retrait à midi n’est ouvert dans les 14 prochains jours.");
+  if(!dates.length) throw new Error("Aucun retrait à midi n’est disponible dans la période proposée.");
+  return dates;
 }
-
 function getPickupLabel(date) {
   return date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
 }
@@ -48,14 +48,14 @@ function formatDateForDatabase(date) {
 }
 
 async function refreshPickupLabel() {
-  const label = checkoutForm?.querySelector("#pickup-label");
-  if (!label) return;
-  try {
-    const pickupDate = await getPickupDate();
-    label.textContent = `${getPickupLabel(pickupDate)} (midi)`;
-  } catch (error) {
-    label.textContent = "Indisponible";
-    label.title = error.message;
+  const select=checkoutForm?.querySelector("#pickup-date");
+  if(!select)return;
+  try{
+    const dates=await getAvailablePickupDates();
+    select.innerHTML=dates.map(date=>`<option value="${formatDateForDatabase(date)}">${getPickupLabel(date)} (midi)</option>`).join("");
+  }catch(error){
+    select.innerHTML='<option value="">Aucune date disponible</option>';
+    select.title=error.message;
   }
 }
 
@@ -74,9 +74,12 @@ function mountCheckout() {
 
       <h3>Vos informations</h3>
 
-      <p class="checkout-help">
-        Retrait : <strong id="pickup-label">Vérification des ouvertures…</strong>
-      </p>
+      <label class="checkout-pickup">
+        Date de retrait
+        <select name="pickup_date" id="pickup-date" required>
+          <option value="">Vérification des ouvertures…</option>
+        </select>
+      </label>
 
       <input
         name="customer_name"
@@ -119,7 +122,7 @@ function mountCheckout() {
     </div>
   `;
 
-  cartContent.after(box);
+  panel.insertBefore(box, cartContent);
   checkoutForm = box;
 
   document.addEventListener("cart:updated", updateCheckoutVisibility);
@@ -153,14 +156,17 @@ function mountCheckout() {
     submit.disabled = true;
     status.textContent = "Vérification des jours d’ouverture…";
     let pickupDate;
-    try {
-      pickupDate = await getPickupDate();
-    } catch (error) {
-      status.textContent = error.message;
-      submit.disabled = false;
+    try{
+      const dates=await getAvailablePickupDates();
+      const selected=box.querySelector("#pickup-date").value;
+      pickupDate=dates.find(date=>formatDateForDatabase(date)===selected);
+      if(!pickupDate)throw new Error("Choisissez une date de retrait disponible.");
+    }catch(error){
+      status.textContent=error.message;
+      submit.disabled=false;
       return;
     }
-    const pickupLabel = `${getPickupLabel(pickupDate)} (midi)`;
+    const pickupLabel=`${getPickupLabel(pickupDate)} (midi)`;
     status.textContent = "Vérification des produits...";
 
     const { data: products, error: productsError } =
@@ -253,8 +259,7 @@ box.hidden = true;
 // Ferme le panier puis remet toute l'interface à zéro
 setTimeout(() => {
   panel.classList.remove("open");
-  window.location.reload();
-}, 2200);
+}, 2600);
 });
 
 updateCheckoutVisibility();
@@ -272,14 +277,11 @@ function openCheckout(){
 
   if (!checkoutForm) return;
 
-  checkoutForm.hidden = false;
-
-  requestAnimationFrame(() => {
-    panel.scrollTo({
-      top: panel.scrollHeight,
-      behavior: "smooth"
-    });
-
+  checkoutForm.hidden=false;
+  cartContent.hidden=true;
+  requestAnimationFrame(()=>{
+    panel.scrollTo({top:0,behavior:"smooth"});
+    checkoutForm.scrollIntoView({block:"start",behavior:"smooth"});
     checkoutForm.querySelector('[name="customer_name"]')?.focus();
   });
 }
