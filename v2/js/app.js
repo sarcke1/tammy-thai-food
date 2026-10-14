@@ -335,7 +335,7 @@ function renderMenu(category="Plats"){
               ? '<span class="dish-badge">🌶️ Piment au choix</span>'
               : ""}
 
-          ${d.servedWithRice ? `<span class="dish-badge rice-badge">🍚 ${/^(soupe|tom kha)/i.test(d.name) ? "Servie" : "Servi"} avec du riz</span>` : ""}
+          ${d.servedWithRice ? `<span class="dish-badge rice-badge">🍚 ${/^(soupe|tom kha)/i.test(d.name) || /^salade thaïe de viande hachée/i.test(d.name) ? "Servie" : "Servi"} avec du riz</span>` : ""}
 
         </div>
 
