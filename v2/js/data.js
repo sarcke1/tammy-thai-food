@@ -59,7 +59,7 @@ export const dishes = [
 
   { id:"soupe-nouille-boeuf", name:"Soupe de nouilles au bœuf", price:9, category:"Plats", emoji:"🍜", photo:"Soupe de nouille au bœuf.png", desc:"Soupe de nouilles de riz au bœuf, servie dans un bouillon parfumé avec des boulettes de viande et de la coriandre. Piment au choix.", spicy:true },
 
-  { id:"spring", name:"Rouleau de printemps", price:1.5, category:"Entrées", emoji:"🌯", photo:"Rouleau de printemps.png", desc:"Vendu à la pièce. Rouleau aux crevettes, salade, carotte, menthe, coriandre et nouilles chinoises, roulé dans une feuille de riz. Servi avec sa sauce.", spicy:false, cartAdjustable:true },
+  { id:"spring", name:"Rouleau de printemps", price:1.5, category:"Entrées", emoji:"🌯", photo:"Rouleau de printemps.png", desc:"Rouleau aux crevettes, salade, carotte, menthe, coriandre et nouilles chinoises, roulé dans une feuille de riz. Servi avec sa sauce.", spicy:false, cartAdjustable:true },
 
   {
     id:"salade-papaye",
@@ -129,7 +129,7 @@ export const dishes = [
     name:"Nems maison façon thaï",
     price:0.75,
     photo:"Nem.png",
-    desc:"Nems maison croustillants préparés selon une recette traditionnelle thaïlandaise.",
+    desc:"Nems maison au poulet, croustillants, préparés selon une recette traditionnelle thaïlandaise.",
     category:"Entrées",
     spicy:false,
     promo:"4 achetés + 1 offert",
