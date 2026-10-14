@@ -1,3 +1,10 @@
+## V2.06.35 — Décorations conservées à l’impression
+
+- Ajout des règles d’impression `print-color-adjust: exact` et `-webkit-print-color-adjust: exact` pour préserver les couleurs et les arrière-plans.
+- Réaffirmation des images de bannière et de fond, du ruban décoratif, des cartes et des bandeaux en mode impression.
+- Le format A4 et la disposition compacte restent inchangés. Selon le navigateur, l’option « Graphiques d’arrière-plan » peut encore devoir être activée dans la fenêtre d’impression.
+- Fichiers modifiés : `v2/prospectus.html`, `CHANGELOG.md`. V1 et logique de commande inchangées.
+
 ## V2.06.34 — Prospectus : reprise globale du visuel V2
 
 - Correction de la bannière : proportions du visuel conservées sans recadrage `cover`, comme sur le site ; bouton d’appel à la commande recalé sur sa position et ses dimensions responsive.
