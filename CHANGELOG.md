@@ -1,3 +1,11 @@
+## V2.06.36 — Décorations imprimables et page A4 unique
+
+- Bannière et fond plage/palmiers convertis en véritables éléments `<img>` décoratifs plutôt qu’en seules images d’arrière-plan CSS, afin qu’ils apparaissent dans l’aperçu PDF/impression même si le navigateur ignore les arrière-plans CSS.
+- Styles d’impression renforcés pour préserver couleurs, rubans, bandeaux et fonds de fiches.
+- Hauteur imprimable réduite à 280 mm dans la zone A4 avec marges, afin de limiter le risque de page supplémentaire blanche.
+- Contenu du menu, prix collègues, QR code et logique de chargement inchangés. V1 inchangée.
+- Fichiers modifiés : `v2/prospectus.html`, `CHANGELOG.md`. Aperçu PDF à vérifier après publication.
+
 ## V2.06.35 — Décorations conservées à l’impression
 
 - Ajout des règles d’impression `print-color-adjust: exact` et `-webkit-print-color-adjust: exact` pour préserver les couleurs et les arrière-plans.
