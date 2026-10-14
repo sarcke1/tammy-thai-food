@@ -13,7 +13,7 @@ body{margin:0;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:va
 .toolbar{position:sticky;top:0;z-index:10;display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;padding:10px;background:#123c30;color:white}
 .toolbar button,.toolbar a{border:1px solid var(--gold);border-radius:999px;padding:9px 16px;background:var(--green);color:white;font-weight:700;text-decoration:none;cursor:pointer}
 .poster{position:relative;isolation:isolate;max-width:1200px;margin:20px auto;background:var(--cream);overflow:hidden;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow)}
-header{position:relative;isolation:isolate;aspect-ratio:1920/800;width:100%;max-height:none;min-height:0;text-align:center;color:white;padding:0;background-image:url('./banniere%20site.png');background-position:center top;background-size:100% 100%;background-repeat:no-repeat;border-bottom:2px solid var(--gold);overflow:hidden}
+header{position:relative;isolation:isolate;aspect-ratio:1920/800;width:100%;max-height:none;min-height:0;text-align:center;color:white;padding:0;background:transparent;border-bottom:2px solid var(--gold);overflow:hidden}.print-banner{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;z-index:0}.order{z-index:1}
 header:before,header:after{display:none}
 header:before{display:none}header:after{display:none}
 .kicker{display:none}
@@ -28,7 +28,7 @@ header:before{display:none}header:after{display:none}
 .qr{display:flex;align-items:center;gap:10px;text-align:center;font-size:12px;font-weight:800;color:var(--forest)}
 .qr img{width:108px;height:108px;object-fit:contain;border:5px solid white;border-radius:5px;background:white}
 .pickup-live{grid-column:1/-1;padding-top:8px;border-top:1px solid var(--line);color:var(--green);font-size:13px}
-main{position:relative;isolation:isolate;padding:20px 18px 25px;background:transparent}main:before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(rgba(247,241,227,.08),rgba(247,241,227,.14)),url('./fond%20d%27%C3%A9cran.png') center top/cover no-repeat;opacity:.95;pointer-events:none}
+main{position:relative;isolation:isolate;padding:20px 18px 25px;background:transparent}.print-background{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:0;pointer-events:none;opacity:.95}.status,.groups{position:relative;z-index:1}
 .groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}.menu-column{display:flex;flex-direction:column;gap:10px;min-width:0}
 .menu-section{min-width:0}.menu-section h2{margin-bottom:6px}.card{margin-bottom:5px}
 .menu-section h2{margin:0 0 8px;padding:7px 4px;text-align:center;background:rgba(255,253,248,.90);color:var(--green);border:1px solid rgba(14,73,56,.12);border-bottom:2px solid var(--coral);border-radius:14px;font:700 clamp(18px,2.2vw,25px) Georgia,serif;box-shadow:0 5px 16px rgba(31,56,45,.05)}
@@ -50,23 +50,20 @@ footer{position:relative;padding:12px 20px 14px;text-align:center;color:var(--in
 @media(max-width:760px){.poster{margin:0;border:0;border-radius:0}.groups{grid-template-columns:1fr}.menu-column{gap:8px}.card{grid-template-columns:120px minmax(0,1fr)}.card img{height:118px}.service{grid-template-columns:1fr}.qr{justify-content:center}header{aspect-ratio:1920/800;width:100%;max-height:none;min-height:0;padding:0;background-position:center top;background-size:100% 100%;background-repeat:no-repeat}.kicker{letter-spacing:2px}main{padding:14px 10px}.name{font-size:17px}.price{font-size:18px}.desc{font-size:12px}.tags,.promo{font-size:11px}}
 @page{size:A4 portrait;margin:4mm}
 @media print{
- /* Conserver les couleurs, dégradés et images décoratives à l'impression. */
+ /* Les décorations sont de vraies images HTML : elles s'impriment même si les fonds CSS sont ignorés. */
  *,*::before,*::after{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
- html,body{background:var(--cream)!important}
- .poster{background:var(--cream)!important;border-color:var(--line)!important}
- header{background-image:url('./banniere%20site.png')!important;background-position:center top!important;background-size:100% 100%!important;background-repeat:no-repeat!important}
- main{background:transparent!important}
- main:before{background-image:linear-gradient(rgba(247,241,227,.08),rgba(247,241,227,.14)),url('./fond%20d%27%C3%A9cran.png')!important;background-position:center top!important;background-size:cover!important;background-repeat:no-repeat!important;opacity:1!important}
- .ribbon{background:linear-gradient(90deg,#c59643,#f7e8bc,#c59643)!important}
- .menu-section h2{background:rgba(255,253,248,.88)!important;color:var(--green)!important}
- .card{background:var(--paper)!important;box-shadow:0 8px 22px rgba(31,56,45,.08)!important}
- footer{background:rgba(255,253,248,.96)!important;color:var(--ink)!important}
- .toolbar{display:none}
-  .poster{width:100%;max-width:none;height:289mm;display:flex;flex-direction:column;margin:0;border:1px solid var(--line);border-radius:0;box-shadow:none;overflow:hidden}
- header{height:31mm;min-height:31mm;max-height:31mm;aspect-ratio:auto;padding:0;background-position:center center;background-size:cover}.brand,.brand span,.kicker,.tagline{display:none}.order{left:29.3%;top:84%;width:25%;height:10%;padding:0 2%;font-size:6pt;box-shadow:0 2px 6px rgba(0,0,0,.16)}
- .ribbon{height:4px;flex:none}.service{padding:6px 9px;gap:8px}.service h2{font-size:12px;margin-bottom:3px}.service p{font-size:7px;line-height:1.2;margin:2px 0}.qr{gap:5px;font-size:7px}.qr img{width:52px;height:52px;border-width:2px}
- main{padding:6px 6px 4px;flex:1;min-height:0;background:transparent}main:before{background:linear-gradient(rgba(247,241,227,.08),rgba(247,241,227,.14)),url('./fond%20d%27%C3%A9cran.png') center top/cover no-repeat}.groups{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.menu-column{gap:4px}.menu-section h2{font-size:11px;margin-bottom:3px;padding:4px;border-bottom-width:2px;background:rgba(255,253,248,.88)}.card{grid-template-columns:27% minmax(0,1fr);gap:4px;padding:3px;margin-bottom:3px;border-radius:5px}.card img{height:48px;border-radius:3px}.name{font-size:8px;margin:1px 0 2px}.price{font-size:8px;margin-bottom:2px;white-space:normal}.desc{font-size:6.5px;line-height:1.15}.tags,.promo{font-size:6px;margin-top:2px;line-height:1.15}.promo{padding:1px 3px}
- footer{padding:5px 8px 6px;flex:none;background:rgba(255,253,248,.96)}.footer-title{font-size:10px}.site-url{font-size:7px;margin-top:2px}.footer-small{font-size:6px;line-height:1.15;margin-top:3px}
+ html,body{margin:0!important;padding:0!important;background:var(--cream)!important}
+ .poster{width:100%;max-width:none;height:280mm;display:flex;flex-direction:column;margin:0;border:1px solid var(--line);border-radius:0;box-shadow:none;overflow:hidden;background:var(--cream)!important}
+ header{height:31mm;min-height:31mm;max-height:31mm;aspect-ratio:auto;padding:0;background:transparent!important}
+ .print-banner{display:block!important;visibility:visible!important;opacity:1!important;object-fit:fill!important}
+ .brand,.brand span,.kicker,.tagline{display:none}
+ .order{left:29.3%;top:78%;width:25%;height:14%;padding:0 2%;font-size:6pt;box-shadow:0 2px 6px rgba(0,0,0,.16)}
+ .ribbon{height:4px;min-height:4px;flex:none;background:linear-gradient(90deg,#c59643,#f7e8bc,#c59643)!important}
+ .service{padding:6px 9px;gap:8px;background:#fffdf8!important}.service h2{font-size:12px;margin-bottom:3px}.service p{font-size:7px;line-height:1.2;margin:2px 0}.qr{gap:5px;font-size:7px}.qr img{width:52px;height:52px;border-width:2px}
+ main{position:relative;padding:6px 6px 4px;flex:1;min-height:0;background:transparent!important}
+ .print-background{display:block!important;visibility:visible!important;opacity:.95!important;object-fit:cover!important;object-position:center top!important}
+ .status,.groups{position:relative;z-index:1}.groups{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.menu-column{gap:4px}.menu-section h2{font-size:11px;margin-bottom:3px;padding:4px;border-bottom-width:2px;background:#fffdf8!important;color:var(--green)!important}.card{grid-template-columns:27% minmax(0,1fr);gap:4px;padding:3px;margin-bottom:3px;border-radius:5px;background:#fffdf8!important;box-shadow:0 3px 8px rgba(31,56,45,.08)!important}.card img{height:48px;border-radius:3px}.name{font-size:8px;margin:1px 0 2px}.price{font-size:8px;margin-bottom:2px;white-space:normal}.desc{font-size:6.5px;line-height:1.15}.tags,.promo{font-size:6px;margin-top:2px;line-height:1.15}.promo{padding:1px 3px}
+ footer{padding:5px 8px 6px;flex:none;background:#fffdf8!important;color:var(--ink)!important}.footer-title{font-size:10px}.site-url{font-size:7px;margin-top:2px}.footer-small{font-size:6px;line-height:1.15;margin-top:3px}
 }
 </style>
 </head>
@@ -78,6 +75,7 @@ footer{position:relative;padding:12px 20px 14px;text-align:center;color:var(--in
 </nav>
 <div class="poster">
 <header>
+  <img class="print-banner" src="./banniere%20site.png" alt="" aria-hidden="true">
   <div class="kicker">✦ Cuisine thaïlandaise authentique ✦</div>
   <div class="brand">Tammy<span>THAI FOOD</span></div>
   <div class="tagline">Les saveurs de Thaïlande · Champhol</div>
@@ -97,6 +95,7 @@ footer{position:relative;padding:12px 20px 14px;text-align:center;color:var(--in
   </a>
 </section>
 <main>
+  <img class="print-background" src="./fond%20d%27%C3%A9cran.png" alt="" aria-hidden="true">
   <div id="status" class="status">Chargement de la carte et des tarifs actuels…</div>
   <div class="groups" id="groups" hidden>
     <div class="menu-column">
