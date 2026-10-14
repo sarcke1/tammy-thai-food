@@ -77,12 +77,14 @@ export const dishes = [
     name:"Salade thaïe de viande hachée aux herbes fraîches",
     price:10,
     colleaguePrice:8,
+    prepNotes:"Base : 1 échalote, 2 branches de menthe et ½ branche de citronnelle.",
     category:"Plats",
     emoji:"🥗",
     photo:"Salade thaïe de viande hachée aux herbes fraîches.png",
-    desc:"Salade thaïe aux herbes fraîches, échalote, menthe et citronnelle. Au choix : porc ou poulet (200 g). Piment au choix de 0 à 3. Ingrédients : 1 échalote, 2 branches de menthe et ½ branche de citronnelle.",
+    desc:"Salade thaïe de viande hachée aux herbes fraîches, servie avec du riz.",
     spicy:true,
-    proteinOptions:["Porc","Poulet"]
+    proteinOptions:["Porc","Poulet"],
+    servedWithRice:true
   },
 
   {
