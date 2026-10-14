@@ -22,7 +22,7 @@ header:before{display:none}header:after{display:none}
 .tagline{display:none}
  .order{position:absolute;left:29.3%;top:78%;width:32%;height:14%;display:flex;align-items:center;justify-content:center;margin:0;padding:0 1%;border:0;border-radius:999px;background:#ff563d;color:#fff;font-size:clamp(9px,1.25vw,17px);font-weight:800;line-height:1;white-space:nowrap;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.16)}
 .ribbon{height:4px;background:linear-gradient(90deg,#c59643,#f7e8bc,#c59643)}
-.service{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:14px 22px;background:rgba(255,253,248,.92);border-bottom:1px solid var(--line)}
+.brand-strip{padding:10px 16px;text-align:center;background:var(--green);color:#fffdf8;border-bottom:2px solid var(--gold);font:700 clamp(18px,2.2vw,25px) Georgia,serif;letter-spacing:.04em}.service{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:14px 22px;background:rgba(255,253,248,.92);border-bottom:1px solid var(--line)}
 .service h2{margin:0 0 6px;color:var(--forest);font:700 22px Georgia,serif}
 .service p{margin:4px 0;line-height:1.4}
 .qr{display:flex;align-items:center;gap:10px;text-align:center;font-size:12px;font-weight:800;color:var(--forest)}
@@ -60,7 +60,7 @@ footer{position:relative;padding:12px 20px 14px;text-align:center;color:var(--in
  .brand,.brand span,.kicker,.tagline{display:none}
  .order{left:29.3%;top:78%;width:32%;height:14%;padding:0 1%;font-size:6pt;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.16)}
  .ribbon{height:4px;min-height:4px;max-height:4px;flex:0 0 4px;background:linear-gradient(90deg,#c59643,#f7e8bc,#c59643)!important}
- .service{grid-template-columns:1fr auto;align-items:start;padding:6px 9px;gap:8px;background:#fffdf8!important}.service>div:first-child{align-self:start}.service h2{font-size:12px;margin-bottom:3px}.service p{font-size:7px;line-height:1.2;margin:2px 0}.qr{grid-column:2;grid-row:1;align-self:start;gap:5px;font-size:7px;margin-top:0}.qr img{width:52px;height:52px;border-width:2px}.pickup-live{grid-column:1/-1}
+ .brand-strip{flex:0 0 8mm;padding:2mm 4mm;font-size:12pt;border-bottom-width:1px;background:var(--green)!important;color:#fffdf8!important}.service{grid-template-columns:1fr auto;align-items:start;padding:6px 9px;gap:8px;background:#fffdf8!important}.service>div:first-child{align-self:start}.service h2{font-size:12px;margin-bottom:3px}.service p{font-size:7px;line-height:1.2;margin:2px 0}.qr{grid-column:2;grid-row:1;align-self:start;gap:5px;font-size:7px;margin-top:0}.qr img{width:52px;height:52px;border-width:2px}.pickup-live{grid-column:1/-1}
  main{position:relative;padding:6px 6px 4px;flex:1 1 0;min-height:0;max-height:100%;overflow:hidden;background:transparent!important}
  .print-background{display:block!important;visibility:visible!important;opacity:.95!important;object-fit:cover!important;object-position:center top!important}
  .status,.groups{position:relative;z-index:1}.groups{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.menu-column{gap:5px}.menu-section h2{font-size:11px;margin-bottom:4px;padding:4px;border-bottom-width:2px;background:#fffdf8!important;color:var(--green)!important}.card{grid-template-columns:29% minmax(0,1fr);gap:4px;padding:4px;margin-bottom:4px;border-radius:5px;background:#fffdf8!important;box-shadow:0 3px 8px rgba(31,56,45,.08)!important}.card img{height:76px;border-radius:3px}.name{font-size:9.5px;margin:1px 0 2px}.price{font-size:8.3px;margin-bottom:2px;white-space:normal}.desc{font-size:7.5px;line-height:1.22}.tags,.promo{font-size:6.5px;margin-top:2px;line-height:1.18}.promo{padding:1px 3px}
@@ -75,6 +75,7 @@ footer{position:relative;padding:12px 20px 14px;text-align:center;color:var(--in
   <button type="button" onclick="location.reload()">Actualiser la carte</button>
 </nav>
 <div class="poster">
+<div class="brand-strip">Tammy Thai Food</div>
 <section class="service">
   <div>
     <h2>Votre commande, prête pour le retrait</h2>
