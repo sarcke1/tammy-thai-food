@@ -1,3 +1,11 @@
+## V2.06.43 — Prospectus sans bannière, fiches agrandies
+
+- Suppression de la bannière haute et de son ruban : l’espace est réaffecté à la carte et aux fiches produits.
+- Photos plus hautes et descriptions plus lisibles à l’écran ; tailles des photos, titres, descriptions et étiquettes augmentées dans l’impression A4.
+- QR code, prix collègues, données dynamiques Supabase, règles de retrait et site client inchangés.
+- Fichiers modifiés : `v2/prospectus.html`, `CHANGELOG.md`. V1 et logique de commande inchangées.
+- Vérifier l’aperçu d’impression : une seule page A4, sans débordement ni fiche coupée.
+
 ## V2.06.42 — Descriptions unitaires et alignement des boutons du menu
 
 - Nems : description client précisée avec la viande de poulet.
