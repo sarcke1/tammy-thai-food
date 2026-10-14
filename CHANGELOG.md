@@ -1,3 +1,10 @@
+## V2.06.39 — Masquer la barre d’outils à l’impression
+
+- Correction de la pagination : la barre d’outils du prospectus n’était plus masquée par la dernière révision et créait une première page vide avant l’affiche.
+- Masquage explicite de `.toolbar` en mode impression, sans toucher au contenu du prospectus ni à sa mise en page validée.
+- Bannière, QR code, fond plage, dimensions des fiches et format A4 conservés. V1 inchangée.
+- Fichiers modifiés : `v2/prospectus.html`, `CHANGELOG.md`. À confirmer dans l’aperçu d’impression après publication.
+
 ## V2.06.38 — Supprimer la page blanche avant le prospectus
 
 - Impression forcée sur une page A4 sans marge externe du navigateur, avec le prospectus limité à 286 mm de hauteur.
