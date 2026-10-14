@@ -50,6 +50,7 @@ footer{position:relative;padding:12px 20px 14px;text-align:center;color:var(--in
 @media(max-width:760px){.poster{margin:0;border:0;border-radius:0}.groups{grid-template-columns:1fr}.menu-column{gap:8px}.card{grid-template-columns:120px minmax(0,1fr)}.card img{height:118px}.service{grid-template-columns:1fr}.qr{justify-content:center}header{aspect-ratio:1920/800;width:100%;max-height:none;min-height:0;padding:0;background-position:center top;background-size:100% 100%;background-repeat:no-repeat}.kicker{letter-spacing:2px}main{padding:14px 10px}.name{font-size:17px}.price{font-size:18px}.desc{font-size:12px}.tags,.promo{font-size:11px}}
 @page{size:A4 portrait;margin:0}
 @media print{
+ .toolbar{display:none!important;position:absolute!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
  /* Les décorations sont de vraies images HTML : elles s'impriment même si les fonds CSS sont ignorés. */
  *,*::before,*::after{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
  html,body{width:100%!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important;overflow:visible!important;background:var(--cream)!important}
