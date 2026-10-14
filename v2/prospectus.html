@@ -50,7 +50,18 @@ footer{position:relative;padding:12px 20px 14px;text-align:center;color:var(--in
 @media(max-width:760px){.poster{margin:0;border:0;border-radius:0}.groups{grid-template-columns:1fr}.menu-column{gap:8px}.card{grid-template-columns:120px minmax(0,1fr)}.card img{height:118px}.service{grid-template-columns:1fr}.qr{justify-content:center}header{aspect-ratio:1920/800;width:100%;max-height:none;min-height:0;padding:0;background-position:center top;background-size:100% 100%;background-repeat:no-repeat}.kicker{letter-spacing:2px}main{padding:14px 10px}.name{font-size:17px}.price{font-size:18px}.desc{font-size:12px}.tags,.promo{font-size:11px}}
 @page{size:A4 portrait;margin:4mm}
 @media print{
- html,body{background:white}.toolbar{display:none}
+ /* Conserver les couleurs, dégradés et images décoratives à l'impression. */
+ *,*::before,*::after{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+ html,body{background:var(--cream)!important}
+ .poster{background:var(--cream)!important;border-color:var(--line)!important}
+ header{background-image:url('./banniere%20site.png')!important;background-position:center top!important;background-size:100% 100%!important;background-repeat:no-repeat!important}
+ main{background:transparent!important}
+ main:before{background-image:linear-gradient(rgba(247,241,227,.08),rgba(247,241,227,.14)),url('./fond%20d%27%C3%A9cran.png')!important;background-position:center top!important;background-size:cover!important;background-repeat:no-repeat!important;opacity:1!important}
+ .ribbon{background:linear-gradient(90deg,#c59643,#f7e8bc,#c59643)!important}
+ .menu-section h2{background:rgba(255,253,248,.88)!important;color:var(--green)!important}
+ .card{background:var(--paper)!important;box-shadow:0 8px 22px rgba(31,56,45,.08)!important}
+ footer{background:rgba(255,253,248,.96)!important;color:var(--ink)!important}
+ .toolbar{display:none}
   .poster{width:100%;max-width:none;height:289mm;display:flex;flex-direction:column;margin:0;border:1px solid var(--line);border-radius:0;box-shadow:none;overflow:hidden}
  header{height:31mm;min-height:31mm;max-height:31mm;aspect-ratio:auto;padding:0;background-position:center center;background-size:cover}.brand,.brand span,.kicker,.tagline{display:none}.order{left:29.3%;top:84%;width:25%;height:10%;padding:0 2%;font-size:6pt;box-shadow:0 2px 6px rgba(0,0,0,.16)}
  .ribbon{height:4px;flex:none}.service{padding:6px 9px;gap:8px}.service h2{font-size:12px;margin-bottom:3px}.service p{font-size:7px;line-height:1.2;margin:2px 0}.qr{gap:5px;font-size:7px}.qr img{width:52px;height:52px;border-width:2px}
