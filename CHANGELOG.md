@@ -1,3 +1,12 @@
+## V2.06.34 — Prospectus : reprise globale du visuel V2
+
+- Correction de la bannière : proportions du visuel conservées sans recadrage `cover`, comme sur le site ; bouton d’appel à la commande recalé sur sa position et ses dimensions responsive.
+- Fond de plage/palmiers rétabli derrière les fiches en utilisant le même `fond d'écran.png` et le même léger voile que le site ; suppression du fond opaque qui masquait l’image.
+- Titres de catégories remplacés par des bandeaux clairs, fins et arrondis avec accent corail ; suppression des gros pavés vert foncé.
+- Pied de page allégé en crème et vert, au lieu d’un grand bloc vert sombre.
+- Conservation du format A4 portrait, des colonnes, des prix collègues, du QR code et du chargement des données. V1 inchangée.
+- Fichiers modifiés : `v2/prospectus.html`, `CHANGELOG.md`. Tests visuels et impression réelle à valider après publication.
+
 ## V2.06.33 — Identité visuelle du site sur le prospectus
 
 - Prospectus harmonisé avec le thème V2 : réutilisation de la bannière `banniere site.png`, du fond `fond d'écran.png`, des couleurs, de la typographie et des formes de cartes du site.
