@@ -1,3 +1,10 @@
+## V2.06.32 — Prix collègues et prospectus compact
+
+- La salade thaïe s’affiche à 8 € sur le site collègues V2 ; le tarif standard à 10 € reste conservé dans Supabase pour le site public.
+- Affichage client de la salade simplifié : « servie avec du riz », choix porc/poulet et piment ; les proportions de base restent dans les notes de préparation non affichées.
+- Prospectus réorganisé en deux colonnes indépendantes (Entrées + Soupes / Plats + Desserts) pour supprimer les grands espaces entre catégories ; affichage du seul tarif collègues.
+- Fichiers modifiés : v2/js/data.js, v2/js/app.js, v2/index.html, v2/prospectus.html, CHANGELOG.md. V1 inchangée.
+
 ## V2.06.31 — Salade thaïe et prospectus A4
 
 - Ajout de la salade thaïe de viande hachée aux herbes fraîches : choix porc/poulet (200 g), piment de 0 à 3, 1 échalote, 2 branches de menthe et ½ branche de citronnelle ; 10 € standard et 8 € collègues.
