@@ -1,3 +1,9 @@
+## V2.06.44 — Libellé unitaire harmonisé
+
+- Sous-titre des nems et rouleaux de printemps : « Vendu à la pièce ».
+- Descriptions vérifiées sans répétition de cette information ; la description des nems précise bien qu’ils sont au poulet.
+- Fichiers modifiés : `v2/js/app.js`, `v2/index.html`, `CHANGELOG.md`. V1 inchangée.
+
 ## V2.06.43 — Prospectus sans bannière, fiches agrandies
 
 - Suppression de la bannière haute et de son ruban : l’espace est réaffecté à la carte et aux fiches produits.
