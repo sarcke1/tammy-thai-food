@@ -1,3 +1,10 @@
+## V2.06.31 — Salade thaïe et prospectus A4
+
+- Ajout de la salade thaïe de viande hachée aux herbes fraîches : choix porc/poulet (200 g), piment de 0 à 3, 1 échalote, 2 branches de menthe et ½ branche de citronnelle ; 10 € standard et 8 € collègues.
+- Ajout du produit actif dans Supabase et dans v2/js/data.js, avec la photo présente dans le dépôt GitHub.
+- Prospectus réglé pour une impression portrait sur une seule face A4 ; densité, images et typographies adaptées à la page. Tarif collègues/standard différencié pour cette salade.
+- Fichiers modifiés : v2/js/data.js, v2/js/app.js, v2/index.html, v2/prospectus.html, CHANGELOG.md. V1 inchangée. Impression A4 et parcours de commande à tester.
+
 ## V2.06.30 — Début de catégorie visible
 
 - Lors d’un changement de catégorie (bouton ou balayage horizontal), le menu défile doucement vers la première fiche de la nouvelle catégorie, sous l’en-tête fixe.
