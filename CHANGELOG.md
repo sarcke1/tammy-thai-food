@@ -1,3 +1,11 @@
+## V2.06.38 — Supprimer la page blanche avant le prospectus
+
+- Impression forcée sur une page A4 sans marge externe du navigateur, avec le prospectus limité à 286 mm de hauteur.
+- Réinitialisation des hauteurs/débordements de `html` et `body` en mode impression et interdiction des sauts de page avant, après ou à l’intérieur du prospectus.
+- Bannière, QR code, hauteur des fiches et décorations de la V2.06.37 conservés.
+- Fichiers modifiés : `v2/prospectus.html`, `CHANGELOG.md`. V1 et données de commande inchangées.
+- À valider dans l’aperçu d’impression : une page A4, sans première page blanche.
+
 ## V2.06.37 — Bannière, QR code et hauteur des plats à l’impression
 
 - Bannière imprimée portée de 31 mm à 40 mm pour retrouver une hauteur moins écrasée.
