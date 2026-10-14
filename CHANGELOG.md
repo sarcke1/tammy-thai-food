@@ -1,3 +1,10 @@
+## V2.06.33 — Identité visuelle du site sur le prospectus
+
+- Prospectus harmonisé avec le thème V2 : réutilisation de la bannière `banniere site.png`, du fond `fond d'écran.png`, des couleurs, de la typographie et des formes de cartes du site.
+- La bannière originale remplace l’en-tête graphique autonome ; un bouton d’appel à la commande reste superposé dans la zone prévue, sans répéter les textes de la bannière.
+- Format portrait A4 et mise en page compacte conservés ; le contenu, les prix collègues et le chargement Supabase ne changent pas.
+- Fichiers modifiés : `v2/prospectus.html`, `CHANGELOG.md`. V1, catalogue, panier et commandes inchangés.
+
 ## V2.06.32 — Prix collègues et prospectus compact
 
 - La salade thaïe s’affiche à 8 € sur le site collègues V2 ; le tarif standard à 10 € reste conservé dans Supabase pour le site public.
