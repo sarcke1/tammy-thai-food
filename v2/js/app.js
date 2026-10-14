@@ -582,6 +582,16 @@ function selectCategory(index){
   button.classList.add("active");
 
   renderMenu(button.textContent.trim());
+  // Lors d’un changement de catégorie, revenir au début des premières fiches.
+  // Le défilement vertical normal reste libre entre deux changements.
+  requestAnimationFrame(() => {
+    const header=document.querySelector(".site-header");
+    const headerHeight=header?.getBoundingClientRect().height||0;
+    const firstCard=grid.querySelector(".dish-card");
+    if(!firstCard)return;
+    const targetY=window.scrollY+firstCard.getBoundingClientRect().top-headerHeight-12;
+    window.scrollTo({top:Math.max(0,targetY),behavior:"smooth"});
+  });
 }
 
 categoryButtons.forEach((button,index)=>{
