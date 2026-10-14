@@ -343,7 +343,7 @@ function renderMenu(category="Plats"){
 
           <div class="dish-title-row">
 
-            <div class="dish-title-copy"><h3>${d.name.replace(/^Nems maison/i, "Nem maison")}</h3>${["nems-maison","spring"].includes(d.id) ? '<div class="dish-subtitle">Vendu à l’unité</div>' : ""}</div>
+            <div class="dish-title-copy"><h3>${d.name.replace(/^Nems maison/i, "Nem maison")}</h3>${["nems-maison","spring"].includes(d.id) ? '<div class="dish-subtitle">Vendu à la pièce</div>' : ""}</div>
 
             <span class="price">${euro(d.price)}</span>
 
