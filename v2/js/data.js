@@ -73,6 +73,19 @@ export const dishes = [
   },
 
   {
+    id:"salade-viande-herbes",
+    name:"Salade thaïe de viande hachée aux herbes fraîches",
+    price:10,
+    colleaguePrice:8,
+    category:"Plats",
+    emoji:"🥗",
+    photo:"Salade thaïe de viande hachée aux herbes fraîches.png",
+    desc:"Salade thaïe aux herbes fraîches, échalote, menthe et citronnelle. Au choix : porc ou poulet (200 g). Piment au choix de 0 à 3. Ingrédients : 1 échalote, 2 branches de menthe et ½ branche de citronnelle.",
+    spicy:true,
+    proteinOptions:["Porc","Poulet"]
+  },
+
+  {
     id:"red-curry-soup",
     name:"Soupe de curry rouge",
     price:8,
