@@ -1,3 +1,10 @@
+## V2.06.40 — Bouton sur une ligne et bannière imprimée agrandie
+
+- Bouton « COMMANDEZ AVANT 18 H » élargi et réglé pour interdire le retour à la ligne, avec une taille de texte responsive pour éviter que le « H » soit isolé.
+- Bannière en version imprimable agrandie de 40 à 53,2 mm (+33 %) pour réduire l’effet écrasé observé dans l’aperçu.
+- Les décorations HTML, le QR code, les fiches produits et les tarifs sont conservés. V1 inchangée.
+- Fichiers modifiés : `v2/prospectus.html`, `CHANGELOG.md`. Contrôle visuel navigateur et impression à refaire après publication.
+
 ## V2.06.39 — Masquer la barre d’outils à l’impression
 
 - Correction de la pagination : la barre d’outils du prospectus n’était plus masquée par la dernière révision et créait une première page vide avant l’affiche.
