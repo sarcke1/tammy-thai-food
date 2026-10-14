@@ -1,3 +1,10 @@
+## V2.06.41 — Bannière imprimable agrandie de 33 % supplémentaires
+
+- Hauteur de la bannière en impression augmentée de 53,2 mm à 70,76 mm (+33 % supplémentaires).
+- Le reste de la mise en page, le bouton, le QR code, les fiches, les prix et les décorations ne sont pas modifiés.
+- Fichiers modifiés : `v2/prospectus.html`, `CHANGELOG.md`. V1 inchangée.
+- Comme la bannière occupe davantage de place, vérifier l’aperçu d’impression pour confirmer que tout tient encore sur une seule page A4.
+
 ## V2.06.40 — Bouton sur une ligne et bannière imprimée agrandie
 
 - Bouton « COMMANDEZ AVANT 18 H » élargi et réglé pour interdire le retour à la ligne, avec une taille de texte responsive pour éviter que le « H » soit isolé.
