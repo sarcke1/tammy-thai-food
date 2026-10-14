@@ -1,3 +1,9 @@
+## V2.06.30 — Début de catégorie visible
+
+- Lors d’un changement de catégorie (bouton ou balayage horizontal), le menu défile doucement vers la première fiche de la nouvelle catégorie, sous l’en-tête fixe.
+- Aucun ancrage n’est ajouté au défilement vertical normal : il reste libre entre les changements de catégorie.
+- Fichiers modifiés : v2/js/app.js, v2/index.html, CHANGELOG.md. V1 inchangée.
+
 ## V2.06.29 — Retour au défilement libre
 
 - Suppression du centrage automatique des fiches lors du changement de catégorie.
