@@ -1,3 +1,10 @@
+## V2.06.45 — Petite bannière et accord de la salade
+
+- Prospectus : ajout d’une petite bannière verte et or « Tammy Thai Food », conservant l’espace principal disponible pour les photos et descriptions.
+- Carte V2 : le badge de la salade thaïe de viande hachée affiche désormais « Servie avec du riz » ; les autres plats gardent leur accord actuel.
+- Fichiers modifiés : `v2/prospectus.html`, `v2/js/app.js`, `v2/index.html`, `CHANGELOG.md`. V1 inchangée.
+- À contrôler sur PC/mobile et dans l’aperçu d’impression A4.
+
 ## V2.06.44 — Libellé unitaire harmonisé
 
 - Sous-titre des nems et rouleaux de printemps : « Vendu à la pièce ».
