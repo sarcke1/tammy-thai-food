@@ -13,26 +13,26 @@ body{margin:0;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:va
 .toolbar{position:sticky;top:0;z-index:10;display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;padding:10px;background:#123c30;color:white}
 .toolbar button,.toolbar a{border:1px solid var(--gold);border-radius:999px;padding:9px 16px;background:var(--green);color:white;font-weight:700;text-decoration:none;cursor:pointer}
 .poster{position:relative;isolation:isolate;max-width:1200px;margin:20px auto;background:var(--cream);overflow:hidden;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow)}
-header{position:relative;isolation:isolate;aspect-ratio:1920/800;max-height:420px;text-align:center;color:white;padding:0;background:url('./banniere%20site.png') center center/cover no-repeat;border-bottom:3px solid var(--gold);overflow:hidden}
+header{position:relative;isolation:isolate;aspect-ratio:1920/800;width:100%;max-height:none;min-height:0;text-align:center;color:white;padding:0;background-image:url('./banniere%20site.png');background-position:center top;background-size:100% 100%;background-repeat:no-repeat;border-bottom:2px solid var(--gold);overflow:hidden}
 header:before,header:after{display:none}
 header:before{display:none}header:after{display:none}
 .kicker{display:none}
 .brand{display:none}
 .brand span{display:none}
 .tagline{display:none}
- .order{position:absolute;left:29.3%;top:84%;width:25%;height:10%;display:flex;align-items:center;justify-content:center;margin:0;padding:0 2%;border:0;border-radius:999px;background:var(--red);color:#fff;font-size:clamp(10px,1.5vw,20px);font-weight:800;box-shadow:0 8px 20px rgba(0,0,0,.16)}
-.ribbon{height:9px;background:repeating-linear-gradient(135deg,var(--gold) 0 8px,#fff2bd 8px 13px,var(--gold) 13px 20px)}
-.service{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:18px 22px;background:#f5ebd0;border-bottom:1px solid #ddc98f}
+ .order{position:absolute;left:29.3%;top:78%;width:25%;height:14%;display:flex;align-items:center;justify-content:center;margin:0;padding:0 2%;border:0;border-radius:999px;background:#ff563d;color:#fff;font-size:clamp(10px,1.5vw,20px);font-weight:800;line-height:1.05;box-shadow:0 8px 20px rgba(0,0,0,.16)}
+.ribbon{height:4px;background:linear-gradient(90deg,#c59643,#f7e8bc,#c59643)}
+.service{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:14px 22px;background:rgba(255,253,248,.92);border-bottom:1px solid var(--line)}
 .service h2{margin:0 0 6px;color:var(--forest);font:700 22px Georgia,serif}
 .service p{margin:4px 0;line-height:1.4}
 .qr{display:flex;align-items:center;gap:10px;text-align:center;font-size:12px;font-weight:800;color:var(--forest)}
 .qr img{width:108px;height:108px;object-fit:contain;border:5px solid white;border-radius:5px;background:white}
-.pickup-live{grid-column:1/-1;padding-top:8px;border-top:1px solid #ddc98f;color:var(--green);font-size:13px}
-main{position:relative;isolation:isolate;padding:20px 18px 25px;background:var(--cream)}main:before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(rgba(247,241,227,.90),rgba(247,241,227,.93)),url('./fond%20d%27%C3%A9cran.png') center top/cover no-repeat;pointer-events:none}
+.pickup-live{grid-column:1/-1;padding-top:8px;border-top:1px solid var(--line);color:var(--green);font-size:13px}
+main{position:relative;isolation:isolate;padding:20px 18px 25px;background:transparent}main:before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(rgba(247,241,227,.08),rgba(247,241,227,.14)),url('./fond%20d%27%C3%A9cran.png') center top/cover no-repeat;opacity:.95;pointer-events:none}
 .groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}.menu-column{display:flex;flex-direction:column;gap:10px;min-width:0}
 .menu-section{min-width:0}.menu-section h2{margin-bottom:6px}.card{margin-bottom:5px}
-.menu-section h2{margin:0 0 12px;padding:10px 4px;text-align:center;background:var(--green);color:#fffdf0;border-bottom:3px solid var(--gold);border-radius:16px;font:700 clamp(18px,2.2vw,25px) Georgia,serif}
-.menu-section h2 span{color:#f2d26f;margin:0 5px}
+.menu-section h2{margin:0 0 8px;padding:7px 4px;text-align:center;background:rgba(255,253,248,.90);color:var(--green);border:1px solid rgba(14,73,56,.12);border-bottom:2px solid var(--coral);border-radius:14px;font:700 clamp(18px,2.2vw,25px) Georgia,serif;box-shadow:0 5px 16px rgba(31,56,45,.05)}
+.menu-section h2 span{color:var(--coral);margin:0 5px}
 .card{display:grid;grid-template-columns:38% minmax(0,1fr);gap:9px;margin-bottom:10px;padding:7px;background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 22px rgba(31,56,45,.08);break-inside:avoid}
 .card img{width:100%;height:110px;object-fit:cover;border-radius:10px;background:#e8e1cf}
 .card img.missing{visibility:hidden}
@@ -43,19 +43,19 @@ main{position:relative;isolation:isolate;padding:20px 18px 25px;background:var(-
 .tags{margin-top:5px;font-size:10px;font-weight:800;line-height:1.3;color:var(--green)}
 .promo{display:inline-block;margin-top:5px;padding:3px 5px;border-radius:4px;background:var(--red);color:white;font-size:10px;font-weight:900}
 .status{padding:18px;text-align:center;color:var(--muted)}
-footer{position:relative;padding:18px 20px 20px;text-align:center;color:white;background:#123c30;border-top:3px solid var(--gold)}
-.footer-title{font:700 21px Georgia,serif;color:#f4d77e}
-.site-url{margin-top:7px;overflow-wrap:anywhere;color:#fff8e7;font-weight:700}
-.footer-small{margin-top:7px;color:#e4e9e0;font-size:11px;line-height:1.4}
-@media(max-width:760px){.poster{margin:0;border:0;border-radius:0}.groups{grid-template-columns:1fr}.menu-column{gap:8px}.card{grid-template-columns:120px minmax(0,1fr)}.card img{height:118px}.service{grid-template-columns:1fr}.qr{justify-content:center}header{aspect-ratio:1920/800;max-height:none;padding:0}.kicker{letter-spacing:2px}main{padding:14px 10px}.name{font-size:17px}.price{font-size:18px}.desc{font-size:12px}.tags,.promo{font-size:11px}}
+footer{position:relative;padding:12px 20px 14px;text-align:center;color:var(--ink);background:rgba(255,253,248,.96);border-top:2px solid var(--gold)}
+.footer-title{font:700 21px Georgia,serif;color:var(--green)}
+.site-url{margin-top:7px;overflow-wrap:anywhere;color:var(--green);font-weight:700}
+.footer-small{margin-top:7px;color:var(--muted);font-size:11px;line-height:1.4}
+@media(max-width:760px){.poster{margin:0;border:0;border-radius:0}.groups{grid-template-columns:1fr}.menu-column{gap:8px}.card{grid-template-columns:120px minmax(0,1fr)}.card img{height:118px}.service{grid-template-columns:1fr}.qr{justify-content:center}header{aspect-ratio:1920/800;width:100%;max-height:none;min-height:0;padding:0;background-position:center top;background-size:100% 100%;background-repeat:no-repeat}.kicker{letter-spacing:2px}main{padding:14px 10px}.name{font-size:17px}.price{font-size:18px}.desc{font-size:12px}.tags,.promo{font-size:11px}}
 @page{size:A4 portrait;margin:4mm}
 @media print{
  html,body{background:white}.toolbar{display:none}
   .poster{width:100%;max-width:none;height:289mm;display:flex;flex-direction:column;margin:0;border:1px solid var(--line);border-radius:0;box-shadow:none;overflow:hidden}
  header{height:31mm;min-height:31mm;max-height:31mm;aspect-ratio:auto;padding:0;background-position:center center;background-size:cover}.brand,.brand span,.kicker,.tagline{display:none}.order{left:29.3%;top:84%;width:25%;height:10%;padding:0 2%;font-size:6pt;box-shadow:0 2px 6px rgba(0,0,0,.16)}
  .ribbon{height:4px;flex:none}.service{padding:6px 9px;gap:8px}.service h2{font-size:12px;margin-bottom:3px}.service p{font-size:7px;line-height:1.2;margin:2px 0}.qr{gap:5px;font-size:7px}.qr img{width:52px;height:52px;border-width:2px}
- main{padding:6px 6px 4px;flex:1;min-height:0;background:var(--cream)}main:before{background:linear-gradient(rgba(247,241,227,.91),rgba(247,241,227,.94)),url('./fond%20d%27%C3%A9cran.png') center top/cover no-repeat}.groups{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.menu-column{gap:4px}.menu-section h2{font-size:11px;margin-bottom:3px;padding:4px;border-bottom-width:2px}.card{grid-template-columns:27% minmax(0,1fr);gap:4px;padding:3px;margin-bottom:3px;border-radius:5px}.card img{height:48px;border-radius:3px}.name{font-size:8px;margin:1px 0 2px}.price{font-size:8px;margin-bottom:2px;white-space:normal}.desc{font-size:6.5px;line-height:1.15}.tags,.promo{font-size:6px;margin-top:2px;line-height:1.15}.promo{padding:1px 3px}
- footer{padding:5px 8px 6px;flex:none}.footer-title{font-size:10px}.site-url{font-size:7px;margin-top:2px}.footer-small{font-size:6px;line-height:1.15;margin-top:3px}
+ main{padding:6px 6px 4px;flex:1;min-height:0;background:transparent}main:before{background:linear-gradient(rgba(247,241,227,.08),rgba(247,241,227,.14)),url('./fond%20d%27%C3%A9cran.png') center top/cover no-repeat}.groups{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.menu-column{gap:4px}.menu-section h2{font-size:11px;margin-bottom:3px;padding:4px;border-bottom-width:2px;background:rgba(255,253,248,.88)}.card{grid-template-columns:27% minmax(0,1fr);gap:4px;padding:3px;margin-bottom:3px;border-radius:5px}.card img{height:48px;border-radius:3px}.name{font-size:8px;margin:1px 0 2px}.price{font-size:8px;margin-bottom:2px;white-space:normal}.desc{font-size:6.5px;line-height:1.15}.tags,.promo{font-size:6px;margin-top:2px;line-height:1.15}.promo{padding:1px 3px}
+ footer{padding:5px 8px 6px;flex:none;background:rgba(255,253,248,.96)}.footer-title{font-size:10px}.site-url{font-size:7px;margin-top:2px}.footer-small{font-size:6px;line-height:1.15;margin-top:3px}
 }
 </style>
 </head>
