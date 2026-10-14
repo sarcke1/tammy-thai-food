@@ -1,7 +1,7 @@
 // ===== TAMMY THAI FOOD V3.10 =====
 // UI Renderer + Event Wiring
 
-import { dishes as localDishes } from "./data.js?v=20261014-01";
+import { dishes as localDishes } from "./data.js?v=20261014-02";
 import { spiceLabel } from "./spice.js";
 import { supabase } from "./supabase.js";
 import {
@@ -82,7 +82,7 @@ console.table(data);
      return {
       id: product.id, // UUID Supabase à conserver
       name: product.name,
-      price: Number(product.price),
+      price: Number(local?.colleaguePrice ?? product.price),
       category: product.product_categories?.name || local?.category || "Plats",
       emoji: local?.emoji || "🍽️",
       photo: local?.photo ?? product.image_url ?? "",
