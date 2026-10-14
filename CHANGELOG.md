@@ -1,3 +1,11 @@
+## V2.06.42 — Descriptions unitaires et alignement des boutons du menu
+
+- Nems : description client précisée avec la viande de poulet.
+- Nems et rouleau de printemps : sous-titre « Vendu à l’unité » affiché sous le nom ; suppression de la mention redondante « Vendu à la pièce » dans la description du rouleau.
+- Menu PC : cartes organisées en colonne avec le bouton « Ajouter au panier » poussé en bas de chaque fiche ; les cartes d’une même rangée peuvent ainsi conserver des boutons alignés même si certaines contiennent les choix de piment.
+- Fichiers modifiés : `v2/js/data.js`, `v2/js/app.js`, `v2/css/menu.css`, `v2/index.html`, `CHANGELOG.md`. V1 inchangée. Vérification PC/mobile requise après publication.
+- Le prospectus n’est pas modifié dans cette version ; son réajustement fera l’objet d’une intervention distincte.
+
 ## V2.06.41 — Bannière imprimable agrandie de 33 % supplémentaires
 
 - Hauteur de la bannière en impression augmentée de 53,2 mm à 70,76 mm (+33 % supplémentaires).
