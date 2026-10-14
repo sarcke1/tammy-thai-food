@@ -1,3 +1,11 @@
+## V2.06.37 — Bannière, QR code et hauteur des plats à l’impression
+
+- Bannière imprimée portée de 31 mm à 40 mm pour retrouver une hauteur moins écrasée.
+- QR code aligné en haut à droite, à la hauteur du titre « Votre commande, prête pour le retrait ».
+- Fiches de plats légèrement agrandies : photos de 48 à 54 px, cartes et espacements un peu plus hauts, typographie très légèrement augmentée.
+- Format A4 et décorations en images HTML conservés. Le contenu et les prix ne changent pas ; V1 inchangée.
+- Fichiers modifiés : `v2/prospectus.html`, `CHANGELOG.md`. Le contrôle de la pagination et du rendu PDF reste à faire après publication.
+
 ## V2.06.36 — Décorations imprimables et page A4 unique
 
 - Bannière et fond plage/palmiers convertis en véritables éléments `<img>` décoratifs plutôt qu’en seules images d’arrière-plan CSS, afin qu’ils apparaissent dans l’aperçu PDF/impression même si le navigateur ignore les arrière-plans CSS.
