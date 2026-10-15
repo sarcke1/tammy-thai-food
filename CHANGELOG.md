@@ -1,3 +1,12 @@
+## V3.00 — Création du socle indépendant du site client public
+
+- Création de `v3/index.html`, `v3/css/style.css`, `v3/js/app.js` et `v3/README.md`.
+- Page d’accueil responsive avec identité Tammy Thai Food, bannière visuelle, présentation et mention explicite que les commandes ne sont pas encore disponibles.
+- Aucun panier, aucune commande, aucun accès Supabase et aucun paiement activés.
+- Sauvegarde de l’état antérieur sur la branche `backup/v2-stable-2026-10-15`, basée sur le commit `c1a2d79296335c33ded39f6faf7f16f081a36215`.
+- Fichiers modifiés : `v3/index.html`, `v3/css/style.css`, `v3/js/app.js`, `v3/README.md`, `ROADMAP_V3.md`, `CHANGELOG.md`, `PROJECT_MEMORY.md`. V1 et V2 inchangées.
+- À tester : rendu PC/mobile et chargement de la bannière. La page est une base de développement, pas un site de commande prêt à ouvrir au public.
+
 ## V2.06.45 — Petite bannière et accord de la salade
 
 - Prospectus : ajout d’une petite bannière verte et or « Tammy Thai Food », conservant l’espace principal disponible pour les photos et descriptions.
