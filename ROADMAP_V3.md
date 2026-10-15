@@ -1,3 +1,7 @@
+## Étape V3.02 — Base de styles modulaire
+
+Les styles de base de V2 sont copiés dans `v3/css/` sans dépendance directe sur les fichiers CSS V2. `v3/css/style.css` reste chargé en dernier pour les adaptations publiques. Cette étape ne raccorde pas encore le moteur JavaScript, le panier ou les commandes.
+
 # ROADMAP V3 — Site client public
 
 ## État actuel
