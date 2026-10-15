@@ -1,7 +1,7 @@
 # Tammy Thai Food — V3 (site client public)
 
 ## État
-V3.01 : première fiche de catalogue public intégrée — Nems maison façon thaï. Le panier, les créneaux, les commandes et les paiements ne sont pas activés.
+V3.03 : catalogue public complet intégré (14 fiches). Le panier, les créneaux, les commandes et les paiements ne sont pas activés.
 
 ## Catalogue public
 - Nems maison façon thaï : 1,00 € la pièce.
@@ -35,3 +35,8 @@ Vérifier et intégrer les autres fiches du catalogue public, sans reprendre les
 ## V3.02 — Base de styles
 
 Les styles modulaires de V2 sont copiés indépendamment dans `css/` (variables, layout, header, hero, menu, footer, responsive). `css/style.css` est chargé en dernier pour conserver les adaptations spécifiques du site public. Les fonctions panier/commande ne sont pas activées par cette étape.
+
+
+## Catalogue V3.03
+
+Les fiches et tarifs publics sont définis dans `js/data.js`, indépendamment des prix collègues de V2. Les catégories sont filtrables. Les boutons restent désactivés tant que le panier et le parcours de commande ne sont pas prêts. Les photos sont référencées depuis les images V2 sans modification de celles-ci.
