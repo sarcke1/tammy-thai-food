@@ -1,3 +1,12 @@
+## V3.01 — Première fiche catalogue public (2026-10-15)
+
+- Première fiche V3 intégrée : Nems maison façon thaï.
+- Prix public : 1,00 € par pièce ; le prix collègue V2 (0,75 €) est distinct et n'est pas repris.
+- Promotion affichée : 4 achetés + 1 offert ; le calcul n'est pas encore actif.
+- Description publique : nems maison au poulet. Image réutilisée en lecture seule depuis `v2/Nem.png`.
+- Le bouton reste désactivé ; panier, commandes et paiement ne sont pas actifs.
+- Modifications limitées au répertoire `v3/` et à la documentation V3. V1 et code fonctionnel V2 inchangés.
+
 ## V3 — Exigences fonctionnelles confirmées (2026-10-15)
 
 - Le site V3 est le site client public ; la V2 reste le site collègues et la V1 est intouchable.
