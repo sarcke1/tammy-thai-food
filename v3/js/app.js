@@ -1,5 +1,11 @@
-// TAMMY THAI FOOD — V3.01
-// Socle indépendant du site public. Aucun accès Supabase ni paiement à ce stade.
-
-const year = document.querySelector("#year");
-if (year) year.textContent = String(new Date().getFullYear());
+// TAMMY THAI FOOD — V3.03 : catalogue public autonome
+import {dishes,categories} from "./data.js?v=20261015-04";
+const grid=document.querySelector("#menu-grid"),row=document.querySelector("#category-row");
+const year=document.querySelector("#year");if(year)year.textContent=String(new Date().getFullYear());
+const euro=n=>Number(n).toLocaleString("fr-FR",{style:"currency",currency:"EUR"});
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function card(d){const proteins=d.proteins?.length?'<p class="product-option">Viande : '+d.proteins.map(esc).join(" · ")+'</p>':d.fixedProtein?'<p class="product-option">Viande : '+esc(d.fixedProtein)+'</p>':"";const spice=d.spice?'<p class="product-option">Piment : choix prévu à la commande</p>':d.fixedSpice!=null?'<p class="product-option">Piment : niveau 1</p>':"";return '<article class="product-card" data-category="'+esc(d.category)+'"><div class="product-photo-wrap"><img class="product-photo" src="'+d.photo+'" alt="'+esc(d.name)+'" loading="lazy" width="720" height="540" onerror="this.closest(\'.product-photo-wrap\').classList.add(\'photo-missing\');this.remove()">'+(d.promo?'<span class="promo-badge">'+esc(d.promo)+'</span>':"")+'</div><div class="product-info"><p class="product-category">'+esc(d.category)+(d.unit?' · Vendu à la pièce':"")+'</p><h3>'+esc(d.name)+'</h3><p class="product-description">'+esc(d.description)+'</p>'+proteins+spice+'<div class="product-bottom"><strong class="product-price">'+euro(d.price)+(d.unit?' <span>/ pièce</span>':"")+'</strong><button class="button order-disabled" type="button" disabled aria-disabled="true">Commande bientôt disponible</button></div></div></article>'}
+function render(cat="Tous"){grid.innerHTML=dishes.filter(d=>cat==="Tous"||d.category===cat).map(card).join("")}
+row.innerHTML=["Tous",...categories].map((c,i)=>'<button type="button" class="'+(!i?'active':'')+'" data-category-filter="'+esc(c)+'">'+esc(c)+'</button>').join("");
+row.addEventListener("click",e=>{const b=e.target.closest("[data-category-filter]");if(!b)return;row.querySelectorAll("button").forEach(x=>x.classList.toggle("active",x===b));render(b.dataset.categoryFilter)});
+render();
