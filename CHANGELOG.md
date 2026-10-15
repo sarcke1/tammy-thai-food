@@ -1,3 +1,13 @@
+## V3.01 — Première fiche du catalogue public (2026-10-15)
+
+- Ajout de la fiche Nems maison façon thaï dans `v3/index.html`.
+- Prix public explicite : 1,00 € la pièce ; prix collègue V2 de 0,75 € non réutilisé.
+- Promotion affichée : « 4 achetés + 1 offert ». Son calcul automatique n'est pas encore implémenté.
+- Photo existante `v2/Nem.png` réutilisée en lecture seule.
+- Bouton de commande désactivé : aucun panier ni enregistrement de commande n'est encore actif.
+- Fichiers modifiés : `v3/index.html`, `v3/css/style.css`, `v3/js/app.js`, `v3/README.md`, `V3_SPECIFICATIONS.md`, `ROADMAP_V3.md`, `CHANGELOG.md`, `PROJECT_MEMORY.md`. Aucun fichier V1/V2 ni aucune donnée Supabase modifiés.
+- Tests visuels PC/mobile et vérification du chargement de la photo à effectuer après publication.
+
 ## Documentation V3 — exigences fonctionnelles client public (2026-10-15)
 
 - Ajout de `V3_SPECIFICATIONS.md` : parcours de commande, services midi/soir, créneaux de retrait, calendrier de fermetures/vacances, capacité, paiement sur place au démarrage, paiement en ligne sécurisé à préparer, administration Kanban et séparation des données internes.
