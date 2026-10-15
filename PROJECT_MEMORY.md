@@ -1,3 +1,12 @@
+## V3.00 — Socle du site client public créé
+
+- Point de restauration GitHub créé avant le travail V3 : branche `backup/v2-stable-2026-10-15`, basée sur `c1a2d79296335c33ded39f6faf7f16f081a36215`.
+- Création d'un espace séparé `v3/` avec `index.html`, `css/style.css`, `js/app.js` et `README.md`.
+- La page présente la marque et précise que les commandes ne sont pas disponibles ; aucun panier, paiement, ni accès Supabase n'est activé.
+- V1 et V2 non modifiées par cette étape. Les prix publics ne doivent pas être importés implicitement depuis le catalogue V2, qui contient des tarifs collègues.
+- Fichiers de suivi : `ROADMAP_V3.md` et `CHANGELOG.md` actualisés.
+- Prochaine étape : V3.01 — vérifier le prix public du Nems et les règles de vente à la pièce/promotion avant de l'ajouter au catalogue client.
+
 ## V2.06.26 — Correctifs carte, panier, calendrier et e-mails
 
 - Carte : « Riz sauté façon thaï » sans bœuf et sans mention de sauce ; ordre des choix de viande uniformisé (porc, poulet, puis autres choix).
