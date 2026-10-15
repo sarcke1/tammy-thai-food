@@ -1,3 +1,12 @@
+## V3.04 — Copie de la base complète V2 dans V3 (2026-10-15)
+
+- Copie indépendante du HTML, des modules JavaScript panier/commande/piment/Supabase/catalogue et des modules CSS dans `v3/`.
+- Le rendu, les contrôles de quantité, les options de viande/piment et le panier reprennent désormais le moteur V2, mais les fichiers sont physiquement séparés sous V3.
+- Les prix affichés dans V3 sont définis dans `v3/js/data.js` avec le barème public. Le moteur d’affichage utilise le prix local V3 et non `colleaguePrice` ni le prix Supabase par défaut lorsqu’un produit correspond au catalogue local.
+- Les visuels de bannière/fond et les photos produits sont référencés depuis les fichiers V2 existants en lecture seule.
+- Le formulaire de commande s’affiche, mais l’envoi est volontairement bloqué : V2 utilise un calcul de retrait destiné aux collègues, incompatible avec les créneaux publics V3. Aucun ordre ne doit être envoyé avant adaptation du calendrier public.
+- V1 et V2 inchangées. Test réel PC/mobile requis ; V3.04 n’est pas déclarée stable.
+
 ## V3.03 — Catalogue public complet (2026-10-15)
 
 - Catalogue V3 autonome créé dans `v3/js/data.js` avec 14 fiches publiques : entrées, plats et dessert, photos, descriptions, catégories, options viande/piment informatives et tarifs clients.
