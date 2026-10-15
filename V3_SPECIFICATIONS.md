@@ -54,6 +54,15 @@ Règles de cadrage fournies :
 5. Préparer le paiement et l'administration, avec validation serveur avant tout paiement en ligne.
 6. Tester sur PC et mobile avant toute déclaration de stabilité et publication sous le domaine définitif.
 
-## 7. Validation
+## 7. Premier produit intégré — V3.01
+
+- Nems maison façon thaï, vendus à la pièce.
+- Prix public retenu pour la fiche : 1,00 € par nem ; le prix collègue V2 de 0,75 € ne doit pas être repris.
+- Promotion affichée : 4 achetés + 1 offert. Le calcul automatique de cette promotion devra être implémenté et testé dans le panier/serveur avant d'ouvrir les commandes.
+- Description publique : nems maison au poulet, croustillants, préparés selon une recette thaïlandaise.
+- Photo réutilisée depuis le dépôt : `v2/Nem.png`, sans modification du fichier.
+- Le bouton de commande reste désactivé tant que le parcours panier/commande n'est pas prêt.
+
+## 8. Validation
 
 Une version n'est stable qu'après des tests PC et mobile du catalogue, des options, du panier, des créneaux, des limites de capacité, des confirmations et des vues d'administration concernées.
