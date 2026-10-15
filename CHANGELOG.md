@@ -1,3 +1,10 @@
+## Documentation V3 — exigences fonctionnelles client public (2026-10-15)
+
+- Ajout de `V3_SPECIFICATIONS.md` : parcours de commande, services midi/soir, créneaux de retrait, calendrier de fermetures/vacances, capacité, paiement sur place au démarrage, paiement en ligne sécurisé à préparer, administration Kanban et séparation des données internes.
+- `ROADMAP_V3.md` réorganisé en étapes catalogue, commande, planning, administration et paiement.
+- Exemples d'horaires provisoires : midi, commande entre 00 h et 13 h potentiellement pour le jour même ; soir, commande dès le matin pour un retrait entre 18 h et 21 h. Les heures limites et capacités restent à confirmer avant activation.
+- Aucun code fonctionnel de V1 ou V2 modifié ; aucun panier, commande ni paiement activé par cette documentation.
+
 ## V3.00 — Création du socle indépendant du site client public
 
 - Création de `v3/index.html`, `v3/css/style.css`, `v3/js/app.js` et `v3/README.md`.
