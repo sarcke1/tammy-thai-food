@@ -1,70 +1,7 @@
 <!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#123c30">
-  <meta name="description" content="Tammy Thai Food à Champhol : cuisine thaïlandaise et commande en ligne.">
-  <title>Tammy Thai Food — Site client</title>
-  <!-- V3.02 : copie isolée des styles modulaires éprouvés de V2. Le style public V3 reste chargé en dernier pour ses adaptations propres. -->
-  <link rel="stylesheet" href="css/variables.css?v=20261015-03">
-  <link rel="stylesheet" href="css/layout.css?v=20261015-03">
-  <link rel="stylesheet" href="css/header.css?v=20261015-03">
-  <link rel="stylesheet" href="css/hero.css?v=20261015-03">
-  <link rel="stylesheet" href="css/menu.css?v=20261015-03">
-  <link rel="stylesheet" href="css/footer.css?v=20261015-03">
-  <link rel="stylesheet" href="css/responsive.css?v=20261015-03">
-  <link rel="stylesheet" href="css/style.css?v=20261015-03">
-  <script type="module" src="js/app.js?v=20261015-02"></script>
-</head>
-<body>
-  <header class="site-header">
-    <a class="brand" href="#accueil" aria-label="Tammy Thai Food, accueil">
-      <span class="brand-mark" aria-hidden="true">✿</span>
-      <span><strong>Tammy Thai Food</strong><small>Cuisine thaïlandaise à Champhol</small></span>
-    </a>
-    <a class="header-link" href="#carte">Découvrir la carte</a>
-  </header>
-
-  <main>
-    <section class="hero" id="accueil">
-      <div class="hero-content">
-        <p class="eyebrow">Cuisine thaïlandaise</p>
-        <h1>Les saveurs de Thaïlande, près de chez vous.</h1>
-        <p>Des recettes thaïlandaises préparées avec soin, à commander pour votre retrait à Champhol.</p>
-        <a class="button" href="#carte">Découvrir la carte <span aria-hidden="true">→</span></a>
-      </div>
-    </section>
-
-    <section class="menu-section" id="carte" aria-labelledby="menu-title">
-      <div class="menu-heading">
-        <p class="eyebrow">La carte</p>
-        <h2 id="menu-title">Nos premières saveurs</h2>
-        <p>La carte publique s’étoffe progressivement. Les commandes en ligne ne sont pas encore ouvertes.</p>
-      </div>
-      <article class="product-card">
-        <div class="product-photo-wrap">
-          <img class="product-photo" src="../v2/Nem.png" alt="Nems maison au poulet" loading="lazy" width="720" height="540">
-          <span class="promo-badge">4 achetés + 1 offert</span>
-        </div>
-        <div class="product-info">
-          <p class="product-category">Entrée · Vendu à la pièce</p>
-          <h3>Nems maison façon thaï</h3>
-          <p class="product-description">Nems maison au poulet, croustillants, préparés selon une recette thaïlandaise.</p>
-          <div class="product-bottom">
-            <strong class="product-price">1,00 € <span>/ pièce</span></strong>
-            <button class="button order-disabled" type="button" disabled aria-disabled="true">Commande bientôt disponible</button>
-          </div>
-        </div>
-      </article>
-      <div class="status" role="status"><span aria-hidden="true"></span> Catalogue en construction — commandes non disponibles</div>
-    </section>
-  </main>
-
-  <footer>
-    <strong>Tammy Thai Food</strong>
-    <span>Cuisine thaïlandaise · Champhol</span>
-    <small>© <span id="year">2026</span> Tammy Thai Food</small>
-  </footer>
-</body>
-</html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#123c30"><meta name="description" content="Tammy Thai Food à Champhol : cuisine thaïlandaise et commande en ligne."><title>Tammy Thai Food — Carte publique</title>
+<link rel="stylesheet" href="css/variables.css?v=20261015-04"><link rel="stylesheet" href="css/layout.css?v=20261015-04"><link rel="stylesheet" href="css/header.css?v=20261015-04"><link rel="stylesheet" href="css/hero.css?v=20261015-04"><link rel="stylesheet" href="css/menu.css?v=20261015-04"><link rel="stylesheet" href="css/footer.css?v=20261015-04"><link rel="stylesheet" href="css/responsive.css?v=20261015-04"><link rel="stylesheet" href="css/style.css?v=20261015-04"><script type="module" src="js/app.js?v=20261015-04"></script></head>
+<body><header class="site-header"><a class="brand" href="#accueil" aria-label="Tammy Thai Food, accueil"><span class="brand-mark" aria-hidden="true">✿</span><span><strong>Tammy Thai Food</strong><small>Cuisine thaïlandaise à Champhol</small></span></a><a class="header-link" href="#carte">Voir la carte</a></header>
+<main><section class="hero" id="accueil"><div class="hero-content"><p class="eyebrow">Cuisine thaïlandaise</p><h1>Les saveurs de Thaïlande, près de chez vous.</h1><p>Des recettes thaïlandaises préparées avec soin, à commander pour votre retrait à Champhol.</p><a class="button" href="#carte">Découvrir la carte <span aria-hidden="true">→</span></a></div></section>
+<section class="menu-section" id="carte" aria-labelledby="menu-title"><div class="menu-heading"><p class="eyebrow">La carte</p><h2 id="menu-title">Nos plats et spécialités</h2><p>Découvrez notre carte. La commande en ligne sera activée après validation du panier et des créneaux de retrait.</p></div><nav id="category-row" class="category-row" aria-label="Catégories du menu"></nav><div id="menu-grid" class="dish-grid" aria-live="polite"></div><div class="status" role="status"><span aria-hidden="true"></span> Catalogue public — commandes en préparation</div></section></main>
+<footer><strong>Tammy Thai Food</strong><span>Cuisine thaïlandaise · Champhol</span><small>© <span id="year">2026</span> Tammy Thai Food</small></footer></body></html>
