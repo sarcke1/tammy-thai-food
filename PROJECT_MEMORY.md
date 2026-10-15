@@ -1,3 +1,16 @@
+## V3 — Exigences fonctionnelles confirmées (2026-10-15)
+
+- Le site V3 est le site client public ; la V2 reste le site collègues et la V1 est intouchable.
+- Spécifications détaillées enregistrées dans `V3_SPECIFICATIONS.md` ; feuille de route actualisée dans `ROADMAP_V3.md`.
+- Parcours prévu : panier, coordonnées, numéro de commande, confirmation client et notification Tammy.
+- Services midi et soir séparés. Le client choisit un créneau parmi les disponibilités restantes. Exemples encore provisoires : commande midi entre 00 h et 13 h pour le jour même ; commande le matin pour le soir, retrait exemple 18 h–21 h. Horaires limites, durée et capacité restent à confirmer.
+- Calendrier de fermetures et vacances et capacité maximale par créneau requis.
+- Paiement sur place au lancement ; paiement en ligne sécurisé à intégrer plus tard avec contrôle serveur.
+- Administration Kanban et notifications prévues.
+- Recettes et données de préparation restent internes ; aucune clé secrète Supabase/paiement dans le frontend.
+- Aucune modification de code V1/V2 dans cette mise à jour documentaire ; aucune commande/paiement activé.
+- Point de restauration conservé : `backup/v2-stable-2026-10-15` (base `c1a2d79296335c33ded39f6faf7f16f081a36215`).
+
 ## V3.00 — Socle du site client public créé
 
 - Point de restauration GitHub créé avant le travail V3 : branche `backup/v2-stable-2026-10-15`, basée sur `c1a2d79296335c33ded39f6faf7f16f081a36215`.
