@@ -1,3 +1,12 @@
+## V3.03 — Catalogue public complet (2026-10-15)
+
+- Catalogue V3 autonome créé dans `v3/js/data.js` avec 14 fiches publiques : entrées, plats et dessert, photos, descriptions, catégories, options viande/piment informatives et tarifs clients.
+- Affichage dynamique et filtres de catégories dans `v3/js/app.js`; mise en page adaptative dans `v3/css/style.css`; structure de catalogue dans `v3/index.html`.
+- Prix publics affichés : nems 1 €/pièce (promo affichée 4 + 1 offert), rouleau de printemps 2 €, salade de papaye 7 €, Pad Thaï 10 €, Chicken Massena 9 €, sauté de poulet cajou 8 €, bœuf sauce huître 10 €, riz sauté 7 €, Tom Kha Kai 9 €, soupe de nouilles de riz au bœuf 9 €, salade thaïe de viande hachée 10 €, curry rouge 8 €, curry vert 8 €, riz gluant mangue 4 €.
+- Les prix sont définis explicitement dans V3, sans import du catalogue V2. Les images existantes V2 sont référencées en lecture seule.
+- Boutons de commande toujours désactivés ; pas de panier, création de commande, paiement ni appel Supabase ajouté à cette étape.
+- V1 et V2 inchangées. Validation navigateur PC/mobile et vérification des images encore nécessaires ; V3.03 n'est pas déclarée stable.
+
 ## V3.02 — Copie isolée des styles modulaires de V2 (2026-10-15)
 
 - Copie dans `v3/css/` des modules `variables.css`, `layout.css`, `header.css`, `hero.css`, `menu.css`, `footer.css` et `responsive.css` depuis les fichiers V2 réellement relus.
