@@ -6,7 +6,7 @@
 - Les exigences fonctionnelles détaillées sont consignées dans `V3_SPECIFICATIONS.md`. Les horaires et capacités exacts de retrait restent à valider.
 
 ## Versions prévues
-- **V3.01 — Catalogue public** : vérifier les plats, descriptions, photos, prix publics, options de viande et de piment ; intégrer les produits uniquement après validation des données commerciales.
+- **V3.01 — Première fiche catalogue public** : Nems maison façon thaï, prix public 1,00 € la pièce, promotion affichée 4 achetés + 1 offert ; bouton de commande désactivé tant que le panier n'est pas développé. Les autres fiches restent à vérifier.
 - **V3.02 — Panier et commande** : panier, coordonnées, numéro de commande et confirmations au client et à Tammy.
 - **V3.03 — Retrait et planning** : choix de créneaux midi/soir, horaires limites, calendrier des fermetures/vacances et capacité maximale par créneau.
 - **V3.04 — Administration cuisine** : file Kanban, statuts de préparation et notifications.
