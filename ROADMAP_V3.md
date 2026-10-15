@@ -1,3 +1,7 @@
+## V3.04 — Base complète reprise de V2
+
+La structure HTML, les modules CSS et le moteur JavaScript du menu/panier sont copiés indépendamment dans `v3/`. Les prix publics restent définis dans le catalogue V3. L’envoi des commandes reste bloqué jusqu’à l’adaptation des créneaux publics et du traitement des commandes. Test PC/mobile nécessaire.
+
 ## Étape V3.03 — Catalogue public complet
 
 Catalogue public dynamique ajouté avec catégories, photos, descriptions et tarifs explicites indépendants de V2. Les boutons de commande restent désactivés. Validation PC/mobile nécessaire.
