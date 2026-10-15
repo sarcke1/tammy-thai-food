@@ -1,7 +1,14 @@
 # Tammy Thai Food — V3 (site client public)
 
 ## État
-V3.00 : socle visuel indépendant créé. Aucune commande n'est encore activée.
+V3.01 : première fiche de catalogue public intégrée — Nems maison façon thaï. Le panier, les créneaux, les commandes et les paiements ne sont pas activés.
+
+## Catalogue public
+- Nems maison façon thaï : 1,00 € la pièce.
+- Promotion affichée : 4 achetés + 1 offert.
+- Description commerciale : nems maison au poulet, croustillants, préparés selon une recette thaïlandaise.
+- Photo : fichier existant `v2/Nem.png`, référencé depuis la V3 sans modifier la V2.
+- Le tarif public est défini explicitement dans la V3 et n'est pas repris du prix collègue V2 (0,75 €).
 
 ## Règles d'architecture
 - Le site public vit dans `v3/`.
@@ -22,4 +29,4 @@ V3.00 : socle visuel indépendant créé. Aucune commande n'est encore activée.
 - Suivi client et intégration à l'administration sans mélanger les règles de prix V2/V3.
 
 ## Étape suivante
-V3.01 — transfert contrôlé du produit Nems, après vérification du prix public et des règles de quantité/promotion.
+Vérifier et intégrer les autres fiches du catalogue public, sans reprendre les prix collègues de V2.
