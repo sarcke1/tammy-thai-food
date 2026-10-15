@@ -40,3 +40,8 @@ Les styles modulaires de V2 sont copiés indépendamment dans `css/` (variables,
 ## Catalogue V3.03
 
 Les fiches et tarifs publics sont définis dans `js/data.js`, indépendamment des prix collègues de V2. Les catégories sont filtrables. Les boutons restent désactivés tant que le panier et le parcours de commande ne sont pas prêts. Les photos sont référencées depuis les images V2 sans modification de celles-ci.
+
+
+## V3.04 — Base V2 copiée
+
+V3 reprend maintenant une copie isolée de la structure HTML, des styles et du moteur menu/panier de V2. Les prix clients sont propres à `js/data.js`. Le formulaire s’affiche, mais l’envoi de commande est bloqué jusqu’à la mise en place des créneaux publics. Les visuels et photos réutilisent les ressources de V2 en lecture seule.
