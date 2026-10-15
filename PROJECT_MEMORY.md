@@ -1,3 +1,10 @@
+## V3.02 — Copie isolée des styles modulaires de V2 (2026-10-15)
+
+- Copie dans `v3/css/` des modules `variables.css`, `layout.css`, `header.css`, `hero.css`, `menu.css`, `footer.css` et `responsive.css` depuis les fichiers V2 réellement relus.
+- V3 charge ces styles copiés puis son `style.css` spécifique en dernier, afin de conserver l’apparence publique actuelle et de préparer une adaptation progressive.
+- Aucun fichier V1 ou V2 n’est modifié. Aucun JavaScript, panier, commande, tarif, Supabase ou paiement n’est activé/modifié dans cette étape.
+- Validation visuelle PC/mobile après publication encore nécessaire.
+
 ## V3.01 — Première fiche catalogue public (2026-10-15)
 
 - Première fiche V3 intégrée : Nems maison façon thaï.
