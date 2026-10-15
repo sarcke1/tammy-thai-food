@@ -30,3 +30,8 @@ V3.01 : première fiche de catalogue public intégrée — Nems maison façon th
 
 ## Étape suivante
 Vérifier et intégrer les autres fiches du catalogue public, sans reprendre les prix collègues de V2.
+
+
+## V3.02 — Base de styles
+
+Les styles modulaires de V2 sont copiés indépendamment dans `css/` (variables, layout, header, hero, menu, footer, responsive). `css/style.css` est chargé en dernier pour conserver les adaptations spécifiques du site public. Les fonctions panier/commande ne sont pas activées par cette étape.
