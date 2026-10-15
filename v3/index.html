@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#123c30">
   <meta name="description" content="Tammy Thai Food à Champhol : cuisine thaïlandaise et commande en ligne.">
   <title>Tammy Thai Food — Site client</title>
-  <link rel="stylesheet" href="css/style.css?v=20261015-01">
-  <script type="module" src="js/app.js?v=20261015-01"></script>
+  <link rel="stylesheet" href="css/style.css?v=20261015-02">
+  <script type="module" src="js/app.js?v=20261015-02"></script>
 </head>
 <body>
   <header class="site-header">
@@ -28,11 +28,28 @@
       </div>
     </section>
 
-    <section class="intro" id="carte">
-      <p class="eyebrow">Tammy Thai Food</p>
-      <h2>Le site de commande se prépare</h2>
-      <p>Cette nouvelle version est en cours de construction. La carte publique, le panier, les créneaux de retrait et la commande seront ajoutés et testés étape par étape.</p>
-      <div class="status" role="status"><span aria-hidden="true"></span> Version de développement — commandes non disponibles</div>
+    <section class="menu-section" id="carte" aria-labelledby="menu-title">
+      <div class="menu-heading">
+        <p class="eyebrow">La carte</p>
+        <h2 id="menu-title">Nos premières saveurs</h2>
+        <p>La carte publique s’étoffe progressivement. Les commandes en ligne ne sont pas encore ouvertes.</p>
+      </div>
+      <article class="product-card">
+        <div class="product-photo-wrap">
+          <img class="product-photo" src="../v2/Nem.png" alt="Nems maison au poulet" loading="lazy" width="720" height="540">
+          <span class="promo-badge">4 achetés + 1 offert</span>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Entrée · Vendu à la pièce</p>
+          <h3>Nems maison façon thaï</h3>
+          <p class="product-description">Nems maison au poulet, croustillants, préparés selon une recette thaïlandaise.</p>
+          <div class="product-bottom">
+            <strong class="product-price">1,00 € <span>/ pièce</span></strong>
+            <button class="button order-disabled" type="button" disabled aria-disabled="true">Commande bientôt disponible</button>
+          </div>
+        </div>
+      </article>
+      <div class="status" role="status"><span aria-hidden="true"></span> Catalogue en construction — commandes non disponibles</div>
     </section>
   </main>
 
