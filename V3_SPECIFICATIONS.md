@@ -66,3 +66,10 @@ Règles de cadrage fournies :
 ## 8. Validation
 
 Une version n'est stable qu'après des tests PC et mobile du catalogue, des options, du panier, des créneaux, des limites de capacité, des confirmations et des vues d'administration concernées.
+
+## 9. Catalogue public V3.03
+
+- Les fiches publiques sont définies dans `v3/js/data.js`, indépendamment du catalogue collègue V2.
+- Prix publics utilisés : Pad Thaï 10 €, Chicken Massena 9 €, sauté de poulet aux noix de cajou 8 €, bœuf sauté sauce huître 10 €, riz sauté 7 €, Tom Kha Kai 9 €, soupe de nouilles de riz au bœuf 9 €, salade thaïe de viande hachée 10 €, salade de papaye 7 €, soupes curry rouge/vert 8 €, rouleau de printemps 2 €, riz gluant à la mangue 4 €, nems 1 € la pièce.
+- Options viande et piment affichées à titre informatif ; le panier et les commandes ne sont pas activés. La promotion nems est affichée mais son calcul n'est pas actif.
+- Les photos référencent les fichiers V2 existants en lecture seule. Contrôler les photos et les prix sur PC/mobile avant validation.
