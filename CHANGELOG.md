@@ -1,3 +1,13 @@
+## V3.08 — Paiements en préparation (2026-10-16)
+
+- Branche isolée : `v3.08-payment`. Les changements ne sont pas encore publiés sur le site principal.
+- Le formulaire V3 prévoit trois choix : carte bancaire via Stripe, PayPal, espèces au retrait. Les titres-restaurant restent hors périmètre.
+- Les commandes en ligne passent par des Edge Functions prévues pour créer le paiement côté serveur, confirmer le statut côté serveur et recevoir les webhooks des prestataires.
+- L’administration affiche le moyen de paiement et son statut. Les commandes Stripe/PayPal non confirmées ne peuvent pas être marquées manuellement comme payées.
+- La base possède déjà `orders.payment_status`, `orders.payment_provider` et `orders.payment_reference`; aucune migration de schéma n'a été appliquée.
+- Prérequis avant activation : configurer les secrets Stripe et PayPal dans Supabase, enregistrer les URL webhook chez les prestataires, déployer les Edge Functions avec la vérification JWT désactivée uniquement pour ces endpoints publics et vérifier leurs contrôles internes.
+- État : code préparatoire uniquement ; aucun paiement réel, test prestataire, déploiement Edge Function ou test PC/mobile n'a été effectué. Ne pas fusionner en production avant revue et essais en environnement sandbox.
+
 ## V3.07 — Planning journalier par service (2026-10-16)
 
 - Remplacement du pilotage hebdomadaire visible par un planning sur 60 jours, avec une ligne par date et deux commandes indépendantes : Midi et Soir.
