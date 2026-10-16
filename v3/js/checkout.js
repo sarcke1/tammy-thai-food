@@ -354,6 +354,10 @@ async function handlePaymentReturn() {
   if (!payment) return;
 
   if (payment === "cancelled") {
+    const orderId = params.get("order_id");
+    if (orderId && provider) {
+      await supabase.functions.invoke("payment-confirm", { body: { action: "cancel", provider, order_id: orderId } });
+    }
     alert("Le paiement a été annulé. Votre panier est conservé ; vous pouvez réessayer.");
     history.replaceState({}, "", window.location.pathname);
     return;
