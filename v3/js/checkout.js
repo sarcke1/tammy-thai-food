@@ -1,5 +1,5 @@
 import { supabase } from './supabase.js';
-import { getCart, clearCart } from './cart.js?v=20261013-01';
+import { getCart, clearCart } from './cart.js?v=20261015-05';
 
 const panel = document.querySelector('#cart-panel');
 const cartContent = document.querySelector('#cart-content');
@@ -155,11 +155,130 @@ function mountCheckout() {
     panel.scrollTo({ top: 0, behavior: "smooth" });
   });
 
-  box.addEventListener("submit", (event) => {
+  box.addEventListener("submit", async (event) => {
     event.preventDefault();
+
     const status = box.querySelector("#order-status");
-    if (status) {
-      status.textContent = "Le panier V3 fonctionne, mais l’envoi des commandes publiques sera activé après la configuration des créneaux et du traitement des commandes.";
+    const submit = box.querySelector('button[type="submit"]');
+    const formData = new FormData(box);
+    const cartItems = getCart();
+
+    if (!cartItems.length) {
+      status.textContent = "Votre panier est vide.";
+      return;
+    }
+
+    const customerName = String(formData.get("customer_name") || "").trim();
+    const email = String(formData.get("email") || "").trim();
+    const phone = String(formData.get("phone") || "").replace(/\s+/g, "").trim();
+    const comment = String(formData.get("comment") || "").trim();
+    const selectedDate = String(formData.get("pickup_date") || "");
+
+    if (!customerName || !email || !phone || !selectedDate) {
+      status.textContent = "Vérifiez les informations obligatoires et la date de retrait.";
+      return;
+    }
+
+    localStorage.setItem("customerName", customerName);
+    localStorage.setItem("customerEmail", email);
+    localStorage.setItem("customerPhone", phone);
+
+    submit.disabled = true;
+    status.textContent = "Vérification de la date et des produits…";
+
+    try {
+      const availableDates = await getAvailablePickupDates();
+      const pickupDate = availableDates.find(date => formatDateForDatabase(date) === selectedDate);
+      if (!pickupDate) {
+        throw new Error("Cette date de retrait n’est plus disponible. Actualisez la page.");
+      }
+
+      const { data: products, error: productsError } = await supabase
+        .from("products")
+        .select("id,name,protein_options,active")
+        .eq("active", true);
+
+      if (productsError) throw new Error("Impossible de vérifier les produits : " + productsError.message);
+
+      const productsByName = new Map(
+        (products || []).map(product => [String(product.name).trim().toLocaleLowerCase("fr-FR"), product])
+      );
+      const items = [];
+
+      for (const item of cartItems) {
+        const product = productsByName.get(String(item.name).trim().toLocaleLowerCase("fr-FR"));
+        if (!product) throw new Error("Produit introuvable ou indisponible : " + item.name);
+
+        const spiceLevel = item.spicy
+          ? Math.max(0, Math.min(3, Number(item.spice) || 0))
+          : 0;
+        const isNems = String(product.name).trim().toLocaleLowerCase("fr-FR").startsWith("nems maison");
+
+        if (isNems) {
+          const existingNems = items.find(entry => entry.product_id === product.id && entry._nemsPromo);
+          if (existingNems) {
+            existingNems.quantity += 1;
+          } else {
+            items.push({ product_id: product.id, quantity: 1, spice_level: spiceLevel, protein: null, _nemsPromo: true });
+          }
+        } else {
+          items.push({
+            product_id: product.id,
+            quantity: 1,
+            spice_level: spiceLevel,
+            protein: item.protein || (
+              Array.isArray(product.protein_options) && product.protein_options.length === 1
+                ? product.protein_options[0]
+                : null
+            )
+          });
+        }
+      }
+
+      const rpcItems = items.map(({ _nemsPromo, ...item }) => item);
+      status.textContent = "Enregistrement de votre commande…";
+
+      const { data: orderData, error: orderError } = await supabase.rpc(
+        "create_public_pending_order",
+        {
+          p_first_name: customerName,
+          p_last_name: "",
+          p_email: email,
+          p_phone: phone,
+          p_service_slot_id: null,
+          p_items: rpcItems,
+          p_customer_note: comment,
+          p_pickup_date: selectedDate
+        }
+      );
+
+      if (orderError) throw new Error(orderError.message || "Impossible d’enregistrer la commande.");
+
+      const order = Array.isArray(orderData) ? orderData[0] : orderData;
+      if (!order?.order_number) throw new Error("La commande a été envoyée, mais son numéro n’a pas pu être récupéré.");
+
+      const pickupLabel = getPickupLabel(pickupDate) + " (midi)";
+      clearCart();
+      box.reset();
+      box.querySelector('[name="customer_name"]').value = customerName;
+      box.querySelector('[name="email"]').value = email;
+      box.querySelector('[name="phone"]').value = phone;
+      box.hidden = true;
+      cartContent.hidden = false;
+      cartContent.innerHTML = `
+        <div class="order-success">
+          <div class="success-icon">✓</div>
+          <h3>Commande enregistrée</h3>
+          <p>Numéro de commande : <strong>#${order.order_number}</strong></p>
+          <p>Votre commande a été transmise à Tammy.</p>
+          <p class="pickup-reminder">Retrait : <strong>${pickupLabel}</strong></p>
+          <p>Le paiement sera effectué au retrait.</p>
+        </div>
+      `;
+    } catch (error) {
+      status.textContent = "Commande non enregistrée : " + (error?.message || "erreur inconnue");
+    } finally {
+      submit.disabled = false;
     }
   });
 
