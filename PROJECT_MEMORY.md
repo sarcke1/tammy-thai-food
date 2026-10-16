@@ -1,3 +1,10 @@
+## V3.08 — Paiement (2026-10-16)
+
+- Moyens retenus : Stripe, PayPal, espèces au retrait. Titres-restaurant prévus plus tard.
+- V3.08 est en cours sur la branche GitHub `v3.08-payment`; V1 et les fichiers client V2 ne doivent pas être modifiés.
+- Schéma Supabase observé : `orders` dispose déjà de `payment_status`, `payment_provider`, `payment_reference`. Le RPC `create_public_order_in_slot` crée aujourd'hui une commande avec `payment_status='unpaid'` et `status='pending_payment'`.
+- Les fichiers Edge Functions ont été ajoutés au dépôt, mais ne sont pas déployés. Les secrets prestataires doivent rester dans Supabase, jamais dans GitHub Pages.
+- Aucun paiement ni test de bout en bout n'a été effectué ; V3.08 n'est pas stable.
 ## V3.07 — Planning journalier par service (2026-10-16)
 
 - L’administration doit montrer une ligne par date sur 60 jours, avec boutons indépendants Midi/Soir, et non un calendrier hebdomadaire d’ouvertures.
