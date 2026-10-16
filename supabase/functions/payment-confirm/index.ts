@@ -42,6 +42,14 @@ Deno.serve(async (req: Request) => {
       .select("id,order_number,total,payment_provider,payment_reference,payment_status")
       .eq("id", orderId).eq("payment_provider", provider).single();
     if (orderError || !order) return reply({ error: "Commande introuvable." }, 404);
+    if (body.action === "cancel") {
+      if (order.payment_status === "paid") return reply({ paid: true, order_number: order.order_number });
+      const { error: cancelError } = await admin.from("orders").update({
+        status: "cancelled", payment_status: "failed", updated_at: new Date().toISOString()
+      }).eq("id", order.id).eq("payment_provider", provider).neq("payment_status", "paid");
+      if (cancelError) return reply({ error: "Impossible d’annuler la tentative de paiement." }, 500);
+      return reply({ cancelled: true, order_number: order.order_number });
+    }
     if (order.payment_status === "paid") return reply({ paid: true, order_number: order.order_number });
 
     if (provider === "stripe") {
