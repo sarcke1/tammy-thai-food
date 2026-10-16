@@ -1,5 +1,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
+const PAYPAL_API = Deno.env.get("PAYPAL_ENV") === "live" ? "https://api-m.paypal.com" : "https://api-m.sandbox.paypal.com";
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "https://sarcke1.github.io",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -12,7 +14,7 @@ async function paypalAccessToken() {
   const clientId = Deno.env.get("PAYPAL_CLIENT_ID");
   const secret = Deno.env.get("PAYPAL_CLIENT_SECRET");
   if (!clientId || !secret) throw new Error("Configuration PayPal absente.");
-  const response = await fetch("https://api-m.paypal.com/v1/oauth2/token", {
+  const response = await fetch(PAYPAL_API + "/v1/oauth2/token", {
     method: "POST",
     headers: { Authorization: "Basic " + btoa(clientId + ":" + secret), "Content-Type": "application/x-www-form-urlencoded" },
     body: "grant_type=client_credentials"
@@ -55,12 +57,12 @@ Deno.serve(async (req: Request) => {
       const paypalOrderId = String(body.paypal_order_id || "");
       if (!paypalOrderId || paypalOrderId !== order.payment_reference) return reply({ error: "Référence PayPal invalide." }, 400);
       const token = await paypalAccessToken();
-      let response = await fetch("https://api-m.paypal.com/v2/checkout/orders/" + encodeURIComponent(paypalOrderId) + "/capture", {
+      let response = await fetch(PAYPAL_API + "/v2/checkout/orders/" + encodeURIComponent(paypalOrderId) + "/capture", {
         method: "POST", headers: { Authorization: "Bearer " + token, "Content-Type": "application/json" }, body: "{}"
       });
       let paypalData = await response.json();
       if (!response.ok) {
-        const verifyResponse = await fetch("https://api-m.paypal.com/v2/checkout/orders/" + encodeURIComponent(paypalOrderId), { headers: { Authorization: "Bearer " + token } });
+        const verifyResponse = await fetch(PAYPAL_API + "/v2/checkout/orders/" + encodeURIComponent(paypalOrderId), { headers: { Authorization: "Bearer " + token } });
         paypalData = await verifyResponse.json();
         if (!verifyResponse.ok || paypalData.status !== "COMPLETED") return reply({ paid: false, error: "PayPal n’a pas confirmé le paiement." }, 409);
       }
