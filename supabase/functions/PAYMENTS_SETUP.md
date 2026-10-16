@@ -11,6 +11,7 @@ Dans le projet Supabase `ugarjrbtvwbwppfeusgd`, ajouter les secrets via la confi
 - `PAYPAL_CLIENT_ID` — identifiant API REST PayPal.
 - `PAYPAL_CLIENT_SECRET` — secret API REST PayPal.
 - `PAYPAL_WEBHOOK_ID` — identifiant du webhook PayPal configuré dans le compte marchand.
+- `PAYPAL_ENV` — utiliser `sandbox` pour les essais (valeur par défaut), puis `live` uniquement au passage en production.
 
 Les variables `SUPABASE_URL` et `SUPABASE_SERVICE_ROLE_KEY` sont fournies par l'environnement Edge Functions Supabase.
 
@@ -25,7 +26,7 @@ Créer ensuite deux endpoints webhook côté prestataires pointant vers :
 `https://ugarjrbtvwbwppfeusgd.supabase.co/functions/v1/payment-webhook`
 
 Stripe : événements `checkout.session.completed` et `checkout.session.async_payment_succeeded`.
-PayPal : événement `PAYMENT.CAPTURE.COMPLETED`.
+PayPal : événement `PAYMENT.CAPTURE.COMPLETED`. Utiliser le webhook de l’environnement correspondant (`sandbox` ou `live`).
 
 ## Tests obligatoires
 
