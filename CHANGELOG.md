@@ -1,3 +1,12 @@
+## V3.07 — Planning journalier par service (2026-10-16)
+
+- Remplacement du pilotage hebdomadaire visible par un planning sur 60 jours, avec une ligne par date et deux commandes indépendantes : Midi et Soir.
+- L’activation d’un service génère ses créneaux de 15 minutes ; la désactivation ferme les créneaux de cette date sans supprimer les commandes déjà enregistrées.
+- Les fonctions Supabase publiques ne se basent plus sur `weekly_opening_hours` : le statut actif des créneaux datés devient la source de vérité.
+- Horaires conservés : midi 11 h–14 h ; soir 17 h 30–21 h en semaine et 17 h 30–22 h le week-end. Site public : aujourd’hui et demain uniquement.
+- Fichiers : `v2/admin/slots.js`, `v2/admin/index.html`, `v2/admin/admin.js`, `v2/admin/admin.css`. Supabase : fonctions `get_public_pickup_slots` et `create_public_order_in_slot`.
+- V1 et fichiers client V2 inchangés. Tests de commande et vérifications visuelles PC/mobile encore requis ; ne pas déclarer stable avant validation.
+
 ## V3.06 — Créneaux de retrait et charge de préparation (2026-10-16)
 
 - Le planning admin ajoute une génération des créneaux sur 60 jours à partir du calendrier hebdomadaire existant.
