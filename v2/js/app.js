@@ -88,6 +88,7 @@ console.table(data);
       photo: local?.photo ?? product.image_url ?? "",
       position: local?.position,
       desc: product.description || local?.desc || "",
+      allergens: local?.allergens || "",
       spicy: Boolean(product.supports_spice),
       fixedSpice: local?.fixedSpice ?? null,
       fixedProtein: local?.fixedProtein ?? null,
@@ -350,6 +351,7 @@ function renderMenu(category="Plats"){
           </div>
 
           <p>${d.desc}</p>
+          ${d.allergens ? `<p class="dish-allergens"><strong>Allergènes :</strong> ${d.allergens}</p>` : ""}
           ${isNemsPromo(d) ? '<p class="promo-note">Offre : 4 achetés + 1 offert</p>' : ""}
 
           ${proteinSelector(d)}
