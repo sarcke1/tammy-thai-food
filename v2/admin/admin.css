@@ -48,3 +48,9 @@
 .service-toggle:disabled{opacity:.6;cursor:wait}
 .service-plan-cell small{text-align:center;color:#65736d;font-size:11px}
 @media(max-width:600px){.slots-panel{padding:12px}.service-plan-head,.service-plan-row{grid-template-columns:minmax(105px,1.1fr) minmax(80px,1fr) minmax(80px,1fr);gap:5px}.service-plan-head{font-size:13px}.service-plan-row{padding:9px 0;font-size:13px}.service-toggle{font-size:12px;padding:7px 3px;min-height:44px}.service-plan-cell small{font-size:10px}}
+
+
+/* V3.08 — affichage du paiement sur les commandes */
+.order-state{display:flex;flex-direction:column;align-items:flex-end;gap:6px;max-width:48%;text-align:right}
+.payment-badge{display:inline-block;background:#e9f0e9;color:#244d3f;border-radius:8px;padding:5px 8px;font-size:12px;font-weight:700;line-height:1.35}
+@media(max-width:620px){.order-state{max-width:52%}.payment-badge{font-size:11px}}
