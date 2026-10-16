@@ -1,3 +1,10 @@
+## V3.07 — Planning journalier par service (2026-10-16)
+
+- L’administration doit montrer une ligne par date sur 60 jours, avec boutons indépendants Midi/Soir, et non un calendrier hebdomadaire d’ouvertures.
+- Chaque activation crée/réactive les créneaux de 15 minutes du service daté ; chaque désactivation rend les créneaux inactifs sans supprimer les commandes existantes.
+- Les fonctions de disponibilité et de création de commande publiques ne consultent plus `weekly_opening_hours`; `service_slots.active` fait foi pour chaque date/service.
+- Les horaires restent midi 11 h–14 h, soir 17 h 30–21 h en semaine et 17 h 30–22 h le week-end. La capacité par créneau reste réglable. Tests end-to-end/PC/mobile à faire.
+
 ## V3.06 — Créneaux de retrait et charge de préparation (2026-10-16)
 
 - Le planning admin ajoute une génération des créneaux sur 60 jours à partir du calendrier hebdomadaire existant.
