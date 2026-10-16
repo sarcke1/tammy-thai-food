@@ -122,6 +122,14 @@ function mountCheckout() {
         rows="3"
       ></textarea>
 
+      <fieldset class="checkout-payment">
+        <legend>3. Choisissez votre paiement</legend>
+        <label><input type="radio" name="payment_method" value="stripe" required> Carte bancaire</label>
+        <label><input type="radio" name="payment_method" value="paypal" required> PayPal</label>
+        <label><input type="radio" name="payment_method" value="cash" required checked> Espèces au retrait</label>
+        <p class="payment-note">Le paiement en ligne sera confirmé par le prestataire. Pour les espèces, le règlement se fera au retrait.</p>
+      </fieldset>
+
       <button class="secondary-cart-action" type="button" data-back-to-cart>Retour au panier</button>
 
       <button class="button cart-submit" type="submit">
@@ -177,6 +185,7 @@ function mountCheckout() {
     const phone = String(formData.get("phone") || "").replace(/\s+/g, "").trim();
     const comment = String(formData.get("comment") || "").trim();
     const selectedSlotId = String(formData.get("pickup_slot_id") || "");
+    const paymentMethod = String(formData.get("payment_method") || "cash");
 
     if (!customerName || !email || !phone || !selectedSlotId) {
       status.textContent = "Vérifiez les informations obligatoires et le créneau de retrait.";
@@ -240,6 +249,25 @@ function mountCheckout() {
       }
 
       const rpcItems = items.map(({ _nemsPromo, ...item }) => item);
+
+      if (paymentMethod !== "cash") {
+        status.textContent = "Préparation du paiement sécurisé…";
+        const { data: paymentData, error: paymentError } = await supabase.functions.invoke("payment-start", {
+          body: {
+            provider: paymentMethod,
+            customer: { first_name: customerName, last_name: "", email, phone },
+            service_slot_id: selectedSlotId,
+            items: rpcItems,
+            customer_note: comment
+          }
+        });
+        if (paymentError) throw new Error(paymentError.message || "Impossible de démarrer le paiement.");
+        if (!paymentData?.checkout_url) throw new Error("Le prestataire n’a pas fourni de lien de paiement.");
+        status.textContent = "Redirection vers le paiement sécurisé…";
+        window.location.assign(paymentData.checkout_url);
+        return;
+      }
+
       status.textContent = "Enregistrement de votre commande…";
 
       const { data: orderData, error: orderError } = await supabase.rpc(
@@ -275,7 +303,7 @@ function mountCheckout() {
           <p>Numéro de commande : <strong>#${order.order_number}</strong></p>
           <p>Votre commande a été transmise à Tammy.</p>
           <p class="pickup-reminder">Retrait : <strong>${pickupLabel}</strong></p>
-          <p>Le paiement sera effectué au retrait.</p>
+          <p>${paymentMethod === "cash" ? "Paiement en espèces au retrait." : "Paiement en ligne en cours de confirmation."}</p>
         </div>
       `;
     } catch (error) {
@@ -319,3 +347,39 @@ document.addEventListener("checkout:open", openCheckout);
 
 mountCheckout();
 
+async function handlePaymentReturn() {
+  const params = new URLSearchParams(window.location.search);
+  const payment = params.get("payment");
+  const provider = params.get("provider");
+  if (!payment) return;
+
+  if (payment === "cancelled") {
+    alert("Le paiement a été annulé. Votre panier est conservé ; vous pouvez réessayer.");
+    history.replaceState({}, "", window.location.pathname);
+    return;
+  }
+  if (payment !== "success" && payment !== "return") return;
+
+  const orderId = params.get("order_id");
+  const sessionId = params.get("session_id");
+  const paypalOrderId = params.get("token");
+  const statusBox = document.createElement("div");
+  statusBox.className = "order-success";
+  statusBox.innerHTML = "<h3>Vérification du paiement…</h3><p>Veuillez patienter pendant la confirmation sécurisée.</p>";
+  document.querySelector("main")?.prepend(statusBox);
+
+  try {
+    const { data, error } = await supabase.functions.invoke("payment-confirm", {
+      body: { provider, order_id: orderId, session_id: sessionId, paypal_order_id: paypalOrderId }
+    });
+    if (error) throw new Error(error.message || "Confirmation impossible.");
+    if (!data?.paid) throw new Error("Le paiement n’est pas encore confirmé. Ne repassez pas commande ; contactez Tammy si le débit apparaît.");
+    clearCart();
+    statusBox.innerHTML = `<h3>Paiement confirmé</h3><p>Commande n°#${data.order_number}</p><p>Votre commande a été transmise à Tammy.</p>`;
+  } catch (error) {
+    statusBox.innerHTML = `<h3>Confirmation en attente</h3><p>${String(error.message || "Vérification impossible.")}</p><p>Si votre compte a été débité, ne repassez pas commande.</p>`;
+  } finally {
+    history.replaceState({}, "", window.location.pathname);
+  }
+}
+void handlePaymentReturn();
