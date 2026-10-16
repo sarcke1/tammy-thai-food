@@ -111,7 +111,7 @@ Deno.serve(async (req: Request) => {
       });
       const data = await response.json();
       if (!response.ok || !data.id || !Array.isArray(data.links)) throw new Error("PayPal n’a pas pu créer la commande de paiement.");
-      checkoutUrl = data.links.find((link: { rel: string; href: string }) => link.rel === "approve")?.href || "";
+      checkoutUrl = data.links.find((link: { rel: string; href: string }) => ["approve", "payer-action"].includes(link.rel))?.href || "";
       reference = data.id;
       if (!checkoutUrl) throw new Error("Lien de validation PayPal introuvable.");
     }
