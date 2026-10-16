@@ -12,54 +12,58 @@ function updateCheckoutVisibility() {
   cartContent.hidden=Boolean(getCart().length&&!checkoutForm.hidden);
 }
 
-async function getAvailablePickupDates() {
-  const { data, error } = await supabase.from("weekly_opening_hours").select("day_of_week,service_period,is_open");
-  if (error) throw new Error("Impossible de vérifier les jours d’ouverture : " + error.message);
-  const lunchRows = (data || []).filter(row => row.service_period === "midi");
-  if (lunchRows.length !== 7) throw new Error("Le calendrier des ouvertures est incomplet. Réessayez plus tard.");
-  const openLunchDays = new Set(lunchRows.filter(row => row.is_open).map(row => Number(row.day_of_week)));
-  const now = new Date();
-  const minimum = new Date(now);
-  minimum.setHours(12,0,0,0);
-  minimum.setDate(minimum.getDate() + (now.getHours() >= 18 ? 2 : 1));
-  const monday = new Date(now);
-  monday.setHours(12,0,0,0);
-  monday.setDate(monday.getDate() - ((monday.getDay()+6)%7));
-  const nextMonday = new Date(monday);
-  nextMonday.setDate(nextMonday.getDate()+7);
-  const dates=[];
-  for(let candidate=new Date(monday);candidate<=nextMonday;candidate.setDate(candidate.getDate()+1)){
-    const day=new Date(candidate);
-    day.setHours(12,0,0,0);
-    if(day>=minimum && openLunchDays.has(day.getDay())) dates.push(new Date(day));
+async function getAvailablePickupSlots(cartItems = getCart()) {
+  const [{ data: slots, error: slotsError }, { data: products, error: productsError }] = await Promise.all([
+    supabase.rpc("get_public_pickup_slots"),
+    supabase.from("products").select("id,name,preparation_minutes,protein_options,active").eq("active", true)
+  ]);
+  if (slotsError) throw new Error("Impossible de charger les créneaux : " + slotsError.message);
+  if (productsError) throw new Error("Impossible de calculer la préparation : " + productsError.message);
+
+  const productsByName = new Map((products || []).map(product => [
+    String(product.name).trim().toLocaleLowerCase("fr-FR"), product
+  ]));
+  const counts = new Map();
+  for (const item of cartItems) {
+    const key = String(item.name).trim().toLocaleLowerCase("fr-FR");
+    counts.set(key, (counts.get(key) || 0) + 1);
   }
-  if(!dates.length) throw new Error("Aucun retrait à midi n’est disponible dans la période proposée.");
-  return dates;
-}
-function getPickupLabel(date) {
-  return date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
+  let neededMinutes = 0;
+  for (const [name, quantity] of counts) {
+    const product = productsByName.get(name);
+    if (!product) continue;
+    const deliveredQuantity = name.startsWith("nems maison") ? quantity + Math.floor(quantity / 4) : quantity;
+    neededMinutes += Math.max(1, Number(product.preparation_minutes) || 1) * deliveredQuantity;
+  }
+  return (slots || []).filter(slot => Number(slot.remaining_preparation_minutes) >= neededMinutes);
 }
 
-function formatDateForDatabase(date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
+function getPickupLabel(dateValue, timeValue) {
+  const date = new Date(String(dateValue) + "T12:00:00");
+  const day = date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
+  return day + " à " + String(timeValue).slice(0,5);
 }
 
 async function refreshPickupLabel() {
-  const select=checkoutForm?.querySelector("#pickup-date");
-  if(!select)return;
-  try{
-    const dates=await getAvailablePickupDates();
-    select.innerHTML='<option value="" selected disabled>Choisissez une date de retrait</option>'+dates.map(date=>`<option value="${formatDateForDatabase(date)}">${getPickupLabel(date)} (midi)</option>`).join("");
-    const details=checkoutForm.querySelector("#checkout-details");
-    if(details)details.hidden=!select.value;
-  }catch(error){
-    select.innerHTML='<option value="" selected disabled>Aucune date disponible</option>';
-    select.title=error.message;
-    const details=checkoutForm.querySelector("#checkout-details");
-    if(details)details.hidden=true;
+  const select = checkoutForm?.querySelector("#pickup-date");
+  if (!select) return;
+  try {
+    const slots = await getAvailablePickupSlots();
+    select.innerHTML = '<option value="" selected disabled>Choisissez une date et une heure</option>' +
+      slots.map(slot => {
+        const label = getPickupLabel(slot.service_date, slot.start_time);
+        return '<option value="' + slot.id + '">' + label + ' (15 min disponibles)</option>';
+      }).join("");
+    if (!slots.length) {
+      select.innerHTML = '<option value="" selected disabled>Aucun créneau disponible pour ce panier</option>';
+    }
+    const details = checkoutForm.querySelector("#checkout-details");
+    if (details) details.hidden = !select.value;
+  } catch (error) {
+    select.innerHTML = '<option value="" selected disabled>Créneaux indisponibles</option>';
+    select.title = error.message;
+    const details = checkoutForm.querySelector("#checkout-details");
+    if (details) details.hidden = true;
   }
 }
 
@@ -77,8 +81,8 @@ function mountCheckout() {
     <div class="checkout-box">
 
       <label class="checkout-pickup">
-        <strong>1. Choisissez votre date de retrait</strong>
-        <select name="pickup_date" id="pickup-date" required>
+        <strong>1. Choisissez votre créneau de retrait</strong>
+        <select name="pickup_slot_id" id="pickup-date" required>
           <option value="" selected disabled>Vérification des ouvertures…</option>
         </select>
       </label>
@@ -172,9 +176,9 @@ function mountCheckout() {
     const email = String(formData.get("email") || "").trim();
     const phone = String(formData.get("phone") || "").replace(/\s+/g, "").trim();
     const comment = String(formData.get("comment") || "").trim();
-    const selectedDate = String(formData.get("pickup_date") || "");
+    const selectedSlotId = String(formData.get("pickup_slot_id") || "");
 
-    if (!customerName || !email || !phone || !selectedDate) {
+    if (!customerName || !email || !phone || !selectedSlotId) {
       status.textContent = "Vérifiez les informations obligatoires et la date de retrait.";
       return;
     }
@@ -187,15 +191,15 @@ function mountCheckout() {
     status.textContent = "Vérification de la date et des produits…";
 
     try {
-      const availableDates = await getAvailablePickupDates();
-      const pickupDate = availableDates.find(date => formatDateForDatabase(date) === selectedDate);
-      if (!pickupDate) {
-        throw new Error("Cette date de retrait n’est plus disponible. Actualisez la page.");
+      const availableSlots = await getAvailablePickupSlots(cartItems);
+      const selectedSlot = availableSlots.find(slot => slot.id === selectedSlotId);
+      if (!selectedSlot) {
+        throw new Error("Ce créneau n’est plus disponible pour votre panier. Choisissez une autre heure.");
       }
 
       const { data: products, error: productsError } = await supabase
         .from("products")
-        .select("id,name,protein_options,active")
+        .select("id,name,protein_options,preparation_minutes,active")
         .eq("active", true);
 
       if (productsError) throw new Error("Impossible de vérifier les produits : " + productsError.message);
@@ -239,16 +243,15 @@ function mountCheckout() {
       status.textContent = "Enregistrement de votre commande…";
 
       const { data: orderData, error: orderError } = await supabase.rpc(
-        "create_public_pending_order",
+        "create_public_order_in_slot",
         {
           p_first_name: customerName,
           p_last_name: "",
           p_email: email,
           p_phone: phone,
-          p_service_slot_id: null,
+          p_service_slot_id: selectedSlotId,
           p_items: rpcItems,
-          p_customer_note: comment,
-          p_pickup_date: selectedDate
+          p_customer_note: comment
         }
       );
 
@@ -257,7 +260,7 @@ function mountCheckout() {
       const order = Array.isArray(orderData) ? orderData[0] : orderData;
       if (!order?.order_number) throw new Error("La commande a été envoyée, mais son numéro n’a pas pu être récupéré.");
 
-      const pickupLabel = getPickupLabel(pickupDate) + " (midi)";
+      const pickupLabel = getPickupLabel(selectedSlot.service_date, selectedSlot.start_time);
       clearCart();
       box.reset();
       box.querySelector('[name="customer_name"]').value = customerName;
