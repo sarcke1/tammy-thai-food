@@ -48,10 +48,15 @@ Deno.serve(async (req: Request) => {
       const event = JSON.parse(rawBody);
       if (event.type === "checkout.session.completed" || event.type === "checkout.session.async_payment_succeeded") {
         const session = event.data?.object;
-        if (session?.payment_status === "paid" && session.id && session.metadata?.order_id) {
-          const { error } = await admin.from("orders").update({ payment_status: "paid", status: "paid", updated_at: new Date().toISOString() })
-            .eq("id", session.metadata.order_id).eq("payment_provider", "stripe").eq("payment_reference", session.id);
-          if (error) return reply({ error: "Mise à jour commande impossible." }, 500);
+        if (session?.payment_status === "paid" && session.id && session.metadata?.order_id && session.currency === "eur") {
+          const { data: order, error: lookupError } = await admin.from("orders").select("id,total")
+            .eq("id", session.metadata.order_id).eq("payment_provider", "stripe").eq("payment_reference", session.id).maybeSingle();
+          if (lookupError) return reply({ error: "Recherche de commande impossible." }, 500);
+          if (order && Number(session.amount_total) === Math.round(Number(order.total) * 100)) {
+            const { error } = await admin.from("orders").update({ payment_status: "paid", status: "paid", updated_at: new Date().toISOString() })
+              .eq("id", order.id).eq("payment_provider", "stripe").eq("payment_reference", session.id);
+            if (error) return reply({ error: "Mise à jour commande impossible." }, 500);
+          }
         }
       }
       return reply({ received: true });
@@ -83,7 +88,7 @@ Deno.serve(async (req: Request) => {
         const { data: order, error: lookupError } = await admin.from("orders").select("id,total")
           .eq("payment_provider", "paypal").eq("payment_reference", paypalOrderId).maybeSingle();
         if (lookupError) return reply({ error: "Recherche de commande impossible." }, 500);
-        if (order && Number(resource.amount?.value) === Number(order.total)) {
+        if (order && resource.amount?.currency_code === "EUR" && Number(resource.amount?.value) === Number(order.total)) {
           const { error } = await admin.from("orders").update({ payment_status: "paid", status: "paid", updated_at: new Date().toISOString() })
             .eq("id", order.id).eq("payment_provider", "paypal").eq("payment_reference", paypalOrderId);
           if (error) return reply({ error: "Mise à jour commande impossible." }, 500);
