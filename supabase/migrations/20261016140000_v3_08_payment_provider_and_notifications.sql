@@ -177,57 +177,68 @@ $function$
 GRANT EXECUTE ON FUNCTION public.create_public_order_in_slot(text, text, text, text, uuid, jsonb, text, text) TO anon, authenticated, service_role;
 
 -- Keep existing V2/colleague and cash-order email behavior; defer online orders until paid.
-CREATE OR REPLACE FUNCTION public.notify_order_email_webhook()
-RETURNS trigger
-LANGUAGE plpgsql
-SECURITY DEFINER
-SET search_path TO 'public', 'extensions'
-AS $function$
-begin
-  if TG_OP = 'INSERT' then
-    -- A online-payment order must not notify the kitchen before payment.
-    if NEW.payment_provider in ('stripe', 'paypal') then
-      return NEW;
-    end if;
-    perform net.http_post(
-      url := 'https://ugarjrbtvwbwppfeusgd.supabase.co/functions/v1/notify-order-email',
-      headers := jsonb_build_object(
-        'Content-Type', 'application/json',
-        'x-ttf-webhook-secret', current_setting('app.settings.order_email_webhook_secret', true)
-      ),
-      body := jsonb_build_object(
-        'type', 'INSERT',
-        'table', 'orders',
-        'schema', 'public',
-        'record', to_jsonb(NEW),
-        'old_record', null
-      )
-    );
-    return NEW;
-  end if;
+DO $migration$
+DECLARE
+  v_webhook_secret text;
+BEGIN
+  -- Reuse the currently configured database secret without copying it into Git.
+  SELECT (regexp_match(
+    pg_get_functiondef('public.notify_order_email_webhook()'::regprocedure),
+    $'x-ttf-webhook-secret',\s*'([^']+)'$
+  ))[1]
+  INTO v_webhook_secret;
+  IF v_webhook_secret IS NULL THEN
+    RAISE EXCEPTION 'Existing order-email webhook secret could not be retrieved safely.';
+  END IF;
 
-  if TG_OP = 'UPDATE'
-     and NEW.payment_provider in ('stripe', 'paypal')
-     and NEW.payment_status = 'paid'
-     and OLD.payment_status is distinct from 'paid' then
-    perform net.http_post(
-      url := 'https://ugarjrbtvwbwppfeusgd.supabase.co/functions/v1/notify-order-email',
-      headers := jsonb_build_object(
-        'Content-Type', 'application/json',
-        'x-ttf-webhook-secret', current_setting('app.settings.order_email_webhook_secret', true)
-      ),
-      body := jsonb_build_object(
-        'type', 'UPDATE',
-        'table', 'orders',
-        'schema', 'public',
-        'record', to_jsonb(NEW),
-        'old_record', to_jsonb(OLD)
-      )
-    );
-  end if;
-  return NEW;
-end;
-$function$;
+  EXECUTE format($fn$
+    CREATE OR REPLACE FUNCTION public.notify_order_email_webhook()
+    RETURNS trigger
+    LANGUAGE plpgsql
+    SECURITY DEFINER
+    SET search_path TO 'public', 'extensions'
+    AS $body$
+    begin
+      if TG_OP = 'INSERT' then
+        if NEW.payment_provider in ('stripe', 'paypal') then
+          return NEW;
+        end if;
+        perform net.http_post(
+          url := 'https://ugarjrbtvwbwppfeusgd.supabase.co/functions/v1/notify-order-email',
+          headers := jsonb_build_object(
+            'Content-Type', 'application/json',
+            'x-ttf-webhook-secret', %L
+          ),
+          body := jsonb_build_object(
+            'type', 'INSERT', 'table', 'orders', 'schema', 'public',
+            'record', to_jsonb(NEW), 'old_record', null
+          )
+        );
+        return NEW;
+      end if;
+
+      if TG_OP = 'UPDATE'
+         and NEW.payment_provider in ('stripe', 'paypal')
+         and NEW.payment_status = 'paid'
+         and OLD.payment_status is distinct from 'paid' then
+        perform net.http_post(
+          url := 'https://ugarjrbtvwbwppfeusgd.supabase.co/functions/v1/notify-order-email',
+          headers := jsonb_build_object(
+            'Content-Type', 'application/json',
+            'x-ttf-webhook-secret', %L
+          ),
+          body := jsonb_build_object(
+            'type', 'UPDATE', 'table', 'orders', 'schema', 'public',
+            'record', to_jsonb(NEW), 'old_record', to_jsonb(OLD)
+          )
+        );
+      end if;
+      return NEW;
+    end;
+    $body$;
+  $fn$, v_webhook_secret, v_webhook_secret);
+END;
+$migration$;
 
 DROP TRIGGER IF EXISTS trg_notify_order_email ON public.orders;
 CREATE TRIGGER trg_notify_order_email
