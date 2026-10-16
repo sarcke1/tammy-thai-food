@@ -54,7 +54,7 @@ export const dishes = [
   },
 
   {
-    id:"bo-bun", name:"Bò Bún au bœuf", price:10.5, colleaguePrice:8.5, category:"Plats", emoji:"🥢", photo:"Bo bun.png", prep:10,
+    id:"bo-bun", name:"Bò Bún au bœuf", price:10.5, category:"Plats", emoji:"🥢", photo:"Bo bun.png", prep:10,
     desc:"Vermicelles de riz, bœuf émincé, carotte, concombre, salade, coriandre, menthe, 2 nems croustillants et cacahuètes concassées. Sauce pimentée servie avec le plat. Cacahuètes incluses dans le prix.",
     allergens:"Arachides (cacahuètes). Les nems et la sauce peuvent contenir d’autres allergènes : vérification des étiquettes fournisseurs nécessaire.",
     spicy:false, fixedProtein:"Bœuf", proteinOptions:["Bœuf"], position:3
