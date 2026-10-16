@@ -52,7 +52,7 @@ async function refreshPickupLabel() {
     select.innerHTML = '<option value="" selected disabled>Choisissez une date et une heure</option>' +
       slots.map(slot => {
         const label = getPickupLabel(slot.service_date, slot.start_time);
-        return '<option value="' + slot.id + '">' + label + ' (15 min disponibles)</option>';
+        return '<option value="' + slot.id + '">' + label + '</option>';
       }).join("");
     if (!slots.length) {
       select.innerHTML = '<option value="" selected disabled>Aucun créneau disponible pour ce panier</option>';
@@ -179,7 +179,7 @@ function mountCheckout() {
     const selectedSlotId = String(formData.get("pickup_slot_id") || "");
 
     if (!customerName || !email || !phone || !selectedSlotId) {
-      status.textContent = "Vérifiez les informations obligatoires et la date de retrait.";
+      status.textContent = "Vérifiez les informations obligatoires et le créneau de retrait.";
       return;
     }
 
@@ -188,7 +188,7 @@ function mountCheckout() {
     localStorage.setItem("customerPhone", phone);
 
     submit.disabled = true;
-    status.textContent = "Vérification de la date et des produits…";
+    status.textContent = "Vérification du créneau et des produits…";
 
     try {
       const availableSlots = await getAvailablePickupSlots(cartItems);
