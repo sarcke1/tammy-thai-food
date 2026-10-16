@@ -17,3 +17,7 @@
 /* V2.06.26 — Navigation de l’administration */
 .admin-header-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
 @media(max-width:600px){.admin-header-actions{width:100%;justify-content:stretch}.admin-header-actions button{flex:1}}
+
+
+/* ADMIN 1.01 — Origine des commandes V2/V3 */
+.channel-badge{display:inline-block;margin:6px 0 0 8px;padding:5px 9px;border-radius:12px;background:#e2eadf;color:#173f35;font:700 12px Arial,sans-serif;vertical-align:middle}.channel-badge:where(:not(:empty)){white-space:nowrap}
