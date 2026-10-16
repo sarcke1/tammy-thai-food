@@ -1,3 +1,12 @@
+## V2.06.27 — Ajout du Bò Bún au bœuf
+
+- Nouveau plat dans V2 : « Bò Bún au bœuf », photo `v2/Bo bun.png`, catégorie Plats.
+- Prix public proposé : 10,50 € ; prix collègues : 8,50 €. À valider après calcul réel des coûts matière et emballage.
+- Portion de départ estimée : bœuf 100 g ; vermicelles de riz 50 g secs ; 1/5 concombre ; 1/5 carotte ; 2 branches de coriandre ; 2 feuilles de salade ; menthe fraîche ; 2 nems ; cacahuètes concassées 10–15 g ; sauce pimentée environ 20 ml (la note manuscrite « 20 cents » est interprétée comme un coût indicatif, pas comme une quantité certaine).
+- Descriptif mentionnant explicitement les cacahuètes, incluses dans le prix. Allergène certain : arachides. Allergènes des nems et de la sauce à confirmer sur leurs fiches fournisseurs avant de publier une information définitive.
+- Fichiers modifiés : `v2/js/data.js`, `v2/js/app.js`, `v2/index.html`, `v2/css/menu.css`, `CHANGELOG.md`, `PROJECT_MEMORY.md`. Produit ajouté dans Supabase pour l’affichage et la commande ; V1 inchangée.
+- Validation visuelle réelle sur PC/mobile et test de commande encore nécessaires.
+
 ## V3.07 — Planning journalier par service (2026-10-16)
 
 - L’administration doit montrer une ligne par date sur 60 jours, avec boutons indépendants Midi/Soir, et non un calendrier hebdomadaire d’ouvertures.
