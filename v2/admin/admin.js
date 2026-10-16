@@ -4,8 +4,8 @@ const loginPanel=document.querySelector('#login-panel'),dashboard=document.query
 let currentView='active',allOrders=[],loading=false,firstLoad=true,knownOrderIds=new Set(),audioContext=null,audioEnabled=false,refreshTimer=null;
 const checklistKey='tammy-kitchen-checklist';
 
-function showDashboard(){loginPanel.classList.add('hidden');dashboard.classList.remove('hidden');logoutButton.classList.remove('hidden');openingTab.classList.remove('hidden');document.querySelector('#slots-tab')?.classList.remove('hidden');openingPanel.classList.add('hidden');openingTab.setAttribute('aria-pressed','false');openingTab.textContent='Calendrier des ouvertures';loadOrders();loadOpeningHours();startAutoRefresh();}
-function showLogin(){loginPanel.classList.remove('hidden');dashboard.classList.add('hidden');logoutButton.classList.add('hidden');openingTab.classList.add('hidden');document.querySelector('#slots-tab')?.classList.add('hidden');openingPanel.classList.add('hidden');if(refreshTimer){clearInterval(refreshTimer);refreshTimer=null;}}
+function showDashboard(){loginPanel.classList.add('hidden');dashboard.classList.remove('hidden');logoutButton.classList.remove('hidden');document.querySelector('#slots-tab')?.classList.remove('hidden');openingPanel?.classList.add('hidden');loadOrders();startAutoRefresh();}
+function showLogin(){loginPanel.classList.remove('hidden');dashboard.classList.add('hidden');logoutButton.classList.add('hidden');document.querySelector('#slots-tab')?.classList.add('hidden');openingPanel?.classList.add('hidden');if(refreshTimer){clearInterval(refreshTimer);refreshTimer=null;}}
 function escapeHtml(v){return String(v??'').replace(/[&<>'\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c]));}
 function statusLabel(s){return({pending_payment:'En attente de paiement',paid:'Payée',confirmed:'En cuisine',preparing:'En cuisine',ready:'En attente de retrait',completed:'Archivée',cancelled:'Annulée'})[s]||s;}
 function nextAction(s){return({pending_payment:['paid','Marquer comme payée'],paid:['enqueue','Mettre en cuisine'],confirmed:['noop','En cuisine'],preparing:null,ready:['completed','Retirer / archiver']})[s]||null;}
@@ -163,8 +163,8 @@ async function saveOpeningHour(input){
   openingStatus.textContent='Enregistré : '+openingDays.find(d=>d.value===day).label+' — '+period;
 }
 
-viewTabs.forEach(t=>t.addEventListener('click',()=>{currentView=t.dataset.view;openingPanel.classList.add('hidden');openingTab.setAttribute('aria-pressed','false');openingTab.textContent='Calendrier des ouvertures';ordersEl.classList.remove('hidden');document.querySelector('.view-tabs').classList.remove('hidden');document.querySelector('.toolbar').classList.remove('hidden');renderOrders();}));
-openingTab.addEventListener('click',()=>{const show=openingPanel.classList.contains('hidden');const slotsPanel=document.querySelector('#slots-panel'),slotsTab=document.querySelector('#slots-tab');slotsPanel?.classList.add('hidden');if(slotsTab){slotsTab.setAttribute('aria-pressed','false');slotsTab.textContent='Planning des créneaux';}openingPanel.classList.toggle('hidden',!show);openingTab.setAttribute('aria-pressed',String(show));ordersEl.classList.toggle('hidden',show);document.querySelector('.view-tabs').classList.toggle('hidden',show);document.querySelector('.toolbar').classList.toggle('hidden',show);openingTab.textContent=show?'Retour aux commandes':'Calendrier des ouvertures';});
+viewTabs.forEach(t=>t.addEventListener('click',()=>{currentView=t.dataset.view;openingPanel?.classList.add('hidden');ordersEl.classList.remove('hidden');document.querySelector('.view-tabs').classList.remove('hidden');document.querySelector('.toolbar').classList.remove('hidden');renderOrders();}));
+
 loginForm.addEventListener('submit',async e=>{e.preventDefault();loginStatus.textContent='Connexion…';const{error}=await supabase.auth.signInWithPassword({email:document.querySelector('#email').value,password:document.querySelector('#password').value});if(error){loginStatus.textContent='Erreur : '+error.message;return;}loginStatus.textContent='';showDashboard();});
 logoutButton.addEventListener('click',async()=>{await supabase.auth.signOut();showLogin();});
 document.querySelector('#refresh').addEventListener('click',()=>loadOrders());
