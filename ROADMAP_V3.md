@@ -1,3 +1,10 @@
+## V3.07 — Planning journalier par service (2026-10-16)
+
+- [x] Administration : une ligne par date sur 60 jours, Midi/Soir indépendants.
+- [x] Activation/désactivation par date avec génération automatique des créneaux de 15 minutes.
+- [x] Supabase : la disponibilité publique repose sur les créneaux datés actifs, plus sur le calendrier hebdomadaire.
+- [ ] Vérifier PC/mobile et enregistrer une commande de test avant de déclarer la version stable.
+
 ## V3.06 — Créneaux de retrait et charge de préparation (2026-10-16)
 
 - Le planning admin ajoute une génération des créneaux sur 60 jours à partir du calendrier hebdomadaire existant.
