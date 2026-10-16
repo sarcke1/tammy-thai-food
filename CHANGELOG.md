@@ -1,3 +1,8 @@
+### Complément V3.05 — Administration commune
+
+- L’administration existante `v2/admin/` lit désormais `orders.sales_channel` et affiche un badge « Client public » ou « Collègue » sur chaque commande.
+- Fichiers d’administration modifiés : `v2/admin/admin.js` et `v2/admin/admin.css`. Aucun fichier du site client V2 n’a été modifié.
+
 ## V3.05 — Activation sécurisée des commandes publiques (2026-10-16)
 
 - Activation du formulaire de commande dans `v3/js/checkout.js` avec l’appel RPC séparé `create_public_pending_order`.
