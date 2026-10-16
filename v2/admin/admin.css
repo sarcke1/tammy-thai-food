@@ -21,3 +21,16 @@
 
 /* ADMIN 1.01 — Origine des commandes V2/V3 */
 .channel-badge{display:inline-block;margin:6px 0 0 8px;padding:5px 9px;border-radius:12px;background:#e2eadf;color:#173f35;font:700 12px Arial,sans-serif;vertical-align:middle}.channel-badge:where(:not(:empty)){white-space:nowrap}
+
+/* ADMIN 1.02 — Planning des créneaux */
+.slots-panel{margin:0 0 18px}
+.slots-panel h2{margin-bottom:8px}
+.slots-panel>button{margin:8px 0}
+.slot-date{margin:22px 0 8px;padding-bottom:7px;border-bottom:1px solid #e2d8c8;text-transform:capitalize}
+.slot-row{display:grid;grid-template-columns:minmax(120px,1fr) minmax(90px,.7fr) minmax(145px,1fr);gap:12px;align-items:center;padding:8px 0;border-bottom:1px dashed #e8dfd2}
+.slot-time{font-weight:bold;font-variant-numeric:tabular-nums}
+.slot-active{display:flex;align-items:center;gap:8px;margin:0;font-weight:normal}
+.slot-active input{width:20px;height:20px;margin:0}
+.slot-capacity{margin:0;font-weight:normal;font-size:12px;color:#65736d}
+.slot-capacity input{width:100%;margin-top:4px;padding:8px}
+@media(max-width:600px){.slot-row{grid-template-columns:1fr 1fr;gap:8px}.slot-time{grid-column:1/-1}.slot-capacity{grid-column:1/-1}.slots-panel{padding:16px}}
