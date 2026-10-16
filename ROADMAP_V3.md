@@ -1,3 +1,11 @@
+## V3.08 — Paiements (en cours)
+
+1. Finaliser et relire les Edge Functions Stripe/PayPal.
+2. Configurer les secrets côté Supabase et les webhooks chez Stripe et PayPal.
+3. Exécuter les tests de paiement en sandbox, puis tester le paiement en espèces.
+4. Vérifier l'affichage dans l'administration et le comportement PC/mobile.
+5. Ne fusionner et publier qu'après validation. Les titres-restaurant restent ultérieurs.
+
 ## V3.07 — Planning journalier par service (2026-10-16)
 
 - [x] Administration : une ligne par date sur 60 jours, Midi/Soir indépendants.
