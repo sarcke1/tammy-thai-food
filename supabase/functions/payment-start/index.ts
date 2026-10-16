@@ -55,7 +55,8 @@ Deno.serve(async (req: Request) => {
       p_phone: String(customer.phone).trim(),
       p_service_slot_id: slotId,
       p_items: items,
-      p_customer_note: String(body.customer_note || "").trim() || null
+      p_customer_note: String(body.customer_note || "").trim() || null,
+      p_payment_provider: provider
     });
     if (rpcError) return reply({ error: rpcError.message || "Commande refusée." }, 400);
     const created = Array.isArray(rpcData) ? rpcData[0] : rpcData;
@@ -126,7 +127,7 @@ Deno.serve(async (req: Request) => {
     return reply({ checkout_url: checkoutUrl, order_number: order.order_number });
   } catch (error) {
     if (orderId) {
-      await admin.from("orders").update({ status: "cancelled", payment_status: "failed" }).eq("id", orderId).eq("payment_status", "unpaid");
+      await admin.from("orders").update({ status: "cancelled", payment_status: "failed" }).eq("id", orderId).in("payment_status", ["unpaid", "pending"]);
     }
     return reply({ error: error instanceof Error ? error.message : "Erreur de préparation du paiement." }, 500);
   }
