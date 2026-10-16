@@ -48,7 +48,7 @@ Deno.serve(async (req: Request) => {
       if (!secret || !sessionId || sessionId !== order.payment_reference) return reply({ error: "Session Stripe invalide." }, 400);
       const response = await fetch("https://api.stripe.com/v1/checkout/sessions/" + encodeURIComponent(sessionId), { headers: { Authorization: "Bearer " + secret } });
       const session = await response.json();
-      if (!response.ok || session.metadata?.order_id !== order.id || session.payment_status !== "paid" || session.status !== "complete") {
+      if (!response.ok || session.metadata?.order_id !== order.id || session.payment_status !== "paid" || session.status !== "complete" || session.currency !== "eur" || Number(session.amount_total) !== Math.round(Number(order.total) * 100)) {
         return reply({ paid: false, error: "Stripe n’a pas encore confirmé le paiement." }, 409);
       }
     } else {
@@ -65,7 +65,7 @@ Deno.serve(async (req: Request) => {
         if (!verifyResponse.ok || paypalData.status !== "COMPLETED") return reply({ paid: false, error: "PayPal n’a pas confirmé le paiement." }, 409);
       }
       const unit = paypalData.purchase_units?.[0];
-      if (paypalData.status !== "COMPLETED" || unit?.custom_id !== order.id || Number(unit?.payments?.captures?.[0]?.amount?.value) !== Number(order.total)) {
+      if (paypalData.status !== "COMPLETED" || unit?.custom_id !== order.id || unit?.payments?.captures?.[0]?.amount?.currency_code !== "EUR" || Number(unit?.payments?.captures?.[0]?.amount?.value) !== Number(order.total)) {
         return reply({ paid: false, error: "Les informations du paiement PayPal ne correspondent pas à la commande." }, 409);
       }
     }
