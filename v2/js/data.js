@@ -5,13 +5,15 @@ const sheet = "../assets/dishes-sheet.webp";
 const pexels = "https://images.pexels.com/photos/";
 
 export const dishes = [
-  { id:"pad", name:"Pad Thaï", price:9, category:"Plats", emoji:"🍜", photo:"Pad thai.png", desc:"Nouilles de riz sautées façon thaïlandaise avec tofu, œuf, ail, échalote, sauce et cacahuètes. Au choix : porc, poulet ou crevettes.", spicy:true, proteinOptions:["Porc","Poulet","Crevettes"] },
+  { id:"pad", name:"Pad Thaï", price:9, category:"Plats", emoji:"🍜", photo:"Pad thai.png", desc:"Nouilles de riz sautées façon thaïlandaise avec œuf, ail, échalote, sauce au tamarin et cacahuètes concassées. Au choix : porc, poulet ou crevettes.", spicy:true, proteinOptions:["Porc","Poulet","Crevettes"] },
 
   {
-    id:"bo-bun", name:"Bò Bún au bœuf", price:10.5, category:"Plats", emoji:"🥢", photo:"Bo bun.png", prep:10,
-    desc:"Bò bún au bœuf : vermicelles de riz (150 g cuits), bœuf sauté mariné (100 g cru), 2 nems, salade, carotte, concombre, menthe, coriandre, oignons frits et cacahuètes concassées (10 g). Sauce nuoc-mâm servie à part. Les cacahuètes sont incluses dans le prix.",
-    allergens:"Allergènes : arachides (cacahuètes). Présence possible de gluten, soja, sésame, poisson et crustacés selon les nems, marinades et sauces utilisées ; à confirmer sur les étiquettes fournisseurs.", spicy:false, fixedProtein:"Bœuf", proteinOptions:["Bœuf"], position:3
+    id:"bo-bun", name:"Bò Bún au bœuf", price:10, category:"Plats", emoji:"🥢", photo:"Bo bun.png", prep:10,
+    desc:"Vermicelles de riz, bœuf sauté, 2 nems, salade, carotte, concombre, menthe, coriandre, oignons frits et cacahuètes concassées. Sauce incluse, au choix : épicée ou non épicée.",
+    allergens:"Allergènes : arachides (cacahuètes). Présence possible de gluten, soja, sésame, poisson et crustacés selon les nems, marinades et sauces utilisées ; à confirmer sur les étiquettes fournisseurs.", spicy:true, fixedProtein:"Bœuf", proteinOptions:["Bœuf"], position:3
   },
+
+
 
   {
     id:"chicken-massena",
