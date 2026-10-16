@@ -279,7 +279,8 @@ function mountCheckout() {
           p_phone: phone,
           p_service_slot_id: selectedSlotId,
           p_items: rpcItems,
-          p_customer_note: comment
+          p_customer_note: comment,
+          p_payment_provider: "cash"
         }
       );
 
