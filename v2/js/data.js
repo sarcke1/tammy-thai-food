@@ -56,7 +56,6 @@ export const dishes = [
   {
     id:"bo-bun", name:"Bò Bún au bœuf", price:10.5, category:"Plats", emoji:"🥢", photo:"Bo bun.png", prep:10,
     desc:"Bò bún au bœuf : vermicelles de riz (150 g cuits), bœuf sauté mariné (100 g cru), 2 nems, salade, carotte, concombre, menthe, coriandre, oignons frits et cacahuètes concassées (10 g). Sauce nuoc-mâm servie à part. Les cacahuètes sont incluses dans le prix.",
-    allergens:"Arachides (cacahuètes). Les nems et la sauce peuvent contenir d’autres allergènes : vérification des étiquettes fournisseurs nécessaire.",
     allergens:"Allergènes : arachides (cacahuètes). Présence possible de gluten, soja, sésame, poisson et crustacés selon les nems, marinades et sauces utilisées ; à confirmer sur les étiquettes fournisseurs.", spicy:false, fixedProtein:"Bœuf", proteinOptions:["Bœuf"], position:3
   },
 
