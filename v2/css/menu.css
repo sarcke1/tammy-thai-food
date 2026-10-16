@@ -19,3 +19,7 @@
   .quantity-row{padding:7px 8px;font-size:.78rem}
   .dish-action{padding:10px 14px!important}
 }
+
+
+/* V2.06.27 — Mention des allergènes sous la description */
+.dish-allergens{margin-top:8px!important;padding:8px 10px;border-left:3px solid #b66b2b;border-radius:4px;background:#fff6e8;color:#69401e;font-size:.82rem!important;line-height:1.4}
