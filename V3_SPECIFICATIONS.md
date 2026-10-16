@@ -1,3 +1,12 @@
+## V3.08 — Paiements (2026-10-16)
+
+- Moyens de paiement : Stripe (carte bancaire), PayPal et espèces au retrait.
+- Pour les paiements en ligne, le prestataire doit être la source de vérité ; la page de retour du navigateur ne suffit jamais à prouver le paiement.
+- Secrets et opérations sensibles côté Supabase Edge Functions uniquement. Aucun secret de prestataire dans les fichiers publics.
+- L'administration affiche le moyen de paiement et le statut de règlement ; aucun marquage manuel ne doit remplacer une confirmation Stripe/PayPal.
+- Les titres-restaurant sont reportés à une évolution ultérieure.
+- Conditions de mise en service : configurer les secrets et webhooks, vérifier les signatures, tester paiements réussis/échoués/abandonnés et doublons, tester PC/mobile. V3.08 n'est pas stable avant validation.
+
 ## V3.07 — Planning journalier par service (2026-10-16)
 
 - L’administration présente 60 jours sous forme de lignes datées avec deux états indépendants : Midi et Soir.
