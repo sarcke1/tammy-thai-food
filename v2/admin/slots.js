@@ -64,7 +64,7 @@ function renderDates(slots,from,to){
 async function toggleService(button){
   const date=button.dataset.date,period=button.dataset.period,nextOpen=button.getAttribute('aria-pressed')!=='true';
   const generated=intervals(new Date(date+'T12:00:00'),period);
-  const fromTime=generated[0].start_time,toTime=generated[generated.length-1].start_time;
+  const fromTime=generated[0].start_time,toTime=generated[generated.length-1].end_time;
   button.disabled=true;
   status.textContent=(nextOpen?'Ouverture':'Fermeture')+' du service '+period+' du '+labelDate(date)+'…';
   try{
