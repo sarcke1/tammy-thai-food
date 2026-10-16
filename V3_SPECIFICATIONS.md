@@ -1,3 +1,11 @@
+## V3.07 — Planning journalier par service (2026-10-16)
+
+- L’administration présente 60 jours sous forme de lignes datées avec deux états indépendants : Midi et Soir.
+- Midi : 11:00–14:00. Soir : 17:30–21:00 du lundi au vendredi, 17:30–22:00 le samedi et dimanche. Créneaux de 15 minutes.
+- L’ouverture d’un service génère/réactive les créneaux de cette date ; sa fermeture les désactive. Les commandes déjà enregistrées restent intactes.
+- La V3 publique propose uniquement les créneaux actifs d’aujourd’hui et demain et filtre selon la charge de préparation. Les fonctions Supabase ne consultent plus le calendrier hebdomadaire pour autoriser un créneau.
+- Capacité par créneau : 45 minutes provisoires, ajustables en administration. Les estimations doivent être confirmées par des tests en cuisine.
+
 ## V3.06 — Créneaux de retrait et charge de préparation (2026-10-16)
 
 - Le planning admin ajoute une génération des créneaux sur 60 jours à partir du calendrier hebdomadaire existant.
