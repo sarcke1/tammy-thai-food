@@ -518,7 +518,9 @@ function renderCart(){
 
               </div>
             `
-            : "<small>Sans piment</small>"}
+            : item.sauce
+              ? ""
+              : "<small>Sans piment</small>"}
 
           <span>${euro(multiple ? entry.total : item.price)}${multiple ? ` <small>(${euro(item.price)} / unité)</small>` : ""}</span>
 
