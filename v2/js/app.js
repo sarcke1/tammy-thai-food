@@ -139,7 +139,8 @@ function getState(dish){
       quantity:0,
       spices:[],
       protein:"",
-      proteinQuantities:{}
+      proteinQuantities:{},
+      sauce:"Sauce non pimentée"
     });
   }
 
@@ -182,6 +183,12 @@ function setProteinQuantity(dish,protein,q){
 
 // ===== Sélecteurs =====
 
+function sauceSelector(dish){
+  if(!dish.sauceOptions?.length)return "";
+  const state=getState(dish);
+  return `<div class="spice-box sauce-box"><div class="spice-box-title">Choix de la sauce</div>
+  ${dish.sauceOptions.map(option=>`<label class="sauce-option"><input type="radio" name="sauce-${dish.id}" value="${option}" data-sauce-option ${state.sauce===option?"checked":""}><span>${option}</span></label>`).join("")}</div>`;
+}
 function proteinSelector(dish){
 
   if(dish.fixedProtein){
@@ -355,6 +362,7 @@ function renderMenu(category="Plats"){
           ${isNemsPromo(d) ? '<p class="promo-note">Offre : 4 achetés + 1 offert</p>' : ""}
 
           ${proteinSelector(d)}
+          ${sauceSelector(d)}
 
           ${quantityControl(d)}
 
@@ -491,6 +499,7 @@ function renderCart(){
           ${item.protein
             ? `<small>${item.protein}</small>`
             : ""}
+          ${item.sauce ? `<small>${item.sauce}</small>` : ""}
 
           ${item.fixedSpice != null
             ? `<small>Piment : niveau ${item.fixedSpice}</small>`
@@ -653,6 +662,8 @@ grid?.addEventListener("click",event=>{
 
   const state=getState(dish);
 
+  if(event.target.matches("[data-sauce-option]")){ state.sauce=event.target.value; return; }
+
   const proteinBtn=event.target.closest("[data-protein-delta]");
   if(proteinBtn){
 
@@ -709,7 +720,7 @@ grid?.addEventListener("click",event=>{
 
     if(dish.fixedProtein){
       for(let i=0;i<state.quantity;i++){
-        addToCart(dish,dish.fixedSpice ?? (dish.spicy ? (state.spices[i] ?? 0) : 0),dish.fixedProtein);
+        addToCart(dish,dish.fixedSpice ?? (dish.spicy ? (state.spices[i] ?? 0) : 0),dish.fixedProtein,state.sauce);
       }
     }else if(dish.proteinOptions?.length){
 
@@ -719,7 +730,7 @@ grid?.addEventListener("click",event=>{
 
         for(let i=0;i<qty;i++){
 
-          addToCart(dish,state.spices[spiceIndex]||0,protein);
+          addToCart(dish,state.spices[spiceIndex]||0,protein,state.sauce);
 
           spiceIndex++;
 
@@ -731,7 +742,7 @@ grid?.addEventListener("click",event=>{
 
       for(let i=0;i<state.quantity;i++){
 
-        addToCart(dish,state.spices[i]||0);
+        addToCart(dish,state.spices[i]||0,"",state.sauce);
 
       }
 
