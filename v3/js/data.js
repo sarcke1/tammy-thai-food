@@ -11,6 +11,8 @@ export const dishes = [
 
   { id:"riz-saute", name:"Riz sauté façon thaï", price:7, category:"Plats", emoji:"🍚", photo:"Riz frit poulet.png", desc:"Riz sauté thaï préparé avec œuf, ail, carottes et coriandre. Au choix : porc, poulet ou crevettes.", spicy:false, proteinOptions:["Porc","Poulet","Crevettes"] },
 
+  { id:"tom-yum", name:"Tom Yum aux crevettes, poulet et poisson", price:11, category:"Plats", emoji:"🍲", photo:"", prep:10, desc:"Soupe thaïlandaise Tom Yum au lait de coco, garnie de crevettes, de poulet tendre, de poisson, de champignons et de tomate. La coriandre fraîche apporte une note herbacée, tandis que la pâte de piment relève le bouillon selon votre goût. Piment au choix.", spicy:true },
+
   { id:"tom-kha-kai", name:"Tom kha kai", price:9, category:"Plats", emoji:"🥥", photo:"Tom kha kai.png", desc:"Soupe thaïlandaise au lait de coco et poulet, avec citronnelle, galanga, feuilles de combava et échalote. Piment au choix de 0 à 3.", spicy:true, servedWithRice:true },
 
   { id:"soupe-nouille-boeuf", name:"Soupe de nouilles au bœuf", price:9, category:"Plats", emoji:"🍜", photo:"Soupe de nouille au bœuf.png", desc:"Soupe de nouilles de riz au bœuf, servie dans un bouillon parfumé avec des boulettes de viande et de la coriandre. Piment au choix.", spicy:true },
