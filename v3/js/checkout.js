@@ -1,5 +1,5 @@
 import { supabase } from './supabase.js';
-import { getCart, clearCart } from './cart.js?v=20261015-05';
+import { getCart, clearCart } from './cart.js?v=20261017-02';
 
 const panel = document.querySelector('#cart-panel');
 const cartContent = document.querySelector('#cart-content');
