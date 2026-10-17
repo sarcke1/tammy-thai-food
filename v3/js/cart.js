@@ -12,6 +12,7 @@ function normalizeItems() {
     quantity: 1,
     spice: Number(item.spice || 0),
     protein: item.protein || '',
+    sauce: item.sauce || '',
     photo: item.photo || '',
     fixedSpice: item.fixedSpice ?? null
   }));
@@ -42,7 +43,7 @@ export function promoDeliveredQuantity(quantity){
 
 export const getCart = () => [...items];
 
-export function addToCart(dish, spice = 0, protein = '') {
+export function addToCart(dish, spice = 0, protein = '', sauce = '') {
   items.push({
     key: `${dish.id}::${Date.now()}::${Math.random().toString(36).slice(2,8)}`,
     id: dish.id,
@@ -53,6 +54,7 @@ export function addToCart(dish, spice = 0, protein = '') {
     spice: dish.spicy ? Math.max(0, Math.min(3, Number(spice)||0)) : 0,
     fixedSpice: dish.fixedSpice ?? null,
     protein,
+    sauce,
 
     quantity: 1
   });
