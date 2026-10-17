@@ -1,3 +1,13 @@
+## 2026-10-18 — Tom Yum aux crevettes, poulet et poisson
+
+- Recette fournie : 2 crevettes, ½ tomate, 1 champignon, 50 g de poulet, 50 g de poisson, 1 gousse d’ail, ¼ d’oignon, 1 branche de coriandre, 1 cuillère à café de pâte de piment et 10 cl de lait de coco.
+- Description publique : soupe thaïlandaise Tom Yum au lait de coco, crevettes, poulet, poisson, champignons, tomate et coriandre ; piment au choix.
+- Prix collègue V2 : 10 €. Prix client V3 : 11 €.
+- Préparation estimée initialement à 10 minutes ; à valider en cuisine.
+- Allergènes identifiés à partir de la recette : crustacés (crevettes) et poisson.
+- Photo non encore ajoutée au dépôt ; vignette de remplacement en attendant.
+- V1 inchangée ; V2 et V3 utilisent le même produit Supabase avec tarifs distincts.
+
 ## 2026-10-17 — Bò Bún sur V2 et V3
 
 - Description souhaitée : belle description culinaire, aucun poids, aucun allergène dans la fiche.
