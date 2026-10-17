@@ -1,3 +1,13 @@
+## 2026-10-18 — Ajout du Tom Yum sur V2 et V3
+
+- Nouveau plat : « Tom Yum aux crevettes, poulet et poisson ».
+- Description commerciale : soupe Tom Yum au lait de coco, crevettes, poulet, poisson, champignons, tomate et coriandre ; piment au choix.
+- Tarifs enregistrés : 10 € collègues (V2) et 11 € clients (V3).
+- Le produit est ajouté au catalogue Supabase avec tarif collègue, tarif public, options de piment et temps de préparation initial estimé à 10 minutes.
+- Allergènes indiqués dans le volet de bas de page : crustacés et poisson.
+- La photo n’est pas encore raccordée au dépôt ; une vignette de remplacement s’affiche en attendant l’ajout du fichier image.
+- V1 inchangée. Tests de commande et vérifications visuelles PC/mobile encore à effectuer.
+
 ## 2026-10-17 — Bò Bún : description et choix de sauce sur V2/V3
 
 - Descriptions V2 et V3 harmonisées : présentation gourmande, sans poids ni mention d’allergènes.
