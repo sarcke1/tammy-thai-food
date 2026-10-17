@@ -9,8 +9,8 @@ export const dishes = [
 
   {
     id:"bo-bun", name:"Bò Bún au bœuf", price:10, category:"Plats", emoji:"🥢", photo:"Bo bun.png", prep:10,
-    desc:"Un Bò Bún généreux et frais, avec bœuf sauté, vermicelles de riz, deux nems croustillants, crudités croquantes, menthe et coriandre fraîches, oignons frits et cacahuètes concassées. Accompagné de sa sauce au choix.",
-    allergens:"À consulter dans la rubrique Allergènes en bas de page.", spicy:false, fixedProtein:"Bœuf", proteinOptions:["Bœuf"], sauceOptions:["Sauce non pimentée","Sauce pimentée"], position:3
+    desc:"Un Bò Bún généreux et frais, composé de vermicelles de riz, de bœuf sauté et de deux nems croustillants, accompagné de crudités croquantes, de menthe et de coriandre fraîches, d’oignons frits et de cacahuètes concassées. Sauce au choix : pimentée ou non pimentée.",
+    spicy:false, fixedProtein:"Bœuf", proteinOptions:["Bœuf"], sauceOptions:["Sauce non pimentée","Sauce pimentée"], position:3
   },
 
 
