@@ -1,3 +1,10 @@
+## 2026-10-17 — Fiche Bò Bún
+
+- Description sans poids ni allergènes.
+- Sauce à sélectionner explicitement : « Sauce non pimentée » ou « Sauce pimentée ». Ce choix remplace toute option générique de niveau de piment pour ce plat.
+- Choix visible dans le panier et dans les détails de commande côté administration.
+- Allergènes présentés uniquement dans le menu déroulant en bas de page, avec les allergènes des fournisseurs à confirmer.
+
 ## V3.07 — Planning journalier par service (2026-10-16)
 
 - L’administration présente 60 jours sous forme de lignes datées avec deux états indépendants : Midi et Soir.
