@@ -23,3 +23,9 @@
 
 /* V2.06.27 — Mention des allergènes sous la description */
 .dish-allergens{margin-top:8px!important;padding:8px 10px;border-left:3px solid #b66b2b;border-radius:4px;background:#fff6e8;color:#69401e;font-size:.82rem!important;line-height:1.4}
+
+
+/* Bò Bún — choix distinct de sauce, pas de niveau de piment */
+.sauce-box{margin-top:10px}
+.sauce-option{display:flex;align-items:center;gap:9px;padding:7px 0;cursor:pointer;font-size:.9rem}
+.sauce-option input{width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
