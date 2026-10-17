@@ -499,6 +499,7 @@ function renderCart(){
           ${item.protein
             ? `<small>${item.protein}</small>`
             : ""}
+          ${item.sauce ? `<small>${item.sauce}</small>` : ""}
 
           ${item.fixedSpice != null
             ? `<small>Piment : niveau ${item.fixedSpice}</small>`
