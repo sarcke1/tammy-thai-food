@@ -1,3 +1,11 @@
+## V2.06.27 — Fiche Bò Bún et choix de sauce
+
+- Bò Bún : description gourmande sans poids ni allergènes ; la mention des cacahuètes concassées reste dans la description.
+- Choix de sauce distinct du piment : « Sauce non pimentée » ou « Sauce pimentée », non pimentée par défaut.
+- Le choix est conservé dans le panier et transmis avec la commande dans la note de l’article.
+- Fichiers : `v2/js/data.js`, `v2/js/app.js`, `v2/js/cart.js`, `v2/js/checkout.js`, `v2/index.html`, documentation projet.
+- V1 inchangée ; tests PC/mobile et vérification du rendu des notifications encore nécessaires.
+
 ## V2.06.27 — Ajout du Bò Bún au bœuf
 
 - Nouveau plat dans V2 : « Bò Bún au bœuf », photo `v2/Bo bun.png`, catégorie Plats.
