@@ -19,3 +19,9 @@
   .quantity-row{padding:7px 8px;font-size:.78rem}
   .dish-action{padding:10px 14px!important}
 }
+
+
+/* Bò Bún — choix distinct de sauce, pas de niveau de piment */
+.sauce-box{margin-top:10px}
+.sauce-option{display:flex;align-items:center;gap:9px;padding:7px 0;cursor:pointer;font-size:.9rem}
+.sauce-option input{width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
