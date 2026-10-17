@@ -87,14 +87,15 @@ console.table(data);
       emoji: local?.emoji || "🍽️",
       photo: local?.photo ?? product.image_url ?? "",
       position: local?.position,
-      desc: product.description || local?.desc || "",
+      desc: local?.id === "bo-bun" ? local.desc : (product.description || local?.desc || ""),
       allergens: local?.allergens || "",
-      spicy: Boolean(product.supports_spice),
+      spicy: local?.id === "bo-bun" ? false : Boolean(product.supports_spice),
       fixedSpice: local?.fixedSpice ?? null,
       fixedProtein: local?.fixedProtein ?? null,
       servedWithRice: local?.servedWithRice ?? false,
       cartAdjustable: local?.cartAdjustable ?? false,
       proteinOptions: product.protein_options || local?.proteinOptions || [],
+      sauceOptions: local?.sauceOptions || [],
       preparation_minutes:
         product.preparation_minutes ??
         local?.preparation_minutes ??
@@ -752,6 +753,7 @@ grid?.addEventListener("click",event=>{
    // une nouvelle sélection indépendante sans réinitialiser le panier.
    state.quantity=0;
    state.spices=[];
+   state.sauce="Sauce non pimentée";
    state.proteinQuantities={};
    state.protein="";
 
