@@ -1,3 +1,10 @@
+## 2026-10-18 — Photo du Tom Yum raccordée
+
+- Utilisation de l’image déjà présente dans le dépôt : `v2/Tom yum crevette poisson blanc et poulet.png`.
+- Le catalogue V2 et V3 pointe désormais vers ce même fichier, servi depuis le répertoire V2 commun aux deux sites.
+- L’image produit Supabase utilise le même nom de fichier pour garder l’affichage cohérent avec le catalogue local.
+- V1 inchangée. Affichage navigateur PC/mobile à vérifier.
+
 ## 2026-10-18 — Ajout du Tom Yum sur V2 et V3
 
 - Nouveau plat : « Tom Yum aux crevettes, poulet et poisson ».
