@@ -66,16 +66,16 @@ begin
     v_quantity := (v_item->>'quantity')::integer;
     v_spice_level := coalesce((v_item->>'spice_level')::integer, 0);
     v_protein := nullif(trim(v_item->>'protein'),'');
-    if nullif(trim(coalesce(v_item->>'sauce','')), '') is not null
-       and (lower(trim(v_product.name)) not like 'bò bún%'
-            or trim(v_item->>'sauce') not in ('Sauce non pimentée','Sauce pimentée')) then
-      raise exception 'Choix de sauce invalide';
-    end if;
     if v_quantity is null or v_quantity <= 0 then raise exception 'Quantité invalide'; end if;
     if v_spice_level < 0 or v_spice_level > 3 then raise exception 'Niveau de piment invalide'; end if;
 
     select * into v_product from public.products where id=(v_item->>'product_id')::uuid and active=true;
     if not found then raise exception 'Produit inexistant ou indisponible'; end if;
+    if nullif(trim(coalesce(v_item->>'sauce','')), '') is not null
+       and (lower(trim(v_product.name)) not like 'bò bún%'
+            or trim(v_item->>'sauce') not in ('Sauce non pimentée','Sauce pimentée')) then
+      raise exception 'Choix de sauce invalide';
+    end if;
 
     if v_spice_level > 0 and v_product.supports_spice = false then raise exception 'Ce produit ne permet pas le choix du piment'; end if;
 
