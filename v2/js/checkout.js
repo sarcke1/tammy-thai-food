@@ -251,7 +251,8 @@ function mountCheckout() {
           product_id: product.id,
           quantity: 1,
           spice_level: spiceLevel,
-          protein: item.protein || (Array.isArray(product.protein_options) && product.protein_options.length === 1 ? product.protein_options[0] : null)
+          protein: item.protein || (Array.isArray(product.protein_options) && product.protein_options.length === 1 ? product.protein_options[0] : null),
+          customer_note: item.sauce ? `Sauce : ${item.sauce}` : null
         });
       }
     }
