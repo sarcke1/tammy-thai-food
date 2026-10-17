@@ -1,3 +1,10 @@
+## 2026-10-18 — Photo du Tom Yum raccordée
+
+- Utilisation de l’image déjà présente dans le dépôt : `v2/Tom yum crevette poisson blanc et poulet.png`.
+- Le catalogue V2 et V3 pointe désormais vers ce même fichier, servi depuis le répertoire V2 commun aux deux sites.
+- L’image produit Supabase utilise le même nom de fichier pour garder l’affichage cohérent avec le catalogue local.
+- V1 inchangée. Affichage navigateur PC/mobile à vérifier.
+
 ## 2026-10-18 — Tom Yum aux crevettes, poulet et poisson
 
 - Recette fournie : 2 crevettes, ½ tomate, 1 champignon, 50 g de poulet, 50 g de poisson, 1 gousse d’ail, ¼ d’oignon, 1 branche de coriandre, 1 cuillère à café de pâte de piment et 10 cl de lait de coco.
