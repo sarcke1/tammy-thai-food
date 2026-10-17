@@ -1,3 +1,12 @@
+## 2026-10-18 — Tom Yum aux crevettes, poulet et poisson
+
+- Recette : 2 crevettes, ½ tomate, 1 champignon, 50 g de poulet, 50 g de poisson, 1 gousse d’ail, ¼ d’oignon, 1 branche de coriandre, 1 c. à café de pâte de piment et 10 cl de lait de coco.
+- Description client : « Soupe thaïlandaise Tom Yum au lait de coco, garnie de crevettes, de poulet tendre, de poisson, de champignons et de tomate. La coriandre fraîche apporte une note herbacée, tandis que la pâte de piment relève le bouillon selon votre goût. Piment au choix. »
+- Tarifs : 10 € V2 collègues ; 11 € V3 clients.
+- Piment au choix ; temps de préparation provisoire : 10 minutes.
+- Allergènes à afficher : crustacés et poisson.
+- Photo à raccorder au dépôt avant validation visuelle finale.
+
 ## 2026-10-17 — Fiche Bò Bún
 
 - Description sans poids ni allergènes.
