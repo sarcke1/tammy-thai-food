@@ -1,3 +1,11 @@
+## 2026-10-17 — Bò Bún sur V2 et V3
+
+- Description souhaitée : belle description culinaire, aucun poids, aucun allergène dans la fiche.
+- Choix obligatoire de sauce distinct du piment : « Sauce non pimentée » ou « Sauce pimentée », non pimentée par défaut. Le Bò Bún ne doit pas afficher le contrôle générique de niveau de piment.
+- Les allergènes restent dans le menu déroulant du bas de page ; arachides (cacahuètes) identifiées, autres allergènes des nems/marinade/sauces à confirmer selon les étiquettes fournisseurs.
+- Choix de sauce transporté jusqu’aux détails de commande et visible dans l’administration.
+- Fichiers clients modifiés uniquement dans V2 et V3 ; V1 inchangée.
+
 ## V2.06.27 — Fiche Bò Bún et choix de sauce
 
 - Bò Bún : description gourmande sans poids ni allergènes ; la mention des cacahuètes concassées reste dans la description.
