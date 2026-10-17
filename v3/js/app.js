@@ -1,7 +1,7 @@
 // ===== TAMMY THAI FOOD V3.10 =====
 // UI Renderer + Event Wiring
 
-import { dishes as localDishes } from "./data.js?v=20261016-04";
+import { dishes as localDishes } from "./data.js?v=20261017-02";
 import { spiceLabel } from "./spice.js";
 import { supabase } from "./supabase.js";
 import {
@@ -16,7 +16,7 @@ import {
   isNemsPromo,
   promoBonus,
   promoDeliveredQuantity
-} from "./cart.js?v=20261015-05";
+} from "./cart.js?v=20261017-02";
 
 let dishes = [...localDishes];
 
@@ -87,7 +87,7 @@ console.table(data);
       emoji: local?.emoji || "🍽️",
       photo: local?.photo ?? product.image_url ?? "",
       position: local?.position,
-      desc: product.description || local?.desc || "",
+      desc: local?.id === "bo-bun" ? local.desc : (product.description || local?.desc || ""),
       spicy: local?.id === "bo-bun" ? false : Boolean(product.supports_spice),
       fixedSpice: local?.fixedSpice ?? null,
       fixedProtein: local?.fixedProtein ?? null,
