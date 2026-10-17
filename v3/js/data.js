@@ -7,8 +7,7 @@ const pexels = "https://images.pexels.com/photos/";
 export const dishes = [
   { id:"pad", name:"Pad Thaï", price:10, category:"Plats", emoji:"🍜", photo:"Pad thai.png", desc:"Nouilles de riz sautées façon thaïlandaise avec œuf, ail, échalote, sauce au tamarin et cacahuètes concassées. Au choix : porc, poulet ou crevettes.", spicy:true, proteinOptions:["Porc","Poulet","Crevettes"] },
 
-  { id:"bo-bun", name:"Bò Bún au bœuf", price:12, colleaguePrice:10, category:"Plats", emoji:"🥢", photo:"Bo bun.png", prep:10, desc:"Vermicelles de riz, bœuf sauté, 2 nems, salade, carotte, concombre, menthe, coriandre, oignons frits et cacahuètes concassées. Sauce incluse, au choix : épicée ou non épicée.",
-    allergens:"Allergènes : arachides (cacahuètes). Présence possible de gluten, soja, sésame, poisson et crustacés selon les nems, marinades et sauces utilisées ; à confirmer sur les étiquettes fournisseurs.", spicy:true, fixedProtein:"Bœuf", proteinOptions:["Bœuf"] },
+  { id:"bo-bun", name:"Bò Bún au bœuf", price:12, colleaguePrice:10, category:"Plats", emoji:"🥢", photo:"Bo bun.png", prep:10, desc:"Un Bò Bún généreux et frais, composé de vermicelles de riz, de bœuf sauté et de deux nems croustillants, accompagné de crudités croquantes, de menthe et de coriandre fraîches, d’oignons frits et de cacahuètes concassées. Sauce au choix : pimentée ou non pimentée.", spicy:false, fixedProtein:"Bœuf", proteinOptions:["Bœuf"], sauceOptions:["Sauce non pimentée","Sauce pimentée"] },
 
   { id:"riz-saute", name:"Riz sauté façon thaï", price:7, category:"Plats", emoji:"🍚", photo:"Riz frit poulet.png", desc:"Riz sauté thaï préparé avec œuf, ail, carottes et coriandre. Au choix : porc, poulet ou crevettes.", spicy:false, proteinOptions:["Porc","Poulet","Crevettes"] },
 
