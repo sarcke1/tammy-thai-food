@@ -144,7 +144,7 @@ export const dishes = [
     spicy:false,
     promo:"4 achetés + 1 offert",
     cartAdjustable:true
-  }
+  },
   {
     id:"menu-enfant-ailes-poulet",
     name:"Menu enfant — ailes de poulet frit",
