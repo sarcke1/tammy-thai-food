@@ -151,7 +151,7 @@ export const dishes = [
     price:6,
     category:"Enfants",
     emoji:"🍗",
-    photo:"",
+    photo:"Aile de poulet frit.png",
     desc:"Un menu gourmand pour les petits appétits : trois ailes de poulet frites, bien dorées et croustillantes, accompagnées au choix de frites ou de riz blanc.",
     spicy:false,
     sideOptions:["Frites","Riz blanc"]
