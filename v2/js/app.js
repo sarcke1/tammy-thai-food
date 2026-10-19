@@ -1,7 +1,7 @@
 // ===== TAMMY THAI FOOD V3.10 =====
 // UI Renderer + Event Wiring
 
-import { dishes as localDishes } from "./data.js?v=20261019-01";
+import { dishes as localDishes } from "./data.js?v=20261019-03";
 import { spiceLabel } from "./spice.js";
 import { supabase } from "./supabase.js";
 import {
@@ -14,9 +14,11 @@ import {
   cartTotal,
   changeQuantity,
   isNemsPromo,
+  isSatayPromo,
+  satayTotal,
   promoBonus,
   promoDeliveredQuantity
-} from "./cart.js?v=20261013-01";
+} from "./cart.js?v=20261019-03";
 
 let dishes = [...localDishes];
 
@@ -360,7 +362,7 @@ function renderMenu(category="Plats"){
 
           <p>${d.desc}</p>
           ${d.allergens ? `<p class="dish-allergens"><strong>Allergènes :</strong> ${d.allergens}</p>` : ""}
-          ${isNemsPromo(d) ? '<p class="promo-note">Offre : 4 achetés + 1 offert</p>' : ""}
+          ${isNemsPromo(d) ? '<p class="promo-note">Offre : 4 achetés + 1 offert</p>' : isSatayPromo(d) ? '<p class="promo-note">Offre : la 3ᵉ brochette à moitié prix</p>' : ""}
 
           ${proteinSelector(d)}
           ${sauceSelector(d)}
@@ -468,7 +470,7 @@ function renderCart(){
 
       const item=entry.item;
       const multiple=entry.quantity>1;
-      const adjustable=item.cartAdjustable || isNemsPromo(item) || item.name==="Rouleau de printemps";
+      const adjustable=item.cartAdjustable || isNemsPromo(item) || isSatayPromo(item) || item.name==="Rouleau de printemps";
 
       return `
       <div class="cart-line">
@@ -522,7 +524,7 @@ function renderCart(){
               ? ""
               : "<small>Sans piment</small>"}
 
-          <span>${euro(multiple ? entry.total : item.price)}${multiple ? ` <small>(${euro(item.price)} / unité)</small>` : ""}</span>
+          <span>${euro(isSatayPromo(item) ? satayTotal(entry.quantity,item.price,Number(item.price)<2) : (multiple ? entry.total : item.price))}${multiple ? ` <small>(${euro(item.price)} / unité)</small>` : ""}</span>
 
         </div>
 
