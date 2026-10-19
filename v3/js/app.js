@@ -512,6 +512,7 @@ function renderCart(){
             ? `<small>${item.protein}</small>`
             : ""}
           ${item.sauce ? `<small>${item.sauce}</small>` : ""}
+          ${item.side ? `<small>Accompagnement : ${escapeCartText(item.side)}</small>` : ""}
 
           ${item.fixedSpice != null
             ? `<small>Piment : niveau ${item.fixedSpice}</small>`
