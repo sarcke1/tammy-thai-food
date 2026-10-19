@@ -1,5 +1,5 @@
 import { supabase } from './supabase.js';
-import { getCart, clearCart } from './cart.js?v=20261019-07';
+import { getCart, clearCart } from './cart.js?v=20261019-08';
 
 const panel = document.querySelector('#cart-panel');
 const cartContent = document.querySelector('#cart-content');
@@ -235,11 +235,11 @@ function mountCheckout() {
             product_id: product.id,
             quantity: 1,
             spice_level: spiceLevel,
-            protein: item.protein || (
+            protein: item.side ? "Accompagnement : " + item.side : (item.protein || (
               Array.isArray(product.protein_options) && product.protein_options.length === 1
                 ? product.protein_options[0]
                 : null
-            )
+            ))
           });
         }
       }
