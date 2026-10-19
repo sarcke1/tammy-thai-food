@@ -1,3 +1,13 @@
+## 2026-10-19 — Brochettes de filet de poulet satay sur V2 et V3
+
+- Deux choix au menu pour rendre la promotion simple à commander sans changer le moteur de panier : 1 brochette et un lot de 3 brochettes.
+- Recette décrite comme filet de poulet mariné, grillé et accompagné d’une sauce satay à part ; produit non épicé.
+- Tarifs V2 collègues : 1,50 € la brochette, 4 € le lot de 3. Tarifs V3 clients : 2 € la brochette, 5 € le lot de 3.
+- Photo utilisée : `v2/Brochette poulet satay.png`.
+- Base matière : 75 g de filet de poulet et 0,20 € de sauce par brochette. Coût complet non calculé (autres ingrédients, pertes et emballage à ajouter).
+- Allergènes de la sauce satay et de la marinade non confirmés ; le menu invite à vérifier les fiches fournisseurs au lieu de présenter une liste non vérifiée.
+- V1 inchangée. Commande réelle et affichage PC/mobile à tester.
+
 ## 2026-10-18 — Photo du Tom Yum raccordée
 
 - Utilisation de l’image déjà présente dans le dépôt : `v2/Tom yum crevette poisson blanc et poulet.png`.
