@@ -239,7 +239,7 @@ function mountCheckout() {
               Array.isArray(product.protein_options) && product.protein_options.length === 1
                 ? product.protein_options[0]
                 : null
-            )),
+            ),
             customer_note: item.side ? "Accompagnement : " + item.side : null
           });
         }
