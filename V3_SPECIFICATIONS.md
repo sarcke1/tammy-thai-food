@@ -1,3 +1,12 @@
+## 2026-10-19 — Menu enfant ailes de poulet frit
+
+- V3 uniquement : « Menu enfant — ailes de poulet frit », 6 €, catégorie Enfants, trois ailes et accompagnement au choix : frites ou riz blanc.
+- V2 collègues : le produit est filtré et n’est pas proposé.
+- Supabase : produit actif en catégorie Enfants ; recette estimée 1,50 € avec riz (1 € les 3 ailes + 0,50 € de riz). Le coût des frites reste à renseigner et n’est pas inclus dans cette estimation.
+- Le choix d’accompagnement est transmis dans la commande.
+- Photo reçue, mais le fichier image n’a pas encore été publié dans les assets du dépôt ; la fiche utilise temporairement le fond de secours.
+- V1 inchangée ; tests PC/mobile et commande de test à effectuer.
+
 ## 2026-10-19 — Promotion satay par lots de trois (finalisation)
 
 - V2 collègues : pastille « Offre : les 3 pour 4 € » ; calcul par groupe de trois à 4 €, puis 1,50 € par brochette restante.
