@@ -18,7 +18,7 @@ import {
   satayTotal,
   promoBonus,
   promoDeliveredQuantity
-} from "./cart.js?v=20261019-05";
+} from "./cart.js?v=20261019-07";
 
 let dishes = [...localDishes];
 
