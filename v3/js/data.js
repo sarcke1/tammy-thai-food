@@ -17,6 +17,10 @@ export const dishes = [
 
   { id:"soupe-nouille-boeuf", name:"Soupe de nouilles au bœuf", price:9, category:"Plats", emoji:"🍜", photo:"Soupe de nouille au bœuf.png", desc:"Soupe de nouilles de riz au bœuf, servie dans un bouillon parfumé avec des boulettes de viande et de la coriandre. Piment au choix.", spicy:true },
 
+  { id:"satay-poulet-1", name:"Brochette de filet de poulet satay — 1 pièce", price:2, category:"Entrées", emoji:"🍢", photo:"Brochette poulet satay.png", desc:"Filets de poulet tendres, marinés aux épices puis grillés jusqu’à obtenir une belle coloration dorée. Servis avec une sauce satay onctueuse à part, pour retrouver les saveurs gourmandes de la cuisine thaïlandaise.", spicy:false, cartAdjustable:true },
+
+  { id:"satay-poulet-3", name:"Brochettes de filet de poulet satay — 3 pièces", price:5, category:"Entrées", emoji:"🍢", photo:"Brochette poulet satay.png", desc:"Filets de poulet tendres, marinés aux épices puis grillés jusqu’à obtenir une belle coloration dorée. Servis avec une sauce satay onctueuse à part, pour retrouver les saveurs gourmandes de la cuisine thaïlandaise. Offre : 3 brochettes pour 5 €.", spicy:false, cartAdjustable:true },
+
   { id:"spring", name:"Rouleau de printemps", price:2, category:"Entrées", emoji:"🌯", photo:"Rouleau de printemps.png", desc:"Rouleau aux crevettes, salade, carotte, menthe, coriandre et nouilles chinoises, roulé dans une feuille de riz. Servi avec sa sauce.", spicy:false, cartAdjustable:true },
 
   {
