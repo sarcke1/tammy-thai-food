@@ -116,4 +116,8 @@ export const cartCount = () => {
   });
   return total;
 };
-export const cartTotal = () => items.reduce((s,i)=>s+Number(i.price||0),0);
+
+export function isSatayPromo(item){ return String(item?.id||"")==="satay-poulet"; }
+export function satayTotal(quantity, unitPrice, colleague=false){ const q=Math.max(0,Number(quantity)||0); return Math.floor(q/3)*(colleague?4:5)+(q%3)*(Number(unitPrice)||0); }
+
+export const cartTotal = () => { const grouped=new Map(); for(const item of items){ const k=String(item.id||item.name); const g=grouped.get(k)||{item,quantity:0,total:0}; g.quantity++; g.total+=Number(item.price||0); grouped.set(k,g); } let total=0; for(const g of grouped.values()){ total += isSatayPromo(g.item) ? satayTotal(g.quantity,g.item.price,Number(g.item.price)<2) : g.total; } return total; };
