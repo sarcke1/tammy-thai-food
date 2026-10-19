@@ -1,7 +1,7 @@
 // ===== TAMMY THAI FOOD V3.10 =====
 // UI Renderer + Event Wiring
 
-import { dishes as localDishes } from "./data.js?v=20261019-03";
+import { dishes as localDishes } from "./data.js?v=20261019-04";
 import { spiceLabel } from "./spice.js";
 import { supabase } from "./supabase.js";
 import {
@@ -18,7 +18,7 @@ import {
   satayTotal,
   promoBonus,
   promoDeliveredQuantity
-} from "./cart.js?v=20261019-03";
+} from "./cart.js?v=20261019-04";
 
 let dishes = [...localDishes];
 
@@ -362,7 +362,7 @@ function renderMenu(category="Plats"){
 
           <p>${d.desc}</p>
           ${sauceSelector(d)}
-          ${isNemsPromo(d) ? '<p class="promo-note">Offre : 4 achetés + 1 offert</p>' : isSatayPromo(d) ? '<p class="promo-note">Offre : la 3ᵉ brochette à moitié prix</p>' : ""}
+          ${isNemsPromo(d) ? '<p class="promo-note">Offre : 4 achetés + 1 offert</p>' : isSatayPromo(d) ? '<p class="promo-note">Offre : les 3 pour 5 €</p>' : ""}
 
           ${proteinSelector(d)}
 
