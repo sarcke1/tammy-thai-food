@@ -1,7 +1,7 @@
 // ===== TAMMY THAI FOOD V3.10 =====
 // UI Renderer + Event Wiring
 
-import { dishes as localDishes } from "./data.js?v=20261019-04";
+import { dishes as localDishes } from "./data.js?v=20261019-05";
 import { spiceLabel } from "./spice.js";
 import { supabase } from "./supabase.js";
 import {
@@ -18,7 +18,7 @@ import {
   satayTotal,
   promoBonus,
   promoDeliveredQuantity
-} from "./cart.js?v=20261019-04";
+} from "./cart.js?v=20261019-05";
 
 let dishes = [...localDishes];
 
@@ -434,7 +434,7 @@ function renderCart(){
   const grouped=new Map();
 
   items.forEach((item,index)=>{
-    const canGroup=!item.protein && !item.spicy && item.fixedSpice == null;
+    const canGroup=(!item.protein && !item.spicy && item.fixedSpice == null) || isSatayPromo(item);
 
     if(!canGroup){
       displayItems.push({
@@ -524,7 +524,7 @@ function renderCart(){
               ? ""
               : "<small>Sans piment</small>"}
 
-          <span>${euro(isSatayPromo(item) ? satayTotal(entry.quantity,item.price,Number(item.price)<2) : (multiple ? entry.total : item.price))}${multiple ? ` <small>(${euro(item.price)} / unité)</small>` : ""}</span>
+          <span>${euro(isSatayPromo(item) ? satayTotal(entry.quantity,item.price,Number(item.price)<2) : (multiple ? entry.total : item.price))}${multiple ? ` <small>(${isSatayPromo(item) ? "tarif promotionnel" : euro(item.price)+" / unité"})</small>` : ""}</span>
 
         </div>
 
