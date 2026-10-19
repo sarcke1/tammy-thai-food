@@ -42,7 +42,8 @@ const categoryOrder = {
   Entrées: 1,
   Plats: 2,
   Desserts: 3,
-  Boissons: 4
+  Boissons: 4,
+  Enfants: 5
 };
 
 // ===== Chargement Supabase =====
@@ -97,6 +98,7 @@ console.table(data);
       cartAdjustable: local?.cartAdjustable ?? false,
       proteinOptions: product.protein_options || local?.proteinOptions || [],
       sauceOptions: local?.sauceOptions || [],
+      sideOptions: local?.sideOptions || [],
       preparation_minutes:
         product.preparation_minutes ??
         local?.preparation_minutes ??
@@ -142,7 +144,8 @@ function getState(dish){
       spices:[],
       protein:"",
       proteinQuantities:{},
-      sauce:"Sauce non pimentée"
+      sauce:"Sauce non pimentée",
+      side:"Frites"
     });
   }
 
@@ -190,6 +193,12 @@ function sauceSelector(dish){
   const state=getState(dish);
   return `<div class="spice-box sauce-box"><div class="spice-box-title">Choix de la sauce</div>
   ${dish.sauceOptions.map(option=>`<label class="sauce-option"><input type="radio" name="sauce-${dish.id}" value="${option}" data-sauce-option ${state.sauce===option?"checked":""}><span>${option}</span></label>`).join("")}</div>`;
+}
+
+function sideSelector(dish){
+  if(!dish.sideOptions?.length) return "";
+  const state=getState(dish);
+  return `<div class="spice-box side-box"><div class="spice-box-title">Accompagnement au choix</div>${dish.sideOptions.map(option=>`<label class="sauce-option"><input type="radio" name="side-${dish.id}" value="${option}" data-side-option ${state.side===option?"checked":""}><span>${option}</span></label>`).join("")}</div>`;
 }
 
 function proteinSelector(dish){
@@ -362,6 +371,7 @@ function renderMenu(category="Plats"){
 
           <p>${d.desc}</p>
           ${sauceSelector(d)}
+          ${sideSelector(d)}
           ${isNemsPromo(d) ? '<p class="promo-note">Offre : 4 achetés + 1 offert</p>' : isSatayPromo(d) ? '<p class="promo-note">Offre : les 3 pour 5 €</p>' : ""}
 
           ${proteinSelector(d)}
@@ -667,6 +677,7 @@ grid?.addEventListener("click",event=>{
   const state=getState(dish);
 
   if(event.target.matches("[data-sauce-option]")){ state.sauce=event.target.value; return; }
+  if(event.target.matches("[data-side-option]")){ state.side=event.target.value; return; }
 
   const proteinBtn=event.target.closest("[data-protein-delta]");
   if(proteinBtn){
@@ -724,7 +735,7 @@ grid?.addEventListener("click",event=>{
 
     if(dish.fixedProtein){
       for(let i=0;i<state.quantity;i++){
-        addToCart(dish,dish.fixedSpice ?? (dish.spicy ? (state.spices[i] ?? 0) : 0),dish.fixedProtein,state.sauce);
+        addToCart(dish,dish.fixedSpice ?? (dish.spicy ? (state.spices[i] ?? 0) : 0),dish.fixedProtein,state.sauce,state.side);
       }
     }else if(dish.proteinOptions?.length){
 
@@ -734,7 +745,7 @@ grid?.addEventListener("click",event=>{
 
         for(let i=0;i<qty;i++){
 
-          addToCart(dish,state.spices[spiceIndex]||0,protein,state.sauce);
+          addToCart(dish,state.spices[spiceIndex]||0,protein,state.sauce,state.side);
 
           spiceIndex++;
 
@@ -746,7 +757,7 @@ grid?.addEventListener("click",event=>{
 
       for(let i=0;i<state.quantity;i++){
 
-        addToCart(dish,state.spices[i]||0,"",state.sauce);
+        addToCart(dish,state.spices[i]||0,"",state.sauce,state.side);
 
       }
 
@@ -757,6 +768,7 @@ grid?.addEventListener("click",event=>{
    state.quantity=0;
    state.spices=[];
    state.sauce="Sauce non pimentée";
+   state.side="Frites";
    state.proteinQuantities={};
    state.protein="";
 
