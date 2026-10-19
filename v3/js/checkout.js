@@ -1,5 +1,5 @@
 import { supabase } from './supabase.js';
-import { getCart, clearCart } from './cart.js?v=20261019-05';
+import { getCart, clearCart } from './cart.js?v=20261019-07';
 
 const panel = document.querySelector('#cart-panel');
 const cartContent = document.querySelector('#cart-content');
@@ -217,7 +217,7 @@ function mountCheckout() {
           ? Math.max(0, Math.min(3, Number(item.spice) || 0))
           : 0;
         const isNems = String(product.name).trim().toLocaleLowerCase("fr-FR").startsWith("nems maison");
-        const isSatay = String(item.id || "").startsWith("satay-poulet");
+        const isSatay = (String(item.id || "").startsWith("satay-poulet") || String(item.name || "").trim().toLocaleLowerCase("fr-FR").startsWith("brochette de filet de poulet satay"));
 
         if (isNems) {
           const existingNems = items.find(entry => entry.product_id === product.id && entry._nemsPromo);
