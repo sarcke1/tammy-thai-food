@@ -2,6 +2,7 @@
 
 - Deux choix au menu pour rendre la promotion simple à commander sans changer le moteur de panier : 1 brochette et un lot de 3 brochettes.
 - Recette décrite comme filet de poulet mariné, grillé et accompagné d’une sauce satay à part ; produit non épicé.
+- Base matière interne par brochette : 75 g de filet de poulet + 0,20 € de sauce satay. Ce n’est pas le coût de revient complet : prix d’achat du poulet, marinade, pertes et emballage restent à ajouter avant calcul de marge.
 - Tarifs V2 collègues : 1,50 € la brochette, 4 € le lot de 3. Tarifs V3 clients : 2 € la brochette, 5 € le lot de 3.
 - Photo utilisée : `v2/Brochette poulet satay.png`.
 - Base matière : 75 g de filet de poulet et 0,20 € de sauce par brochette. Coût complet non calculé (autres ingrédients, pertes et emballage à ajouter).
