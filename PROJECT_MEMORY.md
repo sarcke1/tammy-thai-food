@@ -1,3 +1,10 @@
+## 2026-10-20 — Correctif disponibilité soupe de nouilles au bœuf
+
+- V3 : la « Soupe de nouilles au bœuf » est associée explicitement à la protéine obligatoire « Bœuf », sans modifier sa fiche ni son affichage.
+- Quand le bœuf est désactivé, le plat est masqué, les articles concernés sont retirés du panier et le checkout bloque toute ligne devenue indisponible.
+- Fichiers modifiés pour ce correctif : `v3/js/app.js`, `v3/js/checkout.js`, `v3/index.html`, `CHANGELOG.md`, `PROJECT_MEMORY.md`. V1 et V2 inchangées.
+- Vérification du code effectuée ; test réel PC/mobile encore requis avant validation stable.
+
 ## 2026-10-20 — Finalisation technique des disponibilités
 
 - Les menus V2/V3 actualisent les produits et les protéines toutes les 60 secondes.
