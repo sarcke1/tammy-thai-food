@@ -1,3 +1,10 @@
+## V3.13 — Sauce individuelle du Bò Bún et nom du plat enfant
+
+- Bò Bún : le choix de sauce est désormais individuel pour chaque unité ajoutée. Après avoir choisi une quantité, chaque ligne « Plat 1 », « Plat 2 », etc. permet de choisir sauce pimentée ou non pimentée. Chaque Bò Bún est ajouté au panier avec sa propre sauce.
+- Plat enfant : le nom affiché devient « Ailes de poulet frit », sans la mention « Menu enfant ». La référence du produit dans Supabase est conservée pour préserver le chargement des données.
+- Fichiers concernés : `v3/js/app.js`, `v3/js/data.js`, `v3/index.html`, `CHANGELOG.md`, `PROJECT_MEMORY.md`. V1 et V2 non modifiées.
+- Validation visuelle sur PC et mobile encore nécessaire.
+
 ## V3.12 — Correction de la catégorie Enfants
 
 - Correction du chargement du menu client V3 : les produits actifs de la catégorie « Enfants » ne sont plus exclus des produits récupérés depuis Supabase.
