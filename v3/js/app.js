@@ -69,6 +69,7 @@ async function loadProductsFromSupabase(){
       const requiredProtein=fixedProtein ?? (local?.id==="tom-kha-kai" ? "Poulet" : local?.id==="soupe-nouille-boeuf" ? "Bœuf" : null);
       return {
         id:product.id,
+        localId:local?.id||null,
         name:local?.id==="menu-enfant-ailes-poulet" ? "Ailes de poulet frit" : product.name,
         price:Number(local?.price ?? product.price),
         category:product.product_categories?.name||local?.category||"Plats",
@@ -193,7 +194,7 @@ function setProteinQuantity(dish,protein,q){
 function sauceSelector(dish){
   if(!dish.sauceOptions?.length)return "";
   const state=getState(dish);
-  if(dish.id==="bo-bun"){
+  if(dish.localId==="bo-bun"){
     if(state.quantity===0)return `<div class="spice-box sauce-box"><div class="spice-box-title">Sauce au choix pour chaque plat</div><p>Ajoutez une quantité pour choisir la sauce de chaque Bò Bún.</p></div>`;
     while(state.sauces.length<state.quantity)state.sauces.push("Sauce non pimentée");
     state.sauces.length=state.quantity;
@@ -733,7 +734,7 @@ grid?.addEventListener("click",event=>{
 
     if(dish.fixedProtein){
       for(let i=0;i<state.quantity;i++){
-        addToCart(dish,dish.fixedSpice ?? (dish.spicy ? (state.spices[i] ?? 0) : 0),dish.fixedProtein,dish.id==="bo-bun" ? (state.sauces[i] ?? "Sauce non pimentée") : state.sauce,state.sides[i] ?? state.side);
+        addToCart(dish,dish.fixedSpice ?? (dish.spicy ? (state.spices[i] ?? 0) : 0),dish.fixedProtein,dish.localId==="bo-bun" ? (state.sauces[i] ?? "Sauce non pimentée") : state.sauce,state.sides[i] ?? state.side);
       }
     }else if(dish.proteinOptions?.length){
 
