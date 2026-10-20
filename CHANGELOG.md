@@ -1,3 +1,8 @@
+## 2026-10-20 — Affichage des protéines en rupture
+
+- Les options de protéines indisponibles sont visuellement atténuées et portent explicitement la mention « Indisponible ».
+- Les contrôles de quantité ne sont pas proposés pour une protéine désactivée.
+
 ## 2026-10-20 — Préservation du panier entre V2 et V3
 
 - La synchronisation des ruptures ne retire plus un produit actif simplement parce qu’il n’est pas affiché dans la version visitée (ex. produit réservé à la V3).
