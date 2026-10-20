@@ -1,3 +1,9 @@
+## 2026-10-20 — Contrôle des ruptures à la commande
+
+- La validation V2 et V3 vérifie que chaque produit du panier est encore actif et que la protéine choisie est disponible.
+- Les articles devenus indisponibles sont retirés du panier local et la validation est interrompue pour laisser le client vérifier le nouveau panier.
+- En cas d’erreur lors de la lecture des disponibilités, la commande est bloquée par sécurité.
+
 ## 2026-10-20 — Disponibilités côté menu
 
 - Les menus V2 et V3 rechargent les produits actifs et l’état des protéines depuis Supabase.
