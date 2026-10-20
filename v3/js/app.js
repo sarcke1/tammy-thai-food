@@ -49,74 +49,73 @@ const categoryOrder = {
 // ===== Chargement Supabase =====
 
 async function loadProductsFromSupabase(){
-
-  const { data, error } = await supabase
-    .from("products")
-    .select(`
-      id,
-      name,
-      price,
-      description,
-      image_url,
-      preparation_minutes,
-      supports_spice,
-      protein_options,
-      product_categories(name)
-    `)
-    .eq("active", true);
-  console.log("SUPABASE ERROR :", error);
-console.table(data);
-
-  if(error){
-    console.warn("Fallback data.js :", error.message);
+  const [productResult, proteinResult] = await Promise.all([
+    supabase.from("products").select("id,name,price,description,image_url,preparation_minutes,supports_spice,protein_options,product_categories(name)").eq("active", true),
+    supabase.from("protein_availability").select("protein_name,available")
+  ]);
+  if(productResult.error || proteinResult.error){
+    console.warn("Disponibilités Supabase non actualisées :", productResult.error?.message || proteinResult.error?.message);
     return;
   }
-
-  if(!data?.length){
-    return;
-  }
-
-  dishes = data
-    .map(product => {
-
-     const local = localDishes.find(
-  d => d.name.trim().toLowerCase() === product.name.trim().toLowerCase()
-);
-     return {
-      id: product.id, // UUID Supabase à conserver
-      name: product.name,
-      price: Number(local?.price ?? product.price),
-      category: product.product_categories?.name || local?.category || "Plats",
-      emoji: local?.emoji || "🍽️",
-      photo: local?.photo || product.image_url || "",
-      position: local?.position,
-      desc: local?.id === "bo-bun" ? local.desc : (product.description || local?.desc || ""),
-      spicy: local?.id === "bo-bun" ? false : Boolean(product.supports_spice),
-      fixedSpice: local?.fixedSpice ?? null,
-      fixedProtein: local?.fixedProtein ?? null,
-      servedWithRice: local?.servedWithRice ?? false,
-      cartAdjustable: local?.cartAdjustable ?? false,
-      proteinOptions: product.protein_options || local?.proteinOptions || [],
-      sauceOptions: local?.sauceOptions || [],
-      sideOptions: local?.sideOptions || [],
-      preparation_minutes:
-        product.preparation_minutes ??
-        local?.preparation_minutes ??
-        null,
-      menuPosition: local ? localDishes.indexOf(local) : 999
-    };
-
+  const data=productResult.data||[];
+  const proteinStatus=new Map((proteinResult.data||[]).map(p=>[String(p.protein_name).trim().toLocaleLowerCase("fr-FR"),p.available!==false]));
+  const isProteinAvailable=name=>proteinStatus.get(String(name||"").trim().toLocaleLowerCase("fr-FR"))!==false;
+  const activeNames=new Set(data.map(p=>String(p.name||"").trim().toLocaleLowerCase("fr-FR")));
+  const nextDishes=data
+    .filter(product => product.product_categories?.name !== "Enfants")
+    .map(product=>{
+      const local=localDishes.find(d=>d.name.trim().toLocaleLowerCase("fr-FR")===product.name.trim().toLocaleLowerCase("fr-FR"));
+      const options=Array.isArray(product.protein_options)&&product.protein_options.length ? product.protein_options : (local?.proteinOptions||[]);
+      const fixedProtein=local?.fixedProtein ?? null;
+      return {
+        id:product.id,
+        name:product.name,
+        price:Number(local?.price ?? product.price),
+        category:product.product_categories?.name||local?.category||"Plats",
+        emoji:local?.emoji||"🍽️",
+        photo:local?.photo || product.image_url || "",
+        position:local?.position,
+        desc:local?.id==="bo-bun"?local.desc:(product.description||local?.desc||""),
+        allergens:local?.allergens||"",
+        spicy:local?.id==="bo-bun"?false:Boolean(product.supports_spice),
+        fixedSpice:local?.fixedSpice??null,
+        fixedProtein,
+        servedWithRice:local?.servedWithRice??false,
+        cartAdjustable:local?.cartAdjustable??false,
+        proteinOptions:options,
+        unavailableProteins:options.filter(option=>!isProteinAvailable(option)),
+        sauceOptions:local?.sauceOptions||[],
+        sideOptions:local?.sideOptions||[],
+        preparation_minutes:product.preparation_minutes??local?.preparation_minutes??null,
+        menuPosition:local?localDishes.indexOf(local):999
+      };
     })
-    .sort((a,b)=>
-      (categoryOrder[a.category]||99)-
-      (categoryOrder[b.category]||99)||
-      a.menuPosition-b.menuPosition
-    );
-
-  renderMenu(
-    document.querySelector(".category-row .active")?.textContent.trim() ||
-    "Tous"
-  );
+    .filter(dish=>{
+      if(dish.fixedProtein && !isProteinAvailable(dish.fixedProtein))return false;
+      if(dish.proteinOptions.length && dish.proteinOptions.every(option=>!isProteinAvailable(option)))return false;
+      return true;
+    })
+    .sort((a,b)=>(categoryOrder[a.category]||99)-(categoryOrder[b.category]||99)||a.menuPosition-b.menuPosition);
+  dishes=nextDishes;
+  const visibleNames=new Set(nextDishes.map(d=>String(d.name).trim().toLocaleLowerCase("fr-FR")));
+  getCart().forEach(item=>{
+    const name=String(item.name||"").trim().toLocaleLowerCase("fr-FR");
+    const local=localDishes.find(d=>d.name.trim().toLocaleLowerCase("fr-FR")===name);
+    const protein=item.protein || local?.fixedProtein || "";
+    if(!activeNames.has(name) || !visibleNames.has(name) || (protein && !isProteinAvailable(protein))){
+      removeItem(item.key);
+    }
+  });
+  for(const dish of nextDishes){
+    const state=cardStates.get(dish.id);
+    if(state && dish.unavailableProteins.length){
+      dish.unavailableProteins.forEach(protein=>{state.proteinQuantities[protein]=0;});
+      state.quantity=Object.values(state.proteinQuantities).reduce((sum,value)=>sum+Number(value||0),0);
+      syncSpices(state,dish);
+    }
+  }
+  renderMenu(document.querySelector(".category-row .active")?.textContent.trim()||"Tous");
+  renderCart();
 }
 
 // ===== Photos =====
@@ -207,44 +206,26 @@ function sideSelector(dish){
 }
 
 function proteinSelector(dish){
-
   if(dish.fixedProtein){
     return "<div class=\"spice-box protein-box\"><div class=\"spice-box-title\">Viande</div><div class=\"spice-row\"><span>"+dish.fixedProtein+"</span><b>Inclus</b></div></div>";
   }
-
-  if(!dish.proteinOptions?.length){
-    return "";
-  }
-
+  if(!dish.proteinOptions?.length)return "";
   const state=getState(dish);
-
   return `
     <div class="spice-box protein-box">
-
-      <div class="spice-box-title">
-        Choix
-      </div>
-
-      ${dish.proteinOptions.map(option=>`
-
-        <div class="spice-row protein-row" data-protein-row="${option}">
-
+      <div class="spice-box-title">Choix</div>
+      ${dish.proteinOptions.map(option=>{
+        const unavailable=dish.unavailableProteins?.includes(option);
+        if(unavailable)return `<div class="spice-row protein-row protein-unavailable"><span>${option}</span><b>Indisponible</b></div>`;
+        return `<div class="spice-row protein-row" data-protein-row="${option}">
           <span>${option}</span>
-
           <div class="spice-row-controls">
-
             <button type="button" data-protein-delta="-1">−</button>
-
             <b>${state.proteinQuantities[option]||0}</b>
-
             <button type="button" data-protein-delta="1">+</button>
-
           </div>
-
-        </div>
-
-      `).join("")}
-
+        </div>`;
+      }).join("")}
     </div>
   `;
 }
@@ -906,3 +887,4 @@ renderMenu("Plats");
 renderCart();
 
 loadProductsFromSupabase();
+setInterval(()=>{if(!document.hidden)loadProductsFromSupabase();},60000);
