@@ -1,3 +1,13 @@
+## 2026-10-20 — Gestion des disponibilités
+
+- L’administration commune `v2/admin/` comporte un onglet « Disponibilité » pour activer/désactiver les fiches produits et les protéines.
+- `products.active` pilote la disponibilité d’un produit sans supprimer sa fiche.
+- Nouvelle table Supabase `protein_availability` : Porc, Poulet, Bœuf, Crevettes et Poisson, avec lecture publique et modification réservée aux administrateurs authentifiés via `is_admin()`.
+- Les menus V2 et V3 retirent les produits désactivés ; dans les plats à choix multiples, une protéine en rupture reste affichée avec « Indisponible » et ses boutons de quantité sont supprimés. Un plat à protéine fixe indisponible est masqué.
+- Le panier local est nettoyé quand un produit ou la protéine sélectionnée devient indisponible. La validation de commande revérifie les disponibilités et bloque l’enregistrement si des lignes ont été retirées.
+- Actualisation automatique des menus toutes les 60 secondes. La V1 n’est pas modifiée.
+- À valider manuellement sur PC et mobile avant de déclarer cette évolution stable.
+
 ## 2026-10-19 — Menu enfant ailes de poulet frit
 
 - V3 uniquement : « Menu enfant — ailes de poulet frit », 6 €, catégorie Enfants, trois ailes et accompagnement au choix : frites ou riz blanc.
