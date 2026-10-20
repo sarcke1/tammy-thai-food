@@ -1,3 +1,10 @@
+## V3.12 — Correction de la catégorie Enfants
+
+- Cause identifiée : `v3/js/app.js` excluait explicitement les produits Supabase dont la catégorie était « Enfants », même lorsqu'ils étaient actifs.
+- Correction : suppression de ce filtre d'exclusion. Le menu enfant actif est maintenant inclus dans les données du menu client.
+- Fichiers modifiés : `v3/js/app.js`, `v3/index.html`, `CHANGELOG.md`, `PROJECT_MEMORY.md`.
+- V1 et V2 laissées intactes pour cette correction. Vérification finale à faire sur PC et mobile.
+
 ## 2026-10-20 — Correctif disponibilité soupe de nouilles au bœuf
 
 - V3 : la « Soupe de nouilles au bœuf » est associée explicitement à la protéine obligatoire « Bœuf », sans modifier sa fiche ni son affichage.
