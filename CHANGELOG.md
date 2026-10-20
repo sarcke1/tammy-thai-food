@@ -1,3 +1,8 @@
+## 2026-10-20 — Rupture des plats à protéine fixe
+
+- La rupture de poulet masque également le Tom kha kai, dont la recette utilise du poulet sans proposer de choix de viande.
+- La protéine obligatoire est distinguée de l’affichage du choix afin de conserver l’interface actuelle des fiches.
+
 ## 2026-10-20 — Affichage des protéines en rupture
 
 - Les options de protéines indisponibles sont visuellement atténuées et portent explicitement la mention « Indisponible ».
