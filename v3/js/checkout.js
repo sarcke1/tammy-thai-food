@@ -224,7 +224,7 @@ function mountCheckout() {
       ]));
       const unavailableItems = cartItems.filter(item => {
         const name = String(item.name).trim().toLocaleLowerCase("fr-FR");
-        const protein = String(item.protein || (name === "tom kha kai" ? "Poulet" : "")).trim().toLocaleLowerCase("fr-FR");
+        const protein = String(item.protein || (name === "tom kha kai" ? "Poulet" : name === "soupe de nouilles au bœuf" ? "Bœuf" : "")).trim().toLocaleLowerCase("fr-FR");
         return !productsByName.has(name) || (protein && proteinStatus.get(protein) === false);
       });
       if (unavailableItems.length) {
