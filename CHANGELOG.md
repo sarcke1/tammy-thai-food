@@ -1,3 +1,8 @@
+## 2026-10-20 — Préservation du panier entre V2 et V3
+
+- La synchronisation des ruptures ne retire plus un produit actif simplement parce qu’il n’est pas affiché dans la version visitée (ex. produit réservé à la V3).
+- Les lignes sont retirées uniquement si le produit est désactivé ou si la protéine réellement choisie est indisponible.
+
 ## 2026-10-20 — Contrôle des ruptures à la commande
 
 - La validation V2 et V3 vérifie que chaque produit du panier est encore actif et que la protéine choisie est disponible.
