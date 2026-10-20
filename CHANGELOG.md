@@ -1,3 +1,9 @@
+## V3.11 — Disponibilité du bœuf dans la soupe de nouilles (2026-10-20)
+
+- La « Soupe de nouilles au bœuf » est désormais reconnue comme un plat à protéine fixe « Bœuf » dans le menu V3.
+- Si le bœuf est désactivé dans l’administration, la fiche est masquée, une ligne déjà présente au panier est retirée au rafraîchissement et la validation vérifie aussi cette indisponibilité.
+- V1 et V2 non modifiées. Contrôles navigateur PC/mobile à effectuer après publication.
+
 ## 2026-10-20 — Validation du Tom kha kai en rupture de poulet
 
 - Le contrôle à la validation reconnaît le Tom kha kai comme un plat à poulet fixe, même si le choix de viande n’est pas affiché sur sa fiche.
