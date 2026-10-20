@@ -96,12 +96,11 @@ async function loadProductsFromSupabase(){
     })
     .sort((a,b)=>(categoryOrder[a.category]||99)-(categoryOrder[b.category]||99)||a.menuPosition-b.menuPosition);
   dishes=nextDishes;
-  const visibleNames=new Set(nextDishes.map(d=>String(d.name).trim().toLocaleLowerCase("fr-FR")));
   getCart().forEach(item=>{
     const name=String(item.name||"").trim().toLocaleLowerCase("fr-FR");
     const local=localDishes.find(d=>d.name.trim().toLocaleLowerCase("fr-FR")===name);
     const protein=item.protein || local?.fixedProtein || "";
-    if(!activeNames.has(name) || !visibleNames.has(name) || (protein && !isProteinAvailable(protein))){
+    if(!activeNames.has(name) || (protein && !isProteinAvailable(protein))){
       removeItem(item.key);
     }
   });
