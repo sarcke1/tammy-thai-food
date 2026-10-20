@@ -1,3 +1,10 @@
+## V2 collègues — Correction de la validation du panier (20 octobre 2026)
+
+- Erreur observée : « Choix de sauce invalide » lors de la validation d’un panier contenant notamment un rouleau de printemps et une soupe de nouilles au bœuf.
+- Cause confirmée dans `supabase/migrations/20261017103000_v2_bobun_sauce_selection.sql` : `create_pending_order` n’autorise le champ `sauce` que pour les produits dont le nom commence par « Bò Bún ». Or `v2/js/app.js` transmettait l’état de sauce par défaut à tous les produits.
+- Correction : `v2/js/app.js` ne transmet la sauce que si le produit propose `sauceOptions`; `v2/js/checkout.js` ne transmet le champ sauce et la note que pour le Bò Bún, et ignore les anciennes valeurs sauvegardées sur les autres articles. Cache actualisé dans `v2/index.html`.
+- Fichiers modifiés : `v2/js/app.js`, `v2/js/checkout.js`, `v2/index.html`, `CHANGELOG.md`, `PROJECT_MEMORY.md`. V1 inchangée. Tester une commande collègue sur PC et mobile avant de considérer le correctif stable.
+
 ## V3.14 — Correction du sélecteur individuel de sauce du Bò Bún
 
 - Le Bò Bún chargé depuis Supabase reçoit un UUID comme `dish.id`. Le test `dish.id === "bo-bun"` était donc faux ; le sélecteur restait générique et n’imitait pas celui des accompagnements des ailes de poulet.
