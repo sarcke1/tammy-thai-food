@@ -66,6 +66,7 @@ async function loadProductsFromSupabase(){
       const local=localDishes.find(d=>d.name.trim().toLocaleLowerCase("fr-FR")===product.name.trim().toLocaleLowerCase("fr-FR"));
       const options=Array.isArray(product.protein_options)&&product.protein_options.length ? product.protein_options : (local?.proteinOptions||[]);
       const fixedProtein=local?.fixedProtein ?? null;
+      const requiredProtein=fixedProtein ?? (local?.id==="tom-kha-kai" ? "Poulet" : null);
       return {
         id:product.id,
         name:product.name,
@@ -79,6 +80,7 @@ async function loadProductsFromSupabase(){
         spicy:local?.id==="bo-bun"?false:Boolean(product.supports_spice),
         fixedSpice:local?.fixedSpice??null,
         fixedProtein,
+        requiredProtein,
         servedWithRice:local?.servedWithRice??false,
         cartAdjustable:local?.cartAdjustable??false,
         proteinOptions:options,
@@ -90,7 +92,7 @@ async function loadProductsFromSupabase(){
       };
     })
     .filter(dish=>{
-      if(dish.fixedProtein && !isProteinAvailable(dish.fixedProtein))return false;
+      if(dish.requiredProtein && !isProteinAvailable(dish.requiredProtein))return false;
       if(dish.proteinOptions.length && dish.proteinOptions.every(option=>!isProteinAvailable(option)))return false;
       return true;
     })
@@ -99,7 +101,7 @@ async function loadProductsFromSupabase(){
   getCart().forEach(item=>{
     const name=String(item.name||"").trim().toLocaleLowerCase("fr-FR");
     const local=localDishes.find(d=>d.name.trim().toLocaleLowerCase("fr-FR")===name);
-    const protein=item.protein || local?.fixedProtein || "";
+    const protein=item.protein || local?.fixedProtein || (local?.id==="tom-kha-kai" ? "Poulet" : "");
     if(!activeNames.has(name) || (protein && !isProteinAvailable(protein))){
       removeItem(item.key);
     }
