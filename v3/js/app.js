@@ -62,7 +62,6 @@ async function loadProductsFromSupabase(){
   const isProteinAvailable=name=>proteinStatus.get(String(name||"").trim().toLocaleLowerCase("fr-FR"))!==false;
   const activeNames=new Set(data.map(p=>String(p.name||"").trim().toLocaleLowerCase("fr-FR")));
   const nextDishes=data
-    .filter(product => product.product_categories?.name !== "Enfants")
     .map(product=>{
       const local=localDishes.find(d=>d.name.trim().toLocaleLowerCase("fr-FR")===product.name.trim().toLocaleLowerCase("fr-FR"));
       const options=Array.isArray(product.protein_options)&&product.protein_options.length ? product.protein_options : (local?.proteinOptions||[]);
