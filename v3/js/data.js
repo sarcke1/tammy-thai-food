@@ -157,6 +157,12 @@ export const dishes = [
     sideOptions:["Frites","Riz blanc"]
   },
 
+
+  { id:"coca-classique-33", name:"Coca-Cola classique 33 cl", price:2, category:"Boissons", emoji:"🥤", photo:"Coca 33.png", desc:"Coca-Cola classique — canette de 33 cl.", spicy:false },
+  { id:"coca-zero-33", name:"Coca-Cola Zero 33 cl", price:2, category:"Boissons", emoji:"🥤", photo:"Coca zero 33.png", desc:"Coca-Cola Zero — canette de 33 cl.", spicy:false },
+  { id:"ice-tea-peche-33", name:"Lipton Ice Tea pêche 33 cl", price:2, category:"Boissons", emoji:"🧋", photo:"Ice tea lipton 33.png", desc:"Lipton Ice Tea pêche — canette de 33 cl.", spicy:false },
+  { id:"oasis-tropical-33", name:"Oasis Tropical 33 cl", price:2, category:"Boissons", emoji:"🥤", photo:"Oasis tropical 33.png", desc:"Oasis Tropical — canette de 33 cl.", spicy:false },
+
 ];
 
 export const categories=["Entrées","Plats","Desserts","Boissons","Enfants"];
