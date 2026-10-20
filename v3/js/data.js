@@ -147,7 +147,7 @@ export const dishes = [
   },
   {
     id:"menu-enfant-ailes-poulet",
-    name:"Ailes de poulet frit",
+    name:"Menu enfant — ailes de poulet frit",
     price:6,
     category:"Enfants",
     emoji:"🍗",
