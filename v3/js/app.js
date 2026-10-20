@@ -102,7 +102,7 @@ async function loadProductsFromSupabase(){
   getCart().forEach(item=>{
     const name=String(item.name||"").trim().toLocaleLowerCase("fr-FR");
     const local=localDishes.find(d=>d.name.trim().toLocaleLowerCase("fr-FR")===name);
-    const protein=item.protein || local?.fixedProtein || (local?.id==="tom-kha-kai" ? "Poulet" : "");
+    const protein=item.protein || local?.fixedProtein || (local?.id==="tom-kha-kai" ? "Poulet" : local?.id==="soupe-nouille-boeuf" ? "Bœuf" : "");
     if(!activeNames.has(name) || (protein && !isProteinAvailable(protein))){
       removeItem(item.key);
     }
