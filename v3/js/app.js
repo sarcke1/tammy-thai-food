@@ -69,7 +69,7 @@ async function loadProductsFromSupabase(){
       const requiredProtein=fixedProtein ?? (local?.id==="tom-kha-kai" ? "Poulet" : local?.id==="soupe-nouille-boeuf" ? "Bœuf" : null);
       return {
         id:product.id,
-        name:product.name,
+        name:local?.id==="menu-enfant-ailes-poulet" ? "Ailes de poulet frit" : product.name,
         price:Number(local?.price ?? product.price),
         category:product.product_categories?.name||local?.category||"Plats",
         emoji:local?.emoji||"🍽️",
