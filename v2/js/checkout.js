@@ -1,5 +1,5 @@
 import { supabase } from './supabase.js';
-import { getCart, clearCart } from './cart.js?v=20261019-08';
+import { getCart, clearCart, removeItem } from './cart.js?v=20261019-08';
 
 const panel = document.querySelector('#cart-panel');
 const cartContent = document.querySelector('#cart-content');
@@ -200,7 +200,7 @@ function mountCheckout() {
     const { data: products, error: productsError } =
       await supabase
         .from("products")
-        .select("id,name,protein_options");
+        .select("id,name,protein_options,active").eq("active", true);
 
     if (productsError) {
       status.textContent = "Erreur produits : " + productsError.message;
@@ -210,11 +210,35 @@ function mountCheckout() {
 
     const productsByName = new Map(
       (products || []).map(product => [
-        product.name.trim().toLowerCase(),
+        String(product.name).trim().toLocaleLowerCase("fr-FR"),
         product
       ])
     );
-
+    const { data: proteinRows, error: proteinError } = await supabase
+      .from("protein_availability")
+      .select("protein_name,available");
+    if (proteinError) {
+      status.textContent = "Impossible de vérifier les ruptures de viande : " + proteinError.message;
+      submit.disabled = false;
+      return;
+    }
+    const proteinStatus = new Map((proteinRows || []).map(row => [
+      String(row.protein_name).trim().toLocaleLowerCase("fr-FR"),
+      row.available !== false
+    ]));
+    const unavailableItems = cartItems.filter(item => {
+      const name = String(item.name).trim().toLocaleLowerCase("fr-FR");
+      const protein = String(item.protein || "").trim().toLocaleLowerCase("fr-FR");
+      return !productsByName.has(name) || (protein && proteinStatus.get(protein) === false);
+    });
+    if (unavailableItems.length) {
+      unavailableItems.forEach(item => removeItem(item.key));
+      status.textContent = unavailableItems.length === 1
+        ? "Un article en rupture a été retiré du panier. Vérifiez votre panier avant de recommencer."
+        : unavailableItems.length + " articles en rupture ont été retirés du panier. Vérifiez votre panier avant de recommencer.";
+      submit.disabled = false;
+      return;
+    }
     const items = [];
 
     for (const item of cartItems) {
