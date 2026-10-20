@@ -1,3 +1,9 @@
+## V2 collègues — Correction de la validation du panier (20 octobre 2026)
+
+- Cause : le moteur du menu transmettait la valeur par défaut « Sauce non pimentée » pour tous les plats, y compris le rouleau de printemps et la soupe de nouilles au bœuf. La fonction Supabase `create_pending_order` refuse un choix de sauce pour les produits autres que le Bò Bún, ce qui déclenchait « Choix de sauce invalide ».
+- Correction : le menu ne transmet une sauce que pour les plats proposant ce choix ; le checkout n’envoie le champ `sauce` et la note associée que pour le Bò Bún. Pour les anciens paniers locaux, les valeurs de sauce obsolètes des autres plats sont ignorées à la validation.
+- Fichiers modifiés : `v2/js/app.js`, `v2/js/checkout.js`, `v2/index.html`, `CHANGELOG.md`, `PROJECT_MEMORY.md`. V1 inchangée. Correction ciblée au site collègue V2.
+
 ## V3.14 — Correction du sélecteur individuel de sauce du Bò Bún
 
 - Cause : le moteur du menu remplace l’identifiant local du plat par l’UUID Supabase. Les conditions qui testaient `dish.id === "bo-bun"` ne pouvaient donc pas reconnaître le Bò Bún chargé depuis la base ; il affichait le sélecteur générique au lieu d’un choix par unité.
