@@ -67,7 +67,7 @@ async function loadProductsFromSupabase(){
       const local=localDishes.find(d=>d.name.trim().toLocaleLowerCase("fr-FR")===product.name.trim().toLocaleLowerCase("fr-FR"));
       const options=Array.isArray(product.protein_options)&&product.protein_options.length ? product.protein_options : (local?.proteinOptions||[]);
       const fixedProtein=local?.fixedProtein ?? null;
-      const requiredProtein=fixedProtein ?? (local?.id==="tom-kha-kai" ? "Poulet" : null);
+      const requiredProtein=fixedProtein ?? (local?.id==="tom-kha-kai" ? "Poulet" : local?.id==="soupe-nouille-boeuf" ? "Bœuf" : null);
       return {
         id:product.id,
         name:product.name,
