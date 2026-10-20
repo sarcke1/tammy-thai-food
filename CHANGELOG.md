@@ -1,3 +1,9 @@
+## V3.12 — Correction de la catégorie Enfants
+
+- Correction du chargement du menu client V3 : les produits actifs de la catégorie « Enfants » ne sont plus exclus des produits récupérés depuis Supabase.
+- Le menu enfant « Menu enfant — ailes de poulet frit » redevient visible lorsque sa fiche est active.
+- Aucun changement apporté à V1 ni à V2. Cache du moteur V3 actualisé.
+
 ## V3.11 — Disponibilité du bœuf dans la soupe de nouilles (2026-10-20)
 
 - La « Soupe de nouilles au bœuf » est désormais reconnue comme un plat à protéine fixe « Bœuf » dans le menu V3.
