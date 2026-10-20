@@ -2,6 +2,8 @@
 
 - Le Bò Bún accepte maintenant une sauce indépendante pour chaque unité commandée. Les choix sont initialisés à « Sauce non pimentée » ; l’utilisateur peut sélectionner une sauce pimentée ou non pimentée pour chaque plat. Le panier conserve le choix de chaque unité séparément.
 - Le nom présenté au client pour le produit enfant est « Ailes de poulet frit ». Le nom source utilisé pour retrouver sa fiche locale reste inchangé dans la donnée de référence ; l’affichage est ajusté dans le moteur V3.
+- La sauce individuelle est conservée dans `order_items.customer_note` lors de la validation. Le nom client « Ailes de poulet frit » est converti vers le nom Supabase d’origine à la commande, sans modifier la base.
+- Fichiers : `v3/js/app.js`, `v3/js/checkout.js`, `v3/js/data.js`, `v3/index.html`, `CHANGELOG.md`, `PROJECT_MEMORY.md`.
 - V1 et V2 laissées intactes. Tester l’ajout de 2 Bò Bún avec sauces différentes et la catégorie Enfants sur PC/mobile.
 
 ## V3.12 — Correction de la catégorie Enfants
