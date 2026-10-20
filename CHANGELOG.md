@@ -1,3 +1,11 @@
+## 2026-10-20 — Disponibilités côté menu
+
+- Les menus V2 et V3 rechargent les produits actifs et l’état des protéines depuis Supabase.
+- Les plats à protéine fixe sont masqués lorsque cette protéine est en rupture.
+- Dans les plats à choix multiple, la protéine en rupture reste visible avec le libellé « Indisponible » et ne peut plus être sélectionnée.
+- Les lignes de panier déjà enregistrées localement sont retirées lorsqu’elles correspondent à un produit ou une protéine indisponible.
+- Actualisation automatique des disponibilités toutes les 60 secondes ; validation serveur/client à compléter dans l’étape suivante.
+
 ## 2026-10-20 — Disponibilité produits (première étape)
 
 - Ajout d’un onglet « Disponibilité » dans l’administration commune.
