@@ -1,3 +1,7 @@
+## 2026-10-20 — Validation du Tom kha kai en rupture de poulet
+
+- Le contrôle à la validation reconnaît le Tom kha kai comme un plat à poulet fixe, même si le choix de viande n’est pas affiché sur sa fiche.
+
 ## 2026-10-20 — Rupture des plats à protéine fixe
 
 - La rupture de poulet masque également le Tom kha kai, dont la recette utilise du poulet sans proposer de choix de viande.
