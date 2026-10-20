@@ -1,3 +1,9 @@
+## V3.14 — Correction du sélecteur individuel de sauce du Bò Bún
+
+- Cause : le moteur du menu remplace l’identifiant local du plat par l’UUID Supabase. Les conditions qui testaient `dish.id === "bo-bun"` ne pouvaient donc pas reconnaître le Bò Bún chargé depuis la base ; il affichait le sélecteur générique au lieu d’un choix par unité.
+- Correction : conserver `localId` dans les objets du menu et l’utiliser pour afficher un choix de sauce « Plat 1 », « Plat 2 », etc., puis transmettre la sauce correspondante à chaque ligne du panier.
+- Cache du moteur menu actualisé. V1 et V2 non modifiées.
+
 ## V3.13 — Sauce individuelle du Bò Bún et nom du plat enfant
 
 - Bò Bún : le choix de sauce est désormais individuel pour chaque unité ajoutée. Après avoir choisi une quantité, chaque ligne « Plat 1 », « Plat 2 », etc. permet de choisir sauce pimentée ou non pimentée. Chaque Bò Bún est ajouté au panier avec sa propre sauce.
