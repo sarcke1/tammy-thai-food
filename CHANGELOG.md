@@ -1,3 +1,10 @@
+## 2026-10-20 — Disponibilité produits (première étape)
+
+- Ajout d’un onglet « Disponibilité » dans l’administration commune.
+- Préparation de la gestion centralisée de l’activation des produits et des protéines via Supabase.
+- Les produits ne sont pas supprimés : leur fiche et leurs données sont conservées pour réactivation.
+- La V1 reste inchangée. La propagation complète au menu, au panier et à la validation des commandes est réalisée dans les étapes suivantes.
+
 ## 2026-10-19 — Menu enfant ailes de poulet frit
 
 - V3 uniquement : « Menu enfant — ailes de poulet frit », 6 €, catégorie Enfants, trois ailes et accompagnement au choix : frites ou riz blanc.
