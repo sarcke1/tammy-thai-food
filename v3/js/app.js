@@ -142,6 +142,7 @@ function getState(dish){
       quantity:0,
       spices:[],
       sides:[],
+      sauces:[],
       protein:"",
       proteinQuantities:{},
       sauce:"Sauce non pimentée",
@@ -192,6 +193,12 @@ function setProteinQuantity(dish,protein,q){
 function sauceSelector(dish){
   if(!dish.sauceOptions?.length)return "";
   const state=getState(dish);
+  if(dish.id==="bo-bun"){
+    if(state.quantity===0)return `<div class="spice-box sauce-box"><div class="spice-box-title">Sauce au choix pour chaque plat</div><p>Ajoutez une quantité pour choisir la sauce de chaque Bò Bún.</p></div>`;
+    while(state.sauces.length<state.quantity)state.sauces.push("Sauce non pimentée");
+    state.sauces.length=state.quantity;
+    return `<div class="spice-box sauce-box"><div class="spice-box-title">Sauce au choix pour chaque plat</div>${state.sauces.map((selected,index)=>`<div class="spice-row"><span>Plat ${index+1}</span><div class="side-options">${dish.sauceOptions.map(option=>`<label class="sauce-option"><input type="radio" name="sauce-${dish.id}-${index}" value="${option}" data-sauce-index="${index}" ${selected===option?"checked":""}><span>${option}</span></label>`).join("")}</div></div>`).join("")}</div>`;
+  }
   return `<div class="spice-box sauce-box"><div class="spice-box-title">Choix de la sauce</div>
   ${dish.sauceOptions.map(option=>`<label class="sauce-option"><input type="radio" name="sauce-${dish.id}" value="${option}" data-sauce-option ${state.sauce===option?"checked":""}><span>${option}</span></label>`).join("")}</div>`;
 }
@@ -664,6 +671,7 @@ grid?.addEventListener("click",event=>{
   const state=getState(dish);
 
   if(event.target.matches("[data-sauce-option]")){ state.sauce=event.target.value; return; }
+  if(event.target.matches("[data-sauce-index]")){ state.sauces[Number(event.target.dataset.sauceIndex)]=event.target.value; return; }
   if(event.target.matches("[data-side-index]")){
     state.sides[Number(event.target.dataset.sideIndex)]=event.target.value;
     return;
@@ -725,7 +733,7 @@ grid?.addEventListener("click",event=>{
 
     if(dish.fixedProtein){
       for(let i=0;i<state.quantity;i++){
-        addToCart(dish,dish.fixedSpice ?? (dish.spicy ? (state.spices[i] ?? 0) : 0),dish.fixedProtein,state.sauce,state.sides[i] ?? state.side);
+        addToCart(dish,dish.fixedSpice ?? (dish.spicy ? (state.spices[i] ?? 0) : 0),dish.fixedProtein,dish.id==="bo-bun" ? (state.sauces[i] ?? "Sauce non pimentée") : state.sauce,state.sides[i] ?? state.side);
       }
     }else if(dish.proteinOptions?.length){
 
@@ -758,6 +766,7 @@ grid?.addEventListener("click",event=>{
    state.quantity=0;
    state.spices=[];
    state.sides=[];
+   state.sauces=[];
    state.sauce="Sauce non pimentée";
    state.side="Frites";
    state.proteinQuantities={};
