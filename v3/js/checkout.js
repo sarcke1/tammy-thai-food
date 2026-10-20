@@ -238,7 +238,8 @@ function mountCheckout() {
       const items = [];
 
       for (const item of cartItems) {
-        const product = productsByName.get(String(item.name).trim().toLocaleLowerCase("fr-FR"));
+        const lookupName = String(item.name).trim().toLocaleLowerCase("fr-FR");
+        const product = productsByName.get(lookupName === "ailes de poulet frit" ? "menu enfant — ailes de poulet frit" : lookupName);
         if (!product) throw new Error("Produit introuvable ou indisponible : " + item.name);
 
         const spiceLevel = item.spicy
@@ -268,7 +269,7 @@ function mountCheckout() {
                 ? product.protein_options[0]
                 : null
             ),
-            customer_note: item.side ? "Accompagnement : " + item.side : null
+            customer_note: [item.sauce ? "Sauce : " + item.sauce : "", item.side ? "Accompagnement : " + item.side : ""].filter(Boolean).join(" — ") || null
           });
         }
       }
