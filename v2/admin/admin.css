@@ -48,3 +48,29 @@
 .service-toggle:disabled{opacity:.6;cursor:wait}
 .service-plan-cell small{text-align:center;color:#65736d;font-size:11px}
 @media(max-width:600px){.slots-panel{padding:12px}.service-plan-head,.service-plan-row{grid-template-columns:minmax(105px,1.1fr) minmax(80px,1fr) minmax(80px,1fr);gap:5px}.service-plan-head{font-size:13px}.service-plan-row{padding:9px 0;font-size:13px}.service-toggle{font-size:12px;padding:7px 3px;min-height:44px}.service-plan-cell small{font-size:10px}}
+
+
+/* V3.11 — Disponibilité produits et protéines */
+.admin-header-actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+.availability-panel{margin-bottom:18px}
+.availability-section{margin-top:24px}
+.availability-section h3{margin:0 0 10px;font-family:Georgia,serif}
+.availability-list{display:grid;gap:8px}
+.availability-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid #e2d8c8;border-radius:12px;background:#fff}
+.availability-row-main{min-width:0}
+.availability-row-title{font-weight:bold;overflow-wrap:anywhere}
+.availability-row-meta{margin-top:4px;color:#65736d;font-size:13px}
+.availability-switch{display:flex;align-items:center;gap:9px;flex-shrink:0;margin:0;font-weight:bold}
+.availability-switch input{width:22px;height:22px;margin:0;accent-color:#28764c}
+.availability-row.is-unavailable{background:#fbf1ed;border-color:#e8b8aa}
+.availability-row.is-unavailable .availability-row-title{color:#9f3e30}
+.availability-empty{padding:16px;border:1px dashed #cfc4b2;border-radius:10px;color:#65736d}
+@media(max-width:600px){
+ .admin-shell{padding:16px 10px}
+ .admin-header{display:block}
+ .admin-header-actions{justify-content:flex-start;margin-top:16px}
+ .admin-header-actions button{padding:10px 12px;font-size:13px}
+ .availability-panel{padding:14px}
+ .availability-row{padding:10px;align-items:flex-start}
+ .availability-switch{font-size:12px;gap:6px}
+}
