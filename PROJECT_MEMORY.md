@@ -1,3 +1,11 @@
+## 2026-10-20 — Finalisation technique des disponibilités
+
+- Les menus V2/V3 actualisent les produits et les protéines toutes les 60 secondes.
+- Le Tom kha kai est traité comme un plat à poulet fixe pour le filtrage et la validation, sans changer l’interface de choix de viande.
+- Les scripts et feuilles de style liés aux disponibilités ont des paramètres de cache actualisés.
+- Les protections de validation des paniers V2/V3 retirent les articles indisponibles et interrompent la validation pour que le client vérifie le panier.
+- Tests automatisés et validation visuelle PC/mobile non encore réalisés ; ne pas considérer la fonctionnalité comme stable avant ces contrôles.
+
 ## 2026-10-20 — Gestion des disponibilités
 
 - L’administration commune `v2/admin/` comporte un onglet « Disponibilité » pour activer/désactiver les fiches produits et les protéines.
