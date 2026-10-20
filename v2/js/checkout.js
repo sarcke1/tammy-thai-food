@@ -276,13 +276,14 @@ function mountCheckout() {
         if (existingSatay) existingSatay.quantity += 1;
         else items.push({ product_id: product.id, quantity: 1, spice_level: spiceLevel, protein: null, _satayPromo: true });
       } else {
+        const isBoBun = String(product.name).trim().toLocaleLowerCase("fr-FR").startsWith("bò bún");
         items.push({
           product_id: product.id,
           quantity: 1,
           spice_level: spiceLevel,
           protein: item.protein || (Array.isArray(product.protein_options) && product.protein_options.length === 1 ? product.protein_options[0] : null),
-          sauce: item.sauce || null,
-          customer_note: item.sauce ? `Sauce : ${item.sauce}` : null
+          sauce: isBoBun ? (item.sauce || "Sauce non pimentée") : null,
+          customer_note: isBoBun ? `Sauce : ${item.sauce || "Sauce non pimentée"}` : null
         });
       }
     }
