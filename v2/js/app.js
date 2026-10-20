@@ -707,7 +707,7 @@ grid?.addEventListener("click",event=>{
 
     if(dish.fixedProtein){
       for(let i=0;i<state.quantity;i++){
-        addToCart(dish,dish.fixedSpice ?? (dish.spicy ? (state.spices[i] ?? 0) : 0),dish.fixedProtein,state.sauce);
+        addToCart(dish,dish.fixedSpice ?? (dish.spicy ? (state.spices[i] ?? 0) : 0),dish.fixedProtein,dish.sauceOptions?.length ? state.sauce : "");
       }
     }else if(dish.proteinOptions?.length){
 
@@ -717,7 +717,7 @@ grid?.addEventListener("click",event=>{
 
         for(let i=0;i<qty;i++){
 
-          addToCart(dish,state.spices[spiceIndex]||0,protein,state.sauce);
+          addToCart(dish,state.spices[spiceIndex]||0,protein,dish.sauceOptions?.length ? state.sauce : "");
 
           spiceIndex++;
 
@@ -729,7 +729,7 @@ grid?.addEventListener("click",event=>{
 
       for(let i=0;i<state.quantity;i++){
 
-        addToCart(dish,state.spices[i]||0,"",state.sauce);
+        addToCart(dish,state.spices[i]||0,"",dish.sauceOptions?.length ? state.sauce : "");
 
       }
 
