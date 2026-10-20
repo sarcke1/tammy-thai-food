@@ -29,3 +29,8 @@
 .sauce-box{margin-top:10px}
 .sauce-option{display:flex;align-items:center;gap:9px;padding:7px 0;cursor:pointer;font-size:.9rem}
 .sauce-option input{width:18px;height:18px;accent-color:var(--green);flex:0 0 auto}
+
+
+/* V3.11 — choix de protéine indisponible */
+.protein-row.protein-unavailable{opacity:.68;color:#8a7772;background:#f7efec;border-radius:8px;padding:8px 10px}
+.protein-row.protein-unavailable b{color:#a53c30;font-size:.82rem;white-space:nowrap}
