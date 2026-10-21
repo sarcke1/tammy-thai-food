@@ -1,3 +1,11 @@
+## V2.07 — E-mail lorsque la commande est prête au retrait
+
+- Confirmation initiale envoyée à la création de commande par `notify-order-email` (Brevo).
+- Un e-mail distinct est envoyé au client quand `orders.status` passe à `ready`.
+- Le trigger `trg_notify_order_email` est exécuté après insertion et mise à jour ; la fonction SQL ne déclenche l’appel webhook sur UPDATE que lors d’une transition vers `ready`.
+- Edge Function active en version 13. Code synchronisé avec `supabase/functions/notify-order-email/index.ts`.
+- La réponse HTTP 200 de Brevo/Supabase confirme l’acceptation du traitement, mais ne garantit pas la livraison finale dans la boîte du destinataire.
+
 ## V2 collègues — Correction de la validation du panier (20 octobre 2026)
 
 - Erreur observée : « Choix de sauce invalide » lors de la validation d’un panier contenant notamment un rouleau de printemps et une soupe de nouilles au bœuf.
