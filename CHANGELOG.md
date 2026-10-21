@@ -1,3 +1,10 @@
+## 2026-10-21 — Ajustement du chemin des photos
+
+- Le chemin des images est maintenant calculé explicitement selon l’adresse ouverte : `/tammy-thai-food/v2/` sur GitHub Pages et `/v2/` sur le domaine personnalisé.
+- Les images des fiches et les miniatures du panier utilisent la même base. Les paramètres de cache des moteurs V2/V3 sont renouvelés.
+- Fichiers modifiés : `v2/js/app.js`, `v2/index.html`, `v3/js/app.js`, `v3/index.html`, `CHANGELOG.md`, `PROJECT_MEMORY.md`.
+- V1 et l’authentification admin ne sont pas modifiées. Test réel PC/mobile encore requis.
+
 ## 2026-10-21 — Correction des chemins des photos V2/V3
 
 - Cause : les images du menu et les miniatures du panier utilisaient un chemin absolu fixe `/tammy-thai-food/v2/`, incompatible avec le domaine personnalisé à la racine `tammythaifood.fr`.
