@@ -1,3 +1,10 @@
+## V2.07 — E-mail client lorsque la commande est prête
+
+- L’e-mail de confirmation reste envoyé à la création de la commande.
+- Lors du passage du statut à `ready` (« En attente de retrait »), un e-mail distinct est envoyé au client avec le numéro de commande, le retrait prévu et le récapitulatif.
+- Le déclenchement est limité à une transition vers `ready` afin d’éviter les envois à chaque actualisation.
+- Fonction Supabase `notify-order-email` déployée en version 13 ; déclencheur PostgreSQL étendu aux changements de statut.
+
 ## V2.04 — Tri des commandes par retrait
 
 - Dans tous les onglets de l’administration V2, les commandes sont triées par date de retrait puis par heure de retrait, les créneaux les plus proches apparaissant en premier.
