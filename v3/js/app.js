@@ -133,7 +133,7 @@ function photoStyle(d){
   }
 
   return `
-    background-image:url("${dishImageBase}${encodeURIComponent(d.photo)}");
+    background-image:url(${dishImageBase}${encodeURIComponent(d.photo)});
     background-size:cover;
     background-position:center;
     background-repeat:no-repeat;
