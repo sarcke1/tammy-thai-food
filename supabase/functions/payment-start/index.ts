@@ -52,6 +52,12 @@ Deno.serve(async (req: Request) => {
     const body = await req.json();
     const provider = String(body.provider || "");
     if (!["stripe", "paypal"].includes(provider)) return reply({ error: "Moyen de paiement invalide." }, 400);
+    if (provider === "stripe" && !Deno.env.get("STRIPE_SECRET_KEY")) {
+      return reply({ error: "Stripe n’est pas encore configuré en mode test dans Supabase." }, 503);
+    }
+    if (provider === "paypal" && (!Deno.env.get("PAYPAL_CLIENT_ID") || !Deno.env.get("PAYPAL_CLIENT_SECRET"))) {
+      return reply({ error: "PayPal n’est pas encore configuré dans Supabase." }, 503);
+    }
     const customer = body.customer || {};
     const items = body.items;
     const slotId = String(body.service_slot_id || "");
