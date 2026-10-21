@@ -1,8 +1,8 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const WEBHOOK_SECRET = "ttf-order-mail-9d6e1b7f4c2a8e5f0d3c7b1a6e4f9c2d";
-const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY") || "";
-const RESEND_FROM = Deno.env.get("RESEND_FROM") || "Tammy Thai Food <onboarding@resend.dev>";
+const WEBHOOK_SECRET = Deno.env.get("TTF_WEBHOOK_SECRET") || "";
+const BREVO_API_KEY = Deno.env.get("BREVO_API_KEY") || "";
+const BREVO_FROM = { name: "Tammy Thai Food", email: "commandes@tammythaifood.fr" };
 const RECIPIENT = "sarcke@gmail.com";
 
 function esc(value: unknown) {
@@ -11,7 +11,15 @@ function esc(value: unknown) {
   }[c] || c));
 }
 
-function pickupLabel(createdAt: string) {
+function pickupLabel(pickupDate: string | null, createdAt: string) {
+  if (pickupDate) {
+    return new Intl.DateTimeFormat("fr-FR", {
+      timeZone: "Europe/Paris",
+      weekday: "long",
+      day: "numeric",
+      month: "long"
+    }).format(new Date(pickupDate + "T12:00:00Z"));
+  }
   const date = new Date(createdAt);
   const parts = new Intl.DateTimeFormat("fr-FR", {
     timeZone: "Europe/Paris",
@@ -34,8 +42,8 @@ Deno.serve(async (req: Request) => {
     return new Response("Unauthorized", { status: 401 });
   }
 
-  if (!RESEND_API_KEY) {
-    console.error("RESEND_API_KEY is not configured");
+  if (!BREVO_API_KEY) {
+    console.error("BREVO_API_KEY is not configured");
     return Response.json({ error: "Email provider not configured" }, { status: 503 });
   }
 
@@ -59,7 +67,7 @@ Deno.serve(async (req: Request) => {
   const supabase = createClient(Deno.env.get("SUPABASE_URL")!, secretKey);
   const { data: order, error: orderError } = await supabase
     .from("orders")
-    .select("id,order_number,total,customer_first_name,customer_last_name,customer_email,customer_phone,customer_note,created_at,order_items(product_name,quantity,unit_price,line_total,spice_level,customer_note)")
+    .select("id,order_number,total,customer_first_name,customer_last_name,customer_email,customer_phone,customer_note,created_at,pickup_date,order_items(product_name,quantity,unit_price,line_total,spice_level,customer_note)")
     .eq("id", orderId)
     .single();
 
@@ -69,7 +77,8 @@ Deno.serve(async (req: Request) => {
   }
 
   const rows = (order.order_items || []).map((item: any) => {
-    const protein = String(item.customer_note || "").replace(/^Viande\s*:\s*/i, "").trim();
+    const proteinMatch = String(item.customer_note || "").match(/^Viande\s*:\s*([^—]+)/i);
+    const protein = proteinMatch ? proteinMatch[1].trim() : "";
     const spice = Number(item.spice_level || 0);
     return `
       <tr>
@@ -83,7 +92,7 @@ Deno.serve(async (req: Request) => {
   }).join("");
 
   const total = Number(order.total || 0).toLocaleString("fr-FR",{style:"currency",currency:"EUR"});
-  const pickup = pickupLabel(order.created_at);
+  const pickup = pickupLabel(order.pickup_date || null, order.created_at);
   const customer = [order.customer_first_name, order.customer_last_name].filter(Boolean).join(" ");
 
   const html = `
@@ -98,28 +107,98 @@ Deno.serve(async (req: Request) => {
       </table>
       <p><strong>TOTAL : ${esc(total)}</strong></p>
       ${order.customer_note ? `<p><strong>Commentaire :</strong><br>${esc(order.customer_note)}</p>` : ""}
+      <p style="margin-top:24px"><a href="https://sarcke1.github.io/tammy-thai-food/v2/admin/" style="display:inline-block;background:#234d3d;color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none">Ouvrir l’administration des commandes</a></p>
     </div>`;
 
-  const response = await fetch("https://api.resend.com/emails", {
+  if (payload?.type === "UPDATE" && payload?.old_record?.status !== "ready" && payload?.record?.status === "ready") {
+    if (!order.customer_email) {
+      console.warn("Pickup-ready email skipped: customer email missing", order.order_number);
+      return Response.json({ ok: true, order_id: order.id, pickup_ready_email_sent: false, reason: "missing_customer_email" });
+    }
+
+    const readyHtml = `
+      <div style="font-family:Arial,sans-serif;max-width:680px;margin:auto;color:#222">
+        <h2>Votre commande #${esc(order.order_number)} est prête</h2>
+        <p>Bonjour ${esc(customer)},</p>
+        <p>Votre commande Tammy Thai Food est prête et vous attend pour le retrait.</p>
+        <p><strong>Retrait prévu : ${esc(pickup)} — midi</strong></p>
+        <table style="width:100%;border-collapse:collapse;margin:20px 0">${rows}</table>
+        <p><strong>TOTAL : ${esc(total)}</strong></p>
+        <p>À bientôt,<br>Tammy Thai Food</p>
+      </div>`;
+
+    const readyResponse = await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "api-key": BREVO_API_KEY },
+      body: JSON.stringify({
+        sender: BREVO_FROM,
+        to: [{ email: order.customer_email }],
+        subject: `Votre commande #${order.order_number} est prête au retrait`,
+        htmlContent: readyHtml
+      })
+    });
+    const readyBody = await readyResponse.text();
+    if (!readyResponse.ok) {
+      console.error("Brevo pickup-ready email error", readyResponse.status, readyBody);
+      return new Response(readyBody, { status: 502, headers: { "Content-Type": "application/json" } });
+    }
+    return Response.json({ ok: true, order_id: order.id, pickup_ready_email_sent: true });
+  }
+
+  const adminResponse = await fetch("https://api.brevo.com/v3/smtp/email", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${RESEND_API_KEY}`,
-      "Idempotency-Key": `tammy-order-${order.id}`
+      "api-key": BREVO_API_KEY
     },
     body: JSON.stringify({
-      from: RESEND_FROM,
-      to: [RECIPIENT],
+      sender: BREVO_FROM,
+      to: [{ email: RECIPIENT }],
       subject: `Nouvelle commande #${order.order_number} — ${total}`,
-      html
+      htmlContent: html
     })
   });
 
-  const body = await response.text();
-  if (!response.ok) {
-    console.error("Resend error", response.status, body);
-    return new Response(body, { status: 502, headers: {"Content-Type":"application/json"} });
+  const adminBody = await adminResponse.text();
+  if (!adminResponse.ok) {
+    console.error("Brevo admin email error", adminResponse.status, adminBody);
+    return new Response(adminBody, { status: 502, headers: {"Content-Type":"application/json"} });
   }
 
-  return Response.json({ ok: true, order_id: order.id });
+  let customerEmailSent = false;
+  if (order.customer_email) {
+    const customerHtml = `
+      <div style="font-family:Arial,sans-serif;max-width:680px;margin:auto;color:#222">
+        <h2>Merci pour votre commande #${esc(order.order_number)}</h2>
+        <p>Bonjour ${esc(customer)},</p>
+        <p>Nous avons bien reçu votre commande chez Tammy Thai Food.</p>
+        <p><strong>Retrait prévu : ${esc(pickup)} à midi</strong></p>
+        <table style="width:100%;border-collapse:collapse;margin:20px 0">${rows}</table>
+        <p><strong>TOTAL : ${esc(total)}</strong></p>
+        ${order.customer_note ? `<p><strong>Votre commentaire :</strong><br>${esc(order.customer_note)}</p>` : ""}
+        <p>Merci et à bientôt,<br>Tammy Thai Food</p>
+      </div>`;
+
+    const customerResponse = await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "api-key": BREVO_API_KEY
+      },
+      body: JSON.stringify({
+        sender: BREVO_FROM,
+        to: [{ email: order.customer_email }],
+        subject: `Confirmation de votre commande #${order.order_number} — ${total}`,
+        htmlContent: customerHtml
+      })
+    });
+    const customerBody = await customerResponse.text();
+    if (!customerResponse.ok) {
+      console.error("Brevo customer confirmation error", customerResponse.status, customerBody);
+      return new Response(customerBody, { status: 502, headers: {"Content-Type":"application/json"} });
+    }
+    customerEmailSent = true;
+  }
+
+  return Response.json({ ok: true, order_id: order.id, customer_email_sent: customerEmailSent });
 });
