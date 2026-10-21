@@ -1,3 +1,11 @@
+## 2026-10-21 — Correctifs photos et connexion administration
+
+- Photos V2/V3 : suppression des guillemets qui cassaient l’attribut HTML `style` autour de `background-image`; chemins conservés selon GitHub Pages ou le domaine personnalisé.
+- Administration V2 : `changeOrderStatus` est maintenant déclarée `async`, car elle utilise `await`. L’erreur de syntaxe empêchait le module `admin.js` de s’exécuter, donc le gestionnaire du formulaire de connexion ne s’installait pas et le navigateur rechargeait la page.
+- Cache renouvelé dans `v2/index.html`, `v3/index.html` et `v2/admin/index.html`.
+- Fichiers modifiés : `v2/js/app.js`, `v3/js/app.js`, `v2/index.html`, `v3/index.html`, `v2/admin/admin.js`, `v2/admin/index.html`, `CHANGELOG.md`, `PROJECT_MEMORY.md`.
+- V1 non modifiée. Déploiement GitHub confirmé ; test navigateur réel PC/mobile et connexion admin à effectuer.
+
 ## 2026-10-21 — Ajustement du chemin des photos
 
 - Le chemin des images est maintenant calculé explicitement selon l’adresse ouverte : `/tammy-thai-food/v2/` sur GitHub Pages et `/v2/` sur le domaine personnalisé.
