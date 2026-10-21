@@ -383,3 +383,11 @@
 .checkout-pickup{display:flex;flex-direction:column;gap:6px;font-weight:700;margin:0 0 12px}
 .checkout-pickup select{width:100%;min-height:44px;border:1px solid #d8c8aa;border-radius:10px;padding:10px;background:#fffdf8;color:var(--ink);font:inherit}
 .promo-note{margin:8px 0 12px!important;min-height:0!important;padding:8px 10px;border-radius:10px;background:#fff0ed;color:#9a3f32!important;font-weight:800;font-size:.8rem!important}
+
+
+/* V3.08 — choix du moyen de paiement */
+.checkout-payment{margin:14px 0;padding:12px;border:1px solid #ded7f8;border-radius:12px;display:grid;gap:10px;min-width:0}
+.checkout-payment legend{padding:0 5px;font-weight:800;color:var(--ink)}
+.checkout-payment label{display:flex;align-items:center;gap:9px;line-height:1.4}
+.checkout-payment input[type="radio"]{accent-color:#4f39f6;width:18px;height:18px;flex:0 0 auto}
+.payment-note{margin:2px 0 0;color:#5d6470;font-size:.84rem;line-height:1.45}

@@ -1,3 +1,11 @@
+## V3.08 — Intégration paiement isolée (2026-10-21)
+
+- Branche de travail : `v3.08-payment-integration`, créée depuis `main` pour préserver les correctifs V3 les plus récents ; l'ancienne branche préparatoire `v3.08-payment` n'est pas fusionnée telle quelle.
+- Le checkout V3 conserve les contrôles récents du panier/produits et ajoute Carte bancaire (Stripe), PayPal et espèces au retrait. Aucun moyen de paiement n'est présélectionné : le client doit faire un choix explicite.
+- Le démarrage et la confirmation des paiements sont préparés côté Edge Functions ; les URL de retour prennent en charge `https://tammythaifood.fr/`, `www` et le chemin V3 GitHub Pages pour les essais.
+- La migration est reconstruite depuis la fonction SQL actuellement en production afin de conserver les règles récentes (prix public des brochettes satay, sauce du Bò Bún, notes par article, promotion nems). Elle retarde l'e-mail de confirmation d'une commande en ligne jusqu'au statut payé et conserve l'e-mail de commande espèces et l'e-mail « prêt au retrait ».
+- La migration `v3_08_payment_provider` est appliquée dans Supabase et les Edge Functions `payment-start`, `payment-confirm` et `payment-webhook` sont déployées (v1). Le site client reste inchangé car le checkout V3 modifié est isolé dans cette branche. Les secrets Stripe de test, le webhook Stripe et les essais sandbox restent à configurer/valider avant activation.
+
 ## 2026-10-21 — La V3 devient le site public à la racine
 
 - Décision validée : `https://tammythaifood.fr/` sert désormais l’interface client V3 au lieu de l’ancienne page V1.
@@ -605,3 +613,10 @@ Notification email des nouvelles commandes : déclenchement serveur après créa
 ## V3.00
 
 Bootstrap DevOps.
+
+
+## V3.08.01 — Choix explicite du paiement (2026-10-21)
+
+- Suppression de la présélection du paiement en espèces dans le formulaire V3.
+- Cache-busting des fichiers CSS du panier et JavaScript du checkout pour le prochain déploiement de test.
+- Modifications limitées à `v3/js/checkout.js`, `v3/index.html` et `CHANGELOG.md` ; aucune modification de V1, V2 ou de l'administration.
