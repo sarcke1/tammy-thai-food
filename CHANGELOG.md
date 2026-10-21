@@ -1,3 +1,9 @@
+## V2.04 — Tri des commandes par retrait
+
+- Dans tous les onglets de l’administration V2, les commandes sont triées par date de retrait puis par heure de retrait, les créneaux les plus proches apparaissant en premier.
+- À date et heure de retrait identiques, la commande passée la première apparaît en premier.
+- Les commandes sans date de retrait sont placées après celles dont le créneau est renseigné.
+
 ## V2 collègues — Correction de la validation du panier (20 octobre 2026)
 
 - Cause : le moteur du menu transmettait la valeur par défaut « Sauce non pimentée » pour tous les plats, y compris le rouleau de printemps et la soupe de nouilles au bœuf. La fonction Supabase `create_pending_order` refuse un choix de sauce pour les produits autres que le Bò Bún, ce qui déclenchait « Choix de sauce invalide ».
