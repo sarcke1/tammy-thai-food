@@ -121,6 +121,10 @@ async function loadProductsFromSupabase(){
 
 // ===== Photos =====
 
+// Les photos sont stockées dans v2. Le chemin est résolu depuis ce module
+// pour fonctionner sur GitHub Pages et sur le domaine personnalisé.
+const dishImageBase = new URL("../../v2/", import.meta.url).href;
+
 function photoStyle(d){
 
   if(!d.photo){
@@ -128,7 +132,7 @@ function photoStyle(d){
   }
 
   return `
-    background-image:url(/tammy-thai-food/v2/${encodeURIComponent(d.photo)});
+    background-image:url("${dishImageBase}${encodeURIComponent(d.photo)}");
     background-size:cover;
     background-position:center;
     background-repeat:no-repeat;
@@ -399,7 +403,7 @@ function cartPhotoUrl(item){
     return "";
   }
 
-  return "/tammy-thai-food/v2/" + String(item.photo).split("/").map(encodeURIComponent).join("/");
+  return dishImageBase + String(item.photo).split("/").map(encodeURIComponent).join("/");
 }
 
 function escapeCartText(value){
