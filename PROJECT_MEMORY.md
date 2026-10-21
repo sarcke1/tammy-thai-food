@@ -1,3 +1,11 @@
+## 2026-10-21 — Correctifs photos V2/V3 et formulaire admin
+
+- Photos : suppression des guillemets autour de l’URL dans `background-image` afin que les guillemets ne ferment pas prématurément l’attribut HTML `style`. Le chemin varie selon GitHub Pages (`/tammy-thai-food/v2/`) ou le domaine personnalisé (`/v2/`).
+- Administration : déclaration `async` ajoutée à `changeOrderStatus`, qui contient `await`. L’erreur de syntaxe empêchait tout le module d’administration de se charger et donc l’interception du formulaire de connexion.
+- Cache renouvelé pour les trois moteurs/pages concernés. V1 non modifiée.
+- Fichiers : `v2/js/app.js`, `v3/js/app.js`, `v2/index.html`, `v3/index.html`, `v2/admin/admin.js`, `v2/admin/index.html`, `CHANGELOG.md`, `PROJECT_MEMORY.md`.
+- Tests navigateur réel encore nécessaires.
+
 ## 2026-10-21 — Chemins de photos selon le domaine
 
 - Les moteurs V2/V3 choisissent explicitement `/tammy-thai-food/v2/` sur GitHub Pages et `/v2/` sur le domaine personnalisé.
