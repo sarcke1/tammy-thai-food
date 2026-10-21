@@ -416,6 +416,7 @@ async function handlePaymentReturn() {
 
   heading.textContent = "Vérification du paiement…";
   detail.textContent = "Veuillez patienter pendant la confirmation sécurisée.";
+  let paymentConfirmed = false;
 
   try {
     const { data, error } = await supabase.functions.invoke("payment-confirm", {
@@ -429,13 +430,14 @@ async function handlePaymentReturn() {
     if (error) throw new Error(error.message || "Confirmation impossible.");
     if (!data?.paid) throw new Error("Le paiement n’est pas encore confirmé. Si votre compte a été débité, ne repassez pas commande et contactez Tammy.");
     clearCart();
+    paymentConfirmed = true;
     heading.textContent = "Paiement confirmé";
     detail.textContent = "Commande n°#" + String(data.order_number || "");
   } catch (error) {
     heading.textContent = "Confirmation en attente";
     detail.textContent = error instanceof Error ? error.message : "Vérification impossible.";
   } finally {
-    history.replaceState({}, "", window.location.pathname);
+    if (paymentConfirmed) history.replaceState({}, "", window.location.pathname);
   }
 }
 
