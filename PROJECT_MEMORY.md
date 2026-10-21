@@ -1,3 +1,10 @@
+## 2026-10-21 — Chemins de photos selon le domaine
+
+- Les moteurs V2/V3 choisissent explicitement `/tammy-thai-food/v2/` sur GitHub Pages et `/v2/` sur le domaine personnalisé.
+- Les photos de menu et miniatures du panier partagent cette base. Cache actualisé dans les deux pages index.
+- Fichiers modifiés : `v2/js/app.js`, `v2/index.html`, `v3/js/app.js`, `v3/index.html`, `CHANGELOG.md`, `PROJECT_MEMORY.md`.
+- V1 et authentification admin non modifiées ; test navigateur nécessaire.
+
 ## 2026-10-21 — Chemins des photos compatibles avec le domaine personnalisé
 
 - Les photos des cartes et du panier utilisaient un chemin fixe `/tammy-thai-food/v2/`, qui ne fonctionne pas à la racine du domaine `tammythaifood.fr`.
