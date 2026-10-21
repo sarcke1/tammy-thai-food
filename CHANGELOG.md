@@ -1,3 +1,11 @@
+## 2026-10-21 — Correction des chemins des photos V2/V3
+
+- Cause : les images du menu et les miniatures du panier utilisaient un chemin absolu fixe `/tammy-thai-food/v2/`, incompatible avec le domaine personnalisé à la racine `tammythaifood.fr`.
+- Correction : le moteur V2 et V3 construit désormais le chemin des images depuis l’URL du module JavaScript. Les photos restent stockées dans `v2/` et sont accessibles depuis les deux adresses, GitHub Pages et le domaine personnalisé.
+- Cache du moteur actualisé dans `v2/index.html` et `v3/index.html`.
+- Fichiers modifiés : `v2/js/app.js`, `v2/index.html`, `v3/js/app.js`, `v3/index.html`, `CHANGELOG.md`, `PROJECT_MEMORY.md`.
+- V1 et la logique de commande/authentification ne sont pas modifiées. Vérification du code faite ; affichage réel des photos à tester sur les deux domaines, PC et mobile.
+
 ## V2.07 — E-mail client lorsque la commande est prête
 
 - L’e-mail de confirmation reste envoyé à la création de la commande.
