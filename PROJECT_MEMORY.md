@@ -3,7 +3,7 @@
 - Travail isolé sur la branche `v3.08-payment-integration`, basée sur le code récent de `main` ; ne pas fusionner directement l'ancienne branche `v3.08-payment`, qui est en retard sur des correctifs du site.
 - Parcours prévu : panier V3 → Edge Function `payment-start` → Stripe Checkout ou PayPal → webhook signé et/ou vérification serveur via `payment-confirm` → mise à jour du paiement Supabase.
 - Espèces au retrait conservées comme choix par défaut. Les clés privées restent exclusivement dans les secrets Supabase.
-- Migration préparée à partir de la définition SQL actuelle afin de préserver les tarifs et règles de commande récentes. Pas encore appliquée ; fonctions de paiement non déployées ; aucun paiement sandbox testé ; site public inchangé.
+- Migration préparée à partir de la définition SQL actuelle afin de préserver les tarifs et règles de commande récentes. Migration appliquée à Supabase ; Edge Functions de paiement déployées en v1 ; le frontend V3 reste isolé dans cette branche et n'est pas encore publié. Secrets Stripe et webhook à configurer ; aucun paiement sandbox testé.
 - Le formulaire de paiement Stripe configuré dans le tableau de bord ne suffit pas à lui seul : le lien Checkout est créé côté serveur par l'API Stripe et les webhooks doivent être configurés séparément.
 
 ## 2026-10-21 — Publication V3 à la racine du domaine
