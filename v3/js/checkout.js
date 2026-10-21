@@ -126,7 +126,7 @@ function mountCheckout() {
         <legend>3. Choisissez votre paiement</legend>
         <label><input type="radio" name="payment_method" value="stripe" required> Carte bancaire</label>
         <label><input type="radio" name="payment_method" value="paypal" required> PayPal</label>
-        <label><input type="radio" name="payment_method" value="cash" required checked> Espèces au retrait</label>
+        <label><input type="radio" name="payment_method" value="cash" required> Espèces au retrait</label>
         <p class="payment-note">Pour un paiement en ligne, vous serez redirigé vers une page sécurisée. Le paiement en espèces se fera au retrait.</p>
       </fieldset>
 
