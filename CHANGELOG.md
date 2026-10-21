@@ -1,3 +1,12 @@
+## 2026-10-21 — La V3 devient le site public à la racine
+
+- Décision validée : `https://tammythaifood.fr/` sert désormais l’interface client V3 au lieu de l’ancienne page V1.
+- `index.html` à la racine reprend le HTML actuel de `v3/index.html`, avec les feuilles CSS et modules JavaScript explicitement chargés depuis `/v3/` afin que les chemins relatifs des ressources restent valides.
+- Le répertoire `v3/` est conservé pour les tests et retours arrière. Les fichiers historiques de la V1 ne sont pas supprimés du dépôt, mais ne sont plus utilisés par la page d’accueil du domaine.
+- La V2 collègues reste accessible à `https://sarcke1.github.io/tammy-thai-food/v2/`; l’administration reste à `https://sarcke1.github.io/tammy-thai-food/v2/admin/`.
+- Fichiers modifiés : `index.html`, `CHANGELOG.md`, `PROJECT_MEMORY.md`. V2 et V3 ne sont pas modifiées dans cette intervention.
+- Contrôles nécessaires après publication : accueil, images, catégories, choix du piment et des viandes, panier, créneaux de retrait, création d’une commande test, PC et mobile.
+
 ## 2026-10-21 — Correctifs photos et connexion administration
 
 - Photos V2/V3 : suppression des guillemets qui cassaient l’attribut HTML `style` autour de `background-image`; chemins conservés selon GitHub Pages ou le domaine personnalisé.
