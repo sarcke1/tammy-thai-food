@@ -193,71 +193,70 @@ $function$
 DROP FUNCTION public.create_public_order_in_slot(text, text, text, text, uuid, jsonb, text);
 GRANT EXECUTE ON FUNCTION public.create_public_order_in_slot(text, text, text, text, uuid, jsonb, text, text) TO anon, authenticated, service_role;
 
--- Keep existing V2/colleague and cash-order email behavior; defer online orders until paid.
-DO $migration$
+-- Preserve order-created emails for cash/legacy orders and ready emails.
+-- Online orders send the confirmation email only after a verified paid status.
+CREATE OR REPLACE FUNCTION public.notify_order_email_webhook()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path TO 'public', 'extensions'
+AS $function$
 DECLARE
-  v_webhook_secret text;
+  webhook_secret text;
+  should_notify boolean := false;
 BEGIN
-  -- Reuse the currently configured database secret without copying it into Git.
-  SELECT (regexp_match(
-    pg_get_functiondef('public.notify_order_email_webhook()'::regprocedure),
-    $'x-ttf-webhook-secret',\s*'([^']+)'$
-  ))[1]
-  INTO v_webhook_secret;
-  IF v_webhook_secret IS NULL THEN
-    RAISE EXCEPTION 'Existing order-email webhook secret could not be retrieved safely.';
+  IF TG_OP = 'INSERT' THEN
+    IF NEW.payment_provider IN ('stripe', 'paypal') THEN
+      RETURN NEW;
+    END IF;
+    should_notify := true;
+  ELSIF TG_OP = 'UPDATE' THEN
+    IF NEW.payment_provider IN ('stripe', 'paypal')
+       AND NEW.payment_status = 'paid'
+       AND OLD.payment_status IS DISTINCT FROM 'paid' THEN
+      should_notify := true;
+    ELSIF NEW.status = 'ready' AND OLD.status IS DISTINCT FROM NEW.status THEN
+      should_notify := true;
+    ELSE
+      RETURN NEW;
+    END IF;
   END IF;
 
-  EXECUTE format($fn$
-    CREATE OR REPLACE FUNCTION public.notify_order_email_webhook()
-    RETURNS trigger
-    LANGUAGE plpgsql
-    SECURITY DEFINER
-    SET search_path TO 'public', 'extensions'
-    AS $body$
-    begin
-      if TG_OP = 'INSERT' then
-        if NEW.payment_provider in ('stripe', 'paypal') then
-          return NEW;
-        end if;
-        perform net.http_post(
-          url := 'https://ugarjrbtvwbwppfeusgd.supabase.co/functions/v1/notify-order-email',
-          headers := jsonb_build_object(
-            'Content-Type', 'application/json',
-            'x-ttf-webhook-secret', %L
-          ),
-          body := jsonb_build_object(
-            'type', 'INSERT', 'table', 'orders', 'schema', 'public',
-            'record', to_jsonb(NEW), 'old_record', null
-          )
-        );
-        return NEW;
-      end if;
+  IF NOT should_notify THEN
+    RETURN NEW;
+  END IF;
 
-      if TG_OP = 'UPDATE'
-         and NEW.payment_provider in ('stripe', 'paypal')
-         and NEW.payment_status = 'paid'
-         and OLD.payment_status is distinct from 'paid' then
-        perform net.http_post(
-          url := 'https://ugarjrbtvwbwppfeusgd.supabase.co/functions/v1/notify-order-email',
-          headers := jsonb_build_object(
-            'Content-Type', 'application/json',
-            'x-ttf-webhook-secret', %L
-          ),
-          body := jsonb_build_object(
-            'type', 'UPDATE', 'table', 'orders', 'schema', 'public',
-            'record', to_jsonb(NEW), 'old_record', to_jsonb(OLD)
-          )
-        );
-      end if;
-      return NEW;
-    end;
-    $body$;
-  $fn$, v_webhook_secret, v_webhook_secret);
+  SELECT decrypted_secret
+    INTO webhook_secret
+    FROM vault.decrypted_secrets
+   WHERE name = 'TTF_WEBHOOK_SECRET'
+   LIMIT 1;
+
+  IF webhook_secret IS NULL OR webhook_secret = '' THEN
+    RAISE WARNING 'TTF_WEBHOOK_SECRET absent : notification email non envoyée';
+    RETURN NEW;
+  END IF;
+
+  PERFORM net.http_post(
+    url := 'https://ugarjrbtvwbwppfeusgd.supabase.co/functions/v1/notify-order-email',
+    headers := jsonb_build_object(
+      'Content-Type', 'application/json',
+      'x-ttf-webhook-secret', webhook_secret
+    ),
+    body := jsonb_build_object(
+      'type', TG_OP,
+      'table', 'orders',
+      'schema', 'public',
+      'record', to_jsonb(NEW),
+      'old_record', CASE WHEN TG_OP = 'UPDATE' THEN to_jsonb(OLD) ELSE NULL END
+    )
+  );
+
+  RETURN NEW;
 END;
-$migration$;
+$function$;
 
 DROP TRIGGER IF EXISTS trg_notify_order_email ON public.orders;
 CREATE TRIGGER trg_notify_order_email
-AFTER INSERT OR UPDATE OF payment_status ON public.orders
+AFTER INSERT OR UPDATE OF payment_status, status ON public.orders
 FOR EACH ROW EXECUTE FUNCTION public.notify_order_email_webhook();
