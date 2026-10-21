@@ -1,3 +1,11 @@
+## 2026-10-21 — Chemins des photos compatibles avec le domaine personnalisé
+
+- Les photos des cartes et du panier utilisaient un chemin fixe `/tammy-thai-food/v2/`, qui ne fonctionne pas à la racine du domaine `tammythaifood.fr`.
+- V2 et V3 utilisent maintenant `new URL("../../v2/", import.meta.url)` comme base des images, conservant les fichiers image dans `v2/` et prenant en charge GitHub Pages comme le domaine personnalisé.
+- Paramètres de cache de `v2/js/app.js` et `v3/js/app.js` renouvelés dans leurs pages HTML.
+- Fichiers modifiés : `v2/js/app.js`, `v2/index.html`, `v3/js/app.js`, `v3/index.html`, `CHANGELOG.md`, `PROJECT_MEMORY.md`.
+- V1 et l’authentification de l’administration ne sont pas modifiées. Tester les photos du menu et les miniatures du panier sur PC/mobile après publication.
+
 ## V2.07 — E-mail lorsque la commande est prête au retrait
 
 - Confirmation initiale envoyée à la création de commande par `notify-order-email` (Brevo).
