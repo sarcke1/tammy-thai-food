@@ -1,3 +1,11 @@
+## 2026-10-21 — Publication V3 à la racine du domaine
+
+- La page `index.html` à la racine sert désormais le contenu HTML de V3 pour le domaine `tammythaifood.fr`, en chargeant CSS/JS depuis `/v3/`.
+- L’ancienne page d’accueil V1 n’est plus servie à la racine, mais ses fichiers historiques restent conservés pour un retour arrière. Le dossier V3 reste en place.
+- V2 collègues et son administration restent sur leurs liens GitHub Pages distincts.
+- Fichiers modifiés : `index.html`, `CHANGELOG.md`, `PROJECT_MEMORY.md`.
+- Tests PC/mobile et commande test à effectuer après déploiement.
+
 ## 2026-10-21 — Correctifs photos V2/V3 et formulaire admin
 
 - Photos : suppression des guillemets autour de l’URL dans `background-image` afin que les guillemets ne ferment pas prématurément l’attribut HTML `style`. Le chemin varie selon GitHub Pages (`/tammy-thai-food/v2/`) ou le domaine personnalisé (`/v2/`).
