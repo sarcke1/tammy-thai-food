@@ -123,7 +123,8 @@ async function loadProductsFromSupabase(){
 
 // Les photos sont stockées dans v2. Le chemin est résolu depuis ce module
 // pour fonctionner sur GitHub Pages et sur le domaine personnalisé.
-const dishImageBase = new URL("../../v2/", import.meta.url).href;
+// GitHub Pages sert le dépôt sous /tammy-thai-food/ ; le domaine propre sert à la racine.
+const dishImageBase = `${location.pathname.startsWith("/tammy-thai-food/") ? "/tammy-thai-food/" : "/"}v2/`;
 
 function photoStyle(d){
 
