@@ -1,3 +1,10 @@
+## 2026-10-22 — Prospectus : mise en page A4 sur trois colonnes
+
+- Correction de l’impression : les catégories sont réparties en trois colonnes indépendantes, au lieu de deux colonnes qui coupaient le contenu dans une zone masquée.
+- Photos d’impression réduites pour faire tenir davantage de fiches sur une page A4 ; les photos écran/mobile restent inchangées.
+- La zone du menu n’est plus forcée à masquer le débordement ; objectif de conserver toutes les catégories et fiches sur une page. Vérification visuelle de l’aperçu A4 encore nécessaire.
+- Fichier fonctionnel : `v2/prospectus.html`. V1, commande, administration, V3 et prix inchangés.
+
 ## 2026-10-22 — Prospectus : rubrique Boissons et colonne gauche optimisée
 
 - Ajout d’une rubrique « Boissons » distincte, alimentée automatiquement par les produits actifs Supabase de catégorie « Boissons » et leurs photos/prix locaux.
