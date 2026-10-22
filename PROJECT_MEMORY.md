@@ -515,3 +515,12 @@ Promo
 - Cause confirmée : `v2/js/data.js` déclare `colleaguePrice: 8` pour « Salade thaïe de viande hachée aux herbes fraîches », tandis que `public.products.price` était à 10. Le checkout serveur `create_pending_order` utilise `products.price`, d'où l'écart entre panier collègue et total enregistré.
 - Correction appliquée : `products.price = 8.00`, `products.public_price` reste à 10.00 pour V3. Vérifié après migration. Satay reste 1.50 collègue / 2.00 public, déjà correct.
 - Fichiers : migration `supabase/migrations/20261022150000_v2_fix_colleague_price_salad.sql`; aucun changement du code client V3, V1 ou V2 pour ce correctif.
+
+
+## Correctif créneaux V2 — 2026-10-22
+
+- Cause : `v2/js/checkout.js` lisait seulement `weekly_opening_hours` et proposait des dates, puis appelait `create_pending_order` avec `p_service_slot_id: null`. Cela ignorait les créneaux réellement générés dans `service_slots` par l’administration.
+- Correction : V2 charge les créneaux actifs, les filtre selon les services ouverts dans `weekly_opening_hours`, permet de choisir date et heure et transmet le vrai ID du créneau.
+- RPC `create_pending_order` mise à jour via migration `supabase/migrations/20261022170000_v2_use_admin_pickup_slots.sql` : exige un créneau actif correspondant à la date, valide l’ouverture de la période (midi/soir), vérifie la capacité restante et enregistre `pickup_time`.
+- `v2/index.html` charge `checkout.js?v=20261022-02`. V1 et checkout V3 non modifiés.
+- À tester : jours fermés, service midi fermé/soir ouvert, créneau complet, commande acceptée avec heure identique à l’administration et aux e-mails.
