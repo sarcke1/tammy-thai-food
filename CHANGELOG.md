@@ -1,3 +1,9 @@
+## 2026-10-22 — Prospectus : photos moins étirées à l’impression
+
+- Photos du prospectus A4 en trois colonnes : hauteur augmentée de 18 mm à 27 mm (× 1,5) pour une proportion plus équilibrée et moins aplatie.
+- Le cadrage reste en `object-fit: cover` pour remplir les cartes sans déformer les photos. Le format écran/mobile n’est pas modifié.
+- Fichier fonctionnel : `v2/prospectus.html`. V1, V3, commandes, prix et administration inchangés. Vérifier l’aperçu d’impression A4 pour confirmer que toutes les fiches tiennent encore sur une page.
+
 ## 2026-10-22 — Prospectus : mise en page A4 sur trois colonnes
 
 - Correction de l’impression : les catégories sont réparties en trois colonnes indépendantes, au lieu de deux colonnes qui coupaient le contenu dans une zone masquée.
