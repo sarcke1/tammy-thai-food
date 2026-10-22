@@ -1,3 +1,10 @@
+## 2026-10-22 — Prospectus en ligne : décoration tropicale discrète
+
+- Ajout de motifs discrets palmier, mer et éléphant en arrière-plan de la zone d’information et derrière les fiches produits, avec opacité basse et couleurs tropicales douces.
+- L’image de fond existante derrière les produits est conservée, avec une opacité réduite pour laisser les fiches et leurs photos lisibles.
+- Les motifs décoratifs sont masqués à l’impression pour conserver le rendu PDF validé ; la bannière et les fiches gardent leur structure et leurs couleurs de catégorie.
+- Fichier fonctionnel : `v2/prospectus.html`. Aucune modification à la V1/V3, aux prix, commandes ou à l’administration.
+
 ## 2026-10-22 — Prospectus PDF : mieux remplir la première page
 
 - Hauteur des photos à l’impression augmentée de 40,5 mm à 48 mm pour réduire le grand espace vide en bas de la première page et mieux équilibrer la composition.
