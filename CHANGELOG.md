@@ -1,3 +1,9 @@
+## 2026-10-22 — Prospectus PDF : tri des fiches par catégorie
+
+- À l’impression uniquement, les fiches sont triées visuellement dans l’ordre Entrées → Plats → Soupes → Desserts → Boissons, en conservant la grille de trois colonnes et le flux automatique sur les pages suivantes.
+- Les couleurs pastel d’impression restent distinctes ; l’affichage écran conserve sa présentation sans bandeaux.
+- Fichier fonctionnel : `v2/prospectus.html`. V1, V3, commandes, prix et administration inchangés. Vérifier l’aperçu PDF multipage.
+
 ## 2026-10-22 — Prospectus : retour à la mise en page écran et couleurs par catégorie
 
 - Sur écran, retour à la disposition précédente en deux colonnes avec les titres Entrées, Soupes, Boissons à gauche et Plats, Desserts à droite.
