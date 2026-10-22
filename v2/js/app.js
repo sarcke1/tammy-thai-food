@@ -199,7 +199,7 @@ function sauceSelector(dish){
 }
 function proteinSelector(dish){
   if(dish.fixedProtein){
-    return "<div class=\"spice-box protein-box\"><div class=\"spice-box-title\">Viande</div><div class=\"spice-row\"><span>"+dish.fixedProtein+"</span><b>Inclus</b></div></div>";
+    return "<div class=\"spice-box protein-box\"><div class=\"spice-box-title\">Viande</div><div class=\"spice-row\"><span>"+dish.fixedProtein+"</span><b>Choix unique</b></div></div>";
   }
   if(!dish.proteinOptions?.length)return "";
   const state=getState(dish);
