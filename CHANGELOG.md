@@ -643,3 +643,12 @@ Bootstrap DevOps.
 - La RPC `create_pending_order` valide le créneau actif, sa date, l’ouverture midi/soir correspondante et la capacité de préparation ; elle enregistre aussi l’heure réelle dans `orders.pickup_time`.
 - Cache V2 actualisé dans `v2/index.html`.
 - V1 et le checkout V3 inchangés.
+
+
+## V2 — Règles de livraison collègues restaurées (2026-10-22)
+
+- La V2 n'utilise plus les créneaux individuels du planning public : elle affiche uniquement la prochaine date de livraison au midi.
+- Commande exigée avant 18 h la veille ; après 18 h, la livraison est décalée au prochain jour admissible.
+- Jours de livraison : lundi, mardi, jeudi et vendredi ; aucun mercredi, samedi ni dimanche.
+- La validation Supabase recalcule cette date côté serveur, enregistre `pickup_time=12:00` et ne demande plus d'identifiant `service_slots` pour les commandes collègues.
+- Le checkout V3 et le planning client V3 restent inchangés.
