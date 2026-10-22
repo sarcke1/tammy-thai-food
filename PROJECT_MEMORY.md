@@ -1,3 +1,10 @@
+## 2026-10-22 — Prospectus : prix aligné et descriptions compactes
+
+- Nom du plat et prix alignés sur une même ligne.
+- Description affichée sous le titre en caractères plus petits, y compris à l’impression (6,5 px), pour conserver la lisibilité et limiter la hauteur des fiches.
+- Données de description utilisées depuis Supabase, avec repli sur la description locale si nécessaire. Aucun changement au catalogue, aux prix ou au site de commande.
+- Fichier fonctionnel : `v2/prospectus.html`. V1, V3 et administration inchangées.
+
 ## 2026-10-22 — Prospectus : photos moins étirées à l’impression
 
 - Photos du prospectus A4 en trois colonnes : hauteur augmentée de 18 mm à 27 mm (× 1,5) pour une proportion plus équilibrée et moins aplatie.
