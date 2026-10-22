@@ -1,3 +1,11 @@
+## 2026-10-22 — Prospectus : retour à la mise en page écran et couleurs par catégorie
+
+- Sur écran, retour à la disposition précédente en deux colonnes avec les titres Entrées, Soupes, Boissons à gauche et Plats, Desserts à droite.
+- Les fiches écran utilisent désormais un fond pastel par catégorie : entrées vert pâle, plats bleu pâle, soupes pêche, desserts rose, boissons turquoise.
+- À l’impression, la grille de trois colonnes sans titres de catégories est conservée. Les teintes pastel sont plus distinctes qu’à l’écran pour identifier rapidement chaque famille.
+- Marges d’impression A4 réglées à 5 mm. Noms, prix, descriptions, photos et pagination conservés.
+- Fichier fonctionnel : `v2/prospectus.html`. V1, V3, commandes, tarifs et administration inchangés. Vérifier rendu écran et aperçu PDF multipage.
+
 ## 2026-10-22 — Prospectus : catégories remplacées par des fonds pastel
 
 - Suppression des titres de catégories dans la grille : les fiches sont triées dans l’ordre Entrées, Plats, Soupes, Desserts, Boissons.
