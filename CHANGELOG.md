@@ -634,3 +634,12 @@ Bootstrap DevOps.
 - La V2 affiche explicitement 8 € pour la salade thaïe de viande hachée aux herbes fraîches, mais le tarif serveur `products.price` était resté à 10 €. Le RPC recalculait donc le prix à 10 € au moment de la commande.
 - Mise à jour de `products.price` à 8 €, sans modifier `products.public_price` (10 €), qui reste le tarif public V3.
 - Migration appliquée en Supabase et enregistrée dans `supabase/migrations/20261022150000_v2_fix_colleague_price_salad.sql`.
+
+
+## V2 — Créneaux de retrait synchronisés avec l’administration (2026-10-22)
+
+- Le checkout V2 lit maintenant les créneaux actifs générés dans `service_slots` et filtre les jours/services selon `weekly_opening_hours`, comme le calendrier administrateur.
+- Le client choisit un créneau daté et horodaté, pas uniquement une date générique à midi.
+- La RPC `create_pending_order` valide le créneau actif, sa date, l’ouverture midi/soir correspondante et la capacité de préparation ; elle enregistre aussi l’heure réelle dans `orders.pickup_time`.
+- Cache V2 actualisé dans `v2/index.html`.
+- V1 et le checkout V3 inchangés.
