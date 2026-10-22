@@ -627,3 +627,10 @@ Bootstrap DevOps.
 - Les e-mails de nouvelle commande, de confirmation client et de commande prête utilisent désormais `pickup_time` enregistré en base, au lieu d'afficher systématiquement « midi ».
 - Fonction Supabase `notify-order-email` redéployée en version 16.
 - Aucun changement du fonctionnement V1/V2 ni de la logique de prix.
+
+
+## Correctif tarif V2 — salade thaïe (2026-10-22)
+
+- La V2 affiche explicitement 8 € pour la salade thaïe de viande hachée aux herbes fraîches, mais le tarif serveur `products.price` était resté à 10 €. Le RPC recalculait donc le prix à 10 € au moment de la commande.
+- Mise à jour de `products.price` à 8 €, sans modifier `products.public_price` (10 €), qui reste le tarif public V3.
+- Migration appliquée en Supabase et enregistrée dans `supabase/migrations/20261022150000_v2_fix_colleague_price_salad.sql`.
