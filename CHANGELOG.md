@@ -1,3 +1,10 @@
+## 2026-10-22 — Prospectus : rubrique Boissons et colonne gauche optimisée
+
+- Ajout d’une rubrique « Boissons » distincte, alimentée automatiquement par les produits actifs Supabase de catégorie « Boissons » et leurs photos/prix locaux.
+- Rubrique placée sous les soupes dans la colonne gauche pour utiliser l’espace disponible ; fiches boissons plus compactes, avec photos de hauteur réduite à l’impression pour préserver la place des plats.
+- Aucun changement aux données, prix, commandes, administration, V1 ou V3.
+- Fichier fonctionnel modifié : `v2/prospectus.html`. Test : https://tammythaifood.fr/v2/prospectus.html ; contrôler PC, mobile et aperçu A4.
+
 ## 2026-10-22 — Prospectus : titre en tête et photos encore agrandies
 
 - Nom du plat et prix placés au-dessus de la photo, sur une ligne de titre ; la photo occupe ensuite toute la largeur de la fiche.
