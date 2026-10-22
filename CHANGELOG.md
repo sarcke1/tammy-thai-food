@@ -1,3 +1,10 @@
+## 2026-10-22 — Prospectus : titre en tête et photos encore agrandies
+
+- Nom du plat et prix placés au-dessus de la photo, sur une ligne de titre ; la photo occupe ensuite toute la largeur de la fiche.
+- Photo écran : hauteur portée à 300 px sur PC et 320 px sur mobile. Impression : hauteur portée à 45 mm.
+- Aucun changement de produit, prix, commande, administration, V1 ou V3.
+- Fichier fonctionnel modifié : `v2/prospectus.html`. À vérifier sur PC, mobile et aperçu A4 : https://tammythaifood.fr/v2/prospectus.html.
+
 ## 2026-10-22 — Prospectus aéré, photos agrandies
 
 - Prospectus dynamique V2 : suppression des descriptifs, options et pastilles dans les fiches ; conservation du nom et du prix avec la photo.
