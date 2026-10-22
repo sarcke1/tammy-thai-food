@@ -1,3 +1,12 @@
+## 2026-10-22 — Prospectus aéré, photos agrandies
+
+- Prospectus dynamique V2 : suppression des descriptifs, options et pastilles dans les fiches ; conservation du nom et du prix avec la photo.
+- Photos agrandies : disposition plus visuelle sur écran et hauteur d’impression portée de 76 px à 38 mm (environ deux fois plus grande en hauteur).
+- Sur mobile, chaque fiche place la photo au-dessus du titre et du prix pour maximiser la largeur de l’image.
+- Les produits et tarifs continuent d’être chargés dynamiquement depuis Supabase ; aucune donnée produit, commande ou prix n’est modifiée.
+- Fichier fonctionnel modifié : `v2/prospectus.html`. V1, parcours de commande V2, V3 et administration inchangés.
+- Test : https://tammythaifood.fr/v2/prospectus.html ; vérifier PC, mobile et aperçu avant impression A4, notamment que toutes les fiches restent visibles.
+
 ## V3.08 — Intégration paiement isolée (2026-10-21)
 
 - Branche de travail : `v3.08-payment-integration`, créée depuis `main` pour préserver les correctifs V3 les plus récents ; l'ancienne branche préparatoire `v3.08-payment` n'est pas fusionnée telle quelle.
