@@ -508,3 +508,10 @@ Promo
 - `supabase/functions/notify-order-email/index.ts` lit maintenant `pickup_time` et inclut l'heure réelle du retrait dans les e-mails client et admin, au lieu d'ajouter systématiquement « midi ».
 - Fonction déployée dans Supabase, version 16. À vérifier lors de la prochaine commande test.
 - Les autres demandes (libellé « choix unique », tarifs V2, tri des archives, délivrabilité des e-mails, horaires d'ouverture V2) restent à traiter séparément, une zone à la fois.
+
+
+## Correctif prix V2 — 2026-10-22
+
+- Cause confirmée : `v2/js/data.js` déclare `colleaguePrice: 8` pour « Salade thaïe de viande hachée aux herbes fraîches », tandis que `public.products.price` était à 10. Le checkout serveur `create_pending_order` utilise `products.price`, d'où l'écart entre panier collègue et total enregistré.
+- Correction appliquée : `products.price = 8.00`, `products.public_price` reste à 10.00 pour V3. Vérifié après migration. Satay reste 1.50 collègue / 2.00 public, déjà correct.
+- Fichiers : migration `supabase/migrations/20261022150000_v2_fix_colleague_price_salad.sql`; aucun changement du code client V3, V1 ou V2 pour ce correctif.
