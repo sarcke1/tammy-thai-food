@@ -13,18 +13,30 @@ function updateCheckoutVisibility() {
 }
 
 async function getAvailablePickupSlots() {
-  const { data, error } = await supabase.from("service_slots")
-    .select("id,service_date,start_time,end_time,active,max_preparation_minutes")
-    .eq("active", true).order("service_date").order("start_time");
-  if (error) throw new Error("Impossible de charger les créneaux du planning : " + error.message);
+  const [slotResult, openingResult] = await Promise.all([
+    supabase.from("service_slots")
+      .select("id,service_date,start_time,end_time,active,max_preparation_minutes")
+      .eq("active", true).order("service_date").order("start_time"),
+    supabase.from("weekly_opening_hours").select("day_of_week,service_period,is_open")
+  ]);
+  if (slotResult.error) throw new Error("Impossible de charger les créneaux du planning : " + slotResult.error.message);
+  if (openingResult.error) throw new Error("Impossible de vérifier les ouvertures : " + openingResult.error.message);
+  const openPeriods = new Set((openingResult.data || [])
+    .filter(row => row.is_open)
+    .map(row => Number(row.day_of_week) + "|" + row.service_period));
   const now = new Date();
   const minimum = new Date(now); minimum.setHours(0,0,0,0);
   minimum.setDate(minimum.getDate() + (now.getHours() >= 18 ? 2 : 1));
   const monday = new Date(now); monday.setHours(0,0,0,0);
   monday.setDate(monday.getDate() - ((monday.getDay()+6)%7));
-  const latest = new Date(monday); latest.setDate(latest.getDate()+13);
+  const latest = new Date(monday); latest.setDate(latest.getDate()+7);
   const minDate = formatDateForDatabase(minimum), maxDate = formatDateForDatabase(latest);
-  const slots = (data || []).filter(slot => slot.service_date >= minDate && slot.service_date <= maxDate && slot.start_time && slot.end_time);
+  const slots = (slotResult.data || []).filter(slot => {
+    if (slot.service_date < minDate || slot.service_date > maxDate || !slot.start_time || !slot.end_time) return false;
+    const day = new Date(slot.service_date + "T12:00:00").getDay();
+    const period = String(slot.start_time).slice(0,5) < "15:00" ? "midi" : "soir";
+    return openPeriods.has(day + "|" + period);
+  });
   if (!slots.length) throw new Error("Aucun créneau ouvert n’est actuellement disponible dans le planning.");
   return slots;
 }
