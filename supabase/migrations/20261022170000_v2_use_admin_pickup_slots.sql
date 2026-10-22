@@ -36,34 +36,12 @@ begin
   end if;
 
   v_local_now := timezone('Europe/Paris', now());
-  v_candidate_date := v_local_now::date
+  v_expected_date := v_local_now::date
     + case when extract(hour from v_local_now) >= 18 then 2 else 1 end;
 
-  for v_day_offset in 0..13 loop
-    if exists (
-      select 1
-      from public.weekly_opening_hours h
-      where h.day_of_week = extract(dow from v_candidate_date)::integer
-        and h.service_period = 'midi'
-        and h.is_open = true
-    ) then
-      v_expected_date := v_candidate_date;
-      v_open_found := true;
-      exit;
-    end if;
-    v_candidate_date := v_candidate_date + 1;
-  end loop;
-
-  if not v_open_found
-    or p_pickup_date is null
+  if p_pickup_date is null
     or p_pickup_date < v_expected_date
-    or p_pickup_date > (date_trunc('week', v_local_now)::date + 7)
-    or not exists (
-      select 1 from public.weekly_opening_hours h
-      where h.day_of_week = extract(dow from p_pickup_date)::integer
-        and h.service_period = 'midi'
-        and h.is_open = true
-    ) then
+    or p_pickup_date > (date_trunc('week', v_local_now)::date + 7) then
     raise exception 'Date de retrait invalide. Actualisez la page et réessayez.';
   end if;
 
