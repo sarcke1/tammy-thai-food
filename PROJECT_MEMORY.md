@@ -1,3 +1,9 @@
+## 2026-10-22 — Prospectus PDF : mieux remplir la première page
+
+- Hauteur des photos à l’impression augmentée de 40,5 mm à 48 mm pour réduire le grand espace vide en bas de la première page et mieux équilibrer la composition.
+- Tri PDF conservé : Entrées → Plats → Soupes → Desserts → Boissons, avec couleurs pastel, trois colonnes et pagination automatique.
+- Fichier fonctionnel : `v2/prospectus.html`. Aucun changement au site de commande, à la V1/V3, aux prix ou à l’administration. À contrôler dans l’aperçu PDF sur téléphone et PC.
+
 ## 2026-10-22 — Prospectus PDF : tri des fiches par catégorie
 
 - À l’impression uniquement, les fiches sont triées visuellement dans l’ordre Entrées → Plats → Soupes → Desserts → Boissons, en conservant la grille de trois colonnes et le flux automatique sur les pages suivantes.
