@@ -12,32 +12,27 @@ function updateCheckoutVisibility() {
   cartContent.hidden=Boolean(getCart().length&&!checkoutForm.hidden);
 }
 
-async function getAvailablePickupDates() {
-  const { data, error } = await supabase.from("weekly_opening_hours").select("day_of_week,service_period,is_open");
-  if (error) throw new Error("Impossible de vérifier les jours d’ouverture : " + error.message);
-  const lunchRows = (data || []).filter(row => row.service_period === "midi");
-  if (lunchRows.length !== 7) throw new Error("Le calendrier des ouvertures est incomplet. Réessayez plus tard.");
-  const openLunchDays = new Set(lunchRows.filter(row => row.is_open).map(row => Number(row.day_of_week)));
+async function getAvailablePickupSlots() {
+  const { data, error } = await supabase.from("service_slots")
+    .select("id,service_date,start_time,end_time,active,max_preparation_minutes")
+    .eq("active", true).order("service_date").order("start_time");
+  if (error) throw new Error("Impossible de charger les créneaux du planning : " + error.message);
   const now = new Date();
-  const minimum = new Date(now);
-  minimum.setHours(12,0,0,0);
+  const minimum = new Date(now); minimum.setHours(0,0,0,0);
   minimum.setDate(minimum.getDate() + (now.getHours() >= 18 ? 2 : 1));
-  const monday = new Date(now);
-  monday.setHours(12,0,0,0);
+  const monday = new Date(now); monday.setHours(0,0,0,0);
   monday.setDate(monday.getDate() - ((monday.getDay()+6)%7));
-  const nextMonday = new Date(monday);
-  nextMonday.setDate(nextMonday.getDate()+7);
-  const dates=[];
-  for(let candidate=new Date(monday);candidate<=nextMonday;candidate.setDate(candidate.getDate()+1)){
-    const day=new Date(candidate);
-    day.setHours(12,0,0,0);
-    if(day>=minimum && openLunchDays.has(day.getDay())) dates.push(new Date(day));
-  }
-  if(!dates.length) throw new Error("Aucun retrait à midi n’est disponible dans la période proposée.");
-  return dates;
+  const latest = new Date(monday); latest.setDate(latest.getDate()+13);
+  const minDate = formatDateForDatabase(minimum), maxDate = formatDateForDatabase(latest);
+  const slots = (data || []).filter(slot => slot.service_date >= minDate && slot.service_date <= maxDate && slot.start_time && slot.end_time);
+  if (!slots.length) throw new Error("Aucun créneau ouvert n’est actuellement disponible dans le planning.");
+  return slots;
 }
-function getPickupLabel(date) {
-  return date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
+function getPickupLabel(dateValue, timeValue) {
+  const date = new Date(dateValue + "T12:00:00");
+  const dateLabel = date.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
+  const time = String(timeValue || "").slice(0, 5);
+  return dateLabel + " à " + (time || "midi");
 }
 
 function formatDateForDatabase(date) {
@@ -48,18 +43,21 @@ function formatDateForDatabase(date) {
 }
 
 async function refreshPickupLabel() {
-  const select=checkoutForm?.querySelector("#pickup-date");
-  if(!select)return;
-  try{
-    const dates=await getAvailablePickupDates();
-    select.innerHTML='<option value="" selected disabled>Choisissez une date de retrait</option>'+dates.map(date=>`<option value="${formatDateForDatabase(date)}">${getPickupLabel(date)} (midi)</option>`).join("");
-    const details=checkoutForm.querySelector("#checkout-details");
-    if(details)details.hidden=!select.value;
-  }catch(error){
-    select.innerHTML='<option value="" selected disabled>Aucune date disponible</option>';
-    select.title=error.message;
-    const details=checkoutForm.querySelector("#checkout-details");
-    if(details)details.hidden=true;
+  const select = checkoutForm?.querySelector("#pickup-date");
+  if (!select) return;
+  try {
+    const slots = await getAvailablePickupSlots();
+    select.innerHTML = '<option value="" selected disabled>Choisissez un créneau de retrait</option>' + slots.map(slot => {
+      const label = getPickupLabel(slot.service_date, slot.start_time);
+      const safeLabel = label.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      return '<option value="' + slot.id + '" data-pickup-date="' + slot.service_date + '">' + safeLabel + '</option>';
+    }).join("");
+    select.title = "";
+  } catch (error) {
+    select.innerHTML = '<option value="" selected disabled>Aucun créneau disponible</option>';
+    select.title = error.message;
+    const details = checkoutForm.querySelector("#checkout-details");
+    if (details) details.hidden = true;
   }
 }
 
@@ -77,7 +75,7 @@ function mountCheckout() {
     <div class="checkout-box">
 
       <label class="checkout-pickup">
-        <strong>1. Choisissez votre date de retrait</strong>
+        <strong>1. Choisissez votre créneau de retrait</strong>
         <select name="pickup_date" id="pickup-date" required>
           <option value="" selected disabled>Vérification des ouvertures…</option>
         </select>
@@ -183,18 +181,20 @@ function mountCheckout() {
 
     submit.disabled = true;
     status.textContent = "Vérification des jours d’ouverture…";
+    let pickupSlot;
     let pickupDate;
-    try{
-      const dates=await getAvailablePickupDates();
-      const selected=box.querySelector("#pickup-date").value;
-      pickupDate=dates.find(date=>formatDateForDatabase(date)===selected);
-      if(!pickupDate)throw new Error("Choisissez une date de retrait disponible.");
-    }catch(error){
-      status.textContent=error.message;
-      submit.disabled=false;
+    try {
+      const slots = await getAvailablePickupSlots();
+      const selectedSlotId = String(box.querySelector("#pickup-date").value || "");
+      pickupSlot = slots.find(slot => slot.id === selectedSlotId);
+      if (!pickupSlot) throw new Error("Choisissez un créneau disponible dans le planning.");
+      pickupDate = new Date(pickupSlot.service_date + "T12:00:00");
+    } catch (error) {
+      status.textContent = error.message;
+      submit.disabled = false;
       return;
     }
-    const pickupLabel=`${getPickupLabel(pickupDate)} (midi)`;
+    const pickupLabel = getPickupLabel(pickupSlot.service_date, pickupSlot.start_time);
     status.textContent = "Vérification des produits...";
 
     const { data: products, error: productsError } =
@@ -298,7 +298,7 @@ function mountCheckout() {
         p_last_name: "",
         p_email: email,
         p_phone: phone,
-        p_service_slot_id: null,
+        p_service_slot_id: pickupSlot.id,
         p_items: rpcItems,
         p_customer_note: comment,
         p_pickup_date: formatDateForDatabase(pickupDate)
