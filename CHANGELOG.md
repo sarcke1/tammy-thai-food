@@ -620,3 +620,10 @@ Bootstrap DevOps.
 - Suppression de la présélection du paiement en espèces dans le formulaire V3.
 - Cache-busting des fichiers CSS du panier et JavaScript du checkout pour le prochain déploiement de test.
 - Modifications limitées à `v3/js/checkout.js`, `v3/index.html` et `CHANGELOG.md` ; aucune modification de V1, V2 ou de l'administration.
+
+
+## V3.08.02 — Heure de retrait dans les e-mails (2026-10-22)
+
+- Les e-mails de nouvelle commande, de confirmation client et de commande prête utilisent désormais `pickup_time` enregistré en base, au lieu d'afficher systématiquement « midi ».
+- Fonction Supabase `notify-order-email` redéployée en version 16.
+- Aucun changement du fonctionnement V1/V2 ni de la logique de prix.
