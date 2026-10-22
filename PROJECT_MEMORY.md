@@ -501,3 +501,10 @@ Prix validés
 Promo
 
 4 nems achetés = 1 offert
+
+
+## Correctif V3.08.02 — Heure de retrait e-mail (2026-10-22)
+
+- `supabase/functions/notify-order-email/index.ts` lit maintenant `pickup_time` et inclut l'heure réelle du retrait dans les e-mails client et admin, au lieu d'ajouter systématiquement « midi ».
+- Fonction déployée dans Supabase, version 16. À vérifier lors de la prochaine commande test.
+- Les autres demandes (libellé « choix unique », tarifs V2, tri des archives, délivrabilité des e-mails, horaires d'ouverture V2) restent à traiter séparément, une zone à la fois.
