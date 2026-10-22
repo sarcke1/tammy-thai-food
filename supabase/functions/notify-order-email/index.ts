@@ -11,14 +11,17 @@ function esc(value: unknown) {
   }[c] || c));
 }
 
-function pickupLabel(pickupDate: string | null, createdAt: string) {
+function pickupLabel(pickupDate: string | null, pickupTime: string | null, createdAt: string) {
   if (pickupDate) {
-    return new Intl.DateTimeFormat("fr-FR", {
+    const dateLabel = new Intl.DateTimeFormat("fr-FR", {
       timeZone: "Europe/Paris",
       weekday: "long",
       day: "numeric",
       month: "long"
     }).format(new Date(pickupDate + "T12:00:00Z"));
+    const match = String(pickupTime || "").match(/^(\\d{2}):(\\d{2})/);
+    const timeLabel = match ? match[1] + " h " + match[2] : "midi";
+    return dateLabel + " à " + timeLabel;
   }
   const date = new Date(createdAt);
   const parts = new Intl.DateTimeFormat("fr-FR", {
@@ -67,7 +70,7 @@ Deno.serve(async (req: Request) => {
   const supabase = createClient(Deno.env.get("SUPABASE_URL")!, secretKey);
   const { data: order, error: orderError } = await supabase
     .from("orders")
-    .select("id,order_number,total,customer_first_name,customer_last_name,customer_email,customer_phone,customer_note,created_at,pickup_date,order_items(product_name,quantity,unit_price,line_total,spice_level,customer_note)")
+    .select("id,order_number,total,customer_first_name,customer_last_name,customer_email,customer_phone,customer_note,created_at,pickup_date,pickup_time,order_items(product_name,quantity,unit_price,line_total,spice_level,customer_note)")
     .eq("id", orderId)
     .single();
 
@@ -92,13 +95,13 @@ Deno.serve(async (req: Request) => {
   }).join("");
 
   const total = Number(order.total || 0).toLocaleString("fr-FR",{style:"currency",currency:"EUR"});
-  const pickup = pickupLabel(order.pickup_date || null, order.created_at);
+  const pickup = pickupLabel(order.pickup_date || null, order.pickup_time || null, order.created_at);
   const customer = [order.customer_first_name, order.customer_last_name].filter(Boolean).join(" ");
 
   const html = `
     <div style="font-family:Arial,sans-serif;max-width:680px;margin:auto;color:#222">
       <h2>Nouvelle commande #${esc(order.order_number)}</h2>
-      <p><strong>Retrait : ${esc(pickup)} — midi</strong></p>
+      <p><strong>Retrait : ${esc(pickup)}</strong></p>
       <p><strong>Client :</strong> ${esc(customer)}<br>
       <strong>Téléphone :</strong> ${esc(order.customer_phone || "")}<br>
       <strong>Email :</strong> ${esc(order.customer_email || "")}</p>
@@ -121,7 +124,7 @@ Deno.serve(async (req: Request) => {
         <h2>Votre commande #${esc(order.order_number)} est prête</h2>
         <p>Bonjour ${esc(customer)},</p>
         <p>Votre commande Tammy Thai Food est prête et vous attend pour le retrait.</p>
-        <p><strong>Retrait prévu : ${esc(pickup)} — midi</strong></p>
+        <p><strong>Retrait prévu : ${esc(pickup)}</strong></p>
         <table style="width:100%;border-collapse:collapse;margin:20px 0">${rows}</table>
         <p><strong>TOTAL : ${esc(total)}</strong></p>
         <p>À bientôt,<br>Tammy Thai Food</p>
@@ -172,7 +175,7 @@ Deno.serve(async (req: Request) => {
         <h2>Merci pour votre commande #${esc(order.order_number)}</h2>
         <p>Bonjour ${esc(customer)},</p>
         <p>Nous avons bien reçu votre commande chez Tammy Thai Food.</p>
-        <p><strong>Retrait prévu : ${esc(pickup)} à midi</strong></p>
+        <p><strong>Retrait prévu : ${esc(pickup)}</strong></p>
         <table style="width:100%;border-collapse:collapse;margin:20px 0">${rows}</table>
         <p><strong>TOTAL : ${esc(total)}</strong></p>
         ${order.customer_note ? `<p><strong>Votre commentaire :</strong><br>${esc(order.customer_note)}</p>` : ""}
