@@ -652,3 +652,11 @@ Bootstrap DevOps.
 - Jours de livraison : lundi, mardi, jeudi et vendredi ; aucun mercredi, samedi ni dimanche.
 - La validation Supabase recalcule cette date côté serveur, enregistre `pickup_time=12:00` et ne demande plus d'identifiant `service_slots` pour les commandes collègues.
 - Le checkout V3 et le planning client V3 restent inchangés.
+
+
+## V2 — Choix du jour de livraison sur 7 jours glissants (2026-10-22)
+
+- Les collègues peuvent choisir une date parmi les jours de livraison admissibles dans les 7 prochains jours calendaires.
+- Jours proposés : lundi, mardi, jeudi, vendredi ; pas de mercredi ni de week-end.
+- Avant 18 h, première date possible = lendemain ; à partir de 18 h, première date possible = surlendemain, puis prochaine date admissible.
+- La RPC Supabase valide côté serveur que la date choisie respecte le délai, la fenêtre de 7 jours et les jours autorisés.
