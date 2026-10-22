@@ -524,3 +524,13 @@ Promo
 - RPC `create_pending_order` mise à jour via migration `supabase/migrations/20261022170000_v2_use_admin_pickup_slots.sql` : exige un créneau actif correspondant à la date, valide l’ouverture de la période (midi/soir), vérifie la capacité restante et enregistre `pickup_time`.
 - `v2/index.html` charge `checkout.js?v=20261022-02`. V1 et checkout V3 non modifiés.
 - À tester : jours fermés, service midi fermé/soir ouvert, créneau complet, commande acceptée avec heure identique à l’administration et aux e-mails.
+
+
+## Règles de livraison V2 collègues — 2026-10-22
+
+- V2 = commandes collègues livrées au travail, service unique le midi, pas de créneau horaire individuel.
+- Commande avant 18 h la veille. Après 18 h, basculer vers le prochain jour admissible.
+- Jours admissibles : lundi, mardi, jeudi, vendredi uniquement (pas mercredi car télétravail, ni samedi/dimanche).
+- Le checkout V2 calcule et affiche la prochaine date admissible, transmet cette date à `create_pending_order`, avec `p_service_slot_id: null`.
+- Migration `supabase/migrations/20261022180000_v2_colleague_lunch_delivery_rules.sql` appliquée : la RPC recalcule la date admissible côté serveur, la refuse si elle ne correspond pas au délai/cutoff, et enregistre l'heure de livraison à 12:00 sans dépendre de `service_slots`.
+- Le V3 conserve ses créneaux de retrait et son fonctionnement public ; aucune modification du V3 ou de la V1.
