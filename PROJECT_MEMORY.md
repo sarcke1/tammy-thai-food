@@ -1,3 +1,11 @@
+## 2026-10-22 — Prospectus : catégories remplacées par des fonds pastel
+
+- Suppression des titres de catégories dans la grille : les fiches sont triées dans l’ordre Entrées, Plats, Soupes, Desserts, Boissons.
+- Chaque fiche reçoit un fond pastel par catégorie : entrées vert pâle, plats bleu pâle, soupes pêche pâle, desserts rose pâle, boissons turquoise pâle.
+- La rubrique Boissons est réintégrée au prospectus et placée après les desserts ; seules les couleurs de la page prospectus changent, pas le catalogue ni les prix.
+- Nom et prix restent sur la même ligne ; la description compacte reste sous le titre. Photos et pagination d’impression conservées.
+- Fichier fonctionnel : `v2/prospectus.html`. V1, V3, commandes et administration inchangées. Test PC, mobile et aperçu A4 requis.
+
 ## 2026-10-22 — Prospectus : prix aligné et descriptions compactes
 
 - Nom du plat et prix alignés sur une même ligne.
