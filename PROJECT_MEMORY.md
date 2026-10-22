@@ -534,3 +534,10 @@ Promo
 - Le checkout V2 calcule et affiche la prochaine date admissible, transmet cette date à `create_pending_order`, avec `p_service_slot_id: null`.
 - Migration `supabase/migrations/20261022180000_v2_colleague_lunch_delivery_rules.sql` appliquée : la RPC recalcule la date admissible côté serveur, la refuse si elle ne correspond pas au délai/cutoff, et enregistre l'heure de livraison à 12:00 sans dépendre de `service_slots`.
 - Le V3 conserve ses créneaux de retrait et son fonctionnement public ; aucune modification du V3 ou de la V1.
+
+
+## Choix du jour V2 — semaine glissante (2026-10-22)
+
+- La V2 propose un menu de jours de livraison sur les 7 prochains jours calendaires, sans créneaux horaires : midi uniquement, lundi/mardi/jeudi/vendredi.
+- Commande avant 18 h la veille : minimum demain ; dès 18 h : minimum après-demain. Les jours autorisés suivants dans la fenêtre restent sélectionnables.
+- Frontend `v2/js/checkout.js` version cache `20261022-04`. La RPC valide la fenêtre, la date minimale et les jours autorisés via migration `20261022190000_v2_select_delivery_day_rolling_week.sql`.
