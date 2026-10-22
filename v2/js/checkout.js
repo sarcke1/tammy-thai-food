@@ -12,12 +12,18 @@ function updateCheckoutVisibility() {
   cartContent.hidden=Boolean(getCart().length&&!checkoutForm.hidden);
 }
 
-function getNextColleagueDeliveryDate(now = new Date()) {
-  const date = new Date(now);
-  date.setHours(0, 0, 0, 0);
-  date.setDate(date.getDate() + (now.getHours() >= 18 ? 2 : 1));
-  while ([0, 3, 6].includes(date.getDay())) date.setDate(date.getDate() + 1);
-  return date;
+function getEligibleColleagueDeliveryDates(now = new Date()) {
+  const today = new Date(now);
+  today.setHours(0, 0, 0, 0);
+  const first = new Date(today);
+  first.setDate(first.getDate() + (now.getHours() >= 18 ? 2 : 1));
+  const last = new Date(today);
+  last.setDate(last.getDate() + 6);
+  const dates = [];
+  for (const date = new Date(first); date <= last; date.setDate(date.getDate() + 1)) {
+    if ([1, 2, 4, 5].includes(date.getDay())) dates.push(new Date(date));
+  }
+  return dates;
 }
 
 function getPickupLabel(dateValue) {
@@ -34,15 +40,24 @@ function formatDateForDatabase(date) {
 }
 
 async function refreshPickupLabel() {
-  const select = checkoutForm?.querySelector("#pickup-date");
+  const select = checkoutForm?.querySelector('#pickup-date');
   if (!select) return;
-  const date = getNextColleagueDeliveryDate();
-  const value = formatDateForDatabase(date);
-  const label = getPickupLabel(value);
-  select.innerHTML = '<option value="' + value + '" selected>' + label + '</option>';
-  select.disabled = true;
-  const details = checkoutForm.querySelector("#checkout-details");
-  if (details) details.hidden = false;
+  const dates = getEligibleColleagueDeliveryDates();
+  if (!dates.length) {
+    select.innerHTML = '<option value="" selected disabled>Aucune livraison disponible cette semaine</option>';
+    select.disabled = true;
+    const details = checkoutForm.querySelector('#checkout-details');
+    if (details) details.hidden = true;
+    return;
+  }
+  select.innerHTML = '<option value="" selected disabled>Choisissez votre jour de livraison</option>' + dates.map(date => {
+    const value = formatDateForDatabase(date);
+    const label = getPickupLabel(value);
+    return '<option value="' + value + '">' + label + '</option>';
+  }).join('');
+  select.disabled = false;
+  const details = checkoutForm.querySelector('#checkout-details');
+  if (details) details.hidden = true;
 }
 
 function mountCheckout() {
@@ -59,7 +74,7 @@ function mountCheckout() {
     <div class="checkout-box">
 
       <label class="checkout-pickup">
-        <strong>Livraison prévue</strong>
+        <strong>Choisissez votre jour de livraison</strong>
         <select name="pickup_date" id="pickup-date" required>
           <option value="" selected disabled>Vérification des ouvertures…</option>
         </select>
@@ -165,8 +180,13 @@ function mountCheckout() {
 
     submit.disabled = true;
     status.textContent = "Vérification des jours d’ouverture…";
-    const pickupDate = getNextColleagueDeliveryDate();
-    const pickupDateValue = formatDateForDatabase(pickupDate);
+    const pickupDateValue = String(formData.get("pickup_date") || "");
+    const eligibleDates = getEligibleColleagueDeliveryDates();
+    if (!eligibleDates.some(date => formatDateForDatabase(date) === pickupDateValue)) {
+      status.textContent = "Choisissez un jour de livraison disponible dans les 7 prochains jours. Les commandes doivent être passées avant 18 h la veille.";
+      submit.disabled = false;
+      return;
+    }
     const pickupLabel = getPickupLabel(pickupDateValue);
     status.textContent = "Vérification des produits...";
 
