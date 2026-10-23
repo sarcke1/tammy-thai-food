@@ -1,3 +1,11 @@
+## 2026-10-23 — Prospectus séparés V2 / V3
+
+- Ajout d’un lien « Prospectus » dans l’en-tête du site V2, pointant vers `v2/prospectus.html`.
+- Création de `v3/prospectus.html` sur la base du prospectus V2, mais avec le catalogue et les prix publics définis dans `v3/js/data.js`; les images de plats et la bannière réutilisent les ressources V2 sans les modifier.
+- Ajout d’un lien « Prospectus » dans l’en-tête V3, pointant vers `v3/prospectus.html`.
+- Les prix V2 restent ceux des collègues ; le prospectus V3 utilise les prix clients. V1, panier, commandes et administration non modifiés.
+- Tests à effectuer : liens prospectus depuis les deux sites, affichage des plats/prix, photos, QR code et aperçu d’impression A4 sur PC et mobile.
+
 ## 2026-10-23 — Prospectus en ligne : fond tropical écran
 
 - Arrière-plan de la zone d’information et des fiches enrichi avec des dégradés doux, des motifs discrets de palmiers, mer et éléphant, dans le même esprit que le visuel de référence.
