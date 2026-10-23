@@ -1,3 +1,10 @@
+## 2026-10-23 — Prospectus en ligne : fond tropical écran
+
+- Arrière-plan de la zone d’information et des fiches enrichi avec des dégradés doux, des motifs discrets de palmiers, mer et éléphant, dans le même esprit que le visuel de référence.
+- Image de fond existante conservée en transparence réduite pour que les fiches colorées et leurs textes restent lisibles.
+- Décorations supplémentaires limitées à l’affichage écran/mobile ; elles sont masquées à l’impression afin de préserver le PDF déjà validé.
+- Fichier fonctionnel modifié : `v2/prospectus.html`. V1, V3, catalogue, prix et commandes inchangés.
+
 ## 2026-10-22 — Prospectus en ligne : décoration tropicale discrète
 
 - Ajout de motifs discrets palmier, mer et éléphant en arrière-plan de la zone d’information et derrière les fiches produits, avec opacité basse et couleurs tropicales douces.
