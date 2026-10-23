@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Prospectus et carte Tammy Thai Food à Champhol. Carte et tarifs chargés depuis le site.">
+<title>Tammy Thai Food — Prospectus et carte clients</title>
+<style>
+:root{--forest:#183c31;--green:#0e4938;--leaf:#2c7650;--cream:#f7f1e3;--paper:#fffdf8;--gold:#c59643;--red:#ee634c;--ink:#183c31;--muted:#68756e;--line:#e5dcc9;--shadow:0 16px 40px rgba(31,56,45,.10)}
+*{box-sizing:border-box}
+html{background:#f7f1e3;scroll-behavior:smooth}
+body{margin:0;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:var(--ink);background:var(--cream)}
+.toolbar{position:sticky;top:0;z-index:10;display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;padding:10px;background:#123c30;color:white}
+.toolbar button,.toolbar a{border:1px solid var(--gold);border-radius:999px;padding:9px 16px;background:var(--green);color:white;font-weight:700;text-decoration:none;cursor:pointer}
+.poster{position:relative;isolation:isolate;max-width:1200px;margin:20px auto;background:var(--cream);overflow:hidden;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow)}
+header{position:relative;isolation:isolate;aspect-ratio:1920/800;width:100%;max-height:none;min-height:0;text-align:center;color:white;padding:0;background:transparent;border-bottom:2px solid var(--gold);overflow:hidden}.print-banner{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;z-index:0}.order{z-index:1}
+header:before{display:none}header:after{content:"🌴　　🌊　　🐘";display:block;position:absolute;z-index:0;right:2%;bottom:3%;font-size:clamp(18px,3vw,38px);line-height:1;letter-spacing:3px;opacity:.22;filter:saturate(.7);pointer-events:none}
+.kicker{display:none}
+.brand{display:none}
+.brand span{display:none}
+.tagline{display:none}
+ .order{position:absolute;left:29.3%;top:78%;width:32%;height:14%;display:flex;align-items:center;justify-content:center;margin:0;padding:0 1%;border:0;border-radius:999px;background:#ff563d;color:#fff;font-size:clamp(9px,1.25vw,17px);font-weight:800;line-height:1;white-space:nowrap;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.16)}
+.ribbon{height:4px;background:linear-gradient(90deg,#c59643,#f7e8bc,#c59643)}
+.brand-strip{padding:10px 16px;text-align:center;background:var(--green);color:#fffdf8;border-bottom:2px solid var(--gold);font:700 clamp(18px,2.2vw,25px) Georgia,serif;letter-spacing:.04em}.service{position:relative;isolation:isolate;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:14px 22px;background:linear-gradient(110deg,rgba(255,253,248,.98) 0%,rgba(255,253,248,.91) 58%,rgba(218,239,235,.82) 100%);border-bottom:1px solid var(--line);overflow:hidden}.service:before{content:"🌴　🌊　🐘";position:absolute;z-index:-1;right:5%;top:2px;color:#2c7650;opacity:.16;font-size:clamp(24px,4vw,52px);letter-spacing:4px;white-space:nowrap;pointer-events:none}.service>div,.service>.qr,.service>.pickup-live{position:relative;z-index:1}
+.service h2{margin:0 0 6px;color:var(--forest);font:700 22px Georgia,serif}
+.service p{margin:4px 0;line-height:1.4}
+.qr{display:flex;align-items:center;gap:10px;text-align:center;font-size:12px;font-weight:800;color:var(--forest)}
+.qr img{width:108px;height:108px;object-fit:contain;border:5px solid white;border-radius:5px;background:white}
+.pickup-live{grid-column:1/-1;padding-top:8px;border-top:1px solid var(--line);color:var(--green);font-size:13px}
+main{position:relative;isolation:isolate;padding:20px 18px 25px;background:radial-gradient(ellipse at 8% 12%,rgba(47,126,94,.18),transparent 26%),radial-gradient(ellipse at 93% 28%,rgba(49,145,170,.18),transparent 30%),radial-gradient(ellipse at 45% 92%,rgba(235,192,111,.20),transparent 34%),linear-gradient(180deg,#f5f1df 0%,#e5f1e9 48%,#d9ecec 100%)}main:before,main:after{position:absolute;z-index:0;pointer-events:none;white-space:pre;line-height:1;filter:saturate(.72)}main:before{content:"🌴\A🌿\A🌴";left:0;top:3%;font-size:clamp(32px,5vw,64px);opacity:.18}main:after{content:"🐘　🌊";right:1%;bottom:2%;font-size:clamp(30px,5vw,60px);opacity:.22}.print-background{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:0;pointer-events:none;opacity:.16}.main-tropical-motif{position:absolute;z-index:0;right:1%;bottom:1%;font-size:clamp(36px,7vw,86px);line-height:1;opacity:.10;pointer-events:none;filter:saturate(.7)}.status,.groups{position:relative;z-index:1}
+.groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}.menu-column{display:flex;flex-direction:column;gap:10px;min-width:0}.menu-section{min-width:0}.menu-section h2{display:none!important}.card{display:grid;grid-template-columns:minmax(0,1fr);gap:7px;margin-bottom:12px;padding:9px;border:1px solid rgba(24,60,49,.18);border-radius:16px;box-shadow:0 8px 22px rgba(31,56,45,.08);break-inside:avoid}.card.cat-entry{background:#d9efdf}.card.cat-main{background:#dceafb}.card.cat-soup{background:#ffebc9}.card.cat-dessert{background:#f4dced}.card.cat-drink{background:#d5efec}
+.card img{width:100%;height:300px;object-fit:cover;object-position:center;border-radius:10px;background:#e8e1cf}
+.card .copy{order:-1}
+.card img.missing{visibility:hidden}
+.copy{min-width:0;display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:8px;row-gap:3px;align-items:baseline}
+.name{margin:0;font:700 clamp(16px,1.6vw,21px)/1.15 Georgia,serif;color:var(--forest)}
+.price{margin:0;color:var(--red);font-size:clamp(17px,1.8vw,22px);font-weight:900;white-space:nowrap}
+.desc{grid-column:1/-1;margin:0;color:var(--muted);font-size:13px;line-height:1.3}.tags,.promo{display:none!important}
+.status{padding:18px;text-align:center;color:var(--muted)}
+footer{position:relative;padding:12px 20px 14px;text-align:center;color:var(--ink);background:rgba(255,253,248,.96);border-top:2px solid var(--gold)}
+.footer-title{font:700 21px Georgia,serif;color:var(--green)}
+.site-url{margin-top:7px;overflow-wrap:anywhere;color:var(--green);font-weight:700}
+.footer-small{margin-top:7px;color:var(--muted);font-size:11px;line-height:1.4}
+@media(max-width:760px){.poster{margin:0;border:0;border-radius:0}.groups{grid-template-columns:1fr}.menu-column{gap:8px}.card{grid-template-columns:minmax(0,1fr);gap:7px}.card img{height:320px}.copy{align-items:flex-start}.name{font-size:18px}.price{font-size:19px}.service{grid-template-columns:1fr}.qr{justify-content:center}header{aspect-ratio:1920/800;width:100%;max-height:none;min-height:0;padding:0;background-position:center top;background-size:100% 100%;background-repeat:no-repeat}.kicker{letter-spacing:2px}main{padding:14px 10px}.name{font-size:17px}.price{font-size:18px}.desc{font-size:12px}.tags,.promo{font-size:11px}}
+@page{size:A4 portrait;margin:5mm}
+@media print{
+ .toolbar{display:none!important;position:absolute!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
+ /* Les décorations sont de vraies images HTML : elles s'impriment même si les fonds CSS sont ignorés. */
+ *,*::before,*::after{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+ html,body{width:100%!important;height:auto!important;min-height:0!important;margin:0!important;padding:0!important;overflow:visible!important;background:var(--cream)!important}
+ .poster{position:relative;width:100%;max-width:none;height:auto;min-height:0;max-height:none;display:flex;flex-direction:column;margin:0;border:1px solid var(--line);border-radius:0;box-shadow:none;overflow:visible;background:var(--cream)!important;break-before:auto!important;break-after:auto!important;break-inside:auto!important;page-break-before:auto!important;page-break-after:auto!important;page-break-inside:auto!important}
+ header{height:70.76mm;min-height:70.76mm;max-height:70.76mm;flex:0 0 70.76mm;aspect-ratio:auto;padding:0;background:transparent!important}
+ .print-banner{display:block!important;visibility:visible!important;opacity:1!important;object-fit:fill!important}
+ .brand,.brand span,.kicker,.tagline{display:none}
+ .order{left:29.3%;top:78%;width:32%;height:14%;padding:0 1%;font-size:6pt;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.16)}
+ .ribbon{height:4px;min-height:4px;max-height:4px;flex:0 0 4px;background:linear-gradient(90deg,#c59643,#f7e8bc,#c59643)!important}
+ .brand-strip{flex:0 0 8mm;padding:2mm 4mm;font-size:12pt;border-bottom-width:1px;background:var(--green)!important;color:#fffdf8!important}.service{grid-template-columns:1fr auto;align-items:start;padding:6px 9px;gap:8px;background:#fffdf8!important}.service>div:first-child{align-self:start}.service h2{font-size:12px;margin-bottom:3px}.service p{font-size:7px;line-height:1.2;margin:2px 0}.qr{grid-column:2;grid-row:1;align-self:start;gap:5px;font-size:7px;margin-top:0}.qr img{width:52px;height:52px;border-width:2px}.pickup-live{grid-column:1/-1}
+ main{position:relative;padding:3px 4px 2px;flex:0 0 auto;min-height:0;max-height:none;overflow:visible;background:transparent!important;break-inside:auto!important;page-break-inside:auto!important}
+ .service:before,.main-tropical-motif,main:before,main:after,header:after{display:none!important}.print-background{display:block!important;visibility:visible!important;opacity:.95!important;object-fit:cover!important;object-position:center top!important}
+ .status,.groups{position:relative;z-index:1}.groups{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-flow:row;gap:3px;align-items:start}.menu-column{display:contents}.menu-section{display:contents}.menu-section>div{display:contents}.card{grid-template-columns:minmax(0,1fr);gap:1px;padding:2px;margin:0;border:1px solid rgba(24,60,49,.12);border-radius:3px;background:var(--card-bg,#fffdf8)!important;box-shadow:none!important;min-width:0;break-inside:avoid}.card.cat-entry{--card-bg:#c5e7ce;order:1}.card.cat-main{--card-bg:#c8ddf6;order:2}.card.cat-soup{--card-bg:#ffe0a8;order:3}.card.cat-dessert{--card-bg:#edc9e5;order:4}.card.cat-drink{--card-bg:#bfe7e2;order:5}.card img{height:48mm;border-radius:2px;object-fit:cover;object-position:center}.copy{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:3px;row-gap:1px;align-items:baseline}.name{font-size:7.5px;line-height:1.05;margin:0;overflow-wrap:anywhere}.price{font-size:7.5px;line-height:1;white-space:nowrap}.desc{display:block!important;grid-column:1/-1;margin:0;font-size:6.5px;line-height:1.15;color:#68756e}.tags,.promo{display:none!important}
+ footer{padding:5px 8px 6px;flex:0 0 auto;background:#fffdf8!important;color:var(--ink)!important}.footer-title{font-size:10px}.site-url{font-size:7px;margin-top:2px}.footer-small{font-size:6px;line-height:1.15;margin-top:3px}
+}
+</style>
+</head>
+<body>
+<nav class="toolbar" aria-label="Actions du prospectus">
+  <button type="button" onclick="window.print()">Imprimer / Enregistrer en PDF</button>
+  <a href="./" target="_blank" rel="noopener">Ouvrir le site de commande</a>
+  <button type="button" onclick="location.reload()">Actualiser la carte</button>
+</nav>
+<div class="poster">
+<header aria-label="Bannière Tammy Thai Food">
+  <img class="print-banner" src="../v2/banniere%20site.png" alt="Tammy Thai Food — cuisine thaïlandaise">
+</header>
+<section class="service">
+  <div>
+    <h2>Votre commande, prête pour le retrait</h2>
+    <p><strong>Commande avant 18 h :</strong> retrait le lendemain à midi.</p>
+    <p><strong>Commande à partir de 18 h :</strong> retrait à midi le surlendemain.</p>
+    <p>Retrait à Champhol · Le jour de retrait est calculé automatiquement selon l’heure locale.</p>
+  </div>
+  <a class="qr" href="./" target="_blank" rel="noopener" aria-label="Scanner ou ouvrir le site de commande">
+    <img id="qr-code" alt="QR code vers le site de commande">
+    <span>SCANNEZ<br>POUR COMMANDER</span>
+  </a>
+</section>
+<main>
+  <img class="print-background" src="../v2/fond%20d%27%C3%A9cran.png" alt="" aria-hidden="true">
+  <div class="main-tropical-motif" aria-hidden="true">🌴　🐘　🌊</div>
+  <div id="status" class="status">Chargement de la carte et des tarifs actuels…</div>
+  <div class="groups" id="groups" hidden>
+    <div class="menu-column">
+      <section class="menu-section"><h2>✿ Entrées ✿</h2><div id="entries"></div></section>
+      <section class="menu-section"><h2>✿ Soupes ✿</h2><div id="soups"></div></section>
+      <section class="menu-section"><h2>✿ Boissons ✿</h2><div id="drinks"></div></section>
+    </div>
+    <div class="menu-column">
+      <section class="menu-section"><h2>✿ Plats ✿</h2><div id="mains"></div></section>
+      <section class="menu-section"><h2>✿ Desserts ✿</h2><div id="desserts"></div></section>
+    </div>
+  </div>
+</main>
+<div class="ribbon"></div>
+<footer>
+  <div class="footer-title">Tammy Thai Food · Champhol</div>
+  <div class="site-url"><a href="./" style="color:inherit">tammythaifood.fr/v3/</a></div>
+  <div class="footer-small">Les fiches, photos et prix sont chargés depuis les données actuelles du site et de Supabase.<br>Tarifs clients · Retrait à Champhol.</div>
+</footer>
+</div>
+<script type="module">
+import { dishes as localDishes } from "./js/data.js";
+
+const SITE_URL = "https://tammythaifood.fr/v3/";
+const statusEl = document.querySelector("#status");
+const groupsEl = document.querySelector("#groups");
+document.querySelector("#qr-code").src =
+  "https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&data=" + encodeURIComponent(SITE_URL);
+
+function euro(value) {
+  return Number(value).toLocaleString("fr-FR", {style:"currency",currency:"EUR"});
+}
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+}
+function photoUrl(photo) {
+  return photo ? "../v2/" + encodeURIComponent(photo).replace(/%2F/gi, "/") : "";
+}
+function sectionFor(product) {
+  const name = product.name.toLocaleLowerCase("fr-FR");
+  const category = (product.category || "").toLocaleLowerCase("fr-FR");
+  if (category === "entrées") return "entries";
+  if (category === "boissons") return "drinks";
+  if (category === "desserts") return "desserts";
+  if (/soupe|tom kha|tom yum/.test(name)) return "soups";
+  return "mains";
+}
+function categoryClass(section) {
+  return ({entries:"cat-entry",mains:"cat-main",soups:"cat-soup",desserts:"cat-dessert",drinks:"cat-drink"})[section] || "";
+}
+function cardHtml(product) {
+  const local = product;
+  const photo = photoUrl(local?.photo);
+  return `
+  <article class="card ${categoryClass(sectionFor(product))}">
+    ${photo ? `<img src="${photo}" alt="${escapeHtml(product.name)}" loading="lazy" onerror="this.classList.add('missing')">` : ""}
+    <div class="copy">
+      <div class="name">${escapeHtml(product.name)}</div>
+      <div class="price">${euro(local.price)}</div>
+      ${product.desc || local?.desc ? `<div class="desc">${escapeHtml(product.desc || local.desc)}</div>` : ""}
+    </div>
+  </article>`;
+}
+function loadMenu() {
+  const buckets = {entries:[],mains:[],soups:[],desserts:[],drinks:[]};
+  for (const product of localDishes) {
+    const section = sectionFor(product);
+    if (buckets[section]) buckets[section].push(product);
+  }
+  for (const key of Object.keys(buckets)) {
+    document.querySelector("#" + key).innerHTML = buckets[key].map(cardHtml).join("");
+  }
+  statusEl.hidden = true;
+  groupsEl.hidden = false;
+}
+
+function pickupLabel() {
+  const now = new Date();
+  const pickup = new Date(now);
+  pickup.setDate(pickup.getDate() + (now.getHours() >= 18 ? 2 : 1));
+  return pickup.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
+}
+document.querySelector(".service").insertAdjacentHTML("beforeend",
+  '<div class="pickup-live"><strong>Prochain retrait calculé maintenant :</strong> <span id="pickup-date"></span> à midi.</div>');
+document.querySelector("#pickup-date").textContent = pickupLabel();
+try {
+  loadMenu();
+} catch (error) {
+  console.error("Prospectus V3 : chargement de la carte impossible", error);
+  statusEl.textContent = "La carte V3 n’a pas pu être affichée.";
+}
+</script>
+</body>
+</html>
