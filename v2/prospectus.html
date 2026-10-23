@@ -79,8 +79,8 @@ footer{position:relative;padding:12px 20px 14px;text-align:center;color:var(--in
     <p><strong>Commande à partir de 18 h :</strong> retrait à midi le surlendemain.</p>
     <p>Retrait à Champhol · Le jour de retrait est calculé automatiquement selon l’heure locale.</p>
   </div>
-  <a class="qr" href="./" target="_blank" rel="noopener" aria-label="Scanner ou ouvrir le site de commande">
-    <img id="qr-code" alt="QR code vers le site de commande">
+  <a class="qr" href="https://tammythaifood.fr/v2/" target="_blank" rel="noopener" aria-label="Scanner ou ouvrir le site de commande V2">
+    <img id="qr-code" alt="QR code vers le site de commande Tammy Thai Food V2">
     <span>SCANNEZ<br>POUR COMMANDER</span>
   </a>
 </section>
@@ -111,7 +111,7 @@ footer{position:relative;padding:12px 20px 14px;text-align:center;color:var(--in
 import { dishes as localDishes } from "./js/data.js";
 import { supabase } from "./js/supabase.js";
 
-const SITE_URL = "https://sarcke1.github.io/tammy-thai-food/v2/";
+const SITE_URL = "https://tammythaifood.fr/v2/";
 const statusEl = document.querySelector("#status");
 const groupsEl = document.querySelector("#groups");
 document.querySelector("#qr-code").src =
