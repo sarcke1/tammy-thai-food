@@ -48,8 +48,22 @@ Deno.serve(async (req: Request) => {
       const secret = Deno.env.get("STRIPE_WEBHOOK_SECRET");
       if (!secret || !await validStripeSignature(rawBody, stripeSignature, secret)) return reply({ error: "Signature Stripe invalide." }, 401);
       const event = JSON.parse(rawBody);
-      if (event.type === "checkout.session.completed" || event.type === "checkout.session.async_payment_succeeded") {
-        const session = event.data?.object;
+      const session = event.data?.object;
+      if (event.type === "checkout.session.expired" || event.type === "checkout.session.async_payment_failed") {
+        if (session?.id && session.metadata?.order_id) {
+          const { error } = await admin.from("orders").update({
+            status: "cancelled",
+            payment_status: "failed",
+            updated_at: new Date().toISOString()
+          })
+            .eq("id", session.metadata.order_id)
+            .eq("payment_provider", "stripe")
+            .eq("payment_reference", session.id)
+            .eq("payment_status", "pending")
+            .eq("status", "pending_payment");
+          if (error) return reply({ error: "Annulation de commande impossible." }, 500);
+        }
+      } else if (event.type === "checkout.session.completed" || event.type === "checkout.session.async_payment_succeeded") {
         if (session?.payment_status === "paid" && session.id && session.metadata?.order_id && session.currency === "eur") {
           const { data: order, error: lookupError } = await admin.from("orders").select("id,total")
             .eq("id", session.metadata.order_id).eq("payment_provider", "stripe").eq("payment_reference", session.id).maybeSingle();
