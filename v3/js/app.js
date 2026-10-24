@@ -50,7 +50,7 @@ const categoryOrder = {
 
 async function loadProductsFromSupabase(){
   const [productResult, proteinResult] = await Promise.all([
-    supabase.from("products").select("id,name,price,description,image_url,preparation_minutes,supports_spice,protein_options,product_categories(name)").eq("active", true),
+    supabase.from("products").select("id,name,price,public_price,description,image_url,preparation_minutes,supports_spice,protein_options,product_categories(name)").eq("active", true),
     supabase.from("protein_availability").select("protein_name,available")
   ]);
   if(productResult.error || proteinResult.error){
@@ -71,7 +71,7 @@ async function loadProductsFromSupabase(){
         id:product.id,
         localId:local?.id||null,
         name:local?.id==="menu-enfant-ailes-poulet" ? "Ailes de poulet frit" : product.name,
-        price:Number(local?.price ?? product.price),
+        price:Number(product.public_price),
         category:product.product_categories?.name||local?.category||"Plats",
         emoji:local?.emoji||"🍽️",
         photo:local?.photo || product.image_url || "",
