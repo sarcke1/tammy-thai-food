@@ -70,7 +70,7 @@ async function loadProductsFromSupabase(){
       return {
         id:product.id,
         name:product.name,
-        price:Number(local?.colleaguePrice ?? product.price),
+        price:Number(product.price),
         category:product.product_categories?.name||local?.category||"Plats",
         emoji:local?.emoji||"🍽️",
         photo:local?.photo || product.image_url || "",
