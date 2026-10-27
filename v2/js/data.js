@@ -16,6 +16,21 @@ export const dishes = [
 
 
   {
+    id:"pad-kra-pao-boeuf",
+    name:"Pad Kra Pao au bœuf",
+    price:9,
+    category:"Plats",
+    emoji:"🥩",
+    photo:"Pad Kra Pao.png",
+    prep:8,
+    desc:"Bœuf sauté au basilic thaï et aux piments, accompagné de riz thaï et d’un œuf au plat. Choisissez votre niveau de piment.",
+    spicy:true,
+    fixedProtein:"Bœuf",
+    proteinOptions:["Bœuf"],
+    servedWithRice:true
+  },
+
+  {
     id:"chicken-massena",
     name:"Chicken Massena",
     price:8,
