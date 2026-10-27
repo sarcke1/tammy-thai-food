@@ -260,7 +260,7 @@ function spiceRows(dish){
 
         <div class="spice-row" data-spice-row="${i}">
 
-          <span>${dish.proteinOptions?.length ? `Plat ${i+1} — ${selectedProteinLabels[i] || "Viande"} : choix du piment` : `Plat ${i+1} : choix du piment`}</span>
+          <span>Plat ${i+1} : choix du piment</span>
 
           <div class="spice-row-controls">
 
