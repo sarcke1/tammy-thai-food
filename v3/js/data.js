@@ -9,6 +9,8 @@ export const dishes = [
 
   { id:"bo-bun", name:"Bò Bún au bœuf", price:12, colleaguePrice:10, category:"Plats", emoji:"🥢", photo:"Bo bun.png", prep:10, desc:"Un Bò Bún généreux et frais, composé de vermicelles de riz, de bœuf sauté et de deux nems croustillants, accompagné de crudités croquantes, de menthe et de coriandre fraîches, d’oignons frits et de cacahuètes concassées. Sauce au choix : pimentée ou non pimentée.", spicy:false, fixedProtein:"Bœuf", proteinOptions:["Bœuf"], sauceOptions:["Sauce non pimentée","Sauce pimentée"] },
 
+  { id:"pad-kra-pao-boeuf", name:"Pad Kra Pao au bœuf", price:11, colleaguePrice:9, category:"Plats", emoji:"🥩", photo:"Pad Kra Pao.png", prep:8, desc:"Bœuf sauté au basilic thaï et aux piments, accompagné de riz thaï et d’un œuf au plat. Choisissez votre niveau de piment.", spicy:true, fixedProtein:"Bœuf", proteinOptions:["Bœuf"], servedWithRice:true },
+
   { id:"riz-saute", name:"Riz sauté façon thaï", price:7, category:"Plats", emoji:"🍚", photo:"Riz frit poulet.png", desc:"Riz sauté thaï préparé avec œuf, ail, carottes et coriandre. Au choix : porc, poulet ou crevettes.", spicy:false, proteinOptions:["Porc","Poulet","Crevettes"] },
 
   { id:"tom-yum", name:"Tom Yum aux crevettes, poulet et poisson", price:11, category:"Plats", emoji:"🍲", photo:"Tom yum crevette poisson blanc et poulet.png", prep:10, desc:"Soupe thaïlandaise Tom Yum au lait de coco, garnie de crevettes, de poulet tendre, de poisson, de champignons et de tomate. La coriandre fraîche apporte une note herbacée, tandis que la pâte de piment relève le bouillon selon votre goût. Piment au choix.", spicy:true },
