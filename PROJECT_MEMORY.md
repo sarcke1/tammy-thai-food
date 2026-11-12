@@ -624,3 +624,17 @@ Promo
 - La V2 propose un menu de jours de livraison sur les 7 prochains jours calendaires, sans créneaux horaires : midi uniquement, lundi/mardi/jeudi/vendredi.
 - Commande avant 18 h la veille : minimum demain ; dès 18 h : minimum après-demain. Les jours autorisés suivants dans la fenêtre restent sélectionnables.
 - Frontend `v2/js/checkout.js` version cache `20261022-04`. La RPC valide la fenêtre, la date minimale et les jours autorisés via migration `20261022190000_v2_select_delivery_day_rolling_week.sql`.
+
+
+## HACCP 1.00 — Suivi numérique des températures (2026-11-12)
+
+- Ajout dans l’administration commune du module **HACCP**.
+- Première fonctionnalité livrée : suivi des températures du réfrigérateur et du congélateur.
+- Le relevé est effectué avec un **thermomètre indépendant** ; la saisie numérique enregistre automatiquement la date et l’heure côté base.
+- Une température hors plage exige une action corrective avant l’enregistrement.
+- Les relevés sont en lecture/ajout pour les administrateurs, sans modification ni suppression via les politiques RLS prévues pour les historiques.
+- Tables ajoutées : `haccp_equipment` et `haccp_temperature_logs`.
+- Équipements initiaux : Réfrigérateur (0 à +4 °C) et Congélateur (-25 à -18 °C), valeurs à confirmer/adapter au PMS et aux équipements réellement utilisés.
+- Fichiers : `v2/admin/index.html`, `v2/admin/admin.css`, ajout de `v2/admin/haccp.js`, migration `supabase/migrations/20261112160000_haccp_temperature_tracking.sql`.
+- V1 et les sites clients V2/V3 ne sont pas modifiés. L’administration commune reste utilisée par les deux circuits.
+- Tests navigateur PC/mobile à effectuer avant de déclarer cette version stable.
