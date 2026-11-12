@@ -74,3 +74,27 @@
  .availability-row{padding:10px;align-items:flex-start}
  .availability-switch{font-size:12px;gap:6px}
 }
+
+
+/* HACCP 1.00 — Suivi numérique des températures */
+.haccp-panel{margin:0 0 18px}
+.haccp-panel-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.haccp-panel-head h2{margin-bottom:8px}
+.haccp-equipment{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}
+.haccp-equipment-card{padding:16px;border:1px solid #e2d8c8;border-radius:14px;background:#fff}
+.haccp-equipment-head h3{margin:0 0 4px;font-family:Georgia,serif}
+.haccp-equipment-head p{margin:0;color:#65736d;font-size:13px}
+.haccp-temperature-form label{font-size:13px}
+.haccp-temperature-form input,.haccp-temperature-form textarea{width:100%;margin-top:6px;padding:10px;border:1px solid #cfc4b2;border-radius:8px;font:inherit}
+.haccp-temperature-form textarea{resize:vertical}
+.haccp-temperature-form label span{font-weight:normal;color:#65736d}
+.haccp-form-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px}
+.haccp-live-status{font-size:13px;color:#65736d;font-weight:bold}
+.haccp-live-status.is-ok{color:#28764c}.haccp-live-status.is-alert{color:#b44739}
+.haccp-history-title{margin:24px 0 10px;font-family:Georgia,serif}
+.haccp-history{display:grid;gap:8px}
+.haccp-history-row{display:grid;grid-template-columns:1.2fr .55fr 1.4fr;gap:12px;align-items:center;padding:12px 14px;border:1px solid #e2d8c8;border-radius:10px;background:#fff}
+.haccp-history-row span,.haccp-history-row small{color:#65736d;font-size:12px}
+.haccp-history-temp{font-weight:bold;font-size:18px;font-variant-numeric:tabular-nums}
+.haccp-history-result{font-weight:bold;font-size:13px}.haccp-history-row.is-conforming{border-left:4px solid #8db896}.haccp-history-row.is-nonconforming{border-left:4px solid #ef654f;background:#fff8f5}
+@media(max-width:700px){.haccp-panel-head,.haccp-form-footer{flex-direction:column;align-items:stretch}.haccp-equipment{grid-template-columns:1fr}.haccp-history-row{grid-template-columns:1fr}.haccp-panel-head .secondary,.haccp-form-footer .primary{width:100%}}
