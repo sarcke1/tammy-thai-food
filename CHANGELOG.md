@@ -753,3 +753,17 @@ Bootstrap DevOps.
 - Jours proposés : lundi, mardi, jeudi, vendredi ; pas de mercredi ni de week-end.
 - Avant 18 h, première date possible = lendemain ; à partir de 18 h, première date possible = surlendemain, puis prochaine date admissible.
 - La RPC Supabase valide côté serveur que la date choisie respecte le délai, la fenêtre de 7 jours et les jours autorisés.
+
+
+## HACCP 1.00 — Suivi numérique des températures (2026-11-12)
+
+- Ajout dans l’administration commune du module **HACCP**.
+- Première fonctionnalité livrée : suivi des températures du réfrigérateur et du congélateur.
+- Le relevé est effectué avec un **thermomètre indépendant** ; la saisie numérique enregistre automatiquement la date et l’heure côté base.
+- Une température hors plage exige une action corrective avant l’enregistrement.
+- Les relevés sont en lecture/ajout pour les administrateurs, sans modification ni suppression via les politiques RLS prévues pour les historiques.
+- Tables ajoutées : `haccp_equipment` et `haccp_temperature_logs`.
+- Équipements initiaux : Réfrigérateur (0 à +4 °C) et Congélateur (-25 à -18 °C), valeurs à confirmer/adapter au PMS et aux équipements réellement utilisés.
+- Fichiers : `v2/admin/index.html`, `v2/admin/admin.css`, ajout de `v2/admin/haccp.js`, migration `supabase/migrations/20261112160000_haccp_temperature_tracking.sql`.
+- V1 et les sites clients V2/V3 ne sont pas modifiés. L’administration commune reste utilisée par les deux circuits.
+- Tests navigateur PC/mobile à effectuer avant de déclarer cette version stable.
