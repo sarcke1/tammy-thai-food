@@ -39,7 +39,7 @@ function renderEquipment(){
       </div>
       <form class="haccp-temperature-form" data-equipment-id="${item.id}">
         <label>Température relevée avec le thermomètre indépendant
-          <input name="temperature" type="text" inputmode="decimal" required pattern="[-+]?[0-9]+([,.][0-9]+)?" placeholder="Ex. -18,4 ou 3,2">
+          <input name="temperature" type="text" inputmode="text" required pattern="[-+]?[0-9]+([,.][0-9]+)?" placeholder="Ex. -18,4 ou 3,2">
         </label>
         <label class="haccp-corrective hidden">Action corrective <span>obligatoire si non conforme</span>
           <textarea name="corrective_action" rows="3" placeholder="Ex. contrôle du joint, transfert des denrées, appel maintenance..."></textarea>
