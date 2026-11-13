@@ -19,15 +19,15 @@ export const dishes = [
 
   { id:"soupe-nouille-boeuf", name:"Soupe de nouilles au bœuf", price:9, category:"Plats", emoji:"🍜", photo:"Soupe de nouille au bœuf.png", desc:"Soupe de nouilles de riz au bœuf, servie dans un bouillon parfumé avec des boulettes de viande et de la coriandre. Piment au choix.", spicy:true },
 
-  { id:"satay-poulet", name:"Brochette de filet de poulet satay", price:2, category:"Entrées", emoji:"🍢", photo:"Brochette poulet satay.png", desc:"Filets de poulet tendres, marinés aux épices puis grillés jusqu’à obtenir une belle coloration dorée. Servis avec une sauce satay onctueuse à part, pour retrouver les saveurs gourmandes de la cuisine thaïlandaise.", spicy:false, cartAdjustable:true },
+  { id:"satay-poulet", name:"Brochette de filet de poulet satay", price:2, category:"Entrées & accompagnements", emoji:"🍢", photo:"Brochette poulet satay.png", desc:"Filets de poulet tendres, marinés aux épices puis grillés jusqu’à obtenir une belle coloration dorée. Servis avec une sauce satay onctueuse à part, pour retrouver les saveurs gourmandes de la cuisine thaïlandaise.", spicy:false, cartAdjustable:true },
 
-  { id:"spring", name:"Rouleau de printemps", price:2, category:"Entrées", emoji:"🌯", photo:"Rouleau de printemps.png", desc:"Rouleau aux crevettes, salade, carotte, menthe, coriandre et nouilles chinoises, roulé dans une feuille de riz. Servi avec sa sauce.", spicy:false, cartAdjustable:true },
+  { id:"spring", name:"Rouleau de printemps", price:2, category:"Entrées & accompagnements", emoji:"🌯", photo:"Rouleau de printemps.png", desc:"Rouleau aux crevettes, salade, carotte, menthe, coriandre et nouilles chinoises, roulé dans une feuille de riz. Servi avec sa sauce.", spicy:false, cartAdjustable:true },
 
   {
     id:"salade-papaye",
     name:"Salade de papaye",
     price:7,
-    category:"Entrées",
+    category:"Entrées & accompagnements",
     emoji:"🥗",
     photo:"Salade papaye.png",
     desc:"Salade thaïlandaise de papaye verte râpée, carotte, tomate et citron vert, assaisonnée d’une sauce parfumée et parsemée de cacahuètes.",
@@ -142,7 +142,7 @@ export const dishes = [
     price:1,
     photo:"Nem.png",
     desc:"Nems maison au poulet, croustillants, préparés selon une recette traditionnelle thaïlandaise.",
-    category:"Entrées",
+    category:"Entrées & accompagnements",
     spicy:false,
     promo:"4 achetés + 1 offert",
     cartAdjustable:true
@@ -167,6 +167,6 @@ export const dishes = [
 
 ];
 
-export const categories=["Entrées","Plats","Desserts","Boissons","Enfants"];
+export const categories=["Entrées & accompagnements","Plats","Desserts","Boissons","Enfants"];
 export const serviceWindows=[{label:"Service midi",start:"11:30",end:"14:00"},{label:"Service soir",start:"18:30",end:"21:00"}];
 export const preparation={pad:{base:8,extra:2},"chicken-massena":{base:8,extra:1},"poulet-cajoux":{base:8,extra:1},"boeuf-huitre":{base:8,extra:1},"salade-papaye":{base:5,extra:1},"riz-saute":{base:8,extra:1},"tom-kha-kai":{base:8,extra:1},"soupe-nouille-boeuf":{base:8,extra:1},spring:{base:1.5,extra:.3},mango:{base:2,extra:.5}};
