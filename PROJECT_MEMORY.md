@@ -657,3 +657,6 @@ Promo
 - Migration appliquée : 20261113100000_haccp_v2_full_registers.sql.
 - Fichiers administration : v2/admin/index.html, v2/admin/haccp.js, v2/admin/admin.css.
 - Tests PC/mobile nécessaires avant déclaration de stabilité.
+
+- Complément : les photos de réception sont indexées en base et consultables via URL signée ; migration 20261113101000_haccp_receipt_photo_metadata.sql.
+- Sécurisation : la fonction trigger interne des températures n'est plus exécutable directement par anon/authenticated ; migration 20261113100500_haccp_revoke_trigger_function_execute.sql.
