@@ -101,7 +101,13 @@ async function loadConsult(section){
   } else if(section==='receipts'){
     const {data,error}=await supabase.from('haccp_receipts').select('*,haccp_receipt_items(*),haccp_receipt_photos(storage_path,original_name)').order('received_at',{ascending:false}).limit(100);
     if(error)return consultEl.innerHTML='<div class="availability-empty">'+esc(error.message)+'</div>';
-    consultEl.innerHTML=historyRows(data,d=>'<strong>'+esc(d.receipt_number)+'</strong> — '+esc(d.supplier)+' — '+(d.is_conforming?'✓ Conforme':'⚠ Non conforme')+'<br><small>'+dateTime(d.received_at)+'</small><div>'+((d.haccp_receipt_items||[]).map(i=>'📦 '+esc(i.product_name)+(i.lot_number?' · lot '+esc(i.lot_number):'')).join('<br>'))+'</div>'+((d.haccp_receipt_photos||[]).map(p=>'📷 '+esc(p.original_name||'Photo enregistrée')).join('<br>'))');
+    for(const receipt of data||[]){
+      for(const photo of receipt.haccp_receipt_photos||[]){
+        const {data:signed}=await supabase.storage.from('haccp-receipts').createSignedUrl(photo.storage_path,3600);
+        photo.signed_url=signed?.signedUrl||'';
+      }
+    }
+    consultEl.innerHTML=historyRows(data,d=>'<strong>'+esc(d.receipt_number)+'</strong> — '+esc(d.supplier)+' — '+(d.is_conforming?'✓ Conforme':'⚠ Non conforme')+'<br><small>'+dateTime(d.received_at)+'</small><div>'+((d.haccp_receipt_items||[]).map(i=>'📦 '+esc(i.product_name)+(i.lot_number?' · lot '+esc(i.lot_number):'')).join('<br>'))+'</div>'+((d.haccp_receipt_photos||[]).map(p=>p.signed_url?'📷 <a target="_blank" rel="noopener" href="'+esc(p.signed_url)+'">'+esc(p.original_name||'Voir la photo')+'</a>':'📷 '+esc(p.original_name||'Photo enregistrée')).join('<br>'))');
   } else if(section==='lots'){
     const {data,error}=await supabase.from('haccp_lot_usage').select('*,haccp_receipt_items(product_name,lot_number,haccp_receipts(receipt_number,supplier,received_at))').order('used_from',{ascending:false}).limit(100);
     if(error)return consultEl.innerHTML='<div class="availability-empty">'+esc(error.message)+'</div>';
