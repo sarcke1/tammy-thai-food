@@ -99,9 +99,9 @@ async function loadConsult(section){
     if(error)return consultEl.innerHTML='<div class="availability-empty">'+esc(error.message)+'</div>';
     consultEl.innerHTML=historyRows(data,d=>'<strong>'+esc(d.zone)+'</strong> — '+esc(d.frequency)+'<br><small>'+esc(d.cleaning_date)+' · '+esc(d.method_or_product||'')+'</small>');
   } else if(section==='receipts'){
-    const {data,error}=await supabase.from('haccp_receipts').select('*,haccp_receipt_items(*)').order('received_at',{ascending:false}).limit(100);
+    const {data,error}=await supabase.from('haccp_receipts').select('*,haccp_receipt_items(*),haccp_receipt_photos(storage_path,original_name)').order('received_at',{ascending:false}).limit(100);
     if(error)return consultEl.innerHTML='<div class="availability-empty">'+esc(error.message)+'</div>';
-    consultEl.innerHTML=historyRows(data,d=>'<strong>'+esc(d.receipt_number)+'</strong> — '+esc(d.supplier)+' — '+(d.is_conforming?'✓ Conforme':'⚠ Non conforme')+'<br><small>'+dateTime(d.received_at)+'</small><div>'+((d.haccp_receipt_items||[]).map(i=>'📦 '+esc(i.product_name)+(i.lot_number?' · lot '+esc(i.lot_number):'')).join('<br>'))+'</div>');
+    consultEl.innerHTML=historyRows(data,d=>'<strong>'+esc(d.receipt_number)+'</strong> — '+esc(d.supplier)+' — '+(d.is_conforming?'✓ Conforme':'⚠ Non conforme')+'<br><small>'+dateTime(d.received_at)+'</small><div>'+((d.haccp_receipt_items||[]).map(i=>'📦 '+esc(i.product_name)+(i.lot_number?' · lot '+esc(i.lot_number):'')).join('<br>'))+'</div>'+((d.haccp_receipt_photos||[]).map(p=>'📷 '+esc(p.original_name||'Photo enregistrée')).join('<br>'))');
   } else if(section==='lots'){
     const {data,error}=await supabase.from('haccp_lot_usage').select('*,haccp_receipt_items(product_name,lot_number,haccp_receipts(receipt_number,supplier,received_at))').order('used_from',{ascending:false}).limit(100);
     if(error)return consultEl.innerHTML='<div class="availability-empty">'+esc(error.message)+'</div>';
@@ -137,7 +137,7 @@ async function submitReceipt(form){
   const {data,error}=await supabase.from('haccp_receipts').insert(receipt).select().single(); if(error)throw error;
   const {data:item,error:iErr}=await supabase.from('haccp_receipt_items').insert({receipt_id:data.id,product_name:value(form,'product_name'),lot_number:value(form,'lot_number')||null,expiry_date:value(form,'expiry_date')||null,temperature_c:num(form,'temperature_c')}).select().single(); if(iErr)throw iErr;
   const files=[...(form.elements.photos?.files||[])];
-  for(const file of files){const path=data.id+'/'+Date.now()+'-'+file.name.replace(/[^a-zA-Z0-9._-]/g,'_');const {error:uErr}=await supabase.storage.from('haccp-receipts').upload(path,file,{contentType:file.type});if(uErr)throw uErr;}
+  for(const file of files){const path=data.id+'/'+Date.now()+'-'+file.name.replace(/[^a-zA-Z0-9._-]/g,'_');const {error:uErr}=await supabase.storage.from('haccp-receipts').upload(path,file,{contentType:file.type});if(uErr)throw uErr;const {error:mErr}=await supabase.from('haccp_receipt_photos').insert({receipt_id:data.id,storage_path:path,original_name:file.name});if(mErr)throw mErr;}
   if(item.lot_number){await supabase.from('haccp_lot_usage').insert({receipt_item_id:item.id,used_from:new Date().toISOString().slice(0,10)});}
 }
 async function submitGeneric(section,form){
