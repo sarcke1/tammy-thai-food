@@ -200,6 +200,23 @@ async function saveOpeningHour(input){
 
 viewTabs.forEach(t=>t.addEventListener('click',()=>{currentView=t.dataset.view;openingPanel?.classList.add('hidden');ordersEl.classList.remove('hidden');document.querySelector('.view-tabs').classList.remove('hidden');document.querySelector('.toolbar').classList.remove('hidden');renderOrders();}));
 
+// HACCP : ouverture gérée ici pour garantir que le bouton réagit même si le module est chargé après l'administration.
+document.querySelector('#haccp-tab')?.addEventListener('click',()=>{
+  const haccpPanel=document.querySelector('#haccp-panel');
+  if(!haccpPanel)return;
+  const opening=haccpPanel.classList.contains('hidden');
+  haccpPanel.classList.toggle('hidden',!opening);
+  document.querySelector('#opening-panel')?.classList.add('hidden');
+  document.querySelector('#slots-panel')?.classList.add('hidden');
+  document.querySelector('#availability-panel')?.classList.add('hidden');
+  document.querySelector('#orders')?.classList.toggle('hidden',opening);
+  document.querySelector('.view-tabs')?.classList.toggle('hidden',opening);
+  document.querySelector('.toolbar')?.classList.toggle('hidden',opening);
+  document.querySelector('#haccp-tab')?.setAttribute('aria-pressed',String(opening));
+  if(opening)window.dispatchEvent(new CustomEvent('tammy:haccp-open'));
+});
+
+
 loginForm.addEventListener('submit',async e=>{e.preventDefault();loginStatus.textContent='Connexion…';const{error}=await supabase.auth.signInWithPassword({email:document.querySelector('#email').value,password:document.querySelector('#password').value});if(error){loginStatus.textContent='Erreur : '+error.message;return;}loginStatus.textContent='';showDashboard();});
 logoutButton.addEventListener('click',async()=>{await supabase.auth.signOut();showLogin();});
 document.querySelector('#refresh').addEventListener('click',()=>loadOrders());
