@@ -182,7 +182,7 @@ async function loadHaccp(){
   setStatus('Module HACCP prêt.');
 }
 
-tab?.addEventListener('click',(event)=>{event.preventDefault();showPanel();});
+window.addEventListener('tammy:haccp-open',()=>loadHaccp());
 $('#haccp-refresh')?.addEventListener('click',loadHaccp);
 document.querySelectorAll('.haccp-mode-tab').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.haccpMode)));
 document.querySelectorAll('[data-haccp-section]').forEach(b=>b.addEventListener('click',()=>renderRecord(b.dataset.haccpSection)));
