@@ -98,3 +98,18 @@
 .haccp-history-temp{font-weight:bold;font-size:18px;font-variant-numeric:tabular-nums}
 .haccp-history-result{font-weight:bold;font-size:13px}.haccp-history-row.is-conforming{border-left:4px solid #8db896}.haccp-history-row.is-nonconforming{border-left:4px solid #ef654f;background:#fff8f5}
 @media(max-width:700px){.haccp-panel-head,.haccp-form-footer{flex-direction:column;align-items:stretch}.haccp-equipment{grid-template-columns:1fr}.haccp-history-row{grid-template-columns:1fr}.haccp-panel-head .secondary,.haccp-form-footer .primary{width:100%}}
+
+/* HACCP V2.00 */
+.haccp-mode-tabs,.haccp-section-buttons{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.haccp-mode-tab,.haccp-section-buttons button{border:1px solid #ddd;background:#fff;border-radius:10px;padding:10px 14px;cursor:pointer}
+.haccp-mode-tab.active{background:#222;color:#fff;border-color:#222}
+.haccp-mode-content.hidden{display:none}
+.haccp-form-card{margin-top:14px;padding:16px;border:1px solid #e5e5e5;border-radius:12px;background:#fff}
+.haccp-form-card form{display:grid;gap:12px}
+.haccp-form-card label{display:grid;gap:6px;font-weight:600}
+.haccp-form-card input,.haccp-form-card select,.haccp-form-card textarea{width:100%;box-sizing:border-box;padding:10px;border:1px solid #ccc;border-radius:8px;font:inherit}
+.haccp-form-card label:has(input[type=checkbox]){display:flex;align-items:center;gap:8px}
+.haccp-form-card input[type=checkbox]{width:auto}
+.haccp-history{display:grid;gap:8px;margin-top:14px}
+.haccp-history-row{padding:12px;border:1px solid #e5e5e5;border-radius:10px;background:#fafafa;line-height:1.45}
+@media (max-width:700px){.haccp-section-buttons{display:grid;grid-template-columns:1fr 1fr}.haccp-section-buttons button{font-size:.88rem;padding:10px 8px}}
