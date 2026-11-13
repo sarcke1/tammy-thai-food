@@ -638,3 +638,22 @@ Promo
 - Fichiers : `v2/admin/index.html`, `v2/admin/admin.css`, ajout de `v2/admin/haccp.js`, migration `supabase/migrations/20261112160000_haccp_temperature_tracking.sql`.
 - V1 et les sites clients V2/V3 ne sont pas modifiés. L’administration commune reste utilisée par les deux circuits.
 - Tests navigateur PC/mobile à effectuer avant de déclarer cette version stable.
+
+
+## V2.06.14 / V3 — Panier et accompagnements (2026-11-13)
+
+- Les plats sans piment ne doivent plus afficher « Sans piment » dans le panier client V2 ou V3.
+- La catégorie client est renommée « Entrées & accompagnements » dans V2 et V3.
+- Ajout d'une « Portion de riz thaï » comme accompagnement, prix actuel : 2 €.
+
+## HACCP V2.00 — Administration commune V2/V3 (2026-11-13)
+
+- L'administration HACCP commune est désormais séparée en deux espaces : **Enregistrer** et **Consulter**.
+- Enregistrer : températures, livraison/transport, nettoyage, réception des marchandises, huile de friture, non-conformités.
+- Consulter : historiques températures, transport, nettoyage, réceptions, traçabilité des lots par période d'utilisation, huile et non-conformités.
+- Les réceptions créent un numéro numérique, enregistrent fournisseur, lot, DLC/DDM et peuvent recevoir des photos dans le bucket privé Supabase `haccp-receipts`.
+- La traçabilité des lots est volontairement suivie par produit/lot et période d'utilisation, sans suivi obligatoire plat par plat.
+- Les nouveaux registres sont protégés par RLS et réservés aux administrateurs.
+- Migration appliquée : 20261113100000_haccp_v2_full_registers.sql.
+- Fichiers administration : v2/admin/index.html, v2/admin/haccp.js, v2/admin/admin.css.
+- Tests PC/mobile nécessaires avant déclaration de stabilité.
