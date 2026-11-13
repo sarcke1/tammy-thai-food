@@ -1,7 +1,7 @@
 // ===== TAMMY THAI FOOD V3.10 =====
 // UI Renderer + Event Wiring
 
-import { dishes as localDishes } from "./data.js?v=20261020-02";
+import { dishes as localDishes } from "./data.js?v=20261113-03";
 import { spiceLabel } from "./spice.js";
 import { supabase } from "./supabase.js";
 import {
@@ -39,7 +39,7 @@ const cartCountEl = document.querySelector("#cart-count");
 const cardStates = new Map();
 
 const categoryOrder = {
-  Entrées: 1,
+  "Entrées & accompagnements": 1,
   Plats: 2,
   Desserts: 3,
   Boissons: 4
@@ -71,7 +71,7 @@ async function loadProductsFromSupabase(){
         id:product.id,
         name:product.name,
         price:Number(product.price),
-        category:product.product_categories?.name||local?.category||"Plats",
+        category:local?.category||product.product_categories?.name||"Plats",
         emoji:local?.emoji||"🍽️",
         photo:local?.photo || product.image_url || "",
         position:local?.position,
@@ -489,7 +489,7 @@ function renderCart(){
           ${item.protein
             ? `<small>${item.protein}</small>`
             : ""}
-          ${item.sauce ? `<small>${item.sauce}</small>` : ""}
+          ${item.sauce && item.sauceOptions?.length ? `<small>${item.sauce}</small>` : ""}
 
           ${item.fixedSpice != null
             ? `<small>Piment : niveau ${item.fixedSpice}</small>`
