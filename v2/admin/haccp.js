@@ -15,9 +15,23 @@ async function syncVisibility(){
   tab?.classList.toggle('hidden',!session);
 }
 function showPanel(){
-  panel.classList.toggle('hidden');
-  tab?.setAttribute('aria-pressed',String(!panel.classList.contains('hidden')));
-  if(!panel.classList.contains('hidden')) loadHaccp();
+  if(!panel) return;
+  const isOpening=panel.classList.contains('hidden');
+  panel.classList.toggle('hidden',!isOpening);
+  document.querySelector('#opening-panel')?.classList.add('hidden');
+  document.querySelector('#slots-panel')?.classList.add('hidden');
+  document.querySelector('#availability-panel')?.classList.add('hidden');
+  if(isOpening){
+    document.querySelector('#orders')?.classList.add('hidden');
+    document.querySelector('.view-tabs')?.classList.add('hidden');
+    document.querySelector('.toolbar')?.classList.add('hidden');
+    loadHaccp();
+  }else{
+    document.querySelector('#orders')?.classList.remove('hidden');
+    document.querySelector('.view-tabs')?.classList.remove('hidden');
+    document.querySelector('.toolbar')?.classList.remove('hidden');
+  }
+  tab?.setAttribute('aria-pressed',String(isOpening));
 }
 function setStatus(text){statusEl.textContent=text;}
 function setMode(mode){
@@ -168,7 +182,7 @@ async function loadHaccp(){
   setStatus('Module HACCP prêt.');
 }
 
-tab?.addEventListener('click',showPanel);
+tab?.addEventListener('click',(event)=>{event.preventDefault();showPanel();});
 $('#haccp-refresh')?.addEventListener('click',loadHaccp);
 document.querySelectorAll('.haccp-mode-tab').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.haccpMode)));
 document.querySelectorAll('[data-haccp-section]').forEach(b=>b.addEventListener('click',()=>renderRecord(b.dataset.haccpSection)));
