@@ -13,6 +13,7 @@ function normalizeItems() {
     spice: Number(item.spice || 0),
     protein: item.protein || '',
     sauce: item.sauce || '',
+    sauceOptions: Array.isArray(item.sauceOptions) ? item.sauceOptions : [],
     side: item.side || '',
     photo: item.photo || '',
     fixedSpice: item.fixedSpice ?? null
@@ -55,7 +56,8 @@ export function addToCart(dish, spice = 0, protein = '', sauce = '', side = '') 
     spice: dish.spicy ? Math.max(0, Math.min(3, Number(spice)||0)) : 0,
     fixedSpice: dish.fixedSpice ?? null,
     protein,
-    sauce,
+    sauce: Array.isArray(dish.sauceOptions) && dish.sauceOptions.length ? sauce : '',
+    sauceOptions: Array.isArray(dish.sauceOptions) ? dish.sauceOptions : [],
     side,
 
     quantity: 1
