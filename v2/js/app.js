@@ -507,9 +507,7 @@ function renderCart(){
 
               </div>
             `
-            : item.sauce
-              ? ""
-              : "<small>Sans piment</small>"}
+            : ""}
 
           <span>${euro(isSatayPromo(item) ? satayTotal(entry.quantity,item.price,Number(item.price)<2) : (multiple ? entry.total : item.price))}${multiple ? ` <small>(${isSatayPromo(item) ? "tarif promotionnel" : euro(item.price)+" / unité"})</small>` : ""}</span>
 
