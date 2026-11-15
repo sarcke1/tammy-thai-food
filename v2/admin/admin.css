@@ -113,3 +113,13 @@
 .haccp-history{display:grid;gap:8px;margin-top:14px}
 .haccp-history-row{padding:12px;border:1px solid #e5e5e5;border-radius:10px;background:#fafafa;line-height:1.45}
 @media (max-width:700px){.haccp-section-buttons{display:grid;grid-template-columns:1fr 1fr}.haccp-section-buttons button{font-size:.88rem;padding:10px 8px}}
+
+
+/* HACCP V2.03 — état actif et ergonomie mobile */
+.haccp-section-buttons button.active{background:#222;color:#fff;border-color:#222}
+.haccp-form-card h3{margin-top:0}
+.haccp-form-card p{line-height:1.5}
+.haccp-form .primary{margin-top:4px}
+.haccp-check{display:flex!important;align-items:center;gap:10px;font-weight:600}
+.haccp-check input{flex:0 0 auto}
+#haccp-status.error{color:#b34a3d;font-weight:600}
