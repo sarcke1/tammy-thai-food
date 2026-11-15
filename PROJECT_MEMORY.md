@@ -660,3 +660,13 @@ Promo
 
 - Complément : les photos de réception sont indexées en base et consultables via URL signée ; migration 20261113101000_haccp_receipt_photo_metadata.sql.
 - Sécurisation : la fonction trigger interne des températures n'est plus exécutable directement par anon/authenticated ; migration 20261113100500_haccp_revoke_trigger_function_execute.sql.
+
+
+## HACCP V2.03 — Formulaires opérationnels (2026-11-15)
+
+- Correction complète des interactions HACCP : les clics utilisent désormais une délégation d’événements sur le panneau, afin que les boutons restent fonctionnels après les changements d’affichage.
+- Tous les formulaires d’enregistrement sont opérationnels : températures, livraison/transport, nettoyage, réception avec photos, huile de friture et non-conformités.
+- Toutes les rubriques de consultation sont disponibles : températures, transport, nettoyage, réceptions/photos, lots, huile et non-conformités.
+- Les enregistrements sont horodatés par Supabase et les erreurs de base sont affichées directement dans le statut HACCP.
+- Fichiers modifiés : `v2/admin/haccp.js`, `v2/admin/admin.css`, `v2/admin/index.html`.
+- À tester sur PC et mobile avant stabilisation.
