@@ -99,11 +99,13 @@ function renderRecord(section){
       field('product_name','Produit reçu','text','required')+
       field('lot_number','Numéro de lot','text')+
       field('expiry_date','DLC / DDM','date')+
-      '<label>Type de produit<select name="product_temperature_type"><option value="ambient">Produit à température ambiante</option><option value="chilled">Produit réfrigéré</option><option value="frozen">Produit surgelé</option></select></label>'+\n      field('temperature_c','Température à réception (°C)','text','inputmode="text" placeholder="Uniquement pour les produits réfrigérés/surgelés"')+
+      '<label>Type de produit<select name="product_temperature_type"><option value="ambient">Produit à température ambiante</option><option value="chilled">Produit réfrigéré</option><option value="frozen">Produit surgelé</option></select></label>'+
+      field('temperature_c','Température à réception (°C)','text','inputmode="text" placeholder="Uniquement pour les produits réfrigérés/surgelés"')+
       '<label class="haccp-check"><input type="checkbox" name="packaging_conforming" checked> Emballage conforme</label>'+
       '<label class="haccp-check"><input type="checkbox" name="is_conforming" checked> Réception conforme</label>'+
       textarea('corrective_action','Action corrective')+
-      '<label>Photo obligatoire de l’emballage et de son étiquette (DLC/DDM et lot visibles)<input name="photos" type="file" accept="image/*" capture="environment" required></label>'+\n      '<p>La photo doit permettre de retrouver le produit, le lot et la DLC/DDM. Conserve aussi l’étiquette physique jusqu’à la fin d’utilisation du produit.</p>'+
+      '<label>Photo obligatoire de l’emballage et de son étiquette (DLC/DDM et lot visibles)<input name="photos" type="file" accept="image/*" capture="environment" required></label>'+
+      '<p>La photo doit permettre de retrouver le produit, le lot et la DLC/DDM. Conserve aussi l’étiquette physique jusqu’à la fin d’utilisation du produit.</p>'+
       textarea('notes','Observation')
     );
   }
@@ -284,7 +286,9 @@ async function submitReceipt(form){
   }).select().single();
   if(itemError) throw itemError;
 
-  const photoFiles = [...(form.elements.photos?.files || [])];\n  if(!photoFiles.length) throw new Error('La photo de l’étiquette est obligatoire.');\n  for(const file of photoFiles){
+  const photoFiles = [...(form.elements.photos?.files || [])];
+  if(!photoFiles.length) throw new Error('La photo de l’étiquette est obligatoire.');
+  for(const file of photoFiles){
     const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
     const path = receipt.id+'/'+Date.now()+'-'+safeName;
     const {error:uploadError} = await supabase.storage.from('haccp-receipts').upload(path,file,{contentType:file.type});
@@ -306,7 +310,11 @@ async function submitReceipt(form){
 async function submitGeneric(form){
   const section = currentRecordSection;
   if(section === 'temperatures') return submitTemperature(form);
-  if(section === 'receipts') {\n    const type=formValue(form,'product_temperature_type');\n    if(type!=='ambient' && numberValue(form,'temperature_c')===null) throw new Error('La température est obligatoire pour un produit réfrigéré ou surgelé.');\n    return submitReceipt(form);\n  }
+  if(section === 'receipts') {
+    const type=formValue(form,'product_temperature_type');
+    if(type!=='ambient' && numberValue(form,'temperature_c')===null) throw new Error('La température est obligatoire pour un produit réfrigéré ou surgelé.');
+    return submitReceipt(form);
+  }
 
   let table = '';
   let payload = {};
@@ -365,7 +373,25 @@ async function submitGeneric(form){
   if(error) throw error;
 }
 
-async function loadCleaningTasks(){\n  const {data,error}=await supabase.from('haccp_cleaning_logs').select('zone,cleaning_date,created_at').order('cleaning_date',{ascending:false});\n  if(error) throw error;\n  const last={}; for(const row of data||[]) if(!last[row.zone] || row.cleaning_date>last[row.zone]) last[row.zone]=row.cleaning_date;\n  const now=new Date(today()+'T12:00:00');\n  cleaningTasks=CLEANING_TASKS.filter(task=>{const d=last[task.id]; if(!d)return true; const age=Math.floor((now-new Date(d+'T12:00:00'))/86400000); return age>=task.days;}).map(task=>({...task,last_done:last[task.id]||null}));\n}\n\nasync function saveCleaningTasks(){\n  const checked=[...recordEl.querySelectorAll('input[name="clean_task"]:checked')];\n  if(!checked.length){status('Coche au moins une tâche effectuée.',true);return;}\n  const button=$('#haccp-cleaning-save'); if(button)button.disabled=true;\n  try{const date=today(); const rows=checked.map(input=>{const task=CLEANING_TASKS.find(t=>t.id===input.value);return {cleaning_date:date,zone:task.id,frequency:task.frequency,method_or_product:task.name,notes:recordEl.querySelector('[name="notes"]')?.value||null};});\n    const {error}=await supabase.from('haccp_cleaning_logs').insert(rows); if(error)throw error;\n    status(checked.length+' tâche(s) de nettoyage enregistrée(s).'); await loadCleaningTasks(); renderRecord('cleaning');\n  }catch(error){status('Erreur : '+error.message,true);}finally{if(button)button.disabled=false;}\n}\n\nasync function loadEquipment(){
+async function loadCleaningTasks(){
+  const {data,error}=await supabase.from('haccp_cleaning_logs').select('zone,cleaning_date,created_at').order('cleaning_date',{ascending:false});
+  if(error) throw error;
+  const last={}; for(const row of data||[]) if(!last[row.zone] || row.cleaning_date>last[row.zone]) last[row.zone]=row.cleaning_date;
+  const now=new Date(today()+'T12:00:00');
+  cleaningTasks=CLEANING_TASKS.filter(task=>{const d=last[task.id]; if(!d)return true; const age=Math.floor((now-new Date(d+'T12:00:00'))/86400000); return age>=task.days;}).map(task=>({...task,last_done:last[task.id]||null}));
+}
+
+async function saveCleaningTasks(){
+  const checked=[...recordEl.querySelectorAll('input[name="clean_task"]:checked')];
+  if(!checked.length){status('Coche au moins une tâche effectuée.',true);return;}
+  const button=$('#haccp-cleaning-save'); if(button)button.disabled=true;
+  try{const date=today(); const rows=checked.map(input=>{const task=CLEANING_TASKS.find(t=>t.id===input.value);return {cleaning_date:date,zone:task.id,frequency:task.frequency,method_or_product:task.name,notes:recordEl.querySelector('[name="notes"]')?.value||null};});
+    const {error}=await supabase.from('haccp_cleaning_logs').insert(rows); if(error)throw error;
+    status(checked.length+' tâche(s) de nettoyage enregistrée(s).'); await loadCleaningTasks(); renderRecord('cleaning');
+  }catch(error){status('Erreur : '+error.message,true);}finally{if(button)button.disabled=false;}
+}
+
+async function loadEquipment(){
   status('Chargement HACCP…');
   const {data,error} = await supabase.from('haccp_equipment').select('*').eq('active',true).order('name');
   if(error){
@@ -382,9 +408,15 @@ async function refreshHaccp(){
   else loadConsult(currentConsultSection);
 }
 
-panel?.addEventListener('change', event => {\n  if(event.target.name === 'visual_result') $('#oil-corrective')?.classList.toggle('hidden',event.target.value !== 'bad');\n});\n\npanel?.addEventListener('click', async event => {
+panel?.addEventListener('change', event => {
+  if(event.target.name === 'visual_result') $('#oil-corrective')?.classList.toggle('hidden',event.target.value !== 'bad');
+});
+
+panel?.addEventListener('click', async event => {
   const refresh = event.target.closest('#haccp-refresh');
-  if(refresh){ event.preventDefault(); await refreshHaccp(); return; }\n  if(event.target.closest('#haccp-cleaning-save')){ event.preventDefault(); await saveCleaningTasks(); return; }\n  if(event.target.name==='visual_result'){ $('#oil-corrective')?.classList.toggle('hidden',event.target.value!=='bad'); }
+  if(refresh){ event.preventDefault(); await refreshHaccp(); return; }
+  if(event.target.closest('#haccp-cleaning-save')){ event.preventDefault(); await saveCleaningTasks(); return; }
+  if(event.target.name==='visual_result'){ $('#oil-corrective')?.classList.toggle('hidden',event.target.value!=='bad'); }
 
   const modeButton = event.target.closest('[data-haccp-mode]');
   if(modeButton){ event.preventDefault(); setMode(modeButton.dataset.haccpMode); return; }
