@@ -382,7 +382,7 @@ async function refreshHaccp(){
   else loadConsult(currentConsultSection);
 }
 
-panel?.addEventListener('click', async event => {
+panel?.addEventListener('change', event => {\n  if(event.target.name === 'visual_result') $('#oil-corrective')?.classList.toggle('hidden',event.target.value !== 'bad');\n});\n\npanel?.addEventListener('click', async event => {
   const refresh = event.target.closest('#haccp-refresh');
   if(refresh){ event.preventDefault(); await refreshHaccp(); return; }\n  if(event.target.closest('#haccp-cleaning-save')){ event.preventDefault(); await saveCleaningTasks(); return; }\n  if(event.target.name==='visual_result'){ $('#oil-corrective')?.classList.toggle('hidden',event.target.value!=='bad'); }
 
