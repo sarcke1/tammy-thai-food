@@ -10,6 +10,21 @@ let equipment = [];
 let currentMode = 'record';
 let currentRecordSection = 'temperatures';
 let currentConsultSection = 'temperatures';
+let cleaningTasks = [];
+const CLEANING_TASKS = [
+ {id:'plans',name:'Nettoyage et désinfection des plans de travail',frequency:'Quotidien',days:1},
+ {id:'wok',name:'Nettoyage du wok et des plaques',frequency:'Quotidien',days:1},
+ {id:'ustensiles',name:'Nettoyage des ustensiles et petits matériels',frequency:'Quotidien',days:1},
+ {id:'plonge',name:'Nettoyage de l’évier et de la plonge',frequency:'Quotidien',days:1},
+ {id:'sol',name:'Nettoyage du sol',frequency:'Quotidien',days:1},
+ {id:'poubelles',name:'Vidage, nettoyage et désinfection des poubelles',frequency:'Quotidien',days:1},
+ {id:'frigo',name:'Nettoyage intérieur du réfrigérateur',frequency:'Hebdomadaire',days:7},
+ {id:'congelateur',name:'Nettoyage et contrôle du congélateur',frequency:'Hebdomadaire',days:7},
+ {id:'stockage',name:'Nettoyage des étagères et zones de stockage',frequency:'Hebdomadaire',days:7},
+ {id:'portes',name:'Nettoyage approfondi des portes et poignées',frequency:'Mensuel',days:30},
+ {id:'murs',name:'Nettoyage approfondi des murs et surfaces difficiles',frequency:'Mensuel',days:30},
+ {id:'hotte',name:'Nettoyage approfondi de la hotte et des filtres',frequency:'Mensuel',days:30}
+];
 
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({
   '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
@@ -63,33 +78,18 @@ function renderRecord(section){
       '🌡️ '+esc(eq.name),
       '<input type="hidden" name="equipment_id" value="'+esc(eq.id)+'">'+
       '<p>Plage conforme : '+temp(eq.min_temperature_c)+' à '+temp(eq.max_temperature_c)+'</p>'+
-      field('temperature','Température relevée','text','required placeholder="Ex. 3,2 ou -18,4" inputmode="decimal"')+
+      field('temperature','Température relevée','text','required placeholder="Ex. 3,2 ou -18,4" inputmode="text" autocomplete="off"')+
       textarea('corrective_action','Action corrective — obligatoire si non conforme')+
       textarea('notes','Observation facultative')
     )).join('');
   }
 
-  if(section === 'transport'){
-    recordEl.innerHTML = formCard('🚗 Livraison / transport',
-      field('reference','Référence commande / tournée','text','placeholder="Facultatif"')+
-      '<label>Type de transport<select name="transport_type"><option>Sac isotherme</option><option>Glacière</option><option>Autre</option></select></label>'+
-      field('departure_temperature_c','Température au départ (°C)','number','step="0.1" inputmode="decimal"')+
-      field('arrival_temperature_c','Température à l’arrivée (°C)','number','step="0.1" inputmode="decimal"')+
-      '<label class="haccp-check"><input type="checkbox" name="is_conforming" checked> Transport conforme</label>'+
-      textarea('corrective_action','Action corrective')+
-      textarea('notes','Observation')
-    );
-  }
+
 
   if(section === 'cleaning'){
-    recordEl.innerHTML = formCard('🧹 Suivi du nettoyage',
-      field('cleaning_date','Date','date','required value="'+today()+'"')+
-      '<label>Fréquence<select name="frequency"><option>Quotidien</option><option>Hebdomadaire</option><option>Mensuel</option><option>Périodique</option></select></label>'+
-      field('zone','Zone / équipement','text','required placeholder="Plan de travail, wok, frigo…"')+
-      field('method_or_product','Produit / méthode','text','placeholder="Facultatif"')+
-      field('performed_by','Réalisé par','text','placeholder="Facultatif"')+
-      textarea('notes','Observation')
-    );
+    recordEl.innerHTML = '<article class="haccp-form-card"><h3>🧹 Checklist des nettoyages à effectuer</h3><p>Seules les tâches arrivées à échéance sont affichées. Toutes les cases sont décochées au départ.</p>'+
+      (cleaningTasks.length ? cleaningTasks.map(task=>'<label class="haccp-check haccp-clean-task"><input type="checkbox" name="clean_task" value="'+esc(task.id)+'"> <span><strong>'+esc(task.name)+'</strong><small> · '+esc(task.frequency)+' · '+(task.last_done?'Dernière réalisation : '+esc(task.last_done):'Jamais enregistré')+'</small></span></label>').join('') : '<p>Aucune tâche à échéance aujourd’hui.</p>')+
+      (cleaningTasks.length ? '<label>Observation facultative<textarea name="notes" rows="2"></textarea></label><button type="button" id="haccp-cleaning-save" class="primary">Valider les tâches cochées</button>' : '')+'</article>';
   }
 
   if(section === 'receipts'){
@@ -99,11 +99,11 @@ function renderRecord(section){
       field('product_name','Produit reçu','text','required')+
       field('lot_number','Numéro de lot','text')+
       field('expiry_date','DLC / DDM','date')+
-      field('temperature_c','Température à réception (°C)','number','step="0.1" inputmode="decimal"')+
+      '<label>Type de produit<select name="product_temperature_type"><option value="ambient">Produit à température ambiante</option><option value="chilled">Produit réfrigéré</option><option value="frozen">Produit surgelé</option></select></label>'+\n      field('temperature_c','Température à réception (°C)','text','inputmode="text" placeholder="Uniquement pour les produits réfrigérés/surgelés"')+
       '<label class="haccp-check"><input type="checkbox" name="packaging_conforming" checked> Emballage conforme</label>'+
       '<label class="haccp-check"><input type="checkbox" name="is_conforming" checked> Réception conforme</label>'+
       textarea('corrective_action','Action corrective')+
-      '<label>Photos de l’étiquette / produit<input name="photos" type="file" accept="image/*" multiple></label>'+
+      '<label>Photo obligatoire de l’emballage et de son étiquette (DLC/DDM et lot visibles)<input name="photos" type="file" accept="image/*" capture="environment" required></label>'+\n      '<p>La photo doit permettre de retrouver le produit, le lot et la DLC/DDM. Conserve aussi l’étiquette physique jusqu’à la fin d’utilisation du produit.</p>'+
       textarea('notes','Observation')
     );
   }
@@ -285,7 +285,7 @@ async function submitReceipt(form){
   }).select().single();
   if(itemError) throw itemError;
 
-  for(const file of [...(form.elements.photos?.files || [])]){
+  const photoFiles = [...(form.elements.photos?.files || [])];\n  if(!photoFiles.length) throw new Error('La photo de l’étiquette est obligatoire.');\n  for(const file of photoFiles){
     const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
     const path = receipt.id+'/'+Date.now()+'-'+safeName;
     const {error:uploadError} = await supabase.storage.from('haccp-receipts').upload(path,file,{contentType:file.type});
@@ -307,7 +307,7 @@ async function submitReceipt(form){
 async function submitGeneric(form){
   const section = currentRecordSection;
   if(section === 'temperatures') return submitTemperature(form);
-  if(section === 'receipts') return submitReceipt(form);
+  if(section === 'receipts') {\n    const type=formValue(form,'product_temperature_type');\n    if(type!=='ambient' && numberValue(form,'temperature_c')===null) throw new Error('La température est obligatoire pour un produit réfrigéré ou surgelé.');\n    return submitReceipt(form);\n  }
 
   let table = '';
   let payload = {};
@@ -366,7 +366,7 @@ async function submitGeneric(form){
   if(error) throw error;
 }
 
-async function loadEquipment(){
+async function loadCleaningTasks(){\n  const {data,error}=await supabase.from('haccp_cleaning_logs').select('zone,cleaning_date,created_at').order('cleaning_date',{ascending:false});\n  if(error) throw error;\n  const last={}; for(const row of data||[]) if(!last[row.zone] || row.cleaning_date>last[row.zone]) last[row.zone]=row.cleaning_date;\n  const now=new Date(today()+'T12:00:00');\n  cleaningTasks=CLEANING_TASKS.filter(task=>{const d=last[task.id]; if(!d)return true; const age=Math.floor((now-new Date(d+'T12:00:00'))/86400000); return age>=task.days;}).map(task=>({...task,last_done:last[task.id]||null}));\n}\n\nasync function saveCleaningTasks(){\n  const checked=[...recordEl.querySelectorAll('input[name="clean_task"]:checked')];\n  if(!checked.length){status('Coche au moins une tâche effectuée.',true);return;}\n  const button=$('#haccp-cleaning-save'); if(button)button.disabled=true;\n  try{const date=today(); const rows=checked.map(input=>{const task=CLEANING_TASKS.find(t=>t.id===input.value);return {cleaning_date:date,zone:task.id,frequency:task.frequency,method_or_product:task.name,notes:recordEl.querySelector('[name="notes"]')?.value||null};});\n    const {error}=await supabase.from('haccp_cleaning_logs').insert(rows); if(error)throw error;\n    status(checked.length+' tâche(s) de nettoyage enregistrée(s).'); await loadCleaningTasks(); renderRecord('cleaning');\n  }catch(error){status('Erreur : '+error.message,true);}finally{if(button)button.disabled=false;}\n}\n\nasync function loadEquipment(){
   status('Chargement HACCP…');
   const {data,error} = await supabase.from('haccp_equipment').select('*').eq('active',true).order('name');
   if(error){
@@ -385,7 +385,7 @@ async function refreshHaccp(){
 
 panel?.addEventListener('click', async event => {
   const refresh = event.target.closest('#haccp-refresh');
-  if(refresh){ event.preventDefault(); await refreshHaccp(); return; }
+  if(refresh){ event.preventDefault(); await refreshHaccp(); return; }\n  if(event.target.closest('#haccp-cleaning-save')){ event.preventDefault(); await saveCleaningTasks(); return; }\n  if(event.target.name==='visual_result'){ $('#oil-corrective')?.classList.toggle('hidden',event.target.value!=='bad'); }
 
   const modeButton = event.target.closest('[data-haccp-mode]');
   if(modeButton){ event.preventDefault(); setMode(modeButton.dataset.haccpMode); return; }
@@ -411,7 +411,7 @@ recordEl?.addEventListener('submit', async event => {
     status('Enregistrement effectué et horodaté.');
     form.reset();
     if(currentRecordSection === 'temperatures') renderRecord('temperatures');
-    if(currentRecordSection === 'cleaning') renderRecord('cleaning');
+
   }catch(error){
     status('Erreur : '+(error.message || error),true);
   }finally{
