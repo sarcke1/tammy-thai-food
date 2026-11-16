@@ -681,3 +681,5 @@ Promo
 - Huile : choix simplifié à aspect conforme / non conforme ; action corrective demandée si non conforme.
 - Pas d'intégration Tapo dans cette évolution ; reportée à une étape ultérieure.
 - Fichiers modifiés : v2/admin/haccp.js, v2/admin/index.html. À tester PC/mobile avant stabilisation.
+
+- Correction de suivi : aucun nom d'opérateur n'est demandé ou enregistré dans les checklists HACCP.
