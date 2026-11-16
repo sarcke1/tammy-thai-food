@@ -670,3 +670,14 @@ Promo
 - Les enregistrements sont horodatés par Supabase et les erreurs de base sont affichées directement dans le statut HACCP.
 - Fichiers modifiés : `v2/admin/haccp.js`, `v2/admin/admin.css`, `v2/admin/index.html`.
 - À tester sur PC et mobile avant stabilisation.
+
+
+## HACCP V2.04 — Simplification métier (2026-11-16)
+
+- Suppression de la rubrique livraison/transport client : activité actuelle en Click & Collect, sans livraison.
+- Température à réception demandée uniquement pour les produits réfrigérés ou surgelés ; pas de relevé systématique pour les produits ambiants.
+- Réception : photo de l'emballage et de l'étiquette obligatoire, prise de vue directe possible sur smartphone ; conserver l'étiquette physique jusqu'à la fin d'utilisation recommandée comme pratique de traçabilité.
+- Nettoyage : checklist d'échéances basée sur la dernière réalisation, tâches quotidiennes/hebdomadaires/mensuelles, cases décochées par défaut, aucune saisie de nom opérateur. Désinfection des poubelles incluse.
+- Huile : choix simplifié à aspect conforme / non conforme ; action corrective demandée si non conforme.
+- Pas d'intégration Tapo dans cette évolution ; reportée à une étape ultérieure.
+- Fichiers modifiés : v2/admin/haccp.js, v2/admin/index.html. À tester PC/mobile avant stabilisation.
