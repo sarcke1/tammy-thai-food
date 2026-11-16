@@ -109,13 +109,12 @@ function renderRecord(section){
   }
 
   if(section === 'oil'){
-    recordEl.innerHTML = formCard('🛢️ Huile de friture',
-      '<label>Action<select name="oil_action"><option value="mise_en_service">Mise en service</option><option value="controle">Contrôle</option><option value="changement">Changement d’huile</option></select></label>'+
-      field('result','Résultat / mesure','text','placeholder="Ex. aspect conforme, test…"', '')+
-      '<label class="haccp-check"><input type="checkbox" name="is_conforming" checked> Conforme</label>'+
-      textarea('corrective_action','Action corrective')+
-      textarea('notes','Observation')
-    );
+    recordEl.innerHTML = '<article class="haccp-form-card"><h3>🛢️ Contrôle visuel de l’huile</h3><form class="haccp-form">'+
+      '<label>Action<select name="oil_action"><option value="controle">Contrôle visuel</option><option value="mise_en_service">Mise en service</option><option value="changement">Changement d’huile</option></select></label>'+
+      '<label>Aspect de l’huile<select name="visual_result" required><option value="">Choisir</option><option value="ok">Conforme</option><option value="bad">Non conforme</option></select></label>'+
+      '<div id="oil-corrective" class="hidden">'+textarea('corrective_action','Action corrective réalisée',true)+'</div>'+
+      textarea('notes','Observation facultative')+
+      '<button type="submit" class="primary">Enregistrer</button></form></article>';
   }
 
   if(section === 'nonconformities'){
