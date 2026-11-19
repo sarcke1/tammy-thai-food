@@ -4,8 +4,8 @@ const loginPanel=document.querySelector('#login-panel'),dashboard=document.query
 let currentView='active',allOrders=[],loading=false,firstLoad=true,knownOrderIds=new Set(),audioContext=null,audioEnabled=false,refreshTimer=null;
 const checklistKey='tammy-kitchen-checklist';
 
-function showDashboard(){loginPanel.classList.add('hidden');dashboard.classList.remove('hidden');logoutButton.classList.remove('hidden');document.querySelector('#slots-tab')?.classList.remove('hidden');document.querySelector('#availability-tab')?.classList.remove('hidden');document.querySelector('#haccp-tab')?.classList.remove('hidden');openingPanel?.classList.add('hidden');loadOrders();startAutoRefresh();}
-function showLogin(){loginPanel.classList.remove('hidden');dashboard.classList.add('hidden');logoutButton.classList.add('hidden');document.querySelector('#slots-tab')?.classList.add('hidden');document.querySelector('#availability-tab')?.classList.add('hidden');document.querySelector('#haccp-tab')?.classList.add('hidden');openingPanel?.classList.add('hidden');document.querySelector('#availability-panel')?.classList.add('hidden');if(refreshTimer){clearInterval(refreshTimer);refreshTimer=null;}}
+function showDashboard(){loginPanel.classList.add('hidden');dashboard.classList.remove('hidden');logoutButton.classList.remove('hidden');document.querySelector('#slots-tab')?.classList.remove('hidden');document.querySelector('#availability-tab')?.classList.remove('hidden');document.querySelector('#haccp-tab')?.classList.remove('hidden');document.querySelector('#accounting-tab')?.classList.remove('hidden');openingPanel?.classList.add('hidden');loadOrders();startAutoRefresh();}
+function showLogin(){loginPanel.classList.remove('hidden');dashboard.classList.add('hidden');logoutButton.classList.add('hidden');document.querySelector('#slots-tab')?.classList.add('hidden');document.querySelector('#availability-tab')?.classList.add('hidden');document.querySelector('#haccp-tab')?.classList.add('hidden');document.querySelector('#accounting-tab')?.classList.add('hidden');document.querySelector('#accounting-panel')?.classList.add('hidden');openingPanel?.classList.add('hidden');document.querySelector('#availability-panel')?.classList.add('hidden');if(refreshTimer){clearInterval(refreshTimer);refreshTimer=null;}}
 function escapeHtml(v){return String(v??'').replace(/[&<>'\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c]));}
 function statusLabel(s){return({pending_payment:'En attente de paiement',paid:'Payée',confirmed:'En cuisine',preparing:'En cuisine',ready:'En attente de retrait',completed:'Archivée',cancelled:'Annulée'})[s]||s;}
 function nextAction(s){return({pending_payment:['paid','Marquer comme payée'],paid:['enqueue','Mettre en cuisine'],confirmed:['noop','En cuisine'],preparing:null,ready:['completed','Retirer / archiver']})[s]||null;}
@@ -222,3 +222,21 @@ logoutButton.addEventListener('click',async()=>{await supabase.auth.signOut();sh
 document.querySelector('#refresh').addEventListener('click',()=>loadOrders());
 enableSoundButton.onclick=()=>{void activateAudio();};
 const{data:{session}}=await supabase.auth.getSession();if(session)showDashboard();else showLogin();
+
+
+// Comptabilité — module séparé, sans modifier le cycle de vie des commandes.
+document.querySelector('#accounting-tab')?.addEventListener('click',()=>{
+  const panel=document.querySelector('#accounting-panel');
+  if(!panel)return;
+  const opening=panel.classList.contains('hidden');
+  panel.classList.toggle('hidden',!opening);
+  document.querySelector('#haccp-panel')?.classList.add('hidden');
+  document.querySelector('#opening-panel')?.classList.add('hidden');
+  document.querySelector('#slots-panel')?.classList.add('hidden');
+  document.querySelector('#availability-panel')?.classList.add('hidden');
+  document.querySelector('#orders')?.classList.toggle('hidden',opening);
+  document.querySelector('.view-tabs')?.classList.toggle('hidden',opening);
+  document.querySelector('.toolbar')?.classList.toggle('hidden',opening);
+  document.querySelector('#accounting-tab')?.setAttribute('aria-pressed',String(opening));
+  if(opening)window.dispatchEvent(new CustomEvent('tammy:accounting-open'));
+});
