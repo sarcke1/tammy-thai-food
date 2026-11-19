@@ -708,3 +708,11 @@ Promo
 - Périmètre : administration uniquement. Sites clients V2/V3 et V1 non modifiés ; aucune donnée Supabase modifiée.
 - Fichiers : v2/admin/index.html, v2/admin/admin.css, ajout de v2/admin/i18n.js, PROJECT_MEMORY.md.
 - Première livraison à valider : couverture exhaustive des libellés, qualité des traductions thaïes et essais PC/mobile. Aucun test navigateur réel effectué à ce stade.
+
+
+## V2.02.01 — Complément des traductions thaïes (2026-11-19)
+
+- Complément du dictionnaire français → thaï pour les onglets de commandes avec compteurs, le message de rafraîchissement automatique, les actions, les rubriques HACCP, le planning, les disponibilités et les libellés de comptabilité.
+- Ajout de traductions préfixées pour les textes variables (compteurs, erreurs et messages avec valeurs dynamiques), afin de conserver les nombres et horaires.
+- Seul le moteur `v2/admin/i18n.js` est modifié fonctionnellement ; le paramètre de cache de `v2/admin/index.html` est actualisé. Aucun changement de logique de commande, aucune donnée Supabase, aucun site client, V1 inchangée.
+- Syntaxe JavaScript vérifiée. Vérification visuelle navigateur PC/mobile et relecture native thaï encore nécessaires avant stabilisation.
