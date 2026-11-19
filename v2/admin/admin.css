@@ -123,3 +123,28 @@
 .haccp-check{display:flex!important;align-items:center;gap:10px;font-weight:600}
 .haccp-check input{flex:0 0 auto}
 #haccp-status.error{color:#b34a3d;font-weight:600}
+
+/* COMPTABILITÉ — V2.01 */
+.accounting-panel{margin:0 0 18px}
+.accounting-head,.accounting-filters{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.accounting-filters{margin:18px 0;padding:14px;background:#f8f3e9;border-radius:12px}
+.accounting-filters label,.expense-form label{margin:0;flex:1;min-width:140px}
+.accounting-filters input,.expense-form input,.expense-form select,.expense-form textarea{width:100%;padding:10px;border:1px solid #cfc4b2;border-radius:8px;font:inherit;background:#fff}
+.accounting-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
+.accounting-kpi{padding:14px;border:1px solid #e2d8c8;border-radius:12px;background:#fff}
+.accounting-kpi span{display:block;color:#65736d;font-size:12px}
+.accounting-kpi strong{display:block;margin-top:6px;font:700 22px Georgia,serif;overflow-wrap:anywhere}
+.accounting-block{margin:20px 0;padding:16px;border:1px solid #e2d8c8;border-radius:12px;background:#fffdf8}
+.accounting-block h3{margin:0 0 12px;font:700 19px Georgia,serif}
+.accounting-table{width:100%;border-collapse:collapse;font-size:14px}
+.accounting-table th,.accounting-table td{padding:10px 8px;text-align:left;border-bottom:1px solid #e8dfd2}
+.accounting-table th{color:#65736d;font-size:12px}
+.accounting-table td:last-child,.accounting-table th:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.accounting-note{color:#65736d;font-size:13px;line-height:1.5}
+.accounting-alert{padding:10px 12px;border-radius:9px;background:#fff1e8;color:#8e3d2f;margin:10px 0}
+.expense-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.expense-form label{font-size:13px}
+.expense-form .expense-wide{grid-column:1/-1}
+.expense-form button{justify-self:start}
+.expense-row-actions button{border:0;background:#f4dfd9;color:#8e3d2f;border-radius:8px;padding:7px 10px;cursor:pointer}
+@media(max-width:700px){.accounting-panel{padding:14px}.accounting-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.accounting-kpi strong{font-size:18px}.expense-form{grid-template-columns:1fr}.expense-form .expense-wide{grid-column:auto}.accounting-table{font-size:12px}.accounting-table th,.accounting-table td{padding:8px 5px}.accounting-filters{align-items:stretch}.accounting-filters label,.accounting-filters button{width:100%}}
