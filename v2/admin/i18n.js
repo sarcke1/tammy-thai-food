@@ -22,7 +22,7 @@ const P=[
  ['Erreur de dépôt du justificatif : ','เกิดข้อผิดพลาดในการอัปโหลดเอกสาร: ']
 ];
 let lang='fr';
-function tr(s){if(lang!=='th'||!s)return s;const q=s.trim();if(T[q])return s.replace(q,T[q]);for(const [prefix,to] of P)if(q.startsWith(prefix))return s.replace(q,to+q.slice(prefix.length));return s;}
+function tr(s){if(lang!=='th'||!s)return s;const q=s.trim();if(T[q])return s.replace(q,T[q]);const refresh=q.match(/^(\\d+) commande\\(s\\) — actualisation automatique toutes les 5 s — (.+)$/);if(refresh)return s.replace(q,refresh[1]+' คำสั่งซื้อ — รีเฟรชอัตโนมัติทุก 5 วินาที — '+refresh[2]);for(const [prefix,to] of P)if(q.startsWith(prefix))return s.replace(q,to+q.slice(prefix.length));return s;}
 function visit(n){if(n.nodeType===Node.TEXT_NODE){const v=tr(n.nodeValue);if(v!==n.nodeValue)n.nodeValue=v;return;}if(n.nodeType!==Node.ELEMENT_NODE)return;for(const a of ['placeholder','title','aria-label']){const v=n.getAttribute(a);if(v){const x=tr(v);if(x!==v)n.setAttribute(a,x);}}n.childNodes.forEach(visit);}
 function setLang(v){lang=v==='th'?'th':'fr';document.documentElement.lang=lang;document.querySelectorAll('[data-language]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.language===lang)));if(lang==='fr'){location.reload();return;}visit(document.body);}
 document.querySelectorAll('[data-language]').forEach(b=>b.addEventListener('click',()=>{localStorage.setItem(KEY,b.dataset.language);setLang(b.dataset.language);}));
