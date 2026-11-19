@@ -683,3 +683,18 @@ Promo
 - Fichiers modifiés : v2/admin/haccp.js, v2/admin/index.html. À tester PC/mobile avant stabilisation.
 
 - Correction de suivi : aucun nom d'opérateur n'est demandé ou enregistré dans les checklists HACCP.
+
+
+## V2.01 — Comptabilité de gestion (2026-11-19)
+
+- Ajout d'un espace **Comptabilité** distinct dans l'administration commune V2/V3, réservé aux administrateurs authentifiés.
+- V2 collègues : toutes les commandes non annulées sont considérées encaissées en espèces pour le calcul comptable, sans modifier les statuts opérationnels ni les données de paiement des commandes.
+- V3 public : seules les commandes avec `payment_status = paid` sont intégrées aux recettes ; les moyens `cash`, `stripe` (carte) et `paypal` sont distingués. Les moyens absents sont signalés « à régulariser » ; les remboursements sont présentés séparément.
+- Saisie manuelle des dépenses TTC : date, catégorie, fournisseur, description, montant, mode de règlement, référence et justificatif photo/PDF.
+- Dépenses enregistrées dans `accounting_expenses`, protégées par RLS via `is_admin()`. Documents privés dans le bucket `accounting-documents`.
+- Tableau de bord par période, ventilation des recettes, dépenses, résultat de gestion provisoire, rentabilité indicative à partir des coûts estimés de recettes, et export CSV.
+- Ajout d'une table `accounting_cash_closings` protégée par RLS pour une future fonction de clôture de caisse ; aucun écran de clôture n'est encore livré.
+- Fiscalité affichée : micro-BIC, franchise en base de TVA ; montants TTC et aucune TVA récupérable calculée. Cet outil reste un suivi de gestion interne, pas un logiciel de comptabilité légale certifié.
+- Fichiers : `v2/admin/index.html`, `v2/admin/admin.js`, `v2/admin/admin.css`, nouveau `v2/admin/accounting.js`.
+- Migration Supabase : `accounting_management_v1`, puis `accounting_expense_documents`.
+- V1, sites clients V2/V3 et parcours de commande inchangés. Validation navigateur réelle PC/mobile encore nécessaire.
