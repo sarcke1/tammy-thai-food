@@ -148,3 +148,7 @@
 .expense-form button{justify-self:start}
 .expense-row-actions button{border:0;background:#f4dfd9;color:#8e3d2f;border-radius:8px;padding:7px 10px;cursor:pointer}
 @media(max-width:700px){.accounting-panel{padding:14px}.accounting-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.accounting-kpi strong{font-size:18px}.expense-form{grid-template-columns:1fr}.expense-form .expense-wide{grid-column:auto}.accounting-table{font-size:12px}.accounting-table th,.accounting-table td{padding:8px 5px}.accounting-filters{align-items:stretch}.accounting-filters label,.accounting-filters button{width:100%}}
+
+
+/* V2.02 — Sélecteur de langue FR/TH */
+.language-switch{display:flex;align-items:center;gap:5px;padding:4px;border:1px solid #e2d8c8;border-radius:24px;background:#fffdf8}.language-button{width:42px;height:38px;border:2px solid transparent;border-radius:20px;background:transparent;font-size:22px;line-height:1;cursor:pointer}.language-button[aria-pressed="true"]{border-color:#173f35;background:#e7eee7}.language-button:focus-visible{outline:3px solid #ef654f;outline-offset:2px}@media(max-width:600px){.language-switch{width:100%;justify-content:center}.language-button{flex:1}}
