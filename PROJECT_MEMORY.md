@@ -698,3 +698,13 @@ Promo
 - Fichiers : `v2/admin/index.html`, `v2/admin/admin.js`, `v2/admin/admin.css`, nouveau `v2/admin/accounting.js`.
 - Migration Supabase : `accounting_management_v1`, puis `accounting_expense_documents`.
 - V1, sites clients V2/V3 et parcours de commande inchangés. Validation navigateur réelle PC/mobile encore nécessaire.
+
+
+## V2.02 — Administration bilingue français / thaï (2026-11-19)
+
+- Ajout d'un sélecteur 🇫🇷 / 🇹🇭 dans l'administration commune V2/V3.
+- Langue mémorisée localement dans le navigateur ; traduction centralisée des libellés statiques et des contenus générés dynamiquement des commandes, du planning, des disponibilités, du HACCP et de la comptabilité.
+- L'attribut de langue du document est adapté. Les données métier (noms de clients, plats, commentaires et données enregistrées) ne sont pas traduites ni modifiées.
+- Périmètre : administration uniquement. Sites clients V2/V3 et V1 non modifiés ; aucune donnée Supabase modifiée.
+- Fichiers : v2/admin/index.html, v2/admin/admin.css, ajout de v2/admin/i18n.js, PROJECT_MEMORY.md.
+- Première livraison à valider : couverture exhaustive des libellés, qualité des traductions thaïes et essais PC/mobile. Aucun test navigateur réel effectué à ce stade.
