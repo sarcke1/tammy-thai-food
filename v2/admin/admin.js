@@ -240,3 +240,14 @@ document.querySelector('#accounting-tab')?.addEventListener('click',()=>{
   document.querySelector('#accounting-tab')?.setAttribute('aria-pressed',String(opening));
   if(opening)window.dispatchEvent(new CustomEvent('tammy:accounting-open'));
 });
+
+document.querySelectorAll('.view-tab').forEach(button=>button.addEventListener('click',()=>{
+  document.querySelector('#accounting-panel')?.classList.add('hidden');
+  document.querySelector('#accounting-tab')?.setAttribute('aria-pressed','false');
+}));
+['#slots-tab','#availability-tab','#haccp-tab'].forEach(selector=>{
+  document.querySelector(selector)?.addEventListener('click',()=>{
+    document.querySelector('#accounting-panel')?.classList.add('hidden');
+    document.querySelector('#accounting-tab')?.setAttribute('aria-pressed','false');
+  });
+});
