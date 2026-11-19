@@ -72,7 +72,7 @@ function renderProfitability(periodOrders){
  const recipeByProduct=new Map(recipes.map(r=>[r.product_id,r]));
  const lines=[...sales.entries()].map(([id,s])=>{
   const rec=recipeByProduct.get(id);
-  const unit=Number(rec?.estimated_cost_eur);
+  const unit=Number(rec?.estimated_cost_eur)/(Number(rec?.yield_quantity)||1);
   const hasCost=Boolean(rec&&rec.estimated_cost_eur!==null&&Number.isFinite(unit));
   return {...s,cost:hasCost?unit*s.qty:null,margin:hasCost?s.revenue-unit*s.qty:null,status:rec?.cost_status||'non renseigné'};
  }).sort((a,b)=>(b.margin??-Infinity)-(a.margin??-Infinity));
@@ -84,23 +84,23 @@ async function load(){
  const [o,e,r]=await Promise.all([
   supabase.from('orders').select('id,order_number,sales_channel,status,payment_status,payment_provider,total,created_at,order_items(product_id,product_name,quantity,line_total)').order('created_at',{ascending:false}),
   supabase.from('accounting_expenses').select('*').order('expense_date',{ascending:false}),
-  supabase.from('product_recipes').select('product_id,estimated_cost_eur,cost_status,recipe_name')
+  supabase.from('product_recipes').select('product_id,estimated_cost_eur,yield_quantity,cost_status,recipe_name')
  ]);
  if(o.error||e.error||r.error){statusEl.textContent='Erreur de chargement : '+(o.error?.message||e.error?.message||r.error?.message);return;}
- orders=o.data||[];expenses=e.data||[];recipes=r.data||[];loaded=true;render();statusEl.textContent='Données actualisées. Les montants sont exprimés en euros TTC.';
+ orders=o.data||[];expenses=e.data||[];recipes=r.data||[];await Promise.all(expenses.map(async item=>{if(item.document_path){const signed=await supabase.storage.from('accounting-documents').createSignedUrl(item.document_path,3600);item.document_url=signed.data?.signedUrl||null;}}));loaded=true;render();statusEl.textContent='Données actualisées. Les montants sont exprimés en euros TTC.';
 }
 async function saveExpense(ev){
- ev.preventDefault();const form=ev.currentTarget;const data=Object.fromEntries(new FormData(form).entries());
- data.amount_ttc=Number(data.amount_ttc);
+ ev.preventDefault();const form=ev.currentTarget;const formData=new FormData(form);const data=Object.fromEntries(formData.entries());const file=formData.get('document_file');delete data.document_file;data.amount_ttc=Number(data.amount_ttc);
+ if(file&&file.size){const ext=(file.name.split('.').pop()||'file').toLowerCase().replace(/[^a-z0-9]/g,'');const path='expenses/'+crypto.randomUUID()+'.'+ext;const uploaded=await supabase.storage.from('accounting-documents').upload(path,file,{contentType:file.type,upsert:false});if(uploaded.error){statusEl.textContent='Erreur de dépôt du justificatif : '+uploaded.error.message;return;}data.document_path=path;}
  const {error}=await supabase.from('accounting_expenses').insert(data);
- if(error){statusEl.textContent='Erreur : '+error.message;return;}
+ if(error){if(data.document_path)await supabase.storage.from('accounting-documents').remove([data.document_path]);statusEl.textContent='Erreur : '+error.message;return;}
  form.reset();form.elements.expense_date.value=today();statusEl.textContent='Dépense enregistrée.';await load();
 }
 async function deleteExpense(id){
  if(!confirm('Supprimer cette dépense ?'))return;
- const {error}=await supabase.from('accounting_expenses').delete().eq('id',id);
+ const item=expenses.find(e=>e.id===id);const {error}=await supabase.from('accounting_expenses').delete().eq('id',id);
  if(error){statusEl.textContent='Erreur de suppression : '+error.message;return;}
- await load();
+ if(item?.document_path)await supabase.storage.from('accounting-documents').remove([item.document_path]);await load();
 }
 function exportCsv(){
  const rows=[['Type','Date','Origine / catégorie','Description','Moyen de paiement','Montant EUR']];
