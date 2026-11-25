@@ -64,7 +64,7 @@ export const dishes = [
   {
     id:"boeuf-huitre",
     name:"Bœuf sauté sauce huître",
-    price:8,
+    price:9,
     category:"Plats",
     emoji:"🥩",
     photo:"Boeuf sauté sauce huître.png",
