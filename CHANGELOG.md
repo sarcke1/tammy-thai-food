@@ -1,3 +1,11 @@
+## 2026-11-25 — Prix du Bœuf sauté sauce huître
+
+- Tarif collègues V2 : 9 € (`products.price`).
+- Tarif clients publics V3 : 11 € (`products.public_price`).
+- Les RPC de commande restent séparés : V2 recalcule avec `price`, V3 avec `public_price`.
+- Donnée Supabase mise à jour et valeurs de secours locales synchronisées dans `v2/js/data.js` et `v3/js/data.js`.
+- Aucun changement de recette, de panier, de disponibilité, d'administration ou de V1.
+
 ## 2026-10-23 — Prospectus séparés V2 / V3
 
 - Ajout d’un lien « Prospectus » dans l’en-tête du site V2, pointant vers `v2/prospectus.html`.
