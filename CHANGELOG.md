@@ -1,3 +1,11 @@
+## 2026-11-26 — Notifications de commande envoyées à Tammy
+
+- Les e-mails de nouvelle commande sont désormais adressés aux deux boîtes : `sarcke@gmail.com` et `jan40998@gmail.com`.
+- Le destinataire initial de Cédric est conservé ; Tammy reçoit une copie du même message détaillé.
+- Modification limitée à `supabase/functions/notify-order-email/index.ts`, Edge Function Supabase redéployée en version 17.
+- Les confirmations envoyées aux clients et les notifications de commande prête ne changent pas. Les sites V2/V3, les commandes, les paiements et l’administration ne sont pas modifiés.
+- Test d'envoi réel à effectuer avec une nouvelle commande V2 ou V3 ; le déploiement confirme l'activation de la fonction, pas la réception effective dans les deux boîtes.
+
 ## 2026-11-25 — Prix du Bœuf sauté sauce huître
 
 - Tarif collègues V2 : 9 € (`products.price`).
