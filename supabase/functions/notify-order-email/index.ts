@@ -3,7 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 const WEBHOOK_SECRET = Deno.env.get("TTF_WEBHOOK_SECRET") || "";
 const BREVO_API_KEY = Deno.env.get("BREVO_API_KEY") || "";
 const BREVO_FROM = { name: "Tammy Thai Food", email: "commandes@tammythaifood.fr" };
-const RECIPIENT = "sarcke@gmail.com";
+const RECIPIENTS = ["sarcke@gmail.com", "jan40998@gmail.com"];
 
 function esc(value: unknown) {
   return String(value ?? "").replace(/[&<>'"]/g, c => ({
@@ -156,7 +156,7 @@ Deno.serve(async (req: Request) => {
     },
     body: JSON.stringify({
       sender: BREVO_FROM,
-      to: [{ email: RECIPIENT }],
+      to: RECIPIENTS.map(email => ({ email })),
       subject: `Nouvelle commande #${order.order_number} — ${total}`,
       htmlContent: html
     })
